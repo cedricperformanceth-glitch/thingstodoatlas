@@ -1,9 +1,60 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { laos } from '../data/atlas';
+import { homepageCountries } from '../data/atlas';
 ---
-<BaseLayout title="A guide to places worth your time" description="ThingsToDoAtlas is a practical, editorial guide to destinations, places and useful local knowledge.">
-  <section class="hero container"><div class="hero__copy"><p class="eyebrow">A living travel guide</p><h1>Go somewhere.<br /><em>Find your way in.</em></h1><p class="lede">ThingsToDoAtlas brings together the places, small discoveries and practical details that make a destination easier to enjoy.</p><a class="button" href="/laos">Start with Laos <span>→</span></a></div><div class="hero__image"><img src="https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1400&q=85" alt="Warm evening light over a Southeast Asian landscape" /></div></section>
-  <section class="section container"><div class="section-intro"><p class="eyebrow">The atlas, so far</p><h2>Begin with southern Laos</h2><p>Our first chapter follows the rivers and highlands around Pakse — with more destinations added when they have something real to say.</p></div><a class="destination-card" href="/laos"><img src={laos.destinations[0].image} alt="Southern Laos landscape" loading="lazy" /><div><span>Chapter 01 · Country guide</span><h3>Laos</h3><p>{laos.intro}</p><b>Open the Laos guide →</b></div></a></section>
-  <section class="quote-band"><p>Useful before it is beautiful.<br /><em>Human before it is exhaustive.</em></p></section>
+
+<BaseLayout title="A living atlas for curious travellers" description="ThingsToDoAtlas is a living travel companion for places worth your time across Thailand, Laos and Sri Lanka.">
+  <section class="atlas-hero container" aria-labelledby="hero-title">
+    <div class="atlas-hero__copy">
+      <div class="atlas-hero__eyebrow"><span>Vol. 01</span><span>Places worth the detour</span></div>
+      <p class="eyebrow">A living travel companion</p>
+      <h1 id="hero-title">Go somewhere.<br /><em>Stay curious.</em></h1>
+      <p class="lede">A thoughtful atlas of places, small discoveries and useful local knowledge — made for the moments when you want to see what is just beyond the obvious.</p>
+      <a class="button button--arrow" href="#countries">Choose your way in <span aria-hidden="true">↘</span></a>
+      <div class="atlas-hero__annotation"><span class="route-mark" aria-hidden="true"></span><span>13°58′N · 100°30′E</span><small>Start anywhere</small></div>
+    </div>
+    <div class="atlas-hero__visual">
+      <div class="atlas-hero__stamp" aria-hidden="true">TTA<br /><span>field notes</span></div>
+      <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1600&q=85" alt="Misty green mountains and a quiet Southeast Asian landscape" width="1600" height="1100" fetchpriority="high" />
+      <span class="image-caption">Somewhere south of the usual route</span>
+    </div>
+  </section>
+
+  <section class="intro-band" aria-labelledby="intro-title">
+    <div class="container intro-band__grid">
+      <p class="eyebrow">Why this atlas exists</p>
+      <div>
+        <h2 id="intro-title">The good places are rarely<br /><em>the loudest ones.</em></h2>
+        <p>ThingsToDoAtlas gathers the places we would actually send a friend: carefully chosen, useful in real life and open to a little surprise.</p>
+      </div>
+      <div class="intro-band__note"><span>01</span><p>Local knowledge<br />without the noise.</p></div>
+    </div>
+  </section>
+
+  <section class="country-section container" id="countries" aria-labelledby="countries-title">
+    <div class="section-heading">
+      <div><p class="eyebrow">The first chapters</p><h2 id="countries-title">Where will you<br /><em>begin?</em></h2></div>
+      <p class="section-heading__aside">Three countries.<br />Many ways in.</p>
+    </div>
+    <div class="country-list">
+      {homepageCountries.map((country, index) => <article class:list={["country-feature", `country-feature--${index + 1}`]} id={`country-${country.slug}`}>
+        <div class="country-feature__image"><img src={country.image} alt={`${country.name} landscape`} width="1600" height="1100" loading="lazy" /><span class="country-feature__number">0{index + 1}</span></div>
+        <div class="country-feature__copy">
+          <p class="eyebrow">{country.mood}</p>
+          <h3>{country.name}</h3>
+          <p>{country.description}</p>
+          {country.status === 'open' ? <a class="text-link text-link--large" href="/laos">Enter the Laos chapter <span aria-hidden="true">→</span></a> : <span class="coming-note">Chapter opening soon <span aria-hidden="true">·</span> stay curious</span>}
+        </div>
+      </article>)}
+    </div>
+  </section>
+
+  <section class="journey-transition" aria-label="Atlas note">
+    <div class="journey-transition__line" aria-hidden="true"></div>
+    <div class="container journey-transition__inner">
+      <span class="journey-transition__stamp">Field note<br /><b>01</b></span>
+      <p>There is always another road.<br /><em>Let’s see where it goes.</em></p>
+      <span class="journey-transition__coordinates">Mekong · Indian Ocean · Gulf of Thailand</span>
+    </div>
+  </section>
 </BaseLayout>

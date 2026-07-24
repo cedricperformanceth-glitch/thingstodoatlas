@@ -48,6 +48,24 @@ export const places: Place[] = [
   }
 ];
 
+export const homepageCountries = [
+  {
+    slug: 'thailand', name: 'Thailand', mood: 'Adventure · Energy',
+    description: 'A country of open roads, vivid mornings and the next good turn waiting just beyond the map.',
+    image: 'https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=1600&q=85', status: 'coming soon'
+  },
+  {
+    slug: 'laos', name: 'Laos', mood: 'Authenticity · Serenity',
+    description: 'A slower way through rivers, coffee country and small-town days that leave room to look around.',
+    image: 'https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1600&q=85', status: 'open'
+  },
+  {
+    slug: 'sri-lanka', name: 'Sri Lanka', mood: 'Escape · Relaxation',
+    description: 'Train windows, warm coastlines and a feeling that the journey has already started before arrival.',
+    image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1600&q=85', status: 'coming soon'
+  }
+];
+
 export const laos = { slug: 'laos', name: 'Laos', eyebrow: 'The first atlas chapter', intro: 'A slower, greener way through southern Laos — shaped by rivers, coffee country and small-town days.', destinations: [
   { slug: 'pakse', name: 'Pakse', description: 'A practical base for the Mekong, the Bolaven Plateau and a first taste of southern Laos.', image: 'https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1200&q=80', status: 'active' },
   { slug: 'tad-lo', name: 'Tad Lo', description: 'Waterfalls, forest paths and an easygoing village rhythm on the plateau.', image: 'https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=1200&q=80', status: 'coming soon' },
