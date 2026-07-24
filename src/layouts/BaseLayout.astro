@@ -1,0 +1,22 @@
+---
+import '../styles/global.css';
+const { title, description = 'A thoughtful guide to places worth your time across Asia.', canonical = 'https://thingstodoatlas.com/' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title} | ThingsToDoAtlas</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={`${title} | ThingsToDoAtlas`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+    <header class="site-header"><a class="wordmark" href="/">Things<span>ToDo</span>Atlas</a><nav aria-label="Primary"><a href="/laos">Explore Laos</a><a href="/laos/pakse">Pakse guide</a></nav></header>
+    <main><slot /></main>
+    <footer class="site-footer"><div><a class="wordmark" href="/">Things<span>ToDo</span>Atlas</a><p>A practical atlas for places worth your time.</p></div><small>Prototype content · Some listings are demonstrations and require verification.</small></footer>
+  </body>
+</html>

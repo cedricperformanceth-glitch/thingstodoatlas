@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { laos } from '../data/atlas';
+---
+<BaseLayout title="A guide to places worth your time" description="ThingsToDoAtlas is a practical, editorial guide to destinations, places and useful local knowledge.">
+  <section class="hero container"><div class="hero__copy"><p class="eyebrow">A living travel guide</p><h1>Go somewhere.<br /><em>Find your way in.</em></h1><p class="lede">ThingsToDoAtlas brings together the places, small discoveries and practical details that make a destination easier to enjoy.</p><a class="button" href="/laos">Start with Laos <span>→</span></a></div><div class="hero__image"><img src="https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1400&q=85" alt="Warm evening light over a Southeast Asian landscape" /></div></section>
+  <section class="section container"><div class="section-intro"><p class="eyebrow">The atlas, so far</p><h2>Begin with southern Laos</h2><p>Our first chapter follows the rivers and highlands around Pakse — with more destinations added when they have something real to say.</p></div><a class="destination-card" href="/laos"><img src={laos.destinations[0].image} alt="Southern Laos landscape" loading="lazy" /><div><span>Chapter 01 · Country guide</span><h3>Laos</h3><p>{laos.intro}</p><b>Open the Laos guide →</b></div></a></section>
+  <section class="quote-band"><p>Useful before it is beautiful.<br /><em>Human before it is exhaustive.</em></p></section>
+</BaseLayout>

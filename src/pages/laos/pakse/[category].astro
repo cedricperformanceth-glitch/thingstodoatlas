@@ -1,0 +1,7 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro'; import Breadcrumbs from '../../../components/Breadcrumbs.astro'; import PlaceCard from '../../../components/PlaceCard.astro'; import { getCategory, getPlacesForCategory } from '../../../data/atlas';
+export function getStaticPaths() { return [{params:{category:'restaurants'}}]; }
+const { category: slug } = Astro.params; const category = getCategory(slug!); const places = getPlacesForCategory(slug!);
+if (!category) throw new Error('Category not found');
+---
+<BaseLayout title={`${category.name} in Pakse`} description={`${category.description} A ThingsToDoAtlas guide to ${category.name.toLowerCase()} in Pakse.`} canonical={`https://thingstodoatlas.com/laos/pakse/${slug}`}><section class="page-header container"><Breadcrumbs items={[{label:'Laos',href:'/laos'},{label:'Pakse',href:'/laos/pakse'},{label:category.name}]} /><p class="eyebrow">Pakse · Laos</p><h1>{category.name}<br /><em>in Pakse.</em></h1><p class="lede">{category.description} This first pass contains clearly marked demonstration entries while the guide is being researched.</p></section><section class="listing-section container"><div class="listing-toolbar"><span>{places.length} demonstration entries</span><span>Last checked: not yet published</span></div><div class="place-list">{places.map((place) => <PlaceCard place={place} />)}</div></section></BaseLayout>

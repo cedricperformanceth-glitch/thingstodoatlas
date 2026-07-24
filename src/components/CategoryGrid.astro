@@ -1,0 +1,5 @@
+---
+import { categories } from '../data/atlas';
+const { active = categories } = Astro.props;
+---
+<div class="category-grid">{active.map((category: typeof categories[number]) => <a class="category-card" href={`/laos/pakse/${category.slug}`}><span>{category.icon}</span><h3>{category.name}</h3><p>{category.description}</p><b>Explore →</b></a>)}</div>
