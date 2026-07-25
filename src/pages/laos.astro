@@ -1,8 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const gridColumns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
 const pakse = { x: 679, y: 1024 };
 const vientiane = { x: 384, y: 657 };
 const tadLo = { x: 736, y: 970 };
@@ -19,11 +17,11 @@ const luangPrabang = { x: 356, y: 576 };
     <header class="laos-map-intro">
       <p class="eyebrow">Laos · Chapter 02</p>
       <h1 id="laos-map-title">Choose a place<br /><em>on the map.</em></h1>
-      <p>Temporary reference grid. Use a column letter and row number to position each destination precisely.</p>
+      <p>Follow the marked destinations across Laos and choose where the next chapter begins.</p>
     </header>
 
     <div class="map-sheet">
-      <span class="map-sheet__note">Field map · temporary grid</span>
+      <span class="map-sheet__note">Field map · Laos</span>
 
       <div class="map-layers">
         <img
@@ -35,40 +33,14 @@ const luangPrabang = { x: 356, y: 576 };
         />
 
         <svg class="map-overlay" viewBox="0 0 1024 1536" role="img" aria-labelledby="map-title map-description">
-          <title id="map-title">Temporary coordinate grid over the Laos map</title>
-          <desc id="map-description">The map is divided into eight lettered columns and twelve numbered rows for precise destination placement.</desc>
-
-          <g class="reference-grid" aria-hidden="true">
-            {Array.from({ length: 9 }, (_, index) => {
-              const x = index * 128;
-              return <line x1={x} y1="0" x2={x} y2="1536" />;
-            })}
-
-            {Array.from({ length: 13 }, (_, index) => {
-              const y = index * 128;
-              return <line x1="0" y1={y} x2="1024" y2={y} />;
-            })}
-
-            {gridColumns.map((label, index) => (
-              <>
-                <text class="grid-label grid-label--column" x={index * 128 + 64} y="38">{label}</text>
-                <text class="grid-label grid-label--column" x={index * 128 + 64} y="1510">{label}</text>
-              </>
-            ))}
-
-            {gridRows.map((label, index) => (
-              <>
-                <text class="grid-label grid-label--row" x="30" y={index * 128 + 72}>{label}</text>
-                <text class="grid-label grid-label--row" x="994" y={index * 128 + 72}>{label}</text>
-              </>
-            ))}
-          </g>
+          <title id="map-title">Destinations on the Laos map</title>
+          <desc id="map-description">Marked destinations include Pakse, Vientiane, Tad Lo, Don Det and Luang Prabang.</desc>
 
           <g class="temporary-marker" aria-label="Pakse reference point">
             <circle class="temporary-marker__ring" cx={pakse.x} cy={pakse.y} r="22" />
             <circle class="temporary-marker__dot" cx={pakse.x} cy={pakse.y} r="9" />
-            <path class="temporary-marker__leader" d={`M${pakse.x + 15} ${pakse.y - 5} L${pakse.x + 76} ${pakse.y - 28}`} />
-            <text class="temporary-marker__label" x={pakse.x + 84} y={pakse.y - 32}>Pakse</text>
+            <path class="temporary-marker__leader" d={`M${pakse.x - 15} ${pakse.y - 5} L${pakse.x - 76} ${pakse.y - 28}`} />
+            <text class="temporary-marker__label temporary-marker__label--left" x={pakse.x - 84} y={pakse.y - 32}>Pakse</text>
           </g>
 
           <g class="temporary-marker" aria-label="Vientiane reference point">
@@ -81,8 +53,8 @@ const luangPrabang = { x: 356, y: 576 };
           <g class="temporary-marker" aria-label="Tad Lo reference point">
             <circle class="temporary-marker__ring" cx={tadLo.x} cy={tadLo.y} r="22" />
             <circle class="temporary-marker__dot" cx={tadLo.x} cy={tadLo.y} r="9" />
-            <path class="temporary-marker__leader" d={`M${tadLo.x - 15} ${tadLo.y - 5} L${tadLo.x - 76} ${tadLo.y - 28}`} />
-            <text class="temporary-marker__label temporary-marker__label--left" x={tadLo.x - 84} y={tadLo.y - 32}>Tad Lo</text>
+            <path class="temporary-marker__leader" d={`M${tadLo.x + 15} ${tadLo.y - 5} L${tadLo.x + 76} ${tadLo.y - 28}`} />
+            <text class="temporary-marker__label" x={tadLo.x + 84} y={tadLo.y - 32}>Tad Lo</text>
           </g>
 
           <g class="temporary-marker" aria-label="Don Det reference point">
@@ -99,11 +71,6 @@ const luangPrabang = { x: 356, y: 576 };
             <text class="temporary-marker__label" x={luangPrabang.x + 84} y={luangPrabang.y - 32}>Luang Prabang</text>
           </g>
         </svg>
-      </div>
-
-      <div class="grid-help" aria-label="Grid reference instructions">
-        <strong>How to mark a place</strong>
-        <span>Give the square first, then refine its position: for example “Pakse in F10, near the lower-left corner”.</span>
       </div>
     </div>
   </section>
@@ -208,30 +175,6 @@ const luangPrabang = { x: 356, y: 576 };
     pointer-events: none;
   }
 
-  .reference-grid line {
-    stroke: #8c4f3d;
-    stroke-width: 1.6;
-    stroke-dasharray: 9 8;
-    opacity: 0.62;
-    vector-effect: non-scaling-stroke;
-  }
-
-  .grid-label {
-    fill: #783e30;
-    font-family: Arial, sans-serif;
-    font-size: 25px;
-    font-weight: 700;
-    text-anchor: middle;
-    paint-order: stroke;
-    stroke: #f7f2e6;
-    stroke-width: 7px;
-    stroke-linejoin: round;
-  }
-
-  .grid-label--row {
-    dominant-baseline: middle;
-  }
-
   .temporary-marker {
     color: #315545;
   }
@@ -270,26 +213,6 @@ const luangPrabang = { x: 356, y: 576 };
     text-anchor: end;
   }
 
-  .grid-help {
-    display: grid;
-    gap: 0.35rem;
-    width: 620px;
-    margin: 1.25rem auto 0;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(31, 41, 36, 0.18);
-    font-size: 0.82rem;
-    line-height: 1.5;
-  }
-
-  .grid-help strong {
-    font-family: Georgia, serif;
-    font-size: 1rem;
-  }
-
-  .grid-help span {
-    opacity: 0.72;
-  }
-
   @media (max-width: 700px) {
     .laos-map-page {
       padding-top: 3.5rem;
@@ -308,22 +231,12 @@ const luangPrabang = { x: 356, y: 576 };
 
     .map-layers,
     .map-drawing,
-    .map-overlay,
-    .grid-help {
+    .map-overlay {
       width: 100%;
     }
 
     .map-overlay {
       height: 100%;
-    }
-
-    .reference-grid line {
-      stroke-width: 1;
-    }
-
-    .grid-label {
-      font-size: 31px;
-      stroke-width: 9px;
     }
   }
 </style>
