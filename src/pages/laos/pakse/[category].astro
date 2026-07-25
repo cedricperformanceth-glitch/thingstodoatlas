@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import PlaceCard from '../../../components/PlaceCard.astro';
 import { getCategory, getPlacesForCategory } from '../../../data/atlas';
 
@@ -52,35 +51,11 @@ const schema = {
 >
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />
 
-  <section class="restaurant-hero container" aria-labelledby="restaurant-page-title">
-    <Breadcrumbs items={[{ label: 'Laos', href: '/laos' }, { label: 'Pakse', href: '/laos/pakse' }, { label: category.name }]} />
-    <div class="restaurant-hero__grid">
-      <figure class="restaurant-hero__visual">
-        <img
-          src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1400&q=84"
-          alt="A restaurant table filled with dishes to share"
-          width="1400"
-          height="980"
-          fetchpriority="high"
-        />
-        <span class="restaurant-hero__tape" aria-hidden="true"></span>
-        <figcaption class="hand-note">good tables,<br />kept close.</figcaption>
-      </figure>
-
-      <div class="restaurant-hero__copy">
-        <p class="eyebrow">Eat well · Pakse, Laos</p>
-        <h1 id="restaurant-page-title">Restaurants<br /><em>in Pakse.</em></h1>
-        <p class="lede">{category.description}</p>
-        <p class="restaurant-hero__note">Open an address to see what makes it worth the stop, what to expect and the details you will need when you go.</p>
-      </div>
-    </div>
-  </section>
-
   <section class="restaurant-listing container" aria-labelledby="restaurant-list-title">
     <header class="restaurant-listing__header">
       <div>
         <p class="eyebrow">The shortlist</p>
-        <h2 id="restaurant-list-title">{placeCountLabel} places to<br /><em>begin with.</em></h2>
+        <h1 id="restaurant-list-title">{placeCountLabel} places to<br /><em>begin with.</em></h1>
       </div>
       <div class="restaurant-listing__aside">
         <span>{String(placeCount).padStart(2, '0')}</span>
@@ -100,70 +75,7 @@ const schema = {
 </BaseLayout>
 
 <style>
-  .restaurant-hero { padding: 118px 0 92px; }
-  .restaurant-hero__grid {
-    display: grid;
-    grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
-    gap: clamp(54px, 8vw, 100px);
-    align-items: center;
-    margin-top: 38px;
-  }
-  .restaurant-hero__visual {
-    position: relative;
-    height: 455px;
-    margin: 0;
-  }
-  .restaurant-hero__visual:before {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    inset: 18px -18px -18px 18px;
-    border: 1px solid rgba(49, 85, 69, .22);
-  }
-  .restaurant-hero__visual img {
-    height: 100%;
-    filter: saturate(.72) contrast(.95);
-  }
-  .restaurant-hero__tape {
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    width: 72px;
-    height: 17px;
-    background: rgba(213, 186, 143, .72);
-    transform: translateX(-50%) rotate(-3deg);
-  }
-  .restaurant-hero__visual figcaption {
-    position: absolute;
-    right: -27px;
-    bottom: 28px;
-    padding: 9px 14px;
-    background: var(--paper);
-    color: var(--terracotta);
-    font-size: 1.28rem;
-    line-height: 1.05;
-    transform: rotate(-4deg);
-    box-shadow: 3px 4px 0 rgba(49, 85, 69, .09);
-  }
-  .restaurant-hero__copy { max-width: 570px; }
-  .restaurant-hero__copy h1 { margin-bottom: 24px; }
-  .restaurant-hero__copy .lede { margin-bottom: 27px; }
-  .restaurant-hero__note {
-    max-width: 470px;
-    margin: 0;
-    padding: 14px 0 0 22px;
-    border-top: 1px solid var(--line);
-    color: var(--muted);
-    font-size: .76rem;
-    line-height: 1.65;
-  }
-  .restaurant-hero__note:before {
-    content: '↳';
-    margin-left: -20px;
-    margin-right: 9px;
-    color: var(--terracotta);
-  }
-  .restaurant-listing { padding: 88px 0 140px; border-top: 1px solid var(--line); }
+  .restaurant-listing { padding: 118px 0 140px; }
   .restaurant-listing__header {
     display: flex;
     justify-content: space-between;
@@ -171,7 +83,7 @@ const schema = {
     align-items: end;
     margin-bottom: 48px;
   }
-  .restaurant-listing__header h2 { margin-bottom: 0; }
+  .restaurant-listing__header h1 { margin-bottom: 0; font-size: clamp(2.5rem, 5vw, 4.9rem); }
   .restaurant-listing__aside {
     display: flex;
     align-items: center;
@@ -209,15 +121,9 @@ const schema = {
     .place-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 700px) {
-    .restaurant-hero { padding: 94px 0 68px; }
-    .restaurant-hero__grid { display: flex; flex-direction: column; gap: 52px; margin-top: 28px; }
-    .restaurant-hero__visual { width: calc(100% - 12px); height: 350px; margin-right: 12px; }
-    .restaurant-hero__visual figcaption { right: -15px; bottom: 22px; font-size: 1.12rem; }
-    .restaurant-hero__copy { width: 100%; }
-    .restaurant-hero__copy h1 { font-size: clamp(3.35rem, 15vw, 4.7rem); }
-    .restaurant-listing { padding: 64px 0 92px; }
+    .restaurant-listing { padding: 94px 0 92px; }
     .restaurant-listing__header { align-items: flex-end; margin-bottom: 34px; }
-    .restaurant-listing__header h2 { font-size: clamp(2.75rem, 12vw, 3.7rem); }
+    .restaurant-listing__header h1 { font-size: clamp(2.75rem, 12vw, 3.7rem); }
     .restaurant-listing__aside { display: none; }
     .restaurant-listing__rule { display: grid; gap: 7px; }
     .place-list { grid-template-columns: 1fr; gap: 22px; }
