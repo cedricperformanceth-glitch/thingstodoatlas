@@ -1,0 +1,157 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Things to do in Pakse, Laos"
+  description="Discover Pakse, a relaxed southern Laos base for local streets, Mekong sunsets and journeys toward the Bolaven Plateau."
+  canonical="https://thingstodoatlas.com/laos/pakse"
+>
+  <main class="pakse-page">
+    <section class="pakse-hero" aria-labelledby="pakse-title">
+      <div class="pakse-hero__media" aria-hidden="true">
+        <img
+          src="/images/laos/pakse.webp"
+          alt=""
+          width="1600"
+          height="1100"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div class="pakse-hero__overlay"></div>
+
+      <div class="pakse-hero__content">
+        <a class="pakse-hero__back" href="/laos">← Back to the Laos map</a>
+        <p class="pakse-hero__eyebrow">LAOS · SOUTHERN CHAPTER</p>
+        <h1 id="pakse-title">Pakse</h1>
+        <p class="pakse-hero__lede">
+          A quiet southern city where the Mekong, local streets and the road to the Bolaven Plateau meet.
+        </p>
+        <span class="pakse-hero__note">Field notes coming next.</span>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .pakse-page {
+    min-height: 100vh;
+    background: #f2eee3;
+  }
+
+  .pakse-hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    color: #fffaf0;
+    isolation: isolate;
+  }
+
+  .pakse-hero__media,
+  .pakse-hero__overlay {
+    position: absolute;
+    inset: 0;
+  }
+
+  .pakse-hero__media {
+    z-index: -2;
+  }
+
+  .pakse-hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .pakse-hero__overlay {
+    z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(17, 29, 23, 0.18) 0%, rgba(17, 29, 23, 0.34) 42%, rgba(17, 29, 23, 0.9) 100%),
+      linear-gradient(90deg, rgba(17, 29, 23, 0.6) 0%, rgba(17, 29, 23, 0.08) 70%);
+  }
+
+  .pakse-hero__content {
+    width: min(1180px, calc(100% - 2.5rem));
+    margin: 0 auto;
+    padding: clamp(7rem, 14vw, 11rem) 0 clamp(3rem, 7vw, 5.5rem);
+  }
+
+  .pakse-hero__back {
+    display: inline-flex;
+    margin-bottom: clamp(3rem, 8vw, 6rem);
+    color: rgba(255, 250, 240, 0.76);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 180ms ease, transform 180ms ease;
+  }
+
+  .pakse-hero__back:hover,
+  .pakse-hero__back:focus-visible {
+    color: #fffaf0;
+    transform: translateX(-0.25rem);
+  }
+
+  .pakse-hero__eyebrow {
+    margin: 0 0 0.9rem;
+    color: rgba(255, 250, 240, 0.68);
+    font-size: clamp(0.72rem, 1vw, 0.84rem);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .pakse-hero h1 {
+    max-width: 9ch;
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(5rem, 15vw, 11rem);
+    font-weight: 400;
+    letter-spacing: -0.065em;
+    line-height: 0.78;
+  }
+
+  .pakse-hero__lede {
+    max-width: 42rem;
+    margin: clamp(1.8rem, 3vw, 2.6rem) 0 0;
+    color: rgba(255, 250, 240, 0.88);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.15rem, 2.15vw, 1.75rem);
+    line-height: 1.45;
+  }
+
+  .pakse-hero__note {
+    display: inline-block;
+    margin-top: 1.75rem;
+    color: rgba(255, 250, 240, 0.58);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 640px) {
+    .pakse-hero {
+      min-height: 88svh;
+    }
+
+    .pakse-hero__content {
+      width: min(100% - 2rem, 1180px);
+      padding-bottom: 2.5rem;
+    }
+
+    .pakse-hero__back {
+      margin-bottom: 4rem;
+    }
+
+    .pakse-hero h1 {
+      font-size: clamp(4.5rem, 26vw, 7rem);
+    }
+  }
+</style>
