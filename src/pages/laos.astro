@@ -6,6 +6,7 @@ const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
 const pakse = { x: 679, y: 1024 };
 const vientiane = { x: 256, y: 657 };
 const tadLo = { x: 736, y: 970 };
+const donDet = { x: 696, y: 1152 };
 ---
 
 <BaseLayout
@@ -81,6 +82,13 @@ const tadLo = { x: 736, y: 970 };
             <circle class="temporary-marker__dot" cx={tadLo.x} cy={tadLo.y} r="9" />
             <path class="temporary-marker__leader" d={`M${tadLo.x - 15} ${tadLo.y - 5} L${tadLo.x - 76} ${tadLo.y - 28}`} />
             <text class="temporary-marker__label temporary-marker__label--left" x={tadLo.x - 84} y={tadLo.y - 32}>Tad Lo</text>
+          </g>
+
+          <g class="temporary-marker" aria-label="Don Det reference point">
+            <circle class="temporary-marker__ring" cx={donDet.x} cy={donDet.y} r="22" />
+            <circle class="temporary-marker__dot" cx={donDet.x} cy={donDet.y} r="9" />
+            <path class="temporary-marker__leader" d={`M${donDet.x + 15} ${donDet.y - 5} L${donDet.x + 76} ${donDet.y - 28}`} />
+            <text class="temporary-marker__label" x={donDet.x + 84} y={donDet.y - 32}>Don Det</text>
           </g>
         </svg>
       </div>
