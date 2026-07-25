@@ -151,7 +151,7 @@ const luangPrabang = { x: 356, y: 576 };
 
   .map-sheet {
     position: relative;
-    width: 700px;
+    width: 780px;
     margin: 0 auto;
     padding: 40px;
     border: 1px solid rgba(31, 41, 36, 0.14);
@@ -175,15 +175,15 @@ const luangPrabang = { x: 356, y: 576 };
 
   .map-layers {
     position: relative;
-    width: 620px;
+    width: 700px;
     margin: 0 auto;
     background: #fff;
     box-shadow: 0 0 0 1px rgba(31, 41, 36, 0.2), 0 8px 22px rgba(31, 41, 36, 0.06);
     overflow: visible;
   }
 
-  .map-drawing { display: block; width: 620px; height: auto; }
-  .map-overlay { position: absolute; inset: 0; display: block; width: 620px; height: 930px; overflow: visible; pointer-events: auto; }
+  .map-drawing { display: block; width: 700px; height: auto; }
+  .map-overlay { position: absolute; inset: 0; display: block; width: 700px; height: 1050px; overflow: visible; pointer-events: auto; }
 
   .city-marker { color: #315545; cursor: pointer; outline: none; }
   .city-marker--inactive { color: #7f6d33; cursor: default; }
@@ -264,6 +264,11 @@ const luangPrabang = { x: 356, y: 576 };
   .city-note--active small { color: rgba(31, 63, 86, 0.86); }
 
   @media (max-width: 1100px) {
+    .map-sheet { width: 700px; }
+    .map-layers,
+    .map-drawing,
+    .map-overlay { width: 620px; }
+    .map-overlay { height: 930px; }
     .city-preview { display: none; }
   }
 
