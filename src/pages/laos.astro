@@ -1,11 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const destinations = [
-  { name: 'Luang Prabang', x: 455, y: 345, status: 'future' },
-  { name: 'Tad Lo', x: 585, y: 1125, status: 'open', href: '/laos/tad-lo' },
-  { name: 'Pakse', x: 510, y: 1260, status: 'open', href: '/laos/pakse' }
-];
+const gridColumns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
 ---
 
 <BaseLayout
@@ -17,11 +14,11 @@ const destinations = [
     <header class="laos-map-intro">
       <p class="eyebrow">Laos · Chapter 02</p>
       <h1 id="laos-map-title">Choose a place<br /><em>on the map.</em></h1>
-      <p>Only the green destinations are open for now. More points will appear as the atlas grows.</p>
+      <p>Temporary reference grid. Use a column letter and row number to position each destination precisely.</p>
     </header>
 
     <div class="map-sheet">
-      <span class="map-sheet__note">Field map · not to scale</span>
+      <span class="map-sheet__note">Field map · temporary grid</span>
 
       <div class="map-layers">
         <img
@@ -33,31 +30,40 @@ const destinations = [
         />
 
         <svg class="map-overlay" viewBox="0 0 1024 1536" role="img" aria-labelledby="map-title map-description">
-          <title id="map-title">Destinations in Laos</title>
-          <desc id="map-description">Pakse and Tad Lo are available destinations. Luang Prabang is a future chapter.</desc>
+          <title id="map-title">Temporary coordinate grid over the Laos map</title>
+          <desc id="map-description">The map is divided into eight lettered columns and twelve numbered rows for precise destination placement.</desc>
 
-          {destinations.map((destination) => destination.status === 'open' ? (
-            <a class="destination destination--open" href={destination.href} aria-label={`Explore ${destination.name}`}>
-              <circle class="destination__pulse" cx={destination.x} cy={destination.y} r="30" />
-              <circle class="destination__dot" cx={destination.x} cy={destination.y} r="11" />
-              <path class="destination__leader" d={`M${destination.x + 16} ${destination.y - 4} C${destination.x + 44} ${destination.y - 24}, ${destination.x + 70} ${destination.y - 24}, ${destination.x + 92} ${destination.y - 24}`} />
-              <text class="destination__name" x={destination.x + 103} y={destination.y - 14}>{destination.name}</text>
-              <text class="destination__status" x={destination.x + 103} y={destination.y + 18}>explore</text>
-            </a>
-          ) : (
-            <g class="destination destination--future" aria-label={`${destination.name}, future chapter`}>
-              <circle class="destination__dot" cx={destination.x} cy={destination.y} r="9" />
-              <path class="destination__leader" d={`M${destination.x + 15} ${destination.y - 3} C${destination.x + 42} ${destination.y - 22}, ${destination.x + 67} ${destination.y - 22}, ${destination.x + 88} ${destination.y - 22}`} />
-              <text class="destination__name" x={destination.x + 99} y={destination.y - 12}>{destination.name}</text>
-              <text class="destination__status" x={destination.x + 99} y={destination.y + 19}>later chapter</text>
-            </g>
-          ))}
+          <g class="reference-grid" aria-hidden="true">
+            {Array.from({ length: 9 }, (_, index) => {
+              const x = index * 128;
+              return <line x1={x} y1="0" x2={x} y2="1536" />;
+            })}
+
+            {Array.from({ length: 13 }, (_, index) => {
+              const y = index * 128;
+              return <line x1="0" y1={y} x2="1024" y2={y} />;
+            })}
+
+            {gridColumns.map((label, index) => (
+              <>
+                <text class="grid-label grid-label--column" x={index * 128 + 64} y="38">{label}</text>
+                <text class="grid-label grid-label--column" x={index * 128 + 64} y="1510">{label}</text>
+              </>
+            ))}
+
+            {gridRows.map((label, index) => (
+              <>
+                <text class="grid-label grid-label--row" x="30" y={index * 128 + 72}>{label}</text>
+                <text class="grid-label grid-label--row" x="994" y={index * 128 + 72}>{label}</text>
+              </>
+            ))}
+          </g>
         </svg>
       </div>
 
-      <div class="map-legend" aria-label="Map legend">
-        <span><i class="map-legend__dot map-legend__dot--open"></i> Open chapter</span>
-        <span><i class="map-legend__dot"></i> Future chapter</span>
+      <div class="grid-help" aria-label="Grid reference instructions">
+        <strong>How to mark a place</strong>
+        <span>Give the square first, then refine its position: for example “Pakse in F10, near the lower-left corner”.</span>
       </div>
     </div>
   </section>
@@ -88,7 +94,7 @@ const destinations = [
   }
 
   .laos-map-intro > p:last-child {
-    max-width: 34rem;
+    max-width: 36rem;
     font-size: 1.05rem;
     line-height: 1.7;
   }
@@ -133,7 +139,7 @@ const destinations = [
     font-size: 0.75rem;
     font-style: italic;
     letter-spacing: 0.06em;
-    opacity: 0.58;
+    opacity: 0.62;
   }
 
   .map-layers {
@@ -158,105 +164,48 @@ const destinations = [
     pointer-events: none;
   }
 
-  .destination {
-    color: #315545;
+  .reference-grid line {
+    stroke: #8c4f3d;
+    stroke-width: 1.6;
+    stroke-dasharray: 9 8;
+    opacity: 0.62;
+    vector-effect: non-scaling-stroke;
   }
 
-  a.destination {
-    pointer-events: auto;
-    cursor: pointer;
-    text-decoration: none;
-  }
-
-  .destination__dot {
-    fill: #f7f2e6;
-    stroke: currentColor;
-    stroke-width: 5;
-  }
-
-  .destination--open .destination__dot {
-    fill: #315545;
-  }
-
-  .destination__pulse {
-    fill: rgba(49, 85, 69, 0.1);
-    stroke: rgba(49, 85, 69, 0.34);
-    stroke-width: 2;
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: map-pulse 2.8s ease-out infinite;
-  }
-
-  .destination__leader {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-  }
-
-  .destination__name {
-    fill: currentColor;
-    font-family: Georgia, serif;
-    font-size: 34px;
-    font-weight: 700;
-  }
-
-  .destination__status {
-    fill: currentColor;
+  .grid-label {
+    fill: #783e30;
     font-family: Arial, sans-serif;
-    font-size: 15px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+    font-size: 25px;
+    font-weight: 700;
+    text-anchor: middle;
+    paint-order: stroke;
+    stroke: #f7f2e6;
+    stroke-width: 7px;
+    stroke-linejoin: round;
   }
 
-  .destination--future {
-    color: #7f857e;
+  .grid-label--row {
+    dominant-baseline: middle;
+  }
+
+  .grid-help {
+    display: grid;
+    gap: 0.35rem;
+    max-width: 620px;
+    margin: 1.25rem auto 0;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(31, 41, 36, 0.18);
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .grid-help strong {
+    font-family: Georgia, serif;
+    font-size: 1rem;
+  }
+
+  .grid-help span {
     opacity: 0.72;
-  }
-
-  a.destination:hover,
-  a.destination:focus-visible {
-    color: #1d392d;
-    outline: none;
-  }
-
-  a.destination:hover .destination__dot,
-  a.destination:focus-visible .destination__dot {
-    stroke-width: 8;
-  }
-
-  .map-legend {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    padding: 1rem 0 0.25rem;
-    font-size: 0.76rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .map-legend span {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .map-legend__dot {
-    width: 9px;
-    height: 9px;
-    border: 1px solid #7f857e;
-    border-radius: 50%;
-  }
-
-  .map-legend__dot--open {
-    border-color: #315545;
-    background: #315545;
-  }
-
-  @keyframes map-pulse {
-    0% { opacity: 0.75; transform: scale(0.72); }
-    75%, 100% { opacity: 0; transform: scale(1.35); }
   }
 
   @media (max-width: 640px) {
@@ -277,11 +226,14 @@ const destinations = [
     .map-layers {
       width: 100%;
     }
-  }
 
-  @media (prefers-reduced-motion: reduce) {
-    .destination__pulse {
-      animation: none;
+    .reference-grid line {
+      stroke-width: 1;
+    }
+
+    .grid-label {
+      font-size: 31px;
+      stroke-width: 9px;
     }
   }
 </style>
