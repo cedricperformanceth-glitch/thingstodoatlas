@@ -1,0 +1,13 @@
+/* Sri Lanka notebook: keep the right page clean around the map and CTA. */
+.country-section #country-sri-lanka-3 .country-feature__copy {
+  background: none !important;
+  background-image: none !important;
+}
+
+.country-section #country-sri-lanka-3 .country-feature__copy::before,
+.country-section #country-sri-lanka-3 .country-feature__copy::after {
+  display: none !important;
+  content: none !important;
+  border: 0 !important;
+  background: none !important;
+}
