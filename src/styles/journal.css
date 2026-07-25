@@ -346,5 +346,29 @@
   .country-section #country-laos-2 .country-feature__laos-map{width:160px;margin:8px 0 16px;transform:rotate(-4deg)}
   .country-section #country-laos-2{height:650px;min-height:650px}
   .country-section #country-laos-2 .country-feature__photo-link--laos{transform:translate(12px,10px) rotate(-2deg)}
-  .country-section #country-laos-2 .country-feature__copy img.journal-drawing--lotus{top:34px;right:-8px;width:88px}
+.country-section #country-laos-2 .country-feature__copy img.journal-drawing--lotus{top:34px;right:-8px;width:88px}
+
+/* CH.03 Sri Lanka: keep the existing open-book treatment and replace only its chapter artwork. */
+.country-section #country-sri-lanka-3 .country-feature__image:after{display:none!important;background:none!important}
+.country-section #country-sri-lanka-3 .country-feature__image > img:first-child{position:relative;top:8px!important;width:190px!important;height:180px!important;object-fit:cover;transform:rotate(-2deg)}
+.country-section #country-sri-lanka-3 .country-feature__copy > .country-feature__route-note:not(.country-feature__sri-field-note){display:none!important}
+.country-section #country-sri-lanka-3 .country-feature__copy > .text-link--large{display:none!important}
+.country-section #country-sri-lanka-3 .country-feature__sri-assets{position:absolute;z-index:6;top:-22px;left:-520px;width:500px;height:550px;pointer-events:none}
+.country-section #country-sri-lanka-3 .country-feature__sri-assets img{position:absolute;display:block;height:auto;object-fit:contain;mix-blend-mode:multiply}
+.country-section #country-sri-lanka-3 .country-feature__sri-mask{left:-12px;top:198px;width:154px;opacity:.9;transform:rotate(-7deg)}
+.country-section #country-sri-lanka-3 .country-feature__sri-coast{left:205px;top:178px;width:188px;height:178px;padding:5px 5px 16px;background:#fbf7ef;border:1px solid rgba(112,96,71,.18);box-shadow:0 9px 16px rgba(37,41,35,.15),2px 4px 7px rgba(37,41,35,.08);transform:rotate(3deg)}
+.country-section #country-sri-lanka-3 .country-feature__sri-beach{left:105px;top:337px;width:176px;height:168px;padding:5px 5px 15px;background:#fbf7ef;border:1px solid rgba(112,96,71,.18);box-shadow:0 9px 16px rgba(37,41,35,.15),2px 4px 7px rgba(37,41,35,.08);transform:rotate(-5deg)}
+.country-section #country-sri-lanka-3 .country-feature__sri-field-note{display:block;position:relative;z-index:5;width:max-content;max-width:100%;margin:10px 0 0;padding:12px 0 0 10px;border-top:1px solid rgba(123,105,76,.28);border-left:1px solid rgba(177,103,77,.42);color:#934d37;font-weight:600;transform:rotate(-1deg)}
+.country-section #country-sri-lanka-3 .country-feature__sri-map{position:absolute;z-index:4;left:-2px;bottom:12px;width:112px;height:auto;opacity:.82;mix-blend-mode:multiply;transform:rotate(-5deg)}
+.country-section #country-sri-lanka-3 .country-feature__sri-cta{position:absolute;z-index:6;right:0;bottom:22px;display:inline-flex;align-items:center;gap:10px;color:var(--terracotta);font:500 1.24rem/1 Caveat,cursive;text-decoration:none;transform:rotate(-2deg)}
+.country-section #country-sri-lanka-3 .country-feature__sri-cta span{font:inherit}
+@media(max-width:700px){
+  .country-section #country-sri-lanka-3 .country-feature__image > img:first-child{top:8px!important;width:160px!important;height:150px!important}
+  .country-section #country-sri-lanka-3 .country-feature__sri-assets{top:-350px;left:0;width:100%;height:340px}
+  .country-section #country-sri-lanka-3 .country-feature__sri-mask{left:-4px;top:170px;width:112px}
+  .country-section #country-sri-lanka-3 .country-feature__sri-coast{left:auto;right:8px;top:130px;width:148px;height:140px;padding:4px 4px 12px}
+  .country-section #country-sri-lanka-3 .country-feature__sri-beach{left:74px;top:226px;width:140px;height:132px;padding:4px 4px 12px}
+  .country-section #country-sri-lanka-3 .country-feature__sri-map{position:relative;left:auto;bottom:auto;width:92px;margin:8px 0 0;transform:rotate(-4deg)}
+  .country-section #country-sri-lanka-3 .country-feature__sri-cta{position:relative;right:auto;bottom:auto;margin:12px 0 0 18px;font-size:1.04rem}
+}
 }
