@@ -8,7 +8,8 @@ export function getStaticPaths() {
     { params: { category: 'restaurants' } },
     { params: { category: 'cafes' } },
     { params: { category: 'scooter-rental' } },
-    { params: { category: 'gyms-fitness' } }
+    { params: { category: 'gyms-fitness' } },
+    { params: { category: 'accommodation' } }
   ];
 }
 
@@ -27,20 +28,25 @@ const addressCountNoun = placeCount === 1 ? 'address' : 'addresses';
 const isRestaurantCategory = slug === 'restaurants';
 const isCafeCategory = slug === 'cafes';
 const isGymCategory = slug === 'gyms-fitness';
+const isAccommodationCategory = slug === 'accommodation';
 const pageDescription = isRestaurantCategory
   ? `${category.description} Discover practical details, what to order and why each restaurant belongs in the guide.`
   : isCafeCategory
     ? `${category.description} Discover why each café is worth saving, plus the practical details for planning your stop.`
     : isGymCategory
       ? `${category.description} Discover training styles, practical details and why each gym belongs in the guide.`
-      : `${category.description} Discover practical rental details and why each address belongs in the guide.`;
+      : isAccommodationCategory
+        ? `${category.description} Compare guesthouses, hostels and hotels, then save the stays that fit your trip.`
+        : `${category.description} Discover practical rental details and why each address belongs in the guide.`;
 const schemaPlaceType = isRestaurantCategory
   ? 'Restaurant'
   : isCafeCategory
     ? 'CafeOrCoffeeShop'
     : isGymCategory
       ? 'ExerciseGym'
-      : 'LocalBusiness';
+      : isAccommodationCategory
+        ? 'LodgingBusiness'
+        : 'LocalBusiness';
 
 const schema = {
   '@context': 'https://schema.org',
