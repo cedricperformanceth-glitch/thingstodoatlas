@@ -12,20 +12,28 @@ export type Place = {
   name: string;
   category: string;
   subcategory: string;
+  cuisine: string;
   city: string;
   country: string;
   image: string;
+  imageAlt: string;
+  cardNote: string;
+  shortDescription: string;
   description: string;
   whyWeRecommend: string;
+  highlights: string[];
   mapsUrl: string;
   status: EditorialStatus;
   lastChecked: string;
   hours: string;
   price: string;
+  address: string;
+  phone: string;
+  bestFor: string;
 };
 
 export const categories: Category[] = [
-  { slug: 'restaurants', name: 'Restaurants', description: 'Places to eat, from everyday local tables to memorable evenings.', icon: '01' },
+  { slug: 'restaurants', name: 'Restaurants', description: 'A considered guide to the tables worth remembering in Pakse, from local kitchens to unhurried evenings.', icon: '01' },
   { slug: 'cafes', name: 'Cafés', description: 'Slow mornings, good coffee and places to pause.', icon: '02' },
   { slug: 'accommodation', name: 'Accommodation', description: 'A considered shortlist of places to make your stay easy.', icon: '03' },
   { slug: 'waterfalls', name: 'Waterfalls', description: 'The cascades and river landscapes worth the journey.', icon: '04' },
@@ -35,16 +43,28 @@ export const categories: Category[] = [
 
 export const places: Place[] = [
   {
-    slug: 'corrado', name: 'Corrado', category: 'restaurants', subcategory: 'Italian restaurant', city: 'Pakse', country: 'Laos',
-    image: 'https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1200&q=80',
-    description: 'Demo listing — a concise editorial card for a restaurant in Pakse.', whyWeRecommend: 'A useful example of how a recommendation can be explained without pretending the details are verified.',
-    mapsUrl: 'https://www.google.com/maps', status: 'demo', lastChecked: 'Demo data — verify before publication', hours: 'Opening hours to verify', price: 'Budget to verify'
-  },
-  {
-    slug: 'pakse-riverside-table', name: 'Riverside table — sample', category: 'restaurants', subcategory: 'Local dining', city: 'Pakse', country: 'Laos',
-    image: 'https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1200&q=80',
-    description: 'Demo listing — placeholder content showing a second scan-friendly result.', whyWeRecommend: 'Demonstrates how the list can carry a short reason to choose one place over another.',
-    mapsUrl: 'https://www.google.com/maps', status: 'demo', lastChecked: 'Demo data — verify before publication', hours: 'Opening hours to verify', price: 'Budget to verify'
+    slug: 'dok-mai-lao-trattoria',
+    name: 'Dok Mai Lao Trattoria',
+    category: 'restaurants',
+    subcategory: 'Italian trattoria',
+    cuisine: 'Italian',
+    city: 'Pakse',
+    country: 'Laos',
+    image: 'https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1200&q=84',
+    imageAlt: 'A warmly lit restaurant interior prepared for dinner',
+    cardNote: 'save this for dinner',
+    shortDescription: 'Proper Italian cooking and a quiet garden table in central Pakse.',
+    description: 'A welcoming Italian address for handmade pasta, thin-crust pizza, wine and an evening that can take its time.',
+    whyWeRecommend: 'Keep this one for the evening when you want a slower meal and a genuine break from the local food circuit. The garden setting gives it the feeling of a small find, even though it has long been a Pakse favourite.',
+    highlights: ['Homemade pasta', 'Thin-crust pizza', 'Garden seating', 'Wine'],
+    mapsUrl: 'https://maps.app.goo.gl/QthEv6JmNmNAdcNS8',
+    status: 'verified',
+    lastChecked: 'July 2026',
+    hours: 'Daily · 11:00–22:00',
+    price: 'Mid-range · $$',
+    address: 'Road 24, Pakse 16000, Laos',
+    phone: '+856 20 55 302 608',
+    bestFor: 'A relaxed dinner'
   }
 ];
 

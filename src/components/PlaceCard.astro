@@ -1,31 +1,270 @@
 ---
-const { place } = Astro.props;
+const { place, index = 0 } = Astro.props;
 const tripPlace = JSON.stringify({
   id: place.slug,
   name: place.name,
   city: place.city,
   category: place.subcategory,
-  address: place.price,
+  address: place.address,
   url: `${Astro.url.pathname}#${place.slug}`
 });
+const phoneHref = `tel:${place.phone.replace(/[^\d+]/g, '')}`;
 ---
-<article class="place-card" id={place.slug}>
-  <img src={place.image} alt={`Demo photograph for ${place.name}`} loading="lazy" />
-  <div class="place-card__body">
-    <div class="place-card__meta"><span>{place.subcategory}</span><span class={`status status--${place.status}`}>{place.status === 'demo' ? 'Demo listing' : place.status}</span></div>
-    <h2>{place.name}</h2>
-    <p>{place.description}</p>
-    <p class="recommend">{place.whyWeRecommend}</p>
-    <dl><div><dt>Hours</dt><dd>{place.hours}</dd></div><div><dt>Budget</dt><dd>{place.price}</dd></div></dl>
-    <div class="place-card__actions">
-      <a class="text-link" href={place.mapsUrl} target="_blank" rel="noreferrer">Open Google Maps ↗</a>
-      <button class="trip-save-button" type="button" data-trip-add data-trip-id={place.slug} data-trip-place={tripPlace} aria-pressed="false">Add to My Trip</button>
+<details class="place-card" id={place.slug}>
+  <summary class="place-card__summary">
+    <div class="place-card__image">
+      <img src={place.image} alt={place.imageAlt} loading="lazy" />
+      <span class="place-card__number" aria-hidden="true">0{index + 1}</span>
+      <span class="place-card__photo-note hand-note">{place.cardNote}</span>
     </div>
+    <div class="place-card__preview">
+      <p class="place-card__type">{place.subcategory} · {place.city}</p>
+      <h2>{place.name}</h2>
+      <p>{place.shortDescription}</p>
+      <span class="place-card__toggle">
+        <span class="place-card__toggle-open">Open this address</span>
+        <span class="place-card__toggle-close">Close this address</span>
+        <b aria-hidden="true">→</b>
+      </span>
+    </div>
+  </summary>
+
+  <div class="place-card__details">
+    <div class="place-card__editorial">
+      <p class="eyebrow">Why it belongs in the atlas</p>
+      <p class="place-card__description">{place.description}</p>
+      <p class="place-card__recommend">{place.whyWeRecommend}</p>
+      <ul class="place-card__highlights" aria-label="Highlights">
+        {place.highlights.map((highlight: string) => <li>{highlight}</li>)}
+      </ul>
+    </div>
+
+    <aside class="place-card__practical" aria-label={`Practical information for ${place.name}`}>
+      <span class="place-card__checked">Field checked · {place.lastChecked}</span>
+      <dl>
+        <div><dt>Address</dt><dd>{place.address}</dd></div>
+        <div><dt>Hours</dt><dd>{place.hours}</dd></div>
+        <div><dt>Budget</dt><dd>{place.price}</dd></div>
+        <div><dt>Best for</dt><dd>{place.bestFor}</dd></div>
+      </dl>
+      <div class="place-card__actions">
+        <a class="place-card__map" href={place.mapsUrl} target="_blank" rel="noreferrer">Open Google Maps <span aria-hidden="true">↗</span></a>
+        <a class="place-card__phone" href={phoneHref}>Call the restaurant</a>
+        <button class="trip-save-button" type="button" data-trip-add data-trip-id={place.slug} data-trip-place={tripPlace} aria-pressed="false">Add to My Trip</button>
+      </div>
+    </aside>
   </div>
-</article>
+</details>
 
 <style>
-  .place-card__actions { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.2rem; }
-  .trip-save-button { padding: .55rem 0; border: 0; border-bottom: 1px solid var(--terracotta); background: transparent; color: var(--green); font: 700 .7rem 'DM Sans', sans-serif; cursor: pointer; }
+  .place-card {
+    width: min(370px, 100%);
+    overflow: hidden;
+    border: 1px solid rgba(75, 81, 70, .22);
+    background: #eee8dc;
+    box-shadow: 6px 8px 0 rgba(49, 85, 69, .08);
+    transition: width 420ms cubic-bezier(.22, .75, .2, 1), box-shadow 220ms ease;
+  }
+  .place-card[open] {
+    display: grid;
+    grid-template-columns: minmax(290px, 370px) minmax(0, 1fr);
+    width: 100%;
+    box-shadow: 10px 14px 0 rgba(49, 85, 69, .09);
+  }
+  .place-card__summary {
+    display: block;
+    min-width: 0;
+    list-style: none;
+    cursor: pointer;
+  }
+  .place-card__summary::-webkit-details-marker { display: none; }
+  .place-card__summary:focus-visible { outline: 2px solid var(--terracotta); outline-offset: -4px; }
+  .place-card__image { position: relative; height: 220px; overflow: hidden; background: var(--paper-deep); }
+  .place-card__image:after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 45%, rgba(24, 31, 26, .38));
+    pointer-events: none;
+  }
+  .place-card__image img {
+    height: 100%;
+    filter: saturate(.72) contrast(.96);
+    transition: transform 500ms ease, filter 300ms ease;
+  }
+  .place-card__summary:hover .place-card__image img { transform: scale(1.025); filter: saturate(.86) contrast(.98); }
+  .place-card__number {
+    position: absolute;
+    z-index: 2;
+    top: 15px;
+    left: 15px;
+    display: grid;
+    place-items: center;
+    width: 43px;
+    height: 43px;
+    border: 1px solid rgba(255, 253, 248, .8);
+    border-radius: 50%;
+    background: rgba(32, 60, 49, .76);
+    color: var(--white);
+    font: 500 1rem/1 Fraunces, serif;
+  }
+  .place-card__photo-note {
+    position: absolute;
+    z-index: 2;
+    right: 17px;
+    bottom: 13px;
+    color: var(--white);
+    font-size: 1.08rem;
+    transform: rotate(-3deg);
+  }
+  .place-card__preview { min-height: 250px; padding: 28px 28px 25px; }
+  .place-card__type {
+    margin: 0 0 13px;
+    color: var(--terracotta);
+    font-size: .61rem;
+    font-weight: 700;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+  }
+  .place-card__preview h2 {
+    margin: 0 0 13px;
+    color: var(--green);
+    font-size: clamp(2rem, 3vw, 2.7rem);
+  }
+  .place-card__preview > p:not(.place-card__type) {
+    min-height: 52px;
+    margin: 0 0 26px;
+    color: var(--muted);
+    font-size: .86rem;
+    line-height: 1.55;
+  }
+  .place-card__toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: max-content;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--green);
+    color: var(--green);
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .place-card__toggle b { font-size: 1rem; transition: transform 280ms ease; }
+  .place-card__toggle-close { display: none; }
+  .place-card[open] .place-card__toggle-open { display: none; }
+  .place-card[open] .place-card__toggle-close { display: inline; }
+  .place-card[open] .place-card__toggle b { transform: rotate(180deg); }
+  .place-card__details {
+    min-width: 0;
+    border-left: 1px solid rgba(75, 81, 70, .18);
+    background: var(--paper);
+  }
+  .place-card[open] .place-card__details {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(230px, .85fr);
+    animation: reveal-details 360ms 80ms ease both;
+  }
+  .place-card__editorial { padding: 42px clamp(28px, 4vw, 58px); }
+  .place-card__editorial .eyebrow { margin-bottom: 17px; }
+  .place-card__description {
+    max-width: 530px;
+    margin-bottom: 21px;
+    color: var(--green);
+    font: 500 clamp(1.25rem, 2vw, 1.7rem)/1.35 Fraunces, serif;
+  }
+  .place-card__recommend {
+    max-width: 560px;
+    margin-bottom: 28px;
+    color: var(--muted);
+    font-size: .87rem;
+    line-height: 1.7;
+  }
+  .place-card__highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .place-card__highlights li {
+    padding: 7px 10px;
+    border: 1px solid var(--line);
+    color: var(--green);
+    font-size: .65rem;
+  }
+  .place-card__practical {
+    padding: 42px clamp(24px, 3vw, 38px);
+    border-left: 1px solid var(--line);
+    background: #e7e1d4;
+  }
+  .place-card__checked {
+    display: block;
+    margin-bottom: 23px;
+    color: var(--terracotta);
+    font-size: .57rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .place-card__practical dl { display: grid; gap: 0; margin: 0 0 26px; }
+  .place-card__practical dl div {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 12px;
+    padding: 11px 0;
+    border-top: 1px solid rgba(75, 81, 70, .18);
+  }
+  .place-card__practical dt {
+    color: var(--muted);
+    font-size: .57rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .place-card__practical dd { margin: 0; color: var(--ink); font-size: .75rem; line-height: 1.45; }
+  .place-card__actions { display: grid; justify-items: start; gap: 12px; }
+  .place-card__map, .trip-save-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 13px;
+    border: 0;
+    background: var(--green);
+    color: var(--white);
+    font: 700 .65rem/1 'DM Sans', sans-serif;
+  }
+  .place-card__phone {
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--line);
+    color: var(--green);
+    font-size: .68rem;
+    font-weight: 700;
+  }
+  .trip-save-button { background: var(--terracotta); cursor: pointer; }
   .trip-save-button:disabled { color: var(--muted); border-bottom-color: var(--line); cursor: default; }
+  @keyframes reveal-details {
+    from { opacity: 0; transform: translateX(-12px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @media (max-width: 900px) {
+    .place-card[open] { grid-template-columns: minmax(260px, 330px) minmax(0, 1fr); }
+    .place-card[open] .place-card__details { grid-template-columns: 1fr; }
+    .place-card__practical { border-top: 1px solid var(--line); border-left: 0; }
+  }
+  @media (max-width: 700px) {
+    .place-card, .place-card[open] { display: block; width: 100%; }
+    .place-card__image { height: 230px; }
+    .place-card__preview { min-height: 0; padding: 24px 22px 23px; }
+    .place-card__preview > p:not(.place-card__type) { min-height: 0; margin-bottom: 22px; }
+    .place-card__details { border-top: 1px solid var(--line); border-left: 0; }
+    .place-card__editorial, .place-card__practical { padding: 30px 22px; }
+    .place-card__practical dl div { grid-template-columns: 66px 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .place-card, .place-card__image img, .place-card__toggle b { transition: none; }
+    .place-card[open] .place-card__details { animation: none; }
+  }
 </style>
