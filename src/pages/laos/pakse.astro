@@ -9,27 +9,27 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 >
   <main class="pakse-page">
     <section class="pakse-hero" aria-labelledby="pakse-title">
-      <div class="pakse-hero__media" aria-hidden="true">
+      <div class="pakse-hero__copy">
+        <p class="pakse-hero__eyebrow">LAOS · CHAPTER 02</p>
+        <h1 id="pakse-title">Pakse</h1>
+        <p class="pakse-hero__lede">
+          The gateway to Southern Laos. A relaxed riverside city where local life, coffee culture and the road to the Bolaven Plateau begin within a few kilometres.
+        </p>
+        <span class="pakse-hero__field-note">FIELD NOTE — Mekong light · southern roads</span>
+      </div>
+
+      <figure class="pakse-hero__visual">
+        <span class="pakse-hero__tape pakse-hero__tape--top" aria-hidden="true"></span>
         <img
           src="/images/laos/pakse.webp"
-          alt=""
+          alt="A view of Pakse in southern Laos"
           width="1600"
           height="1100"
           fetchpriority="high"
         />
-      </div>
-
-      <div class="pakse-hero__overlay"></div>
-
-      <div class="pakse-hero__content">
-        <a class="pakse-hero__back" href="/laos">← Back to the Laos map</a>
-        <p class="pakse-hero__eyebrow">LAOS · SOUTHERN CHAPTER</p>
-        <h1 id="pakse-title">Pakse</h1>
-        <p class="pakse-hero__lede">
-          A quiet southern city where the Mekong, local streets and the road to the Bolaven Plateau meet.
-        </p>
-        <span class="pakse-hero__note">Field notes coming next.</span>
-      </div>
+        <figcaption>Southern Laos · first notes from the road</figcaption>
+        <span class="pakse-hero__tape pakse-hero__tape--bottom" aria-hidden="true"></span>
+      </figure>
     </section>
   </main>
 </BaseLayout>
@@ -38,120 +38,154 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .pakse-page {
     min-height: 100vh;
     background: #f2eee3;
+    color: #1f2924;
   }
 
   .pakse-hero {
     position: relative;
-    min-height: 100svh;
-    display: flex;
-    align-items: flex-end;
-    overflow: hidden;
-    color: #fffaf0;
-    isolation: isolate;
-  }
-
-  .pakse-hero__media,
-  .pakse-hero__overlay {
-    position: absolute;
-    inset: 0;
-  }
-
-  .pakse-hero__media {
-    z-index: -2;
-  }
-
-  .pakse-hero__media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-
-  .pakse-hero__overlay {
-    z-index: -1;
-    background:
-      linear-gradient(180deg, rgba(17, 29, 23, 0.18) 0%, rgba(17, 29, 23, 0.34) 42%, rgba(17, 29, 23, 0.9) 100%),
-      linear-gradient(90deg, rgba(17, 29, 23, 0.6) 0%, rgba(17, 29, 23, 0.08) 70%);
-  }
-
-  .pakse-hero__content {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(18rem, 1.08fr);
+    align-items: center;
+    gap: clamp(3rem, 7vw, 7.5rem);
     width: min(1180px, calc(100% - 2.5rem));
+    min-height: calc(100svh - 5rem);
     margin: 0 auto;
-    padding: clamp(7rem, 14vw, 11rem) 0 clamp(3rem, 7vw, 5.5rem);
+    padding: clamp(6rem, 11vw, 9rem) 0 clamp(4rem, 8vw, 7rem);
   }
 
-  .pakse-hero__back {
-    display: inline-flex;
-    margin-bottom: clamp(3rem, 8vw, 6rem);
-    color: rgba(255, 250, 240, 0.76);
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: color 180ms ease, transform 180ms ease;
-  }
-
-  .pakse-hero__back:hover,
-  .pakse-hero__back:focus-visible {
-    color: #fffaf0;
-    transform: translateX(-0.25rem);
+  .pakse-hero__copy {
+    position: relative;
+    z-index: 2;
+    max-width: 34rem;
   }
 
   .pakse-hero__eyebrow {
-    margin: 0 0 0.9rem;
-    color: rgba(255, 250, 240, 0.68);
-    font-size: clamp(0.72rem, 1vw, 0.84rem);
-    font-weight: 600;
+    margin: 0 0 1.15rem;
+    color: #8a4d36;
+    font-size: 0.76rem;
+    font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
   }
 
   .pakse-hero h1 {
-    max-width: 9ch;
     margin: 0;
+    color: #1f392d;
     font-family: Georgia, 'Times New Roman', serif;
-    font-size: clamp(5rem, 15vw, 11rem);
+    font-size: clamp(5.5rem, 12vw, 9.5rem);
     font-weight: 400;
-    letter-spacing: -0.065em;
-    line-height: 0.78;
+    letter-spacing: -0.07em;
+    line-height: 0.82;
   }
 
   .pakse-hero__lede {
-    max-width: 42rem;
-    margin: clamp(1.8rem, 3vw, 2.6rem) 0 0;
-    color: rgba(255, 250, 240, 0.88);
+    max-width: 31rem;
+    margin: clamp(2rem, 4vw, 3rem) 0 0;
+    color: #3f4943;
     font-family: Georgia, 'Times New Roman', serif;
-    font-size: clamp(1.15rem, 2.15vw, 1.75rem);
-    line-height: 1.45;
+    font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+    line-height: 1.7;
   }
 
-  .pakse-hero__note {
+  .pakse-hero__field-note {
     display: inline-block;
-    margin-top: 1.75rem;
-    color: rgba(255, 250, 240, 0.58);
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    margin-top: 2rem;
+    color: rgba(31, 57, 45, 0.62);
+    font-family: 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: clamp(0.78rem, 1vw, 0.9rem);
+    letter-spacing: 0.04em;
+    transform: rotate(-1.5deg);
   }
 
-  @media (max-width: 640px) {
+  .pakse-hero__visual {
+    position: relative;
+    width: min(100%, 34rem);
+    margin: 0 0 0 auto;
+    padding: clamp(0.65rem, 1.2vw, 0.9rem) clamp(0.65rem, 1.2vw, 0.9rem) 2.75rem;
+    background: #fbf8f0;
+    box-shadow: 0 18px 45px rgba(38, 45, 40, 0.12);
+    transform: rotate(1.25deg);
+  }
+
+  .pakse-hero__visual img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center;
+    filter: saturate(0.88) contrast(0.97);
+  }
+
+  .pakse-hero__visual figcaption {
+    position: absolute;
+    left: 1.15rem;
+    bottom: 0.85rem;
+    margin: 0;
+    color: rgba(31, 41, 36, 0.62);
+    font-family: 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: 0.76rem;
+    letter-spacing: 0.035em;
+  }
+
+  .pakse-hero__tape {
+    position: absolute;
+    z-index: 2;
+    width: 5.5rem;
+    height: 1.35rem;
+    background: rgba(196, 177, 139, 0.48);
+    pointer-events: none;
+  }
+
+  .pakse-hero__tape--top {
+    top: -0.45rem;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+  }
+
+  .pakse-hero__tape--bottom {
+    right: 1.8rem;
+    bottom: -0.45rem;
+    transform: rotate(4deg);
+  }
+
+  @media (max-width: 820px) {
     .pakse-hero {
-      min-height: 88svh;
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+      min-height: auto;
+      padding-top: 7rem;
     }
 
-    .pakse-hero__content {
+    .pakse-hero__copy {
+      max-width: 38rem;
+    }
+
+    .pakse-hero__visual {
+      width: min(88%, 31rem);
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .pakse-hero {
       width: min(100% - 2rem, 1180px);
-      padding-bottom: 2.5rem;
-    }
-
-    .pakse-hero__back {
-      margin-bottom: 4rem;
+      gap: 3rem;
+      padding-top: 6rem;
+      padding-bottom: 4rem;
     }
 
     .pakse-hero h1 {
-      font-size: clamp(4.5rem, 26vw, 7rem);
+      font-size: clamp(4.7rem, 27vw, 7rem);
+    }
+
+    .pakse-hero__lede {
+      font-size: 1.03rem;
+      line-height: 1.65;
+    }
+
+    .pakse-hero__visual {
+      width: 92%;
+      transform: rotate(0.7deg);
     }
   }
 </style>
