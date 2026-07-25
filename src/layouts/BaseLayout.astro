@@ -43,15 +43,22 @@ const isPakseCafePage = currentPath === '/laos/pakse/cafes' || currentPath === '
           artwork.className = 'cafe-heading-art';
           artwork.setAttribute('aria-hidden', 'true');
           artwork.innerHTML = `
-            <svg viewBox="0 0 420 420" role="presentation" focusable="false">
-              <image
-                href="https://raw.githubusercontent.com/cedricperformanceth-glitch/thingstodoatlas/master/calque%20SVG/ChatGPT%20Image%2026%20juil.%202026%2C%2001_20_52_result.webp"
-                x="0"
-                y="0"
-                width="420"
-                height="420"
-                preserveAspectRatio="xMidYMid meet"
-              />
+            <svg viewBox="0 0 240 190" role="presentation" focusable="false">
+              <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <g transform="translate(12 20) rotate(-17 53 57)">
+                  <path d="M18 58C18 29 37 10 59 11c24 2 39 27 34 54-6 29-29 49-52 45-19-3-26-25-23-52Z" stroke-width="3.1" />
+                  <path d="M59 16c-11 15-9 28-1 42 8 15 9 29-8 46" stroke-width="2.5" />
+                  <path d="M53 19c6 12 5 23-1 34-7 12-8 26 2 42" stroke-width="1.2" opacity=".42" />
+                  <path d="M29 39c8-11 18-18 31-20M25 73c7 15 17 25 31 31" stroke-width="1.1" opacity=".26" />
+                </g>
+                <g transform="translate(112 49) rotate(21 52 56)">
+                  <path d="M15 56C17 28 36 9 57 11c24 2 39 26 35 51-5 29-27 50-49 47-20-3-31-25-28-53Z" stroke-width="3.1" />
+                  <path d="M58 16c-10 14-9 27-2 40 8 15 10 30-8 47" stroke-width="2.5" />
+                  <path d="M53 19c5 12 4 23-2 33-7 13-8 27 2 43" stroke-width="1.2" opacity=".42" />
+                  <path d="M27 37c8-10 17-16 29-18M23 73c7 15 17 25 31 31" stroke-width="1.1" opacity=".26" />
+                </g>
+                <path d="M25 158c27 7 57 7 84 0M127 165c24 5 47 4 70-2" stroke-width="1.15" opacity=".2" />
+              </g>
             </svg>`;
           cafeHeading.insertBefore(artwork, cafeAside);
         }
@@ -83,6 +90,7 @@ const isPakseCafePage = currentPath === '/laos/pakse/cafes' || currentPath === '
     align-self: center;
     width: min(100%, 230px);
     margin: 0 auto;
+    color: var(--green);
     pointer-events: none;
   }
 
@@ -91,7 +99,6 @@ const isPakseCafePage = currentPath === '/laos/pakse/cafes' || currentPath === '
     width: 100%;
     height: auto;
     overflow: visible;
-    mix-blend-mode: multiply;
   }
 
   @media (max-width: 980px) {
