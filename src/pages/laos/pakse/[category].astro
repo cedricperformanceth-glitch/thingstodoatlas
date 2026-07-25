@@ -6,6 +6,7 @@ import { getCategory, getPlacesForCategory } from '../../../data/atlas';
 export function getStaticPaths() {
   return [
     { params: { category: 'restaurants' } },
+    { params: { category: 'cafes' } },
     { params: { category: 'scooter-rental' } }
   ];
 }
@@ -23,9 +24,17 @@ const placeCountLabel = placeCountWords[placeCount] ?? String(placeCount);
 const placeCountNoun = placeCount === 1 ? 'place' : 'places';
 const addressCountNoun = placeCount === 1 ? 'address' : 'addresses';
 const isRestaurantCategory = slug === 'restaurants';
+const isCafeCategory = slug === 'cafes';
 const pageDescription = isRestaurantCategory
   ? `${category.description} Discover practical details, what to order and why each restaurant belongs in the guide.`
+  : isCafeCategory
+    ? `${category.description} Discover why each café is worth saving, plus the practical details for planning your stop.`
   : `${category.description} Discover practical rental details and why each address belongs in the guide.`;
+const schemaPlaceType = isRestaurantCategory
+  ? 'Restaurant'
+  : isCafeCategory
+    ? 'CafeOrCoffeeShop'
+    : 'LocalBusiness';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -35,9 +44,9 @@ const schema = {
     '@type': 'ListItem',
     position: index + 1,
     item: {
-      '@type': isRestaurantCategory ? 'Restaurant' : 'LocalBusiness',
+      '@type': schemaPlaceType,
       name: place.name,
-      ...(isRestaurantCategory ? { servesCuisine: place.cuisine } : {}),
+      ...(isRestaurantCategory || isCafeCategory ? { servesCuisine: place.cuisine } : {}),
       image: place.image,
       telephone: place.phone || undefined,
       priceRange: place.status === 'verified' ? place.price : undefined,
