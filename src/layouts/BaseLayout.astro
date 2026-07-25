@@ -25,7 +25,7 @@ const currentPath = Astro.url.pathname;
   <body>
     <header class="site-header">
       <a class="site-logo" href="/" aria-label="ThingsToDoAtlas home">
-        <img src="/calque%20SVG/ChatGPT%20Image%2026%20juil.%202026,%2001_49_26_result.webp" alt="ThingsToDoAtlas" width="1536" height="1024" />
+        <img src="https://raw.githubusercontent.com/cedricperformanceth-glitch/thingstodoatlas/master/calque%20SVG/ChatGPT%20Image%2026%20juil.%202026%2C%2001_49_26_result.webp" alt="ThingsToDoAtlas" width="1536" height="1024" />
       </a>
       <nav class="country-nav" aria-label="Choose a country">
         {countries.map((country) => <a class:list={[{ 'is-active': currentPath.startsWith(`/${country.slug}`), 'is-coming-soon': country.slug !== 'laos' }]} href={country.href} aria-current={currentPath.startsWith(`/${country.slug}`) ? 'page' : undefined}><span class="nav-chapter">{country.number}</span>{country.name}{country.slug !== 'laos' && <sup>soon</sup>}</a>)}
