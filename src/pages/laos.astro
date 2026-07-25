@@ -34,41 +34,96 @@ const luangPrabang = { x: 356, y: 576 };
 
         <svg class="map-overlay" viewBox="0 0 1024 1536" role="img" aria-labelledby="map-title map-description">
           <title id="map-title">Destinations on the Laos map</title>
-          <desc id="map-description">Marked destinations include Pakse, Vientiane, Tad Lo, Don Det and Luang Prabang.</desc>
+          <desc id="map-description">Pakse and Tad Lo are available. Vientiane, Don Det and Luang Prabang are being documented.</desc>
 
-          <g class="temporary-marker" aria-label="Pakse reference point">
-            <circle class="temporary-marker__ring" cx={pakse.x} cy={pakse.y} r="22" />
-            <circle class="temporary-marker__dot" cx={pakse.x} cy={pakse.y} r="9" />
-            <path class="temporary-marker__leader" d={`M${pakse.x - 15} ${pakse.y - 5} L${pakse.x - 76} ${pakse.y - 28}`} />
-            <text class="temporary-marker__label temporary-marker__label--left" x={pakse.x - 84} y={pakse.y - 32}>Pakse</text>
+          <a class="city-marker city-marker--active" href="/laos/pakse" aria-label="Explore Pakse">
+            <circle class="city-marker__ring" cx={pakse.x} cy={pakse.y} r="22" />
+            <circle class="city-marker__dot" cx={pakse.x} cy={pakse.y} r="9" />
+            <path class="city-marker__leader" d={`M${pakse.x - 15} ${pakse.y - 5} L${pakse.x - 76} ${pakse.y - 28}`} />
+            <text class="city-marker__label city-marker__label--left" x={pakse.x - 84} y={pakse.y - 32}>Pakse</text>
+            <foreignObject class="city-preview" x={pakse.x - 370} y={pakse.y - 310} width="300" height="250">
+              <div class="city-card city-card--active" xmlns="http://www.w3.org/1999/xhtml">
+                <img src="/images/hand-drawn/laos-map.webp" alt="Temporary Pakse preview" />
+                <div class="city-card__body">
+                  <span class="city-card__badge">Open chapter</span>
+                  <strong>Pakse</strong>
+                  <p>Southern streets, local places and the road toward the Bolaven Plateau.</p>
+                  <span class="city-card__button">Explore Pakse →</span>
+                </div>
+              </div>
+            </foreignObject>
+          </a>
+
+          <g class="city-marker city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Vientiane guide coming soon">
+            <circle class="city-marker__ring" cx={vientiane.x} cy={vientiane.y} r="22" />
+            <circle class="city-marker__dot" cx={vientiane.x} cy={vientiane.y} r="9" />
+            <path class="city-marker__leader" d={`M${vientiane.x + 15} ${vientiane.y - 5} L${vientiane.x + 76} ${vientiane.y - 28}`} />
+            <text class="city-marker__label" x={vientiane.x + 84} y={vientiane.y - 32}>Vientiane</text>
+            <foreignObject class="city-preview" x={vientiane.x + 70} y={vientiane.y + 20} width="300" height="250">
+              <div class="city-card" xmlns="http://www.w3.org/1999/xhtml">
+                <img src="/images/hand-drawn/laos-map.webp" alt="Temporary Vientiane preview" />
+                <div class="city-card__body">
+                  <span class="city-card__badge">Field notes underway</span>
+                  <strong>Vientiane</strong>
+                  <p>This chapter is currently being documented. Local addresses and practical notes are on the way.</p>
+                  <span class="city-card__status">Available soon</span>
+                </div>
+              </div>
+            </foreignObject>
           </g>
 
-          <g class="temporary-marker" aria-label="Vientiane reference point">
-            <circle class="temporary-marker__ring" cx={vientiane.x} cy={vientiane.y} r="22" />
-            <circle class="temporary-marker__dot" cx={vientiane.x} cy={vientiane.y} r="9" />
-            <path class="temporary-marker__leader" d={`M${vientiane.x + 15} ${vientiane.y - 5} L${vientiane.x + 76} ${vientiane.y - 28}`} />
-            <text class="temporary-marker__label" x={vientiane.x + 84} y={vientiane.y - 32}>Vientiane</text>
+          <a class="city-marker city-marker--active" href="/laos/tad-lo" aria-label="Explore Tad Lo">
+            <circle class="city-marker__ring" cx={tadLo.x} cy={tadLo.y} r="22" />
+            <circle class="city-marker__dot" cx={tadLo.x} cy={tadLo.y} r="9" />
+            <path class="city-marker__leader" d={`M${tadLo.x + 15} ${tadLo.y - 5} L${tadLo.x + 76} ${tadLo.y - 28}`} />
+            <text class="city-marker__label" x={tadLo.x + 84} y={tadLo.y - 32}>Tad Lo</text>
+            <foreignObject class="city-preview" x={tadLo.x + 65} y={tadLo.y - 310} width="300" height="250">
+              <div class="city-card city-card--active" xmlns="http://www.w3.org/1999/xhtml">
+                <img src="/images/hand-drawn/laos-map.webp" alt="Temporary Tad Lo preview" />
+                <div class="city-card__body">
+                  <span class="city-card__badge">Ready to explore</span>
+                  <strong>Tad Lo</strong>
+                  <p>Waterfalls, village roads and a slower chapter in the Bolaven countryside.</p>
+                  <span class="city-card__button">Explore Tad Lo →</span>
+                </div>
+              </div>
+            </foreignObject>
+          </a>
+
+          <g class="city-marker city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Don Det guide coming soon">
+            <circle class="city-marker__ring" cx={donDet.x} cy={donDet.y} r="22" />
+            <circle class="city-marker__dot" cx={donDet.x} cy={donDet.y} r="9" />
+            <path class="city-marker__leader" d={`M${donDet.x + 15} ${donDet.y - 5} L${donDet.x + 76} ${donDet.y - 28}`} />
+            <text class="city-marker__label" x={donDet.x + 84} y={donDet.y - 32}>Don Det</text>
+            <foreignObject class="city-preview" x={donDet.x - 320} y={donDet.y - 305} width="300" height="250">
+              <div class="city-card" xmlns="http://www.w3.org/1999/xhtml">
+                <img src="/images/hand-drawn/laos-map.webp" alt="Temporary Don Det preview" />
+                <div class="city-card__body">
+                  <span class="city-card__badge">Next chapter</span>
+                  <strong>Don Det</strong>
+                  <p>The island guide is still taking shape, with places, routes and riverside notes to come.</p>
+                  <span class="city-card__status">In progress</span>
+                </div>
+              </div>
+            </foreignObject>
           </g>
 
-          <g class="temporary-marker" aria-label="Tad Lo reference point">
-            <circle class="temporary-marker__ring" cx={tadLo.x} cy={tadLo.y} r="22" />
-            <circle class="temporary-marker__dot" cx={tadLo.x} cy={tadLo.y} r="9" />
-            <path class="temporary-marker__leader" d={`M${tadLo.x + 15} ${tadLo.y - 5} L${tadLo.x + 76} ${tadLo.y - 28}`} />
-            <text class="temporary-marker__label" x={tadLo.x + 84} y={tadLo.y - 32}>Tad Lo</text>
-          </g>
-
-          <g class="temporary-marker" aria-label="Don Det reference point">
-            <circle class="temporary-marker__ring" cx={donDet.x} cy={donDet.y} r="22" />
-            <circle class="temporary-marker__dot" cx={donDet.x} cy={donDet.y} r="9" />
-            <path class="temporary-marker__leader" d={`M${donDet.x + 15} ${donDet.y - 5} L${donDet.x + 76} ${donDet.y - 28}`} />
-            <text class="temporary-marker__label" x={donDet.x + 84} y={donDet.y - 32}>Don Det</text>
-          </g>
-
-          <g class="temporary-marker" aria-label="Luang Prabang reference point">
-            <circle class="temporary-marker__ring" cx={luangPrabang.x} cy={luangPrabang.y} r="22" />
-            <circle class="temporary-marker__dot" cx={luangPrabang.x} cy={luangPrabang.y} r="9" />
-            <path class="temporary-marker__leader" d={`M${luangPrabang.x + 15} ${luangPrabang.y - 5} L${luangPrabang.x + 76} ${luangPrabang.y - 28}`} />
-            <text class="temporary-marker__label" x={luangPrabang.x + 84} y={luangPrabang.y - 32}>Luang Prabang</text>
+          <g class="city-marker city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Luang Prabang guide coming soon">
+            <circle class="city-marker__ring" cx={luangPrabang.x} cy={luangPrabang.y} r="22" />
+            <circle class="city-marker__dot" cx={luangPrabang.x} cy={luangPrabang.y} r="9" />
+            <path class="city-marker__leader" d={`M${luangPrabang.x + 15} ${luangPrabang.y - 5} L${luangPrabang.x + 76} ${luangPrabang.y - 28}`} />
+            <text class="city-marker__label" x={luangPrabang.x + 84} y={luangPrabang.y - 32}>Luang Prabang</text>
+            <foreignObject class="city-preview" x={luangPrabang.x + 65} y={luangPrabang.y - 300} width="300" height="250">
+              <div class="city-card" xmlns="http://www.w3.org/1999/xhtml">
+                <img src="/images/hand-drawn/laos-map.webp" alt="Temporary Luang Prabang preview" />
+                <div class="city-card__body">
+                  <span class="city-card__badge">On the road</span>
+                  <strong>Luang Prabang</strong>
+                  <p>Research is underway. A carefully selected city guide will be added here soon.</p>
+                  <span class="city-card__status">Coming later</span>
+                </div>
+              </div>
+            </foreignObject>
           </g>
         </svg>
       </div>
@@ -84,159 +139,51 @@ const luangPrabang = { x: 356, y: 576 };
     color: #1f2924;
   }
 
-  .laos-map-intro {
-    max-width: 42rem;
-    margin-bottom: 2rem;
-  }
+  .laos-map-intro { max-width: 42rem; margin-bottom: 2rem; }
+  .laos-map-intro h1 { margin: 0.35rem 0 1rem; font-size: clamp(3.2rem, 9vw, 7.8rem); line-height: 0.88; letter-spacing: -0.055em; }
+  .laos-map-intro h1 em { font-weight: 400; }
+  .laos-map-intro > p:last-child { max-width: 36rem; font-size: 1.05rem; line-height: 1.7; }
 
-  .laos-map-intro h1 {
-    margin: 0.35rem 0 1rem;
-    font-size: clamp(3.2rem, 9vw, 7.8rem);
-    line-height: 0.88;
-    letter-spacing: -0.055em;
-  }
+  .map-sheet { position: relative; width: 700px; margin: 0 auto; padding: 40px; border: 1px solid rgba(31, 41, 36, 0.14); background: #f7f2e6; }
+  .map-sheet::before, .map-sheet::after { content: ''; position: absolute; z-index: 3; width: 78px; height: 22px; background: rgba(199, 181, 143, 0.48); }
+  .map-sheet::before { top: -9px; left: 8%; transform: rotate(-4deg); }
+  .map-sheet::after { right: 8%; bottom: -8px; transform: rotate(3deg); }
+  .map-sheet__note { position: absolute; z-index: 4; top: 1.25rem; right: 1.5rem; font-family: Georgia, serif; font-size: 0.75rem; font-style: italic; letter-spacing: 0.06em; opacity: 0.62; }
 
-  .laos-map-intro h1 em {
-    font-weight: 400;
-  }
+  .map-layers { position: relative; width: 620px; margin: 0 auto; background: #fff; box-shadow: 0 0 0 1px rgba(31, 41, 36, 0.2), 0 8px 22px rgba(31, 41, 36, 0.06); }
+  .map-drawing { display: block; width: 620px; height: auto; }
+  .map-overlay { position: absolute; inset: 0; display: block; width: 620px; height: 930px; overflow: visible; pointer-events: auto; }
 
-  .laos-map-intro > p:last-child {
-    max-width: 36rem;
-    font-size: 1.05rem;
-    line-height: 1.7;
-  }
+  .city-marker { color: #315545; cursor: pointer; outline: none; }
+  .city-marker--inactive { color: #b8ad96; cursor: default; }
+  .city-marker__ring { fill: color-mix(in srgb, currentColor 12%, transparent); stroke: currentColor; stroke-width: 3; transition: opacity 180ms ease, transform 180ms ease; transform-box: fill-box; transform-origin: center; }
+  .city-marker__dot { fill: currentColor; stroke: #fff; stroke-width: 3; }
+  .city-marker__leader { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+  .city-marker__label { fill: currentColor; font-family: Georgia, serif; font-size: 34px; font-weight: 700; paint-order: stroke; stroke: #fff; stroke-width: 7px; stroke-linejoin: round; }
+  .city-marker__label--left { text-anchor: end; }
+  .city-marker--inactive .city-marker__label { opacity: 0.72; }
+  .city-marker:hover .city-marker__ring, .city-marker:focus .city-marker__ring { transform: scale(1.18); }
 
-  .map-sheet {
-    position: relative;
-    width: 700px;
-    margin: 0 auto;
-    padding: 40px;
-    border: 1px solid rgba(31, 41, 36, 0.14);
-    background: #f7f2e6;
-  }
+  .city-preview { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 180ms ease, visibility 180ms ease; overflow: visible; }
+  .city-marker:hover .city-preview, .city-marker:focus .city-preview, .city-marker:focus-visible .city-preview { opacity: 1; visibility: visible; }
 
-  .map-sheet::before,
-  .map-sheet::after {
-    content: '';
-    position: absolute;
-    z-index: 3;
-    width: 78px;
-    height: 22px;
-    background: rgba(199, 181, 143, 0.48);
-  }
-
-  .map-sheet::before {
-    top: -9px;
-    left: 8%;
-    transform: rotate(-4deg);
-  }
-
-  .map-sheet::after {
-    right: 8%;
-    bottom: -8px;
-    transform: rotate(3deg);
-  }
-
-  .map-sheet__note {
-    position: absolute;
-    z-index: 4;
-    top: 1.25rem;
-    right: 1.5rem;
-    font-family: Georgia, serif;
-    font-size: 0.75rem;
-    font-style: italic;
-    letter-spacing: 0.06em;
-    opacity: 0.62;
-  }
-
-  .map-layers {
-    position: relative;
-    width: 620px;
-    margin: 0 auto;
-    background: #fff;
-    box-shadow:
-      0 0 0 1px rgba(31, 41, 36, 0.2),
-      0 8px 22px rgba(31, 41, 36, 0.06);
-  }
-
-  .map-drawing {
-    display: block;
-    width: 620px;
-    height: auto;
-  }
-
-  .map-overlay {
-    position: absolute;
-    inset: 0;
-    display: block;
-    width: 620px;
-    height: 930px;
-    overflow: visible;
-    pointer-events: none;
-  }
-
-  .temporary-marker {
-    color: #315545;
-  }
-
-  .temporary-marker__ring {
-    fill: rgba(49, 85, 69, 0.1);
-    stroke: currentColor;
-    stroke-width: 3;
-  }
-
-  .temporary-marker__dot {
-    fill: currentColor;
-    stroke: #fff;
-    stroke-width: 3;
-  }
-
-  .temporary-marker__leader {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-  }
-
-  .temporary-marker__label {
-    fill: currentColor;
-    font-family: Georgia, serif;
-    font-size: 34px;
-    font-weight: 700;
-    paint-order: stroke;
-    stroke: #fff;
-    stroke-width: 7px;
-    stroke-linejoin: round;
-  }
-
-  .temporary-marker__label--left {
-    text-anchor: end;
-  }
+  .city-card { width: 280px; overflow: hidden; border: 1px solid rgba(49, 85, 69, 0.18); background: #f6f0e4; color: #27352e; box-shadow: 0 18px 40px rgba(32, 42, 36, 0.22); font-family: Arial, sans-serif; }
+  .city-card img { display: block; width: 100%; height: 88px; object-fit: cover; object-position: center 62%; filter: saturate(0.72) contrast(0.92); }
+  .city-card__body { padding: 15px 16px 16px; }
+  .city-card__badge { display: inline-block; margin-bottom: 7px; font-size: 9px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: #7b6f59; }
+  .city-card strong { display: block; margin-bottom: 5px; font-family: Georgia, serif; font-size: 22px; }
+  .city-card p { margin: 0 0 12px; font-size: 11px; line-height: 1.45; color: rgba(39, 53, 46, 0.74); }
+  .city-card__button, .city-card__status { display: inline-flex; align-items: center; min-height: 28px; padding: 0 11px; border: 1px solid rgba(49, 85, 69, 0.28); font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .city-card__button { background: #315545; color: #f7f2e6; }
+  .city-card__status { color: #8c806b; border-color: rgba(140, 128, 107, 0.28); }
+  .city-card--active { border-color: rgba(49, 85, 69, 0.32); }
+  .city-card--active .city-card__badge { color: #315545; }
 
   @media (max-width: 700px) {
-    .laos-map-page {
-      padding-top: 3.5rem;
-    }
-
-    .map-sheet {
-      width: auto;
-      padding: 0.75rem;
-    }
-
-    .map-sheet__note {
-      top: 0.8rem;
-      right: 0.9rem;
-      font-size: 0.65rem;
-    }
-
-    .map-layers,
-    .map-drawing,
-    .map-overlay {
-      width: 100%;
-    }
-
-    .map-overlay {
-      height: 100%;
-    }
+    .laos-map-page { padding-top: 3.5rem; }
+    .map-sheet { width: auto; padding: 0.75rem; }
+    .map-sheet__note { top: 0.8rem; right: 0.9rem; font-size: 0.65rem; }
+    .map-layers, .map-drawing, .map-overlay { width: 100%; }
+    .map-overlay { height: 100%; }
   }
 </style>
