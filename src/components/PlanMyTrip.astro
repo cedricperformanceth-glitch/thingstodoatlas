@@ -1,51 +1,396 @@
 <div class="plan-trip-widget" data-trip-widget hidden>
   <button class="plan-trip-fab" type="button" data-trip-toggle aria-expanded="false" aria-controls="plan-trip-drawer" aria-label="Open My Trip">
-    <img src="/images/plan-my-trip-logo.webp" alt="Plan My Trip" width="1024" height="1536" />
-    <span class="plan-trip-fab__count" data-trip-count hidden>0</span>
+    <span class="plan-trip-fab__icon" aria-hidden="true">
+      <img src="/images/plan-my-trip-logo.webp" alt="" width="1024" height="1536" />
+    </span>
+    <span class="plan-trip-fab__copy">
+      <small>FIELD NOTES</small>
+      <strong data-trip-fab-title>MY TRIP</strong>
+    </span>
+    <span class="plan-trip-fab__count" data-trip-count>00</span>
   </button>
 
-  <aside class="plan-trip-drawer" id="plan-trip-drawer" data-trip-drawer hidden aria-label="My Trip">
+  <aside class="plan-trip-drawer" id="plan-trip-drawer" data-trip-drawer hidden aria-label="My Trip" role="dialog" aria-modal="false">
     <div class="plan-trip-drawer__head">
-      <img src="/images/plan-my-trip-logo.webp" alt="" width="1024" height="1536" />
-      <div><p>PLAN MY TRIP</p><h2>My Trip</h2><span data-trip-summary></span></div>
+      <p class="plan-trip-drawer__kicker">FIELD NOTES <span aria-hidden="true">·</span> PERSONAL ROUTE</p>
+      <h2 data-trip-title>My Trip</h2>
+      <p class="plan-trip-drawer__summary" data-trip-summary aria-live="polite"></p>
       <button class="plan-trip-drawer__close" type="button" data-trip-close aria-label="Close My Trip">×</button>
     </div>
     <div class="plan-trip-drawer__body" data-trip-content></div>
+    <div class="plan-trip-drawer__foot" data-trip-footer hidden>
+      <a href="/laos/pakse" data-trip-explore>CONTINUE EXPLORING <span aria-hidden="true">→</span></a>
+      <button type="button" data-trip-clear>CLEAR NOTES</button>
+    </div>
   </aside>
 </div>
 
-<style>
-  .plan-trip-widget { position: fixed; z-index: 40; right: 1.25rem; bottom: 1.25rem; display: grid; justify-items: end; gap: .8rem; }
-  .plan-trip-fab { position: relative; width: 70px; height: 70px; padding: 0; overflow: visible; border: 0; background: transparent; box-shadow: none; cursor: pointer; transition: opacity 180ms ease; }
+<style is:global>
+  .plan-trip-widget {
+    position: fixed;
+    z-index: 40;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    display: grid;
+    justify-items: end;
+    gap: .8rem;
+  }
+  .plan-trip-fab {
+    position: relative;
+    min-width: 224px;
+    height: 66px;
+    display: grid;
+    grid-template-columns: 52px 1fr auto;
+    align-items: center;
+    gap: .65rem;
+    padding: 6px 10px 6px 7px;
+    overflow: visible;
+    border: 1px solid rgba(49, 85, 69, .42);
+    background:
+      linear-gradient(rgba(247, 242, 230, .96), rgba(247, 242, 230, .96)),
+      repeating-linear-gradient(0deg, transparent 0 8px, rgba(49, 85, 69, .035) 8px 9px);
+    color: #315545;
+    box-shadow: 4px 5px 0 rgba(49, 85, 69, .12), 0 12px 30px rgba(32, 60, 49, .12);
+    transform: rotate(-.45deg);
+    cursor: pointer;
+    transition: opacity 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  }
+  .plan-trip-fab:before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 31px;
+    width: 42px;
+    height: 10px;
+    background: rgba(210, 177, 126, .66);
+    transform: rotate(-3deg);
+  }
+  .plan-trip-fab:hover {
+    transform: rotate(0) translateY(-2px);
+    box-shadow: 5px 7px 0 rgba(49, 85, 69, .13), 0 16px 34px rgba(32, 60, 49, .15);
+  }
+  .plan-trip-fab:focus-visible,
+  .plan-trip-drawer button:focus-visible,
+  .plan-trip-drawer a:focus-visible {
+    outline: 2px solid #b76645;
+    outline-offset: 3px;
+  }
   .plan-trip-widget.is-open .plan-trip-fab { visibility: hidden; pointer-events: none; opacity: 0; }
-  .plan-trip-fab img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
-  .plan-trip-fab__count { position: absolute; top: -.35rem; right: -.35rem; min-width: 1.35rem; height: 1.35rem; display: grid; place-items: center; padding: 0 .2rem; border-radius: 50%; background: #b76645; color: #fffdf8; font: 700 .65rem/1 'DM Sans', sans-serif; }
-  .plan-trip-drawer { width: min(410px, calc(100vw - 2rem)); max-height: min(620px, calc(100vh - 7rem)); overflow: hidden; background: #f7f2e6; color: #252923; border: 1px solid rgba(49, 85, 69, .25); box-shadow: 0 18px 50px rgba(32, 60, 49, .22); transform-origin: bottom right; animation: plan-trip-open 180ms ease-out both; }
-  .plan-trip-drawer__head { display: grid; grid-template-columns: 52px 1fr auto; gap: .8rem; align-items: center; padding: 1rem; border-bottom: 1px solid rgba(49, 85, 69, .16); }
-  .plan-trip-drawer__head img { width: 52px; height: 52px; object-fit: cover; background: #3f4444; }
-  .plan-trip-drawer__head p { margin: 0 0 .2rem; color: #b76645; font-size: .55rem; font-weight: 700; letter-spacing: .12em; }
-  .plan-trip-drawer__head h2 { margin: 0; color: #315545; font-size: 1.8rem; }
-  .plan-trip-drawer__head span { color: #70766d; font-size: .68rem; }
-  .plan-trip-drawer__close { border: 0; background: none; color: #315545; font-size: 1.7rem; line-height: 1; cursor: pointer; }
-  .plan-trip-drawer__body { max-height: 450px; overflow-y: auto; padding: 1rem; }
-  .plan-trip-empty { margin: 0; color: #667068; font-size: .84rem; line-height: 1.6; }
-  .plan-trip-empty strong { display: block; margin-bottom: .35rem; color: #315545; font: 500 1.45rem/1.1 Fraunces, serif; }
-  .plan-trip-group { margin: 0 0 1.1rem; }
-  .plan-trip-group h3 { margin: 0 0 .5rem; color: #b76645; font: 700 .6rem/1 'DM Sans', sans-serif; letter-spacing: .13em; text-transform: uppercase; }
-  .plan-trip-item { display: grid; grid-template-columns: 1fr auto; gap: .5rem; padding: .65rem 0; border-top: 1px solid rgba(49, 85, 69, .15); }
-  .plan-trip-item strong { display: block; color: #315545; font: 600 .88rem/1.25 'DM Sans', sans-serif; }
-  .plan-trip-item small { display: block; margin-top: .25rem; color: #70766d; font-size: .7rem; }
-  .plan-trip-item a { display: inline-block; margin-top: .3rem; color: #b76645; font-size: .68rem; font-weight: 700; }
-  .plan-trip-item button { align-self: start; border: 0; background: none; color: #70766d; font-size: 1rem; cursor: pointer; }
-  @keyframes plan-trip-open { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-  @media (max-width: 700px) { .plan-trip-widget { right: .75rem; bottom: 4.9rem; } .plan-trip-drawer { width: calc(100vw - 1.5rem); max-height: min(560px, calc(100vh - 6rem)); } }
-  @media (prefers-reduced-motion: reduce) { .plan-trip-drawer { animation: none; } }
+  .plan-trip-fab__icon {
+    width: 52px;
+    height: 52px;
+    overflow: hidden;
+    background: #d8d5cf;
+  }
+  .plan-trip-fab__icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 54%;
+    filter: grayscale(1) contrast(1.12) brightness(1.3);
+    mix-blend-mode: multiply;
+  }
+  .plan-trip-fab__copy { min-width: 0; text-align: left; }
+  .plan-trip-fab__copy small {
+    display: block;
+    margin-bottom: .24rem;
+    color: #b76645;
+    font: 700 .48rem/1 'DM Sans', sans-serif;
+    letter-spacing: .17em;
+  }
+  .plan-trip-fab__copy strong {
+    display: block;
+    white-space: nowrap;
+    font: 600 .76rem/1.1 'DM Sans', sans-serif;
+    letter-spacing: .055em;
+  }
+  .plan-trip-fab__count {
+    min-width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #b76645;
+    border-radius: 50%;
+    color: #b76645;
+    font: 600 .72rem/1 Fraunces, serif;
+    transform: rotate(4deg);
+  }
+  .plan-trip-drawer {
+    width: min(446px, calc(100vw - 2rem));
+    max-height: min(680px, calc(100vh - 4rem));
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(183, 102, 69, .055), transparent 27%),
+      repeating-linear-gradient(0deg, transparent 0 10px, rgba(49, 85, 69, .025) 10px 11px),
+      #eee8dc;
+    color: #252923;
+    border: 1px solid rgba(49, 85, 69, .32);
+    box-shadow: 7px 9px 0 rgba(49, 85, 69, .09), 0 24px 60px rgba(32, 60, 49, .24);
+    transform-origin: bottom right;
+    animation: plan-trip-open 200ms ease-out both;
+  }
+  .plan-trip-drawer__head {
+    position: relative;
+    padding: 1.45rem 3.7rem 1.2rem 1.45rem;
+    border-bottom: 1px dashed rgba(49, 85, 69, .28);
+  }
+  .plan-trip-drawer__head:after {
+    content: '';
+    position: absolute;
+    left: 1.45rem;
+    bottom: 1rem;
+    width: 96px;
+    border-top: 1px solid rgba(183, 102, 69, .55);
+    transform: rotate(-1deg);
+  }
+  .plan-trip-drawer__kicker {
+    margin: 0 0 .55rem;
+    color: #b76645;
+    font: 700 .54rem/1 'DM Sans', sans-serif;
+    letter-spacing: .17em;
+  }
+  .plan-trip-drawer__kicker span { padding: 0 .24rem; color: #315545; }
+  .plan-trip-drawer__head h2 {
+    margin: 0 0 .6rem;
+    color: #315545;
+    font: 500 clamp(1.85rem, 6vw, 2.35rem)/1 Fraunces, serif;
+    letter-spacing: -.045em;
+  }
+  .plan-trip-drawer__summary {
+    margin: 0;
+    padding-bottom: .75rem;
+    color: #6f746d;
+    font: 500 1.05rem/1 Caveat, cursive;
+    transform: rotate(-.7deg);
+  }
+  .plan-trip-drawer__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 1px solid rgba(49, 85, 69, .24);
+    border-radius: 50%;
+    background: rgba(247, 242, 230, .6);
+    color: #315545;
+    font: 400 1.35rem/1 'DM Sans', sans-serif;
+    cursor: pointer;
+  }
+  .plan-trip-drawer__close:hover { border-color: #b76645; color: #b76645; }
+  .plan-trip-drawer__body {
+    min-height: 132px;
+    max-height: 470px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 1.15rem 1.35rem 1.5rem;
+    scrollbar-color: rgba(49, 85, 69, .38) transparent;
+    scrollbar-width: thin;
+  }
+  .plan-trip-empty {
+    margin: .2rem 0 0;
+    padding: 1rem 1.05rem;
+    border: 1px dashed rgba(49, 85, 69, .26);
+    background: rgba(247, 242, 230, .62);
+    color: #667068;
+    font-size: .8rem;
+    line-height: 1.6;
+    transform: rotate(-.35deg);
+  }
+  .plan-trip-empty strong {
+    display: block;
+    margin-bottom: .5rem;
+    color: #315545;
+    font: 500 1.35rem/1.1 Fraunces, serif;
+  }
+  .plan-trip-notes {
+    display: grid;
+    padding: .15rem .2rem .35rem;
+  }
+  .plan-trip-note {
+    --note-accent: #b58442;
+    --note-rotation: -.45deg;
+    position: relative;
+    z-index: 1;
+    min-height: 134px;
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr);
+    gap: .8rem;
+    margin: 0 2px .58rem;
+    padding: .92rem 2.6rem .9rem .85rem;
+    border: 1px solid rgba(70, 75, 65, .2);
+    background:
+      linear-gradient(90deg, transparent 45px, rgba(183, 102, 69, .12) 45px 46px, transparent 46px),
+      repeating-linear-gradient(0deg, transparent 0 25px, rgba(49, 85, 69, .055) 25px 26px),
+      #f8f3e8;
+    box-shadow: 3px 4px 0 rgba(49, 85, 69, .08), 0 8px 16px rgba(32, 60, 49, .07);
+    transform: translateX(-2px) rotate(var(--note-rotation));
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  }
+  .plan-trip-note:nth-child(3n + 2) { --note-rotation: .6deg; transform: translateX(3px) rotate(var(--note-rotation)); }
+  .plan-trip-note:nth-child(3n) { --note-rotation: -.2deg; transform: translateX(0) rotate(var(--note-rotation)); }
+  .plan-trip-note:hover,
+  .plan-trip-note:focus-within {
+    z-index: 3;
+    border-color: rgba(49, 85, 69, .34);
+    box-shadow: 5px 7px 0 rgba(49, 85, 69, .09), 0 12px 23px rgba(32, 60, 49, .11);
+    transform: translateX(0) translateY(-3px) rotate(0);
+  }
+  .plan-trip-note--stay { --note-accent: #315545; }
+  .plan-trip-note--eat { --note-accent: #b76645; }
+  .plan-trip-note--bar { --note-accent: #7f3d3f; }
+  .plan-trip-note--explore { --note-accent: #b58442; }
+  .plan-trip-note__number {
+    padding-top: .17rem;
+    color: #315545;
+    font: 500 1.28rem/1 Fraunces, serif;
+    letter-spacing: -.05em;
+  }
+  .plan-trip-note__details { min-width: 0; }
+  .plan-trip-note__stamp {
+    display: inline-flex;
+    align-items: center;
+    min-height: 20px;
+    margin-bottom: .42rem;
+    padding: 0 .48rem;
+    border: 1px solid var(--note-accent);
+    color: var(--note-accent);
+    font: 700 .48rem/1 'DM Sans', sans-serif;
+    letter-spacing: .15em;
+    transform: rotate(-1.5deg);
+  }
+  .plan-trip-note strong {
+    display: block;
+    overflow-wrap: anywhere;
+    color: #315545;
+    font: 500 1.12rem/1.08 Fraunces, serif;
+    letter-spacing: -.03em;
+  }
+  .plan-trip-note small {
+    display: block;
+    margin-top: .32rem;
+    overflow: hidden;
+    color: #70766d;
+    font: 400 .65rem/1.35 'DM Sans', sans-serif;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .plan-trip-note__link {
+    position: relative;
+    display: inline-block;
+    margin-top: .55rem;
+    color: #315545;
+    font: 600 .64rem/1 'DM Sans', sans-serif;
+  }
+  .plan-trip-note__link:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -.25rem;
+    left: 0;
+    border-top: 1px solid rgba(183, 102, 69, .48);
+    transform: scaleX(.4) rotate(-1deg);
+    transform-origin: left;
+    transition: transform 180ms ease;
+  }
+  .plan-trip-note:hover .plan-trip-note__link:after,
+  .plan-trip-note__link:focus-visible:after { transform: scaleX(1) rotate(-1deg); }
+  .plan-trip-note__remove {
+    position: absolute;
+    top: .6rem;
+    right: .65rem;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #7c8078;
+    font: 500 1.25rem/1 Caveat, cursive;
+    cursor: pointer;
+    transform: rotate(5deg);
+  }
+  .plan-trip-note__remove:hover { color: #b76645; }
+  .plan-trip-note[hidden] { display: none; }
+  .plan-trip-more {
+    justify-self: center;
+    margin: .45rem 0 0;
+    padding: .65rem .85rem;
+    border: 1px dashed rgba(49, 85, 69, .4);
+    background: rgba(247, 242, 230, .72);
+    color: #315545;
+    font: 700 .58rem/1 'DM Sans', sans-serif;
+    letter-spacing: .12em;
+    cursor: pointer;
+  }
+  .plan-trip-more:hover { border-color: #b76645; color: #b76645; }
+  .plan-trip-drawer__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .95rem 1.35rem 1.05rem;
+    border-top: 1px dashed rgba(49, 85, 69, .28);
+    background: rgba(247, 242, 230, .65);
+  }
+  .plan-trip-drawer__foot[hidden] { display: none; }
+  .plan-trip-drawer__foot a {
+    color: #315545;
+    font: 700 .6rem/1 'DM Sans', sans-serif;
+    letter-spacing: .075em;
+  }
+  .plan-trip-drawer__foot a span { margin-left: .25rem; color: #b76645; font-size: .85rem; }
+  .plan-trip-drawer__foot a:hover { color: #b76645; }
+  .plan-trip-drawer__foot button {
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid rgba(112, 118, 109, .38);
+    background: transparent;
+    color: #70766d;
+    font: 600 .53rem/1.5 'DM Sans', sans-serif;
+    letter-spacing: .08em;
+    cursor: pointer;
+  }
+  .plan-trip-drawer__foot button:hover { color: #9d4938; border-color: #9d4938; }
+  @keyframes plan-trip-open {
+    from { opacity: 0; transform: translateY(10px) scale(.98) rotate(.25deg); }
+    to { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+  }
+  @media (max-width: 700px) {
+    .plan-trip-widget { right: .75rem; bottom: 4.9rem; }
+    .plan-trip-fab { min-width: 202px; height: 60px; grid-template-columns: 46px 1fr auto; }
+    .plan-trip-fab__icon { width: 46px; height: 46px; }
+    .plan-trip-fab__count { min-width: 29px; height: 29px; }
+    .plan-trip-drawer { width: calc(100vw - 1.5rem); max-height: calc(100vh - 6rem); }
+    .plan-trip-drawer__head { padding: 1.2rem 3.35rem 1rem 1.1rem; }
+    .plan-trip-drawer__head:after { left: 1.1rem; bottom: .8rem; }
+    .plan-trip-drawer__body { max-height: none; padding: 1rem .9rem 1.2rem; }
+    .plan-trip-note { grid-template-columns: 40px minmax(0, 1fr); gap: .65rem; min-height: 126px; padding-right: 2.35rem; }
+    .plan-trip-drawer__foot { padding: .85rem 1rem .95rem; }
+  }
+  @media (max-width: 380px) {
+    .plan-trip-fab { min-width: 184px; }
+    .plan-trip-fab__copy small { display: none; }
+    .plan-trip-drawer__foot { align-items: flex-start; flex-direction: column; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .plan-trip-drawer { animation: none; }
+    .plan-trip-fab,
+    .plan-trip-note,
+    .plan-trip-note__link:after { transition: none; }
+  }
 </style>
 
 <script>
   const TRIP_STORAGE_KEY = 'thingsToDoAtlas.trip.v1';
   const cityRoutes = { pakse: '/laos/pakse', 'tad-lo': '/laos/tad-lo' };
   const cityNames = { pakse: 'Pakse', 'tad-lo': 'Tad Lo' };
+  const numberWords = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve'];
 
   const readTrip = () => {
     try {
@@ -60,35 +405,100 @@
   const tripContent = document.querySelector('[data-trip-content]');
   const tripCount = document.querySelector('[data-trip-count]');
   const tripSummary = document.querySelector('[data-trip-summary]');
+  const tripTitle = document.querySelector('[data-trip-title]');
+  const tripFabTitle = document.querySelector('[data-trip-fab-title]');
+  const tripFooter = document.querySelector('[data-trip-footer]');
+  const tripExplore = document.querySelector('[data-trip-explore]');
+
+  const getNoteType = (item) => {
+    const group = String(item.group || '').toLowerCase();
+    const category = String(item.category || '').toLowerCase();
+    if (group === 'accommodation' || /hostel|hotel|guesthouse|stay/.test(category)) return { key: 'stay', label: 'STAY' };
+    if (/bar|beer|wine/.test(category)) return { key: 'bar', label: 'BAR' };
+    if (group === 'restaurants' || group === 'cafes' || /restaurant|café|cafe|coffee|bakery|food|noodle|grill|bistro|trattoria/.test(category)) return { key: 'eat', label: 'EAT' };
+    return { key: 'explore', label: 'EXPLORE' };
+  };
+
+  const getWaitingCopy = (count) => {
+    if (!count) return 'Your first field note is waiting.';
+    const amount = numberWords[count] || String(count);
+    return `${amount} ${count === 1 ? 'place' : 'places'} waiting for you.`;
+  };
 
   const renderTrip = () => {
     const trip = readTrip();
     if (!trip?.started) { tripWidget.hidden = true; return; }
+    const cityName = cityNames[trip.startingCity] || trip.startingCity || 'Your';
+    const cityRoute = cityRoutes[trip.startingCity] || '/';
     tripWidget.hidden = false;
-    tripCount.textContent = trip.items.length;
-    tripCount.hidden = trip.items.length === 0;
-    tripSummary.textContent = `${cityNames[trip.startingCity] || trip.startingCity || 'Your trip'} · ${trip.items.length} ${trip.items.length === 1 ? 'place' : 'places'}`;
+    tripCount.textContent = String(trip.items.length).padStart(2, '0');
+    tripFabTitle.textContent = `MY ${cityName.toUpperCase()} TRIP`;
+    tripTitle.textContent = `My ${cityName} Trip`;
+    tripSummary.textContent = getWaitingCopy(trip.items.length);
+    tripFab.setAttribute('aria-label', `Open My ${cityName} Trip with ${trip.items.length} saved ${trip.items.length === 1 ? 'place' : 'places'}`);
+    tripDrawer.setAttribute('aria-label', `My ${cityName} Trip`);
+    tripExplore.href = cityRoute;
+    tripExplore.firstChild.textContent = `CONTINUE EXPLORING ${cityName.toUpperCase()} `;
+    tripFooter.hidden = trip.items.length === 0;
     tripContent.replaceChildren();
     if (!trip.items.length) {
       const empty = document.createElement('p');
       empty.className = 'plan-trip-empty';
-      empty.innerHTML = `<strong>Your trip starts in ${cityNames[trip.startingCity] || trip.startingCity}.</strong>Explore the city guide and save the places you want to remember. They’ll appear here with their essential information.`;
+      const emptyTitle = document.createElement('strong');
+      emptyTitle.textContent = `Your trip starts in ${cityName}.`;
+      empty.append(emptyTitle, document.createTextNode('Explore the city guide and keep the places that catch your attention. Each one will become a field note here.'));
       tripContent.append(empty);
     } else {
-      const grouped = trip.items.reduce((groups, item) => { (groups[item.category || 'Places'] ||= []).push(item); return groups; }, {});
-      Object.entries(grouped).forEach(([category, items]) => {
-        const group = document.createElement('section'); group.className = 'plan-trip-group';
-        const heading = document.createElement('h3'); heading.textContent = category; group.append(heading);
-        items.forEach((item) => {
-          const row = document.createElement('article'); row.className = 'plan-trip-item';
-          const details = document.createElement('div');
-          const name = document.createElement('strong'); name.textContent = item.name; details.append(name);
-          const meta = document.createElement('small'); meta.textContent = `${item.city}${item.address ? ` · ${item.address}` : ''}`; details.append(meta);
-          if (item.url) { const link = document.createElement('a'); link.href = item.url; link.textContent = 'Open the guide →'; details.append(link); }
-          const remove = document.createElement('button'); remove.type = 'button'; remove.dataset.tripRemove = item.id; remove.setAttribute('aria-label', `Remove ${item.name}`); remove.textContent = '×'; row.append(details, remove); group.append(row);
-        });
-        tripContent.append(group);
+      const stack = document.createElement('section');
+      stack.className = 'plan-trip-notes';
+      stack.setAttribute('aria-label', 'Saved field notes');
+      trip.items.forEach((item, index) => {
+        const noteType = getNoteType(item);
+        const row = document.createElement('article');
+        row.className = `plan-trip-note plan-trip-note--${noteType.key}`;
+        if (index >= 4) row.hidden = true;
+
+        const number = document.createElement('span');
+        number.className = 'plan-trip-note__number';
+        number.setAttribute('aria-hidden', 'true');
+        number.textContent = String(index + 1).padStart(2, '0');
+
+        const details = document.createElement('div');
+        details.className = 'plan-trip-note__details';
+        const stamp = document.createElement('span');
+        stamp.className = 'plan-trip-note__stamp';
+        stamp.textContent = noteType.label;
+        const name = document.createElement('strong');
+        name.textContent = item.name;
+        const meta = document.createElement('small');
+        meta.textContent = `${item.city || cityName}${item.address ? ` · ${item.address}` : ''}`;
+        details.append(stamp, name, meta);
+        if (item.url) {
+          const link = document.createElement('a');
+          link.className = 'plan-trip-note__link';
+          link.href = item.url;
+          link.textContent = 'Open the field note →';
+          details.append(link);
+        }
+        const remove = document.createElement('button');
+        remove.className = 'plan-trip-note__remove';
+        remove.type = 'button';
+        remove.dataset.tripRemove = item.id;
+        remove.setAttribute('aria-label', `Remove ${item.name}`);
+        remove.textContent = '×';
+        row.append(number, details, remove);
+        stack.append(row);
       });
+      if (trip.items.length > 4) {
+        const more = document.createElement('button');
+        more.className = 'plan-trip-more';
+        more.type = 'button';
+        more.dataset.tripMore = '';
+        more.textContent = `+ ${trip.items.length - 4} MORE FIELD ${trip.items.length - 4 === 1 ? 'NOTE' : 'NOTES'}`;
+        more.setAttribute('aria-expanded', 'false');
+        stack.append(more);
+      }
+      tripContent.append(stack);
     }
     document.querySelectorAll('[data-trip-add]').forEach((button) => {
       const saved = trip.items.some((item) => item.id === button.dataset.tripId);
@@ -129,6 +539,22 @@
     }
     const remove = event.target.closest('[data-trip-remove]');
     if (remove) { const trip = readTrip(); trip.items = trip.items.filter((item) => item.id !== remove.dataset.tripRemove); writeTrip(trip); renderTrip(); }
+    const more = event.target.closest('[data-trip-more]');
+    if (more) {
+      const isExpanded = more.getAttribute('aria-expanded') === 'true';
+      const noteCount = more.parentElement.querySelectorAll('.plan-trip-note').length;
+      const remainingCount = noteCount - 4;
+      more.parentElement.querySelectorAll('.plan-trip-note').forEach((note, index) => { if (index >= 4) note.hidden = isExpanded; });
+      more.setAttribute('aria-expanded', String(!isExpanded));
+      more.textContent = isExpanded ? `+ ${remainingCount} MORE FIELD ${remainingCount === 1 ? 'NOTE' : 'NOTES'}` : 'SHOW FEWER NOTES';
+    }
+  });
+  document.querySelector('[data-trip-clear]')?.addEventListener('click', () => {
+    const trip = readTrip();
+    if (!trip?.items.length || !window.confirm('Remove every saved field note from this trip?')) return;
+    trip.items = [];
+    writeTrip(trip);
+    renderTrip();
   });
   window.addEventListener('storage', renderTrip);
   renderTrip();

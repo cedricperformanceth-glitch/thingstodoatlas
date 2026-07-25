@@ -4,6 +4,7 @@ const tripPlace = JSON.stringify({
   id: place.slug,
   name: place.name,
   city: place.city,
+  group: place.category,
   category: place.subcategory,
   address: place.address,
   url: `${Astro.url.pathname}#${place.slug}`
