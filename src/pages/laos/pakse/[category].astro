@@ -12,6 +12,9 @@ const { category: slug } = Astro.params;
 const category = getCategory(slug!);
 const places = getPlacesForCategory(slug!);
 if (!category) throw new Error('Category not found');
+const placeCount = places.length;
+const placeCountWords = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
+const placeCountLabel = placeCountWords[placeCount] ?? String(placeCount);
 
 const schema = {
   '@context': 'https://schema.org',
@@ -25,13 +28,12 @@ const schema = {
       name: place.name,
       servesCuisine: place.cuisine,
       image: place.image,
-      telephone: place.phone,
-      priceRange: place.price,
+      telephone: place.phone || undefined,
+      priceRange: place.status === 'verified' ? place.price : undefined,
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'Road 24',
+        streetAddress: place.address,
         addressLocality: place.city,
-        postalCode: '16000',
         addressCountry: 'LA'
       },
       hasMap: place.mapsUrl,
@@ -75,11 +77,11 @@ const schema = {
     <header class="restaurant-listing__header">
       <div>
         <p class="eyebrow">The shortlist</p>
-        <h2 id="restaurant-list-title">One place to<br /><em>begin with.</em></h2>
+        <h2 id="restaurant-list-title">{placeCountLabel} places to<br /><em>begin with.</em></h2>
       </div>
       <div class="restaurant-listing__aside">
-        <span>01</span>
-        <p>address in<br />the notebook</p>
+        <span>{String(placeCount).padStart(2, '0')}</span>
+        <p>addresses in<br />the notebook</p>
       </div>
     </header>
 

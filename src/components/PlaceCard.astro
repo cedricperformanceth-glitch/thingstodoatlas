@@ -8,13 +8,15 @@ const tripPlace = JSON.stringify({
   address: place.address,
   url: `${Astro.url.pathname}#${place.slug}`
 });
-const phoneHref = `tel:${place.phone.replace(/[^\d+]/g, '')}`;
+const cardNumber = String(index + 1).padStart(2, '0');
+const phoneHref = place.phone ? `tel:${place.phone.replace(/[^\d+]/g, '')}` : '';
+const verificationLabel = place.status === 'verified' ? 'Field checked' : 'Map saved';
 ---
 <details class="place-card" id={place.slug}>
   <summary class="place-card__summary">
     <div class="place-card__image">
       <img src={place.image} alt={place.imageAlt} loading="lazy" />
-      <span class="place-card__number" aria-hidden="true">0{index + 1}</span>
+      <span class="place-card__number" aria-hidden="true">{cardNumber}</span>
       <span class="place-card__photo-note hand-note">{place.cardNote}</span>
     </div>
     <div class="place-card__preview">
@@ -40,7 +42,7 @@ const phoneHref = `tel:${place.phone.replace(/[^\d+]/g, '')}`;
     </div>
 
     <aside class="place-card__practical" aria-label={`Practical information for ${place.name}`}>
-      <span class="place-card__checked">Field checked · {place.lastChecked}</span>
+      <span class="place-card__checked">{verificationLabel} · {place.lastChecked}</span>
       <dl>
         <div><dt>Address</dt><dd>{place.address}</dd></div>
         <div><dt>Hours</dt><dd>{place.hours}</dd></div>
@@ -49,7 +51,7 @@ const phoneHref = `tel:${place.phone.replace(/[^\d+]/g, '')}`;
       </dl>
       <div class="place-card__actions">
         <a class="place-card__map" href={place.mapsUrl} target="_blank" rel="noreferrer">Open Google Maps <span aria-hidden="true">↗</span></a>
-        <a class="place-card__phone" href={phoneHref}>Call the restaurant</a>
+        {place.phone && <a class="place-card__phone" href={phoneHref}>Call the restaurant</a>}
         <button class="trip-save-button" type="button" data-trip-add data-trip-id={place.slug} data-trip-place={tripPlace} aria-pressed="false">Add to My Trip</button>
       </div>
     </aside>
