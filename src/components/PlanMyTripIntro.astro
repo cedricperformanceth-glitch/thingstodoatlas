@@ -1,6 +1,15 @@
 <section class="plan-trip-intro" aria-label="Plan my trip">
   <div class="plan-trip-intro__identity">
-    <img class="plan-trip-intro__logo" src="/images/laptop-line-art.svg" alt="Hand-drawn laptop for planning a trip" width="640" height="520" />
+    <div class="plan-trip-intro__laptop">
+      <img class="plan-trip-intro__logo" src="/images/laptop-line-art.svg" alt="" width="640" height="520" />
+      <div class="plan-trip-intro__screen-copy">
+        <p>Choose the place you want to explore first.</p>
+        <p>Inside each city guide, save the restaurants, stays and experiences you like — we’ll keep every address together for you.</p>
+      </div>
+      <span class="plan-trip-intro__notebook" aria-hidden="true">
+        <img src="/images/plan-my-trip-logo.webp" alt="" width="1024" height="1536" />
+      </span>
+    </div>
   </div>
 
   <div class="plan-trip-intro__choice">
@@ -33,7 +42,53 @@
   }
 
   .plan-trip-intro__identity { display: flex; align-items: center; justify-content: center; min-height: 330px; }
-  .plan-trip-intro__logo { display: block; width: min(100%, 460px); height: auto; mix-blend-mode: multiply; }
+  .plan-trip-intro__laptop { position: relative; width: min(100%, 460px); isolation: isolate; }
+  .plan-trip-intro__logo { display: block; width: 100%; height: auto; mix-blend-mode: multiply; }
+  .plan-trip-intro__screen-copy {
+    position: absolute;
+    z-index: 1;
+    top: 12%;
+    left: 11.5%;
+    width: 48%;
+    min-height: 43%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #315545;
+    transform: rotate(-3.8deg);
+    transform-origin: center;
+  }
+  .plan-trip-intro__screen-copy p { margin: 0; }
+  .plan-trip-intro__screen-copy p:first-child {
+    max-width: 12.5rem;
+    font: 500 clamp(.88rem, 1.35vw, 1.12rem)/1.15 Fraunces, serif;
+  }
+  .plan-trip-intro__screen-copy p + p {
+    max-width: 13.5rem;
+    margin-top: .65rem;
+    color: #626a62;
+    font: 500 clamp(.48rem, .72vw, .61rem)/1.5 'DM Sans', sans-serif;
+  }
+  .plan-trip-intro__notebook {
+    position: absolute;
+    z-index: 2;
+    right: -5.25rem;
+    bottom: 1.25rem;
+    width: 9.4rem;
+    height: 7.8rem;
+    overflow: hidden;
+    pointer-events: none;
+    transform: rotate(3deg);
+  }
+  .plan-trip-intro__notebook img {
+    position: absolute;
+    top: -5.15rem;
+    left: -1.35rem;
+    width: 12.7rem;
+    max-width: none;
+    height: auto;
+    mix-blend-mode: multiply;
+  }
   .plan-trip-intro__choice { padding-left: clamp(1.2rem, 3vw, 2.5rem); border-left: 1px solid rgba(49, 85, 69, .22); }
   .plan-trip-intro__question { margin: 0 0 1.3rem; color: #252923; font: 500 clamp(1.5rem, 2.5vw, 2.1rem)/1.1 Fraunces, serif; }
   .plan-trip-intro__label { display: block; margin-bottom: .45rem; color: #70766d; font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
@@ -45,7 +100,12 @@
   @media (max-width: 700px) {
     .plan-trip-intro { width: calc(100% - 2rem); grid-template-columns: 1fr; gap: 2rem; margin-top: 1.8rem; padding: 2rem 1rem 2.4rem; }
     .plan-trip-intro__identity { min-height: 220px; }
-    .plan-trip-intro__logo { width: min(100%, 360px); }
+    .plan-trip-intro__laptop { width: min(100%, 360px); }
+    .plan-trip-intro__screen-copy { top: 11%; left: 11%; width: 49%; min-height: 45%; }
+    .plan-trip-intro__screen-copy p:first-child { font-size: clamp(.72rem, 3.4vw, .94rem); }
+    .plan-trip-intro__screen-copy p + p { margin-top: .45rem; font-size: clamp(.4rem, 1.85vw, .53rem); line-height: 1.4; }
+    .plan-trip-intro__notebook { right: -.75rem; bottom: -.2rem; width: 7.2rem; height: 5.8rem; }
+    .plan-trip-intro__notebook img { top: -3.95rem; left: -1rem; width: 9.6rem; }
     .plan-trip-intro__choice { padding: 1.8rem 0 0; border-top: 1px solid rgba(49, 85, 69, .22); border-left: 0; }
   }
 </style>
