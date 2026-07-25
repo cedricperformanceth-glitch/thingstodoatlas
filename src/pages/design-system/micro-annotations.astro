@@ -1,0 +1,116 @@
+---
+import MicroAnnotation from '../../components/micro-annotations/MicroAnnotation.astro';
+import { microAnnotations } from '../../data/micro-annotations';
+
+const textAnnotations = microAnnotations.filter((annotation) => annotation.group === 'text');
+const connectorAnnotations = microAnnotations.filter((annotation) => annotation.group === 'connector');
+const colors = ['saffron', 'turquoise', 'green'] as const;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Micro-annotations · Travel Journal · ThingsToDoAtlas</title>
+  </head>
+  <body class="annotation-preview">
+    <main class="preview-shell">
+      <header class="preview-header">
+        <p class="preview-kicker">ThingsToDoAtlas · internal design system</p>
+        <h1>Micro-annotations <em>Travel Journal</em></h1>
+        <p>Shared notebook marks for direction, memory and place. They support real HTML content and stay secondary to the page.</p>
+      </header>
+
+      <section aria-labelledby="text-title">
+        <div class="section-title"><p class="preview-kicker">01 · Words with direction</p><h2 id="text-title">Text annotations</h2></div>
+        <div class="annotation-grid">
+          {textAnnotations.length === 0 && <p class="empty-state">No text annotations yet. Add the first one when a real page need is identified.</p>}
+          {textAnnotations.map((annotation) => <article class="annotation-card">
+            <div class="annotation-card__meta"><strong>{annotation.label}</strong><code>{annotation.id}</code></div>
+            <div class="annotation-card__sample"><MicroAnnotation name={annotation.id} family={annotation.family} color="ink" /></div>
+            <dl><div><dt>file</dt><dd>{annotation.file}</dd></div><div><dt>style</dt><dd>{annotation.style}</dd></div><div><dt>meaning</dt><dd>{annotation.decorative ? 'decorative by default' : 'may carry meaning'}</dd></div></dl>
+          </article>)}
+        </div>
+      </section>
+
+      <section aria-labelledby="connector-title">
+        <div class="section-title"><p class="preview-kicker">02 · Route language</p><h2 id="connector-title">Connector-only marks</h2></div>
+        <div class="connector-grid">
+          {connectorAnnotations.length === 0 && <p class="empty-state">No connector marks yet. This inventory stays intentionally empty until one is needed in context.</p>}
+          {connectorAnnotations.map((annotation) => <article class="connector-card">
+            <div class="annotation-card__meta"><strong>{annotation.id}</strong><code>{annotation.file}</code></div>
+            <div class="annotation-card__sample"><MicroAnnotation name={annotation.id} family={annotation.family} color="ink" /></div>
+          </article>)}
+        </div>
+      </section>
+
+      <section aria-labelledby="color-title">
+        <div class="section-title"><p class="preview-kicker">03 · Ink tests</p><h2 id="color-title">Colour tests</h2></div>
+        <div class="color-grid">
+          {microAnnotations.length === 0 ? <p class="empty-state">No approved assets yet.</p> : <>
+            {colors.map((color) => <article class:list={['color-card', `color-card--${color}`]}><h3>{color}</h3>{microAnnotations.map((annotation) => <MicroAnnotation name={annotation.id} family={annotation.family} color={color} size={annotation.defaultSize} />)}</article>)}
+            <article class="color-card color-card--dark"><h3>dark background</h3><MicroAnnotation name="field-notes-stamp" family="navigation" color="saffron" size="medium" /><MicroAnnotation name="keep-this-feeling" family="navigation" color="saffron" size="medium" /></article>
+          </>}
+        </div>
+      </section>
+
+      <section aria-labelledby="size-title">
+        <div class="section-title"><p class="preview-kicker">04 · Scale tests</p><h2 id="size-title">Small · medium · large</h2></div>
+        <article class="size-card"><div><code>shared asset scale</code><p>Each mark remains responsive and inherits its colour from the placement.</p></div><div class="size-samples">{microAnnotations.map((annotation) => <MicroAnnotation name={annotation.id} family={annotation.family} color="ink" size={annotation.defaultSize} />)}</div></article>
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  :global(*) { box-sizing: border-box; }
+  :global(body) { margin: 0; background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; }
+  .annotation-preview { overflow-x: hidden; }
+  .preview-shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; padding: 70px 0 100px; }
+  .preview-header { border-bottom: 1px solid var(--line); max-width: 720px; padding-bottom: 48px; margin-bottom: 76px; }
+  .preview-kicker { color: var(--terracotta); font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  h1, h2, h3 { font-family: Fraunces, serif; font-weight: 500; line-height: 1.05; letter-spacing: -.045em; }
+  h1 { font-size: clamp(3.3rem, 8vw, 7rem); margin: 20px 0; }
+  h1 em { color: var(--green); font-style: normal; }
+  h2 { font-size: clamp(2.2rem, 5vw, 4rem); margin: 8px 0 32px; }
+  h3 { font-size: 1rem; margin: 0 0 18px; letter-spacing: 0; text-transform: uppercase; }
+  p { color: var(--muted); line-height: 1.7; }
+  section { margin-bottom: 96px; }
+  .section-title { margin-bottom: 22px; }
+  .annotation-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .annotation-card, .connector-card, .size-card { background: var(--white); border: 1px solid var(--line); padding: 22px; min-width: 0; }
+  .annotation-card__meta { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+  .annotation-card__meta strong { font-size: .9rem; }
+  code, dd { font-family: 'DM Sans', sans-serif; font-size: .68rem; color: var(--muted); overflow-wrap: anywhere; }
+  .annotation-card__sample { display: flex; align-items: center; min-height: 90px; padding: 18px 0; overflow: hidden; }
+  dl { border-top: 1px solid var(--line); margin: 0; padding-top: 13px; display: grid; gap: 7px; }
+  dl div { display: flex; justify-content: space-between; gap: 12px; }
+  dt { color: var(--muted); font-size: .65rem; text-transform: uppercase; letter-spacing: .1em; }
+  dd { margin: 0; text-align: right; }
+  .connector-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .connector-card { min-height: 120px; }
+  .connector-card .annotation-card__sample { min-height: 64px; }
+  .color-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+  .color-card { min-height: 180px; padding: 22px; background: color-mix(in srgb, var(--paper-deep) 55%, var(--white)); color: var(--annotation-color); display: flex; flex-direction: column; gap: 22px; overflow: hidden; }
+  .color-card h3 { color: var(--ink); }
+  .color-card .micro-annotation + .micro-annotation { margin-top: auto; }
+  .color-card--saffron { --annotation-color: var(--annotation-saffron); }
+  .color-card--turquoise { --annotation-color: var(--annotation-turquoise); }
+  .color-card--green { --annotation-color: var(--annotation-green); }
+  .color-card--dark { --annotation-color: var(--annotation-saffron); background: var(--green-dark); }
+  .color-card--dark h3 { color: var(--white); }
+  .size-card { display: grid; grid-template-columns: .6fr 1.4fr; align-items: center; gap: 24px; }
+  .size-card p { margin: 8px 0 0; font-size: .86rem; }
+  .empty-state { border: 1px dashed var(--line); padding: 24px; margin: 0; color: var(--muted); }
+  .size-samples { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 0; overflow: hidden; }
+  @media (max-width: 760px) {
+    .preview-shell { width: min(100% - 28px, 560px); padding-top: 36px; }
+    .preview-header { margin-bottom: 54px; }
+    section { margin-bottom: 70px; }
+    .annotation-grid, .connector-grid, .color-grid { grid-template-columns: 1fr; }
+    .annotation-card__sample { min-height: 78px; }
+    .size-card { grid-template-columns: 1fr; }
+    .size-samples { align-items: flex-start; flex-direction: column; }
+  }
+</style>

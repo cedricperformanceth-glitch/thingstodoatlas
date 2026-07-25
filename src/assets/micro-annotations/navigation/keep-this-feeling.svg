@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" role="img" aria-labelledby="title desc">
+  <title id="title">Keep this feeling</title>
+  <desc id="desc">A handwritten travel note with a small guiding arrow.</desc>
+  <g fill="currentColor" font-family="Caveat, cursive">
+    <text x="32" y="31" font-size="24" transform="rotate(-3 32 31)">keep this</text>
+    <text x="66" y="56" font-size="25" transform="rotate(-2 66 56)">feeling</text>
+  </g>
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 13c7 3 12 7 16 13" stroke-width="1.2" opacity=".74" />
+    <path d="m25 22 6 4-1-7" stroke-width="1.2" opacity=".74" />
+    <path d="M123 61c23 4 48 4 72-1 11-2 20-6 28-12" stroke-width="1.05" opacity=".58" />
+  </g>
+</svg>

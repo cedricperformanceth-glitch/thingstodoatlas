@@ -51,18 +51,21 @@ export const places: Place[] = [
 export const homepageCountries = [
   {
     slug: 'thailand', name: 'Thailand', mood: 'Adventure · Energy',
-    description: 'A country of open roads, vivid mornings and the next good turn waiting just beyond the map.',
-    image: 'https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=1600&q=85', status: 'coming soon'
+    description: 'From Bangkok’s restless streets to quiet islands and northern roads, Thailand always has another story waiting beyond the map.',
+    image: '/images/thailand-chapter-main.webp', status: 'coming soon',
+    routeNote: 'Open roads · vivid mornings'
   },
   {
-    slug: 'laos', name: 'Laos', mood: 'Authenticity · Serenity',
-    description: 'A slower way through rivers, coffee country and small-town days that leave room to look around.',
-    image: 'https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1600&q=85', status: 'open'
+    slug: 'thailand', name: 'Thailand', mood: 'Adventure · Energy',
+    description: 'From Bangkok’s restless streets to quiet islands and northern roads, Thailand always has another story waiting beyond the map.',
+    image: '/images/thailand-chapter-main.webp', status: 'coming soon',
+    routeNote: 'Open roads · vivid mornings'
   },
   {
-    slug: 'sri-lanka', name: 'Sri Lanka', mood: 'Escape · Relaxation',
-    description: 'Train windows, warm coastlines and a feeling that the journey has already started before arrival.',
-    image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1600&q=85', status: 'coming soon'
+    slug: 'thailand', name: 'Thailand', mood: 'Adventure · Energy',
+    description: 'From Bangkok’s restless streets to quiet islands and northern roads, Thailand always has another story waiting beyond the map.',
+    image: '/images/thailand-chapter-main.webp', status: 'coming soon',
+    routeNote: 'Open roads · vivid mornings'
   }
 ];
 

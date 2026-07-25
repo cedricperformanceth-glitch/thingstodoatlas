@@ -1,33 +1,65 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { homepageCountries } from '../data/atlas';
+import MicroAnnotation from '../components/micro-annotations/MicroAnnotation.astro';
+
+const homepageCountryChapters = homepageCountries.map((country, index) => index === 1 ? {
+  ...country,
+  slug: 'laos',
+  name: 'Laos',
+  mood: 'Authenticity - Road Trip',
+  description: 'A country of slow rivers, wild waterfalls and quiet roads, where the journey matters as much as the destination.',
+  image: '/images/laos-chapter-main.webp'
+} : country);
 ---
 
 <BaseLayout title="A living atlas for curious travellers" description="ThingsToDoAtlas is a living travel companion for places worth your time across Thailand, Laos and Sri Lanka.">
   <section class="atlas-hero container" aria-labelledby="hero-title">
     <div class="atlas-hero__copy">
-      <div class="atlas-hero__eyebrow"><span>Vol. 01</span><span>Places worth the detour</span></div>
+      <img class="journal-drawing journal-drawing--tuk-tuk" src="/images/hand-drawn/tuk-tuk-route.webp" alt="" width="1329" height="1183" aria-hidden="true" />
       <p class="eyebrow">A living travel companion</p>
-      <h1 id="hero-title">Go somewhere.<br /><em>Stay curious.</em></h1>
-      <p class="lede">A thoughtful atlas of places, small discoveries and useful local knowledge — made for the moments when you want to see what is just beyond the obvious.</p>
+      <h1 id="hero-title">Explore the Unexpected</h1>
+      <h2 class="lede">Every destination has hidden gems waiting to be discovered. Explore authentic places, connect with local culture and uncover unforgettable experiences across Thailand, Laos and Sri Lanka.</h2>
       <a class="button button--arrow" href="#countries">Choose your way in <span aria-hidden="true">↘</span></a>
-      <div class="atlas-hero__annotation"><span class="route-mark" aria-hidden="true"></span><span>13°58′N · 100°30′E</span><small>Start anywhere</small></div>
+      <span class="hand-note hero-hand-note">I always begin by<br />looking around.</span>
     </div>
     <div class="atlas-hero__visual">
-      <div class="atlas-hero__stamp" aria-hidden="true">TTA<br /><span>field notes</span></div>
-      <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1600&q=85" alt="Misty green mountains and a quiet Southeast Asian landscape" width="1600" height="1100" fetchpriority="high" />
+      <MicroAnnotation name="field-notes-stamp" family="navigation" color="terracotta" size="small" class="atlas-hero__stamp" />
+      <img src="/images/heros-page.webp" alt="A visual journey through the landscapes, temples and local streets of Southeast Asia" width="1500" height="837" fetchpriority="high" />
       <span class="image-caption">Somewhere south of the usual route</span>
+      <MicroAnnotation name="keep-this-feeling" family="navigation" color="ink" size="medium" class="hero-photo-note" />
+      <MicroAnnotation name="notebook-compass" family="terrain" color="terracotta" size="small" class="hero-compass" />
     </div>
   </section>
 
   <section class="intro-band" aria-labelledby="intro-title">
     <div class="container intro-band__grid">
-      <p class="eyebrow">Why this atlas exists</p>
-      <div>
-        <h2 id="intro-title">The good places are rarely<br /><em>the loudest ones.</em></h2>
-        <p>ThingsToDoAtlas gathers the places we would actually send a friend: carefully chosen, useful in real life and open to a little surprise.</p>
+      <aside class="intro-band__aside">
+        <p class="eyebrow">How the journey grows</p>
+        <img class="intro-band__green-notebook" src="/images/hand-drawn/travel-notebook-green.webp" alt="" width="1536" height="1024" loading="lazy" aria-hidden="true" />
+        <span class="hand-note intro-band__hand-note">Collect places<br />as you go.</span>
+      </aside>
+      <div class="intro-band__main">
+        <h2 id="intro-title">Your journey comes together<br /><em>as you explore.</em></h2>
+        <p class="intro-band__description">Discover places naturally, keep the ones that catch your attention, and find them later in one simple trip summary.</p>
+        <div class="journey-sequence" aria-label="How your journey grows">
+          <div class="journey-step"><span class="journey-step__mark" aria-hidden="true">↗</span><strong>Explore</strong><small>Find what feels right</small></div>
+          <div class="journey-step"><span class="journey-step__mark" aria-hidden="true">+</span><strong>Save</strong><small>Add it to My Trip</small></div>
+          <div class="journey-step"><span class="journey-step__mark" aria-hidden="true">⌁</span><strong>Collect</strong><small>Let the journey take shape</small></div>
+          <div class="journey-step"><span class="journey-step__mark" aria-hidden="true">→</span><strong>Take it with you</strong><small>Copy, print or export later</small></div>
+        </div>
+        <aside class="intro-band__trip-slip" aria-label="My Trip preview">
+          <span class="intro-band__trip-label">My Trip</span>
+          <ul>
+            <li>Scooter rental</li>
+            <li>Tad Fane</li>
+            <li>Coffee stop</li>
+            <li>Guesthouse</li>
+          </ul>
+          <small>Ready when you are.</small>
+        </aside>
+        <p class="intro-band__support hand-note">Explore first. Your trip takes shape along the way.</p>
       </div>
-      <div class="intro-band__note"><span>01</span><p>Local knowledge<br />without the noise.</p></div>
     </div>
   </section>
 
@@ -36,14 +68,22 @@ import { homepageCountries } from '../data/atlas';
       <div><p class="eyebrow">The first chapters</p><h2 id="countries-title">Where will you<br /><em>begin?</em></h2></div>
       <p class="section-heading__aside">Three countries.<br />Many ways in.</p>
     </div>
+    <div class="country-route" aria-hidden="true"><svg viewBox="0 0 100 1000" preserveAspectRatio="none"><path d="M50 0 C24 110 76 205 50 330 C24 455 76 555 50 675 C28 790 71 885 50 1000" /><circle cx="50" cy="0" r="5" /><circle cx="50" cy="500" r="5" /><circle cx="50" cy="1000" r="5" /></svg></div>
     <div class="country-list">
-      {homepageCountries.map((country, index) => <article class:list={["country-feature", `country-feature--${index + 1}`]} id={`country-${country.slug}`}>
-        <div class="country-feature__image"><img src={country.image} alt={`${country.name} landscape`} width="1600" height="1100" loading="lazy" /><span class="country-feature__number">0{index + 1}</span></div>
+      {homepageCountryChapters.map((country, index) => <article class:list={["country-feature", "country-feature--1"]} id={index === 0 ? `country-${country.slug}` : `country-${country.slug}-${index + 1}`}>
+        <span class="country-feature__stitching" aria-hidden="true"></span>
+        <div class="country-feature__image"><img src={country.image} alt={`${country.name} landscape`} width="1600" height="1100" loading="lazy" /><span class="country-feature__number"><small>CH.</small><b>0{index + 1}</b></span>{country.slug === 'thailand' && <><span class="country-feature__photo-note">First stop</span><span class="country-feature__sunrise-note" aria-hidden="true">← sunrise</span><a class="country-feature__photo-link" href={`/${country.slug}`} aria-label={`Explore ${country.name}`}><span>Explore {country.name}</span><svg viewBox="0 0 34 12" aria-hidden="true"><path d="M1 6 C9 5 18 7 31 5 M25 1 L32 5 L26 11" /></svg></a><img class="country-feature__under-drawing" src="/images/hand-drawn/bangkok-skytrain.webp" alt="" width="1536" height="1024" loading="lazy" aria-hidden="true" /><img class="country-feature__second-photo" src="/images/thailand-wat-arun.webp" alt="Wat Arun and Bangkok skyline" width="499" height="613" loading="lazy" /><svg class="country-feature__photo-connector" viewBox="0 0 120 80" aria-hidden="true"><path d="M3 9 C34 12 51 49 115 70" /></svg><svg class="country-feature__tape country-feature__tape--main" viewBox="0 0 72 18" aria-hidden="true"><path d="M2 3 L68 1 L70 15 L4 17 Z" /></svg><svg class="country-feature__tape country-feature__tape--second" viewBox="0 0 72 18" aria-hidden="true"><path d="M2 3 L68 1 L70 15 L4 17 Z" /></svg></>}{country.slug === 'laos' && <><svg class="country-feature__tape country-feature__tape--main" viewBox="0 0 72 18" aria-hidden="true"><path d="M2 3 L68 1 L70 15 L4 17 Z" /></svg><svg class="country-feature__tape country-feature__tape--second" viewBox="0 0 72 18" aria-hidden="true"><path d="M2 3 L68 1 L70 15 L4 17 Z" /></svg></>}</div>
         <div class="country-feature__copy">
-          <p class="eyebrow">{country.mood}</p>
+          <p class:list={["eyebrow", (country.slug === 'thailand' || country.slug === 'laos') && "country-feature__mood-note"]}>{country.mood}</p>
           <h3>{country.name}</h3>
           <p>{country.description}</p>
-          {country.status === 'open' ? <a class="text-link text-link--large" href="/laos">Enter the Laos chapter <span aria-hidden="true">→</span></a> : <span class="coming-note">Chapter opening soon <span aria-hidden="true">·</span> stay curious</span>}
+          {country.slug === 'laos' && <span class="country-feature__route-note hand-note">FIELD NOTE — River mist · quiet rhythms</span>}
+          {country.slug === 'laos' && <div class="country-feature__laos-map-row"><img class="journal-drawing journal-drawing--laos-map country-feature__laos-map" src="/images/hand-drawn/laos-map.webp" alt="" width="1024" height="1536" loading="lazy" aria-hidden="true" /><a class="country-feature__photo-link country-feature__photo-link--laos" href={`/${country.slug}`} aria-label={`Explore ${country.name}`}><span>Explore {country.name}</span><svg viewBox="0 0 34 12" aria-hidden="true"><path d="M1 6 C9 5 18 7 31 5 M25 1 L32 5 L26 11" /></svg></a></div>}
+          {country.slug === 'laos' && <img class="journal-drawing journal-drawing--lotus" src="/images/hand-drawn/lotus-field-note.webp" alt="" width="1200" height="1200" loading="lazy" aria-hidden="true" />}
+          {country.slug !== 'laos' && <span class="country-feature__route-note hand-note">field note — {country.routeNote}</span>}
+          {country.slug === 'thailand' && <img class="journal-drawing journal-drawing--thailand-map country-feature__margin-drawing" src="/images/hand-drawn/thailand-map.webp" alt="" width="1024" height="1536" loading="lazy" aria-hidden="true" />}
+          {country.slug === 'thailand' && <a class="country-feature__photo-link country-feature__photo-link--right-page" href={`/${country.slug}`} aria-label={`Explore ${country.name}`}><span>Explore {country.name}</span><svg viewBox="0 0 34 12" aria-hidden="true"><path d="M1 6 C9 5 18 7 31 5 M25 1 L32 5 L26 11" /></svg></a>}
+          {country.status === 'open' ? <a class="text-link text-link--large" href={`/${country.slug}`}>Enter the {country.name} chapter <span aria-hidden="true">→</span></a> : <span class="coming-note">Chapter opening soon <span aria-hidden="true">·</span> stay curious</span>}
         </div>
       </article>)}
     </div>
@@ -52,6 +92,7 @@ import { homepageCountries } from '../data/atlas';
   <section class="journey-transition" aria-label="Atlas note">
     <div class="journey-transition__line" aria-hidden="true"></div>
     <div class="container journey-transition__inner">
+      <img class="journal-drawing journal-drawing--surfboards" src="/images/hand-drawn/surfboards-palm.webp" alt="" width="1200" height="1200" loading="lazy" aria-hidden="true" />
       <span class="journey-transition__stamp">Field note<br /><b>01</b></span>
       <p>There is always another road.<br /><em>Let’s see where it goes.</em></p>
       <span class="journey-transition__coordinates">Mekong · Indian Ocean · Gulf of Thailand</span>

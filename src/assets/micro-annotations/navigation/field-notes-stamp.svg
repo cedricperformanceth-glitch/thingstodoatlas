@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-labelledby="title desc">
+  <title id="title">Vol. 01. Places worth the detour</title>
+  <desc id="desc">A circular, imperfect travel notebook stamp reading Vol. 01, Places worth the detour.</desc>
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M91 13c24-1 46 8 61 25 14 16 18 39 12 61-6 23-20 42-41 54-22 12-48 13-70 3-22-10-38-28-45-50-7-23-3-47 11-65C32 24 59 14 91 13Z" stroke-width="2" opacity=".82" />
+    <path d="M88 18c22-1 42 7 57 22 13 14 17 35 12 55-5 21-18 38-37 50-20 11-43 12-63 3-20-9-35-25-42-45-6-20-3-41 10-58 13-17 37-26 63-27Z" stroke-width="1.1" opacity=".55" />
+    <path d="M47 48c8-9 18-15 29-19m-35 31c-3 10-4 20-2 30m87-45c8 8 13 17 16 27m-24 59c-10 6-21 9-32 9" stroke-width="1.15" opacity=".62" />
+  </g>
+  <g fill="currentColor" text-anchor="middle">
+    <text x="90" y="67" font-family="Fraunces, Georgia, serif" font-size="10" letter-spacing="2.2">FIELD NOTES</text>
+    <text x="90" y="96" font-family="Caveat, cursive" font-size="28" transform="rotate(-3 90 96)">Vol. 01</text>
+    <text x="90" y="116" font-family="Caveat, cursive" font-size="10.5" transform="rotate(1 90 116)">Places worth the detour</text>
+  </g>
+  <path d="M68 128c14 3 29 3 44-1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".7" />
+</svg>

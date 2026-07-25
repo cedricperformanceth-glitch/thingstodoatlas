@@ -1,0 +1,40 @@
+---
+import { microAnnotations, type AnnotationFamily, type AnnotationSize } from '../../data/micro-annotations';
+
+interface Props {
+  name: string;
+  family?: AnnotationFamily;
+  color?: 'saffron' | 'turquoise' | 'green' | 'ink' | 'terracotta';
+  size?: AnnotationSize;
+  class?: string;
+  label?: string;
+  decorative?: boolean;
+  rotation?: number;
+}
+
+const { name, family = 'navigation', color = 'ink', size, class: className = '', label, decorative = true, rotation = 0 } = Astro.props;
+const definition = microAnnotations.find((item) => item.id === name && item.family === family);
+if (!definition) throw new Error(`Unknown micro-annotation: ${family}/${name}`);
+const svgModules = import.meta.glob('../../assets/micro-annotations/**/*.svg', { eager: true, query: '?raw', import: 'default' });
+const svgKey = Object.keys(svgModules).find((key) => key.endsWith(`/${definition.file}`));
+const svg = svgKey ? svgModules[svgKey] : '';
+const ariaLabel = label ?? definition.label;
+const ariaProps = decorative ? { 'aria-hidden': 'true' } : { role: 'img', 'aria-label': ariaLabel };
+---
+<span class:list={['micro-annotation', `micro-annotation--${size ?? definition.defaultSize}`, `micro-annotation--${color}`, className]} style={`--annotation-rotation: ${rotation}deg`} {...ariaProps}>
+  {svg && <Fragment set:html={svg} />}
+</span>
+
+<style>
+  .micro-annotation { display: inline-flex; max-width: 100%; color: var(--annotation-color, var(--annotation-ink)); transform: rotate(var(--annotation-rotation, 0deg)); vertical-align: middle; line-height: 0; pointer-events: none; }
+  .micro-annotation svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .micro-annotation--small { width: 8rem; max-width: 100%; }
+  .micro-annotation--medium { width: 12rem; max-width: 100%; }
+  .micro-annotation--large { width: 16rem; max-width: 100%; }
+  .micro-annotation--saffron { --annotation-color: var(--annotation-saffron); }
+  .micro-annotation--turquoise { --annotation-color: var(--annotation-turquoise); }
+  .micro-annotation--green { --annotation-color: var(--annotation-green); }
+  .micro-annotation--ink { --annotation-color: var(--annotation-ink); }
+  .micro-annotation--terracotta { --annotation-color: var(--terracotta); }
+  @media (max-width: 700px) { .micro-annotation--large svg { max-height: 2.6rem; } }
+</style>
