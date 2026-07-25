@@ -9,6 +9,7 @@ const countries = [
   { name: 'Sri Lanka', href: '/#country-sri-lanka', slug: 'sri-lanka', number: '03' }
 ];
 const currentPath = Astro.url.pathname;
+const isPakseCafePage = currentPath === '/laos/pakse/cafes' || currentPath === '/laos/pakse/cafes/';
 ---
 <!doctype html>
 <html lang="en">
@@ -22,7 +23,7 @@ const currentPath = Astro.url.pathname;
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
   </head>
-  <body>
+  <body class:list={[{ 'cafe-category-page': isPakseCafePage }]}>
     <header class="site-header">
       <a class="site-logo" href="/" aria-label="ThingsToDoAtlas home">
         <img src="https://raw.githubusercontent.com/cedricperformanceth-glitch/thingstodoatlas/master/calque%20SVG/ChatGPT%20Image%2026%20juil.%202026%2C%2001_49_26_result.webp" alt="ThingsToDoAtlas" width="1536" height="1024" />
@@ -33,6 +34,29 @@ const currentPath = Astro.url.pathname;
       <span class="header-note">Field Notes <i aria-hidden="true">·</i> Vol. 01</span>
     </header>
     <main><slot /></main>
+    {isPakseCafePage && (
+      <script is:inline>
+        const cafeHeading = document.querySelector('.chapter-sheet__title');
+        const cafeAside = cafeHeading?.querySelector('.chapter-sheet__aside');
+        if (cafeHeading && cafeAside && !cafeHeading.querySelector('.cafe-heading-art')) {
+          const artwork = document.createElement('div');
+          artwork.className = 'cafe-heading-art';
+          artwork.setAttribute('aria-hidden', 'true');
+          artwork.innerHTML = `
+            <svg viewBox="0 0 420 420" role="presentation" focusable="false">
+              <image
+                href="https://raw.githubusercontent.com/cedricperformanceth-glitch/thingstodoatlas/master/calque%20SVG/ChatGPT%20Image%2026%20juil.%202026%2C%2001_20_52_result.webp"
+                x="0"
+                y="0"
+                width="420"
+                height="420"
+                preserveAspectRatio="xMidYMid meet"
+              />
+            </svg>`;
+          cafeHeading.insertBefore(artwork, cafeAside);
+        }
+      </script>
+    )}
     <PlanMyTrip />
     <footer class="site-footer"><div><a class="wordmark" href="/">Things<span>ToDo</span>Atlas</a><p>A practical atlas for places worth your time.</p></div><small>Built for the curious. Chapters open as they are ready.</small></footer>
     <nav class="bottom-country-bar" aria-label="Country chapters">
@@ -46,5 +70,48 @@ const currentPath = Astro.url.pathname;
   .plan-trip-drawer[hidden],
   .plan-trip-drawer__foot[hidden] {
     display: none;
+  }
+
+  body.cafe-category-page .chapter-sheet__title {
+    grid-template-columns: minmax(0, 1.55fr) minmax(150px, .5fr) minmax(275px, .72fr);
+    gap: clamp(24px, 3vw, 54px);
+  }
+
+  .cafe-heading-art {
+    display: grid;
+    place-items: center;
+    align-self: center;
+    width: min(100%, 230px);
+    margin: 0 auto;
+    pointer-events: none;
+  }
+
+  .cafe-heading-art svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    mix-blend-mode: multiply;
+  }
+
+  @media (max-width: 980px) {
+    body.cafe-category-page .chapter-sheet__title {
+      grid-template-columns: minmax(0, 1.25fr) minmax(125px, .42fr) minmax(240px, .72fr);
+      gap: 24px;
+    }
+
+    .cafe-heading-art { width: min(100%, 175px); }
+  }
+
+  @media (max-width: 700px) {
+    body.cafe-category-page .chapter-sheet__title {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .cafe-heading-art {
+      width: 150px;
+      margin: -4px auto 0;
+    }
   }
 </style>
