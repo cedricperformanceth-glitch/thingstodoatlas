@@ -44,7 +44,7 @@ export const categories: Category[] = [
 export const places: Place[] = [
   {
     slug: 'la-boulange-garden',
-    name: 'La Boulange “garden”',
+    name: 'La Boulange “Garden”',
     category: 'restaurants',
     subcategory: 'Garden restaurant & bakery',
     cuisine: 'French bakery and international',
