@@ -1,9 +1,9 @@
-body:has(.restaurant-listing--restaurants),
-body:has(.restaurant-listing--restaurants) main {
+body:has(.restaurant-listing--editorial),
+body:has(.restaurant-listing--editorial) main {
   background: #eee8dc;
 }
 
-.restaurant-listing--restaurants .place-card {
+.restaurant-listing--editorial .place-card {
   overflow: visible;
   padding: clamp(10px, 1.25vw, 14px) clamp(10px, 1.25vw, 14px) 0;
   border: 0 !important;
@@ -17,22 +17,22 @@ body:has(.restaurant-listing--restaurants) main {
   transition: transform 260ms ease, box-shadow 260ms ease;
 }
 
-.restaurant-listing--restaurants .place-card__open {
+.restaurant-listing--editorial .place-card__open {
   border: 0 !important;
   border-radius: 0;
   background: transparent !important;
   box-shadow: none !important;
 }
 
-.restaurant-listing--restaurants .place-list__item:nth-child(even) .place-card {
+.restaurant-listing--editorial .place-list__item:nth-child(even) .place-card {
   transform: rotate(.5deg);
 }
 
-.restaurant-listing--restaurants .place-list__item:nth-child(3n) .place-card {
+.restaurant-listing--editorial .place-list__item:nth-child(3n) .place-card {
   transform: rotate(-.2deg);
 }
 
-.restaurant-listing--restaurants .place-card:hover {
+.restaurant-listing--editorial .place-card:hover {
   border: 0 !important;
   background: #ffffff !important;
   box-shadow:
@@ -41,34 +41,34 @@ body:has(.restaurant-listing--restaurants) main {
   transform: translateY(-7px) rotate(0deg);
 }
 
-.restaurant-listing--restaurants .place-card:has(.place-card__open:focus-visible) {
+.restaurant-listing--editorial .place-card:has(.place-card__open:focus-visible) {
   outline: 2px solid var(--terracotta);
   outline-offset: 5px;
 }
 
-.restaurant-listing--restaurants .place-card__image {
+.restaurant-listing--editorial .place-card__image {
   height: clamp(215px, 19vw, 265px);
   border: 0 !important;
   border-radius: 0;
   background: #ffffff !important;
 }
 
-.restaurant-listing--restaurants .place-card__image::after {
+.restaurant-listing--editorial .place-card__image::after {
   background:
     linear-gradient(180deg, rgba(17, 24, 20, .02) 54%, rgba(20, 27, 23, .28)),
     linear-gradient(90deg, rgba(255, 245, 220, .04), transparent 30%, rgba(20, 27, 23, .04));
 }
 
-.restaurant-listing--restaurants .place-card__image img {
+.restaurant-listing--editorial .place-card__image img {
   filter: saturate(.82) contrast(.96) sepia(.04);
 }
 
-.restaurant-listing--restaurants .place-card:hover .place-card__image img {
+.restaurant-listing--editorial .place-card:hover .place-card__image img {
   transform: scale(1.025);
   filter: saturate(.9) contrast(.98) sepia(.02);
 }
 
-.restaurant-listing--restaurants .place-card__number {
+.restaurant-listing--editorial .place-card__number {
   top: 12px;
   left: 12px;
   width: 37px;
@@ -78,14 +78,14 @@ body:has(.restaurant-listing--restaurants) main {
   font-size: .82rem;
 }
 
-.restaurant-listing--restaurants .place-card__photo-note {
+.restaurant-listing--editorial .place-card__photo-note {
   right: 13px;
   bottom: 10px;
   font-size: .95rem;
   text-shadow: 0 1px 7px rgba(18, 25, 21, .32);
 }
 
-.restaurant-listing--restaurants .place-card__preview {
+.restaurant-listing--editorial .place-card__preview {
   min-height: 224px;
   padding: 25px 10px 27px;
   border: 0 !important;
@@ -94,28 +94,28 @@ body:has(.restaurant-listing--restaurants) main {
   box-shadow: none !important;
 }
 
-.restaurant-listing--restaurants .place-card__type {
+.restaurant-listing--editorial .place-card__type {
   margin-bottom: 9px;
   color: var(--terracotta);
   font-size: .55rem;
   letter-spacing: .14em;
 }
 
-.restaurant-listing--restaurants .place-card__preview h3 {
+.restaurant-listing--editorial .place-card__preview h3 {
   margin-bottom: 10px;
   color: var(--green);
   font-size: clamp(1.65rem, 2.15vw, 2rem);
   line-height: 1.03;
 }
 
-.restaurant-listing--restaurants .place-card__preview > p:not(.place-card__type) {
+.restaurant-listing--editorial .place-card__preview > p:not(.place-card__type) {
   margin-bottom: 19px;
   color: #68685f;
   font-size: .77rem;
   line-height: 1.58;
 }
 
-.restaurant-listing--restaurants .place-card__cta {
+.restaurant-listing--editorial .place-card__cta {
   padding-bottom: 4px;
   border-bottom-color: rgba(49, 85, 69, .72);
   font-size: .58rem;
@@ -123,40 +123,40 @@ body:has(.restaurant-listing--restaurants) main {
 }
 
 @media (max-width: 980px) {
-  .restaurant-listing--restaurants .place-card__image {
+  .restaurant-listing--editorial .place-card__image {
     height: clamp(220px, 30vw, 275px);
   }
 }
 
 @media (max-width: 700px) {
-  .restaurant-listing--restaurants .place-card,
-  .restaurant-listing--restaurants .place-list__item:nth-child(even) .place-card,
-  .restaurant-listing--restaurants .place-list__item:nth-child(3n) .place-card {
+  .restaurant-listing--editorial .place-card,
+  .restaurant-listing--editorial .place-list__item:nth-child(even) .place-card,
+  .restaurant-listing--editorial .place-list__item:nth-child(3n) .place-card {
     padding: 11px 11px 0;
     transform: rotate(-.25deg);
   }
 
-  .restaurant-listing--restaurants .place-list__item:nth-child(even) .place-card {
+  .restaurant-listing--editorial .place-list__item:nth-child(even) .place-card {
     transform: rotate(.25deg);
   }
 
-  .restaurant-listing--restaurants .place-card:hover {
+  .restaurant-listing--editorial .place-card:hover {
     transform: translateY(-4px) rotate(0deg);
   }
 
-  .restaurant-listing--restaurants .place-card__image {
+  .restaurant-listing--editorial .place-card__image {
     height: 245px;
   }
 
-  .restaurant-listing--restaurants .place-card__preview {
+  .restaurant-listing--editorial .place-card__preview {
     min-height: 0;
     padding: 24px 9px 26px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .restaurant-listing--restaurants .place-card,
-  .restaurant-listing--restaurants .place-card:hover {
+  .restaurant-listing--editorial .place-card,
+  .restaurant-listing--editorial .place-card:hover {
     transform: none;
   }
 }
