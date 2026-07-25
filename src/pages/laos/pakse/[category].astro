@@ -140,27 +140,28 @@ const schema = {
             <span>{placeCount} restaurants in Pakse</span>
             <em>to begin with.</em>
           </h1>
-          <p>
-            From local Lao kitchens to European tables and late-night bars, these are the addresses
-            worth keeping in your notebook.
-          </p>
+          <div class="chapter-sheet__aside">
+            <p>
+              From local Lao kitchens to European tables and late-night bars, these are the addresses
+              worth keeping in your notebook.
+            </p>
+            <nav class="chapter-filters" aria-label="Filter Pakse restaurants">
+              {restaurantFilters.map((filter) => (
+                <button
+                  class:list={['chapter-filter', { 'is-active': filter.value === 'all' }]}
+                  type="button"
+                  data-restaurant-filter={filter.value}
+                  aria-pressed={filter.value === 'all' ? 'true' : 'false'}
+                >
+                  {filter.label}
+                </button>
+              ))}
+            </nav>
+            <p class="restaurant-filter__status" data-filter-status aria-live="polite">
+              {placeCount} addresses shown
+            </p>
+          </div>
         </div>
-
-        <nav class="chapter-filters" aria-label="Filter Pakse restaurants">
-          {restaurantFilters.map((filter) => (
-            <button
-              class:list={['chapter-filter', { 'is-active': filter.value === 'all' }]}
-              type="button"
-              data-restaurant-filter={filter.value}
-              aria-pressed={filter.value === 'all' ? 'true' : 'false'}
-            >
-              {filter.label}
-            </button>
-          ))}
-        </nav>
-        <p class="restaurant-filter__status" data-filter-status aria-live="polite">
-          {placeCount} addresses shown
-        </p>
       </header>
     ) : (
       <header class="restaurant-listing__header">
@@ -250,76 +251,87 @@ const schema = {
   .chapter-sheet {
     position: relative;
     z-index: 1;
-    padding: clamp(26px, 4vw, 43px) clamp(24px, 5vw, 62px) clamp(47px, 6vw, 68px);
-    border: 1px solid rgba(75, 81, 70, .2);
-    border-bottom: 0;
-    background: #f0eadf;
-    box-shadow: 0 18px 42px rgba(49, 85, 69, .08);
-  }
-  .chapter-sheet::after {
-    content: '';
-    position: absolute;
-    right: -1px;
-    bottom: -18px;
-    left: -1px;
-    height: 20px;
-    background: #f0eadf;
-    clip-path: polygon(
-      0 0, 100% 0, 100% 44%, 96% 72%, 91% 47%, 86% 83%, 80% 55%,
-      74% 77%, 68% 50%, 62% 88%, 56% 58%, 49% 80%, 43% 48%, 36% 84%,
-      30% 54%, 23% 76%, 17% 46%, 11% 82%, 5% 53%, 0 72%
-    );
+    padding-bottom: clamp(38px, 4.5vw, 58px);
   }
   .chapter-sheet__meta {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(75, 81, 70, .24);
+    margin-bottom: clamp(42px, 5vw, 66px);
+    padding: 18px clamp(20px, 2.6vw, 34px) 24px;
+    border: 1px solid rgba(75, 81, 70, .18);
+    border-bottom: 0;
+    background: #eee5d8;
+    box-shadow: 0 9px 24px rgba(49, 85, 69, .055);
+  }
+  .chapter-sheet__meta::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    bottom: -9px;
+    left: -1px;
+    height: 10px;
+    background: #eee5d8;
+    clip-path: polygon(
+      0 0, 100% 0, 100% 42%, 96% 72%, 91% 48%, 86% 80%, 81% 52%,
+      75% 76%, 69% 46%, 63% 82%, 57% 54%, 51% 74%, 45% 48%, 39% 80%,
+      33% 51%, 27% 77%, 21% 47%, 15% 82%, 9% 52%, 4% 74%, 0 48%
+    );
   }
   .chapter-sheet__meta div {
     display: grid;
-    gap: 7px;
+    gap: 5px;
   }
   .chapter-sheet__meta div:last-child { text-align: right; }
   .chapter-sheet__meta span,
   .chapter-sheet__meta strong {
     color: var(--green);
-    font-size: .58rem;
+    font-size: .56rem;
     font-weight: 700;
     letter-spacing: .13em;
     line-height: 1.25;
     text-transform: uppercase;
   }
   .chapter-sheet__meta strong { color: var(--terracotta); }
-  .chapter-sheet__title { margin-top: clamp(37px, 5vw, 60px); }
+  .chapter-sheet__title {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(275px, .72fr);
+    gap: clamp(38px, 5vw, 78px);
+    align-items: end;
+    padding: 0 clamp(4px, 1vw, 14px);
+  }
   .chapter-sheet__title h1 {
-    max-width: 900px;
+    max-width: 980px;
     margin: 0;
-    font-size: clamp(2.8rem, 5.8vw, 5.65rem);
-    line-height: .97;
+    font-size: clamp(3.15rem, 4.55vw, 4.85rem);
+    line-height: .95;
+    letter-spacing: -.025em;
   }
   .chapter-sheet__title h1 span,
   .chapter-sheet__title h1 em { display: block; }
   .chapter-sheet__title h1 em { color: var(--green); }
-  .chapter-sheet__title p {
-    max-width: 710px;
-    margin: 24px 0 31px;
+  .chapter-sheet__aside {
+    max-width: 410px;
+    padding-bottom: 4px;
+  }
+  .chapter-sheet__aside > p {
+    margin: 0 0 24px;
     color: var(--muted);
-    font-size: clamp(.82rem, 1.2vw, .94rem);
-    line-height: 1.7;
+    font-size: clamp(.78rem, 1vw, .9rem);
+    line-height: 1.65;
   }
   .chapter-filters {
     display: flex;
     flex-wrap: wrap;
-    gap: 9px 12px;
+    gap: 8px 9px;
     align-items: center;
   }
   .chapter-filter {
     position: relative;
     flex: 0 0 auto;
-    min-width: 62px;
-    padding: 10px 17px;
+    min-width: 57px;
+    padding: 9px 14px;
     border: 0;
     background: transparent;
     color: var(--green);
@@ -372,7 +384,7 @@ const schema = {
   .restaurant-listing--restaurants .place-list {
     position: relative;
     z-index: 0;
-    margin-top: 7px;
+    margin-top: 0;
   }
   .place-list__item { display: contents; }
   .place-list__item[hidden] { display: none; }
@@ -399,6 +411,13 @@ const schema = {
   }
   @media (max-width: 980px) {
     .place-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .chapter-sheet__title {
+      grid-template-columns: minmax(0, 1.55fr) minmax(250px, .8fr);
+      gap: 32px;
+    }
+    .chapter-sheet__title h1 {
+      font-size: clamp(2.8rem, 6vw, 3.8rem);
+    }
   }
   @media (max-width: 700px) {
     .restaurant-listing { padding: 94px 0 92px; }
@@ -408,19 +427,30 @@ const schema = {
     .restaurant-listing__aside { display: none; }
     .restaurant-listing__rule { display: grid; gap: 7px; }
     .chapter-sheet {
-      padding: 23px 20px 48px;
-      box-shadow: 0 13px 30px rgba(49, 85, 69, .08);
+      padding-bottom: 36px;
     }
-    .chapter-sheet__meta { gap: 14px; padding-bottom: 16px; }
+    .chapter-sheet__meta {
+      gap: 14px;
+      margin-bottom: 38px;
+      padding: 15px 16px 20px;
+    }
     .chapter-sheet__meta span,
     .chapter-sheet__meta strong { font-size: .51rem; letter-spacing: .1em; }
-    .chapter-sheet__title { margin-top: 31px; }
+    .chapter-sheet__title {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 0 2px;
+    }
     .chapter-sheet__title h1 { font-size: clamp(2.55rem, 12vw, 3.75rem); }
-    .chapter-sheet__title p { margin: 19px 0 25px; font-size: .8rem; }
+    .chapter-sheet__aside {
+      max-width: 100%;
+      padding-bottom: 0;
+    }
+    .chapter-sheet__aside > p { margin: 0 0 21px; font-size: .8rem; }
     .chapter-filters {
       flex-wrap: nowrap;
-      margin-right: -20px;
-      padding: 3px 20px 7px 1px;
+      margin-right: -2px;
+      padding: 3px 2px 7px 1px;
       overflow-x: auto;
       scrollbar-width: none;
     }
