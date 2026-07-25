@@ -37,3 +37,11 @@ const currentPath = Astro.url.pathname;
     </nav>
   </body>
 </html>
+
+<style is:global>
+  .plan-trip-widget[hidden],
+  .plan-trip-drawer[hidden],
+  .plan-trip-drawer__foot[hidden] {
+    display: none;
+  }
+</style>
