@@ -36,12 +36,37 @@ export const categories: Category[] = [
   { slug: 'restaurants', name: 'Restaurants', description: 'A considered guide to the tables worth remembering in Pakse, from local kitchens to unhurried evenings.', icon: '01' },
   { slug: 'cafes', name: 'Cafés', description: 'Slow mornings, good coffee and places to pause.', icon: '02' },
   { slug: 'accommodation', name: 'Accommodation', description: 'A considered shortlist of places to make your stay easy.', icon: '03' },
+  { slug: 'scooter-rental', name: 'Scooter Rental', description: 'Trusted rental addresses, practical advice and the right bike for exploring Pakse and the Bolaven Plateau.', icon: '07' },
   { slug: 'waterfalls', name: 'Waterfalls', description: 'The cascades and river landscapes worth the journey.', icon: '04' },
   { slug: 'things-to-do', name: 'Things to do', description: 'Ideas for a day, a weekend or a longer route.', icon: '05' },
   { slug: 'muay-thai', name: 'Muay Thai', description: 'Gyms and training experiences for visitors who want to move.', icon: '06' }
 ];
 
 export const places: Place[] = [
+  {
+    slug: 'miss-noy-motorbike',
+    name: 'Miss Noy Motorbike',
+    category: 'scooter-rental',
+    subcategory: 'Scooter & motorbike rental',
+    cuisine: 'Scooter and motorbike rental',
+    city: 'Pakse',
+    country: 'Laos',
+    image: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1200&q=84',
+    imageAlt: 'A motorbike ready for a road trip',
+    cardNote: 'keys for the Bolaven Loop',
+    shortDescription: 'A well-known Pakse rental address for setting out toward the Bolaven Plateau.',
+    description: 'A long-established scooter and motorbike rental on Road 13, known for helping travellers prepare for the Bolaven Loop before they leave Pakse.',
+    whyWeRecommend: 'Save this address when you want more than a set of keys. The team shares route advice and practical information for the loop, making it a useful first stop before choosing a bike and heading out.',
+    highlights: ['Scooter rental', 'Bolaven Loop advice', 'Route map', 'Luggage storage'],
+    mapsUrl: 'https://maps.app.goo.gl/aGVfWaiEWxrcM4J68',
+    status: 'needs-review',
+    lastChecked: 'July 2026',
+    hours: 'Listed daily · 07:00–20:00; confirm before visiting',
+    price: 'Confirm the current daily rate in person',
+    address: '129 Road 13, Pakse 16000, Laos',
+    phone: '+856 20 22 272 278',
+    bestFor: 'Preparing for the Bolaven Loop'
+  },
   {
     slug: 'la-boulange-garden',
     name: 'La Boulange “Garden”',

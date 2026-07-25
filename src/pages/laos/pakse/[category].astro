@@ -4,7 +4,10 @@ import PlaceCard from '../../../components/PlaceCard.astro';
 import { getCategory, getPlacesForCategory } from '../../../data/atlas';
 
 export function getStaticPaths() {
-  return [{ params: { category: 'restaurants' } }];
+  return [
+    { params: { category: 'restaurants' } },
+    { params: { category: 'scooter-rental' } }
+  ];
 }
 
 const { category: slug } = Astro.params;
@@ -17,6 +20,12 @@ const placeCountWords = [
   'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen'
 ];
 const placeCountLabel = placeCountWords[placeCount] ?? String(placeCount);
+const placeCountNoun = placeCount === 1 ? 'place' : 'places';
+const addressCountNoun = placeCount === 1 ? 'address' : 'addresses';
+const isRestaurantCategory = slug === 'restaurants';
+const pageDescription = isRestaurantCategory
+  ? `${category.description} Discover practical details, what to order and why each restaurant belongs in the guide.`
+  : `${category.description} Discover practical rental details and why each address belongs in the guide.`;
 
 const schema = {
   '@context': 'https://schema.org',
@@ -26,9 +35,9 @@ const schema = {
     '@type': 'ListItem',
     position: index + 1,
     item: {
-      '@type': 'Restaurant',
+      '@type': isRestaurantCategory ? 'Restaurant' : 'LocalBusiness',
       name: place.name,
-      servesCuisine: place.cuisine,
+      ...(isRestaurantCategory ? { servesCuisine: place.cuisine } : {}),
       image: place.image,
       telephone: place.phone || undefined,
       priceRange: place.status === 'verified' ? place.price : undefined,
@@ -46,7 +55,7 @@ const schema = {
 ---
 <BaseLayout
   title={`${category.name} in Pakse`}
-  description={`${category.description} Discover practical details, what to order and why each restaurant belongs in the guide.`}
+  description={pageDescription}
   canonical={`https://thingstodoatlas.com/laos/pakse/${slug}`}
 >
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />
@@ -55,11 +64,11 @@ const schema = {
     <header class="restaurant-listing__header">
       <div>
         <p class="eyebrow">The shortlist</p>
-        <h1 id="restaurant-list-title">{placeCountLabel} places to<br /><em>begin with.</em></h1>
+        <h1 id="restaurant-list-title">{placeCountLabel} {placeCountNoun} to<br /><em>begin with.</em></h1>
       </div>
       <div class="restaurant-listing__aside">
         <span>{String(placeCount).padStart(2, '0')}</span>
-        <p>addresses in<br />the notebook</p>
+        <p>{addressCountNoun} in<br />the notebook</p>
       </div>
     </header>
 
