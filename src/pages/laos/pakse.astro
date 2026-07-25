@@ -109,7 +109,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .pakse-hero__visual img {
     display: block;
     width: 100%;
-    aspect-ratio: 16 / 9;
+    height: clamp(12rem, 16vw, 15rem);
     object-fit: cover;
     object-position: center;
     filter: saturate(0.88) contrast(0.97);
@@ -164,6 +164,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       width: min(100%, 34rem);
       margin: 0 auto;
     }
+
+    .pakse-hero__visual img {
+      height: clamp(11rem, 42vw, 15rem);
+    }
   }
 
   @media (max-width: 540px) {
@@ -186,6 +190,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     .pakse-hero__visual {
       width: 100%;
       transform: rotate(0.5deg);
+    }
+
+    .pakse-hero__visual img {
+      height: 11rem;
     }
   }
 </style>
