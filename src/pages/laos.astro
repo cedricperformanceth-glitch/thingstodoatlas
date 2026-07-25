@@ -151,11 +151,12 @@ const luangPrabang = { x: 356, y: 576 };
 
   .map-sheet {
     position: relative;
-    width: 1040px;
+    width: 700px;
     margin: 0 auto;
     padding: 40px;
     border: 1px solid rgba(31, 41, 36, 0.14);
     background: #f7f2e6;
+    overflow: visible;
   }
 
   .map-sheet::before,
@@ -175,9 +176,10 @@ const luangPrabang = { x: 356, y: 576 };
   .map-layers {
     position: relative;
     width: 620px;
-    margin-left: auto;
+    margin: 0 auto;
     background: #fff;
     box-shadow: 0 0 0 1px rgba(31, 41, 36, 0.2), 0 8px 22px rgba(31, 41, 36, 0.06);
+    overflow: visible;
   }
 
   .map-drawing { display: block; width: 620px; height: auto; }
@@ -260,8 +262,6 @@ const luangPrabang = { x: 356, y: 576 };
   .city-note small { display: block; font-family: Georgia, serif; font-size: 12px; font-style: italic; color: rgba(49, 85, 69, 0.78); }
 
   @media (max-width: 1100px) {
-    .map-sheet { width: 700px; }
-    .map-layers { margin: 0 auto; }
     .city-preview { display: none; }
   }
 
