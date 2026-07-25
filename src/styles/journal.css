@@ -361,7 +361,7 @@
 .country-section #country-sri-lanka-3 .country-feature__sri-polaroid--beach{left:44px;bottom:2px;width:180px!important;height:162px!important;transform:rotate(-5deg)}
 .country-section #country-sri-lanka-3 .country-feature__sri-first-stop{position:absolute;z-index:8;top:42px;left:252px;color:var(--terracotta);font-size:1.05rem;line-height:1.35;transform:rotate(-5deg);white-space:nowrap}
 .country-section #country-sri-lanka-3 .country-feature__sri-first-stop b{font:inherit;font-size:.94rem}
-.country-section #country-sri-lanka-3 .country-feature__sri-mask{position:absolute;z-index:5;top:205px;left:-2px;width:154px!important;height:auto!important;border:0!important;box-shadow:none!important;object-fit:contain;filter:none;mix-blend-mode:multiply;transform:rotate(-7deg)}
+.country-section #country-sri-lanka-3 .country-feature__sri-mask{position:absolute;z-index:5;top:205px;left:-2px;width:154px!important;height:auto!important;border:0!important;box-shadow:none!important;object-fit:contain;filter:none;mix-blend-mode:normal;transform:rotate(-7deg)}
 .country-section #country-sri-lanka-3 .country-feature__sri-tape{position:absolute;z-index:9;display:block;width:62px;height:13px;background:rgba(221,190,142,.66);clip-path:polygon(2% 12%,96% 0,100% 82%,8% 100%);filter:drop-shadow(0 1px 0 rgba(126,97,61,.12))}
 .country-section #country-sri-lanka-3 .country-feature__sri-tape--main{top:12px;left:165px;transform:rotate(4deg)}
 .country-section #country-sri-lanka-3 .country-feature__sri-tape--coast{top:191px;right:26px;transform:rotate(-5deg)}
