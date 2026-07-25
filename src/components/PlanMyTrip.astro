@@ -1,0 +1,129 @@
+<div class="plan-trip-widget" data-trip-widget hidden>
+  <button class="plan-trip-fab" type="button" data-trip-toggle aria-expanded="false" aria-controls="plan-trip-drawer" aria-label="Open My Trip">
+    <img src="/images/plan-my-trip-logo.webp" alt="Plan My Trip" width="1024" height="1536" />
+    <span class="plan-trip-fab__count" data-trip-count hidden>0</span>
+  </button>
+
+  <aside class="plan-trip-drawer" id="plan-trip-drawer" data-trip-drawer hidden aria-label="My Trip">
+    <div class="plan-trip-drawer__head">
+      <img src="/images/plan-my-trip-logo.webp" alt="" width="1024" height="1536" />
+      <div><p>PLAN MY TRIP</p><h2>My Trip</h2><span data-trip-summary></span></div>
+      <button class="plan-trip-drawer__close" type="button" data-trip-close aria-label="Close My Trip">×</button>
+    </div>
+    <div class="plan-trip-drawer__body" data-trip-content></div>
+  </aside>
+</div>
+
+<style>
+  .plan-trip-widget { position: fixed; z-index: 40; right: 1.25rem; bottom: 1.25rem; display: grid; justify-items: end; gap: .8rem; }
+  .plan-trip-fab { position: relative; width: 70px; height: 70px; padding: 0; overflow: visible; border: 1px solid rgba(49, 85, 69, .35); background: #3f4444; box-shadow: 0 10px 26px rgba(32, 60, 49, .2); cursor: pointer; }
+  .plan-trip-fab img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .plan-trip-fab__count { position: absolute; top: -.35rem; right: -.35rem; min-width: 1.35rem; height: 1.35rem; display: grid; place-items: center; padding: 0 .2rem; border-radius: 50%; background: #b76645; color: #fffdf8; font: 700 .65rem/1 'DM Sans', sans-serif; }
+  .plan-trip-drawer { width: min(410px, calc(100vw - 2rem)); max-height: min(620px, calc(100vh - 7rem)); overflow: hidden; background: #f7f2e6; color: #252923; border: 1px solid rgba(49, 85, 69, .25); box-shadow: 0 18px 50px rgba(32, 60, 49, .22); transform-origin: bottom right; animation: plan-trip-open 180ms ease-out both; }
+  .plan-trip-drawer__head { display: grid; grid-template-columns: 52px 1fr auto; gap: .8rem; align-items: center; padding: 1rem; border-bottom: 1px solid rgba(49, 85, 69, .16); }
+  .plan-trip-drawer__head img { width: 52px; height: 52px; object-fit: cover; background: #3f4444; }
+  .plan-trip-drawer__head p { margin: 0 0 .2rem; color: #b76645; font-size: .55rem; font-weight: 700; letter-spacing: .12em; }
+  .plan-trip-drawer__head h2 { margin: 0; color: #315545; font-size: 1.8rem; }
+  .plan-trip-drawer__head span { color: #70766d; font-size: .68rem; }
+  .plan-trip-drawer__close { border: 0; background: none; color: #315545; font-size: 1.7rem; line-height: 1; cursor: pointer; }
+  .plan-trip-drawer__body { max-height: 450px; overflow-y: auto; padding: 1rem; }
+  .plan-trip-empty { margin: 0; color: #667068; font-size: .84rem; line-height: 1.6; }
+  .plan-trip-empty strong { display: block; margin-bottom: .35rem; color: #315545; font: 500 1.45rem/1.1 Fraunces, serif; }
+  .plan-trip-group { margin: 0 0 1.1rem; }
+  .plan-trip-group h3 { margin: 0 0 .5rem; color: #b76645; font: 700 .6rem/1 'DM Sans', sans-serif; letter-spacing: .13em; text-transform: uppercase; }
+  .plan-trip-item { display: grid; grid-template-columns: 1fr auto; gap: .5rem; padding: .65rem 0; border-top: 1px solid rgba(49, 85, 69, .15); }
+  .plan-trip-item strong { display: block; color: #315545; font: 600 .88rem/1.25 'DM Sans', sans-serif; }
+  .plan-trip-item small { display: block; margin-top: .25rem; color: #70766d; font-size: .7rem; }
+  .plan-trip-item a { display: inline-block; margin-top: .3rem; color: #b76645; font-size: .68rem; font-weight: 700; }
+  .plan-trip-item button { align-self: start; border: 0; background: none; color: #70766d; font-size: 1rem; cursor: pointer; }
+  @keyframes plan-trip-open { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  @media (max-width: 700px) { .plan-trip-widget { right: .75rem; bottom: 4.9rem; } .plan-trip-drawer { width: calc(100vw - 1.5rem); max-height: min(560px, calc(100vh - 6rem)); } }
+  @media (prefers-reduced-motion: reduce) { .plan-trip-drawer { animation: none; } }
+</style>
+
+<script>
+  const TRIP_STORAGE_KEY = 'thingsToDoAtlas.trip.v1';
+  const cityRoutes = { pakse: '/laos/pakse', 'tad-lo': '/laos/tad-lo' };
+  const cityNames = { pakse: 'Pakse', 'tad-lo': 'Tad Lo' };
+
+  const readTrip = () => {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(TRIP_STORAGE_KEY) || 'null');
+      return parsed?.version === 1 && Array.isArray(parsed.items) ? parsed : null;
+    } catch { return null; }
+  };
+  const writeTrip = (trip) => localStorage.setItem(TRIP_STORAGE_KEY, JSON.stringify(trip));
+  const tripWidget = document.querySelector('[data-trip-widget]');
+  const tripFab = document.querySelector('[data-trip-toggle]');
+  const tripDrawer = document.querySelector('[data-trip-drawer]');
+  const tripContent = document.querySelector('[data-trip-content]');
+  const tripCount = document.querySelector('[data-trip-count]');
+  const tripSummary = document.querySelector('[data-trip-summary]');
+
+  const renderTrip = () => {
+    const trip = readTrip();
+    if (!trip?.started) { tripWidget.hidden = true; return; }
+    tripWidget.hidden = false;
+    tripCount.textContent = trip.items.length;
+    tripCount.hidden = trip.items.length === 0;
+    tripSummary.textContent = `${cityNames[trip.startingCity] || trip.startingCity || 'Your trip'} · ${trip.items.length} ${trip.items.length === 1 ? 'place' : 'places'}`;
+    tripContent.replaceChildren();
+    if (!trip.items.length) {
+      const empty = document.createElement('p');
+      empty.className = 'plan-trip-empty';
+      empty.innerHTML = `<strong>Your trip starts in ${cityNames[trip.startingCity] || trip.startingCity}.</strong>Explore the city guide and save the places you want to remember. They’ll appear here with their essential information.`;
+      tripContent.append(empty);
+    } else {
+      const grouped = trip.items.reduce((groups, item) => { (groups[item.category || 'Places'] ||= []).push(item); return groups; }, {});
+      Object.entries(grouped).forEach(([category, items]) => {
+        const group = document.createElement('section'); group.className = 'plan-trip-group';
+        const heading = document.createElement('h3'); heading.textContent = category; group.append(heading);
+        items.forEach((item) => {
+          const row = document.createElement('article'); row.className = 'plan-trip-item';
+          const details = document.createElement('div');
+          const name = document.createElement('strong'); name.textContent = item.name; details.append(name);
+          const meta = document.createElement('small'); meta.textContent = `${item.city}${item.address ? ` · ${item.address}` : ''}`; details.append(meta);
+          if (item.url) { const link = document.createElement('a'); link.href = item.url; link.textContent = 'Open the guide →'; details.append(link); }
+          const remove = document.createElement('button'); remove.type = 'button'; remove.dataset.tripRemove = item.id; remove.setAttribute('aria-label', `Remove ${item.name}`); remove.textContent = '×'; row.append(details, remove); group.append(row);
+        });
+        tripContent.append(group);
+      });
+    }
+    document.querySelectorAll('[data-trip-add]').forEach((button) => {
+      const saved = trip.items.some((item) => item.id === button.dataset.tripId);
+      button.textContent = saved ? 'Saved to My Trip' : 'Add to My Trip';
+      button.toggleAttribute('disabled', saved);
+      button.setAttribute('aria-pressed', String(saved));
+    });
+  };
+
+  document.querySelector('[data-trip-city-select]')?.addEventListener('change', (event) => {
+    const city = event.currentTarget.value;
+    const button = document.querySelector('[data-trip-start]');
+    const label = document.querySelector('[data-trip-start-label]');
+    button.disabled = !city;
+    label.textContent = city ? `Begin in ${cityNames[city]}` : 'Choose a city first';
+  });
+  document.querySelector('[data-trip-start]')?.addEventListener('click', () => {
+    const city = document.querySelector('[data-trip-city-select]').value;
+    if (!city) return;
+    const existing = readTrip();
+    writeTrip({ version: 1, started: true, startingCity: city, items: existing?.items || [] });
+    window.location.href = cityRoutes[city];
+  });
+  tripFab?.addEventListener('click', () => { tripDrawer.hidden = !tripDrawer.hidden; tripFab.setAttribute('aria-expanded', String(!tripDrawer.hidden)); });
+  document.querySelector('[data-trip-close]')?.addEventListener('click', () => { tripDrawer.hidden = true; tripFab.setAttribute('aria-expanded', 'false'); tripFab.focus(); });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !tripDrawer.hidden) { tripDrawer.hidden = true; tripFab.setAttribute('aria-expanded', 'false'); tripFab.focus(); } });
+  document.addEventListener('click', (event) => {
+    const add = event.target.closest('[data-trip-add]');
+    if (add) {
+      const trip = readTrip(); if (!trip?.started) return;
+      const item = JSON.parse(add.dataset.tripPlace); if (!trip.items.some((saved) => saved.id === item.id)) trip.items.push(item);
+      writeTrip(trip); renderTrip(); return;
+    }
+    const remove = event.target.closest('[data-trip-remove]');
+    if (remove) { const trip = readTrip(); trip.items = trip.items.filter((item) => item.id !== remove.dataset.tripRemove); writeTrip(trip); renderTrip(); }
+  });
+  window.addEventListener('storage', renderTrip);
+  renderTrip();
+</script>

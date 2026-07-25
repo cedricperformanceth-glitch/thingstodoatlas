@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
 
 const pakse = { x: 679, y: 1024 };
 const vientiane = { x: 384, y: 657 };
@@ -135,6 +136,7 @@ const luangPrabang = { x: 356, y: 576 };
         </svg>
       </div>
     </div>
+    <PlanMyTripIntro />
   </section>
 </BaseLayout>
 
@@ -203,7 +205,7 @@ const luangPrabang = { x: 356, y: 576 };
     font-style: normal;
   }
   .map-sheet__chapter { font-size: 15px; font-weight: 500; letter-spacing: 0.12em; opacity: 0.62; }
-  .map-sheet__title { font-size: 54px; font-weight: 600; letter-spacing: 0.01em; }
+  .map-sheet__title { font-size: 51px; font-weight: 550; letter-spacing: 0.01em; opacity: 0.93; }
   .map-sheet__note {
     position: static;
     flex: 0 0 auto;

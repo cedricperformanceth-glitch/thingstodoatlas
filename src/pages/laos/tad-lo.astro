@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Tad Lo travel guide"
+  description="Explore Tad Lo in southern Laos, with waterfalls, forest paths and a slower village rhythm."
+  canonical="https://thingstodoatlas.com/laos/tad-lo"
+>
+  <main class="tad-lo-page">
+    <section class="tad-lo-hero" aria-labelledby="tad-lo-title">
+      <div class="tad-lo-hero__media" aria-hidden="true"><img src="/images/laos/tad-lo.webp" alt="" width="1600" height="1100" fetchpriority="high" /></div>
+      <div class="tad-lo-hero__overlay"></div>
+      <div class="tad-lo-hero__content">
+        <a class="tad-lo-hero__back" href="/laos">← Back to the Laos map</a>
+        <p class="tad-lo-hero__eyebrow">LAOS · SOUTHERN CHAPTER</p>
+        <h1 id="tad-lo-title">Tad Lo</h1>
+        <p class="tad-lo-hero__lede">Waterfalls, forest paths and an easygoing village rhythm on the plateau.</p>
+        <span class="tad-lo-hero__note">Field notes coming next.</span>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .tad-lo-page { min-height: 100vh; background: #f2eee3; }
+  .tad-lo-hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; color: #fffaf0; isolation: isolate; }
+  .tad-lo-hero__media, .tad-lo-hero__overlay { position: absolute; inset: 0; }
+  .tad-lo-hero__media { z-index: -2; }
+  .tad-lo-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .tad-lo-hero__overlay { z-index: -1; background: linear-gradient(180deg, rgba(17, 29, 23, .18), rgba(17, 29, 23, .9)); }
+  .tad-lo-hero__content { width: min(1180px, calc(100% - 2.5rem)); margin: 0 auto; padding: clamp(7rem, 14vw, 11rem) 0 clamp(3rem, 7vw, 5.5rem); }
+  .tad-lo-hero__back { display: inline-flex; margin-bottom: clamp(3rem, 8vw, 6rem); color: rgba(255, 250, 240, .76); font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+  .tad-lo-hero__eyebrow { margin: 0 0 .9rem; color: rgba(255, 250, 240, .68); font-size: .78rem; font-weight: 600; letter-spacing: .18em; }
+  .tad-lo-hero h1 { max-width: 9ch; margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(5rem, 15vw, 11rem); font-weight: 400; letter-spacing: -.065em; line-height: .78; }
+  .tad-lo-hero__lede { max-width: 42rem; margin: clamp(1.8rem, 3vw, 2.6rem) 0 0; color: rgba(255, 250, 240, .88); font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1.15rem, 2.15vw, 1.75rem); line-height: 1.45; }
+  .tad-lo-hero__note { display: inline-block; margin-top: 1.75rem; color: rgba(255, 250, 240, .58); font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+  @media (max-width: 640px) { .tad-lo-hero { min-height: 88svh; } .tad-lo-hero__content { width: calc(100% - 2rem); padding-bottom: 2.5rem; } .tad-lo-hero h1 { font-size: clamp(4.5rem, 26vw, 7rem); } }
+</style>

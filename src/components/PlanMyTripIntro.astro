@@ -1,0 +1,60 @@
+<section class="plan-trip-intro" aria-labelledby="plan-my-trip-title">
+  <div class="plan-trip-intro__identity">
+    <img class="plan-trip-intro__logo" src="/images/plan-my-trip-logo.webp" alt="Plan My Trip notebook logo" width="1024" height="1536" />
+    <div>
+      <p class="plan-trip-intro__eyebrow">PLAN MY TRIP · STEP 01</p>
+      <h2 id="plan-my-trip-title">Every trip starts somewhere.</h2>
+      <p class="plan-trip-intro__copy">Choose the place you want to explore first. Inside each city guide, save the restaurants, stays and experiences you like — we’ll keep every address together for you.</p>
+    </div>
+  </div>
+
+  <div class="plan-trip-intro__choice">
+    <p class="plan-trip-intro__question">Where do you want to begin?</p>
+    <label class="plan-trip-intro__label" for="trip-start-city">Choose a city</label>
+    <select id="trip-start-city" data-trip-city-select>
+      <option value="">Select a starting point</option>
+      <option value="pakse">Pakse</option>
+      <option value="tad-lo">Tad Lo</option>
+    </select>
+    <button class="plan-trip-intro__cta" type="button" data-trip-start disabled>
+      <span data-trip-start-label>Choose a city first</span><span aria-hidden="true">→</span>
+    </button>
+    <p class="plan-trip-intro__note">You’ll build your trip as you explore.</p>
+  </div>
+</section>
+
+<style>
+  .plan-trip-intro {
+    width: min(1120px, calc(100% - 2.5rem));
+    margin: 2.5rem auto 0;
+    padding: clamp(2rem, 4vw, 3.8rem) clamp(1.2rem, 4vw, 4rem);
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(260px, .75fr);
+    gap: clamp(2.5rem, 7vw, 7rem);
+    align-items: center;
+    border-top: 1px solid rgba(49, 85, 69, .2);
+    border-bottom: 1px solid rgba(49, 85, 69, .15);
+    background: rgba(247, 242, 230, .62);
+  }
+
+  .plan-trip-intro__identity { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: clamp(1.2rem, 3vw, 2.3rem); align-items: center; }
+  .plan-trip-intro__logo { width: 112px; height: 126px; object-fit: cover; object-position: center; mix-blend-mode: multiply; }
+  .plan-trip-intro__eyebrow { margin: 0 0 .8rem; color: #b76645; font-size: .61rem; font-weight: 700; letter-spacing: .15em; }
+  .plan-trip-intro h2 { margin: 0 0 1rem; color: #315545; font-size: clamp(2.2rem, 4vw, 4.2rem); }
+  .plan-trip-intro__copy { max-width: 590px; margin: 0; color: #667068; font-size: .96rem; line-height: 1.7; }
+  .plan-trip-intro__choice { padding-left: clamp(1.2rem, 3vw, 2.5rem); border-left: 1px solid rgba(49, 85, 69, .22); }
+  .plan-trip-intro__question { margin: 0 0 1.3rem; color: #252923; font: 500 clamp(1.5rem, 2.5vw, 2.1rem)/1.1 Fraunces, serif; }
+  .plan-trip-intro__label { display: block; margin-bottom: .45rem; color: #70766d; font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  .plan-trip-intro select { width: 100%; min-height: 48px; padding: 0 .85rem; border: 1px solid rgba(49, 85, 69, .28); border-radius: 0; background: transparent; color: #315545; font: 500 .9rem 'DM Sans', sans-serif; }
+  .plan-trip-intro__cta { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1rem; padding: .85rem 0; border: 0; border-bottom: 1px solid #b76645; background: transparent; color: #315545; font: 600 1rem 'DM Sans', sans-serif; text-align: left; cursor: pointer; }
+  .plan-trip-intro__cta:disabled { color: #9ca39c; border-bottom-color: rgba(183, 102, 69, .28); cursor: not-allowed; }
+  .plan-trip-intro__cta:not(:disabled):hover { color: #b76645; }
+  .plan-trip-intro__note { margin: 1rem 0 0; color: #70766d; font: 400 1rem/1 Caveat, cursive; transform: rotate(-2deg); }
+  @media (max-width: 700px) {
+    .plan-trip-intro { width: calc(100% - 2rem); grid-template-columns: 1fr; gap: 2rem; margin-top: 1.8rem; padding: 2rem 1rem 2.4rem; }
+    .plan-trip-intro__identity { grid-template-columns: 82px minmax(0, 1fr); gap: 1rem; }
+    .plan-trip-intro__logo { width: 82px; height: 100px; }
+    .plan-trip-intro h2 { font-size: 2.45rem; }
+    .plan-trip-intro__choice { padding: 1.8rem 0 0; border-top: 1px solid rgba(49, 85, 69, .22); border-left: 0; }
+  }
+</style>

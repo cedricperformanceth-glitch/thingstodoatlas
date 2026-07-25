@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import PlanMyTrip from '../components/PlanMyTrip.astro';
 const { title, description = 'A thoughtful guide to places worth your time across Asia.', canonical = 'https://thingstodoatlas.com/' } = Astro.props;
 const countries = [
   { name: 'Thailand', href: '/#country-thailand', slug: 'thailand', number: '01' },
@@ -29,6 +30,7 @@ const currentPath = Astro.url.pathname;
       <span class="header-note">Field Notes <i aria-hidden="true">·</i> Vol. 01</span>
     </header>
     <main><slot /></main>
+    <PlanMyTrip />
     <footer class="site-footer"><div><a class="wordmark" href="/">Things<span>ToDo</span>Atlas</a><p>A practical atlas for places worth your time.</p></div><small>Built for the curious. Chapters open as they are ready.</small></footer>
     <nav class="bottom-country-bar" aria-label="Country chapters">
       {countries.map((country) => <a class:list={[{ 'is-active': currentPath.startsWith(`/${country.slug}`), 'is-coming-soon': country.slug !== 'laos' }]} href={country.href} aria-current={currentPath.startsWith(`/${country.slug}`) ? 'page' : undefined}><span class="bottom-chapter">{country.number}</span>{country.name}</a>)}
