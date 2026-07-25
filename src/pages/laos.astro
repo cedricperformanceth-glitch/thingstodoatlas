@@ -137,6 +137,8 @@ const luangPrabang = { x: 356, y: 576 };
 </BaseLayout>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
+
   .laos-map-page {
     min-height: 100vh;
     padding: clamp(4rem, 8vw, 7rem) max(1.25rem, calc((100vw - 1180px) / 2));
@@ -222,7 +224,7 @@ const luangPrabang = { x: 356, y: 576 };
     background: #f6dc57;
     color: #29342f;
     box-shadow: 0 18px 36px rgba(32, 42, 36, 0.2);
-    font-family: Arial, sans-serif;
+    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
     transform: rotate(-1.4deg);
   }
 
@@ -255,12 +257,44 @@ const luangPrabang = { x: 356, y: 576 };
     box-sizing: border-box;
   }
 
-  .city-note__body { padding: 18px 5px 0; }
-  .city-note__badge { display: inline-block; margin-bottom: 9px; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #5f532d; }
+  .city-note__body { padding: 15px 5px 0; }
+  .city-note__badge {
+    display: inline-block;
+    margin-bottom: 5px;
+    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.025em;
+    text-transform: none;
+    color: #5f532d;
+  }
   .city-note--active .city-note__badge { color: #254864; }
-  .city-note strong { display: block; margin-bottom: 8px; font-family: Georgia, serif; font-size: 29px; }
-  .city-note p { margin: 0 0 14px; font-size: 13px; line-height: 1.55; color: rgba(41, 52, 47, 0.8); }
-  .city-note small { display: block; font-family: Georgia, serif; font-size: 12px; font-style: italic; color: rgba(49, 85, 69, 0.82); }
+  .city-note strong {
+    display: block;
+    margin-bottom: 4px;
+    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: 0.01em;
+  }
+  .city-note p {
+    margin: 0 0 8px;
+    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.18;
+    color: rgba(41, 52, 47, 0.86);
+  }
+  .city-note small {
+    display: block;
+    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.1;
+    color: rgba(49, 85, 69, 0.82);
+  }
   .city-note--active small { color: rgba(31, 63, 86, 0.86); }
 
   @media (max-width: 1100px) {
