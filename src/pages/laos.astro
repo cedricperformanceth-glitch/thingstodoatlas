@@ -155,10 +155,11 @@ const luangPrabang = { x: 356, y: 576 };
     position: relative;
     width: 900px;
     margin: 0 auto;
-    padding: 26px;
+    padding: 90px;
     border: 1px solid rgba(31, 41, 36, 0.14);
     background: #f7f2e6;
     overflow: visible;
+    box-sizing: border-box;
   }
 
   .map-sheet::before,
@@ -177,15 +178,15 @@ const luangPrabang = { x: 356, y: 576 };
 
   .map-layers {
     position: relative;
-    width: 848px;
+    width: 720px;
     margin: 0 auto;
     background: #fff;
     box-shadow: 0 0 0 1px rgba(31, 41, 36, 0.2), 0 8px 22px rgba(31, 41, 36, 0.06);
     overflow: hidden;
   }
 
-  .map-drawing { display: block; width: 848px; height: auto; }
-  .map-overlay { position: absolute; inset: 0; display: block; width: 848px; height: 1272px; overflow: hidden; pointer-events: auto; }
+  .map-drawing { display: block; width: 720px; height: auto; }
+  .map-overlay { position: absolute; inset: 0; display: block; width: 720px; height: 1080px; overflow: hidden; pointer-events: auto; }
 
   .city-marker { color: #315545; cursor: pointer; outline: none; }
   .city-marker--inactive { color: #7f6d33; cursor: default; }
@@ -298,17 +299,17 @@ const luangPrabang = { x: 356, y: 576 };
   .city-note--active small { color: rgba(31, 63, 86, 0.86); }
 
   @media (max-width: 1100px) {
-    .map-sheet { width: 700px; }
+    .map-sheet { width: 700px; padding: 70px; }
     .map-layers,
     .map-drawing,
-    .map-overlay { width: 648px; }
-    .map-overlay { height: 972px; }
+    .map-overlay { width: 560px; }
+    .map-overlay { height: 840px; }
     .city-preview { display: none; }
   }
 
   @media (max-width: 700px) {
     .laos-map-page { padding-top: 3.5rem; }
-    .map-sheet { width: auto; padding: 0.75rem; }
+    .map-sheet { width: auto; padding: 10%; }
     .map-sheet__note { top: 0.8rem; right: 0.9rem; font-size: 0.65rem; }
     .map-layers,
     .map-drawing,
