@@ -1,0 +1,146 @@
+.restaurant-listing--restaurants .place-card {
+  overflow: visible;
+  padding: clamp(10px, 1.25vw, 14px) clamp(10px, 1.25vw, 14px) 0;
+  border: 1px solid rgba(72, 67, 57, .14);
+  background:
+    linear-gradient(rgba(255, 254, 250, .96), rgba(246, 242, 233, .98)),
+    repeating-linear-gradient(0deg, rgba(63, 56, 45, .018) 0 1px, transparent 1px 4px);
+  box-shadow:
+    0 18px 30px rgba(45, 48, 40, .12),
+    0 3px 7px rgba(45, 48, 40, .09);
+  transform: rotate(-.45deg);
+  transform-origin: 50% 44%;
+  transition: transform 260ms ease, box-shadow 260ms ease;
+}
+
+.restaurant-listing--restaurants .place-list__item:nth-child(even) .place-card {
+  transform: rotate(.5deg);
+}
+
+.restaurant-listing--restaurants .place-list__item:nth-child(3n) .place-card {
+  transform: rotate(-.2deg);
+}
+
+.restaurant-listing--restaurants .place-card:hover {
+  border-color: rgba(72, 67, 57, .19);
+  box-shadow:
+    0 24px 38px rgba(45, 48, 40, .16),
+    0 5px 9px rgba(45, 48, 40, .1);
+  transform: translateY(-7px) rotate(0deg);
+}
+
+.restaurant-listing--restaurants .place-card:has(.place-card__open:focus-visible) {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 5px;
+}
+
+.restaurant-listing--restaurants .place-card__image {
+  height: clamp(215px, 19vw, 265px);
+  border: 1px solid rgba(54, 57, 49, .12);
+  background: #ddd7ca;
+}
+
+.restaurant-listing--restaurants .place-card__image::after {
+  background:
+    linear-gradient(180deg, rgba(17, 24, 20, .02) 54%, rgba(20, 27, 23, .28)),
+    linear-gradient(90deg, rgba(255, 245, 220, .04), transparent 30%, rgba(20, 27, 23, .04));
+}
+
+.restaurant-listing--restaurants .place-card__image img {
+  filter: saturate(.82) contrast(.96) sepia(.04);
+}
+
+.restaurant-listing--restaurants .place-card:hover .place-card__image img {
+  transform: scale(1.025);
+  filter: saturate(.9) contrast(.98) sepia(.02);
+}
+
+.restaurant-listing--restaurants .place-card__number {
+  top: 12px;
+  left: 12px;
+  width: 37px;
+  height: 37px;
+  border: 1px solid rgba(255, 253, 248, .72);
+  background: rgba(31, 59, 48, .76);
+  font-size: .82rem;
+}
+
+.restaurant-listing--restaurants .place-card__photo-note {
+  right: 13px;
+  bottom: 10px;
+  font-size: .95rem;
+  text-shadow: 0 1px 7px rgba(18, 25, 21, .32);
+}
+
+.restaurant-listing--restaurants .place-card__preview {
+  min-height: 224px;
+  padding: 25px 10px 27px;
+  background: transparent;
+}
+
+.restaurant-listing--restaurants .place-card__type {
+  margin-bottom: 9px;
+  color: var(--terracotta);
+  font-size: .55rem;
+  letter-spacing: .14em;
+}
+
+.restaurant-listing--restaurants .place-card__preview h3 {
+  margin-bottom: 10px;
+  color: var(--green);
+  font-size: clamp(1.65rem, 2.15vw, 2rem);
+  line-height: 1.03;
+}
+
+.restaurant-listing--restaurants .place-card__preview > p:not(.place-card__type) {
+  margin-bottom: 19px;
+  color: #68685f;
+  font-size: .77rem;
+  line-height: 1.58;
+}
+
+.restaurant-listing--restaurants .place-card__cta {
+  padding-bottom: 4px;
+  border-bottom-color: rgba(49, 85, 69, .72);
+  font-size: .58rem;
+  letter-spacing: .105em;
+}
+
+@media (max-width: 980px) {
+  .restaurant-listing--restaurants .place-card__image {
+    height: clamp(220px, 30vw, 275px);
+  }
+}
+
+@media (max-width: 700px) {
+  .restaurant-listing--restaurants .place-card,
+  .restaurant-listing--restaurants .place-list__item:nth-child(even) .place-card,
+  .restaurant-listing--restaurants .place-list__item:nth-child(3n) .place-card {
+    padding: 11px 11px 0;
+    transform: rotate(-.25deg);
+  }
+
+  .restaurant-listing--restaurants .place-list__item:nth-child(even) .place-card {
+    transform: rotate(.25deg);
+  }
+
+  .restaurant-listing--restaurants .place-card:hover {
+    transform: translateY(-4px) rotate(0deg);
+  }
+
+  .restaurant-listing--restaurants .place-card__image {
+    height: 245px;
+  }
+
+  .restaurant-listing--restaurants .place-card__preview {
+    min-height: 0;
+    padding: 24px 9px 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .restaurant-listing--restaurants .place-card,
+  .restaurant-listing--restaurants .place-card:hover {
+    transform: none;
+  }
+}
