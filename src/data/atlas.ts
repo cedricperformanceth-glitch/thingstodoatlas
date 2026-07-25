@@ -37,6 +37,7 @@ export const categories: Category[] = [
   { slug: 'cafes', name: 'Cafés', description: 'Slow mornings, good coffee and places to pause.', icon: '02' },
   { slug: 'accommodation', name: 'Accommodation', description: 'A considered shortlist of places to make your stay easy.', icon: '03' },
   { slug: 'scooter-rental', name: 'Scooter Rental', description: 'Trusted rental addresses, practical advice and the right bike for exploring Pakse and the Bolaven Plateau.', icon: '07' },
+  { slug: 'bolaven-loop', name: 'Bolaven Loop', description: 'Routes, waterfalls, coffee stops and practical field notes for exploring the Bolaven Plateau.', icon: '04' },
   { slug: 'waterfalls', name: 'Waterfalls', description: 'The cascades and river landscapes worth the journey.', icon: '04' },
   { slug: 'things-to-do', name: 'Things to do', description: 'Ideas for a day, a weekend or a longer route.', icon: '05' },
   { slug: 'gyms-fitness', name: 'Gyms & Fitness', description: 'Muay Lao camps, weight rooms and practical places to keep training in Pakse.', icon: '06' },
