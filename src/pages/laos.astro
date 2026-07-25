@@ -2,9 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const destinations = [
-  { name: 'Luang Prabang', x: 287, y: 218, status: 'future' },
-  { name: 'Tad Lo', x: 365, y: 608, status: 'open', href: '/laos/tad-lo' },
-  { name: 'Pakse', x: 323, y: 680, status: 'open', href: '/laos/pakse' }
+  { name: 'Luang Prabang', x: 455, y: 345, status: 'future' },
+  { name: 'Tad Lo', x: 585, y: 1125, status: 'open', href: '/laos/tad-lo' },
+  { name: 'Pakse', x: 510, y: 1260, status: 'open', href: '/laos/pakse' }
 ];
 ---
 
@@ -23,56 +23,37 @@ const destinations = [
     <div class="map-sheet">
       <span class="map-sheet__note">Field map · not to scale</span>
 
-      <svg class="laos-map" viewBox="0 0 620 920" role="img" aria-labelledby="map-title map-description">
-        <title id="map-title">Illustrated map of Laos</title>
-        <desc id="map-description">A hand-drawn style map showing Pakse and Tad Lo as available destinations and Luang Prabang as a future destination.</desc>
+      <div class="map-layers">
+        <img
+          class="map-drawing"
+          src="/images/hand-drawn/laos-map.webp"
+          alt="Hand-drawn map of Laos"
+          width="1024"
+          height="1536"
+        />
 
-        <defs>
-          <filter id="roughen" x="-10%" y="-10%" width="120%" height="120%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="8" result="noise" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.4" xChannelSelector="R" yChannelSelector="G" />
-          </filter>
-        </defs>
+        <svg class="map-overlay" viewBox="0 0 1024 1536" role="img" aria-labelledby="map-title map-description">
+          <title id="map-title">Destinations in Laos</title>
+          <desc id="map-description">Pakse and Tad Lo are available destinations. Luang Prabang is a future chapter.</desc>
 
-        <g class="map-outline" filter="url(#roughen)">
-          <path d="M330 52 C302 83 278 113 274 146 C270 177 288 203 277 232 C265 265 235 285 236 319 C237 353 264 369 258 401 C252 431 223 449 229 484 C236 521 273 532 274 569 C275 600 250 628 255 663 C260 696 292 714 291 748 C290 782 268 804 278 838 C290 875 331 883 357 856 C383 829 375 792 390 764 C406 734 440 718 439 684 C438 650 409 631 413 598 C417 565 448 544 445 510 C442 478 413 462 417 428 C421 396 450 376 447 341 C444 306 413 290 414 256 C415 221 441 194 428 162 C417 133 384 121 376 91 C370 68 356 47 330 52 Z" />
-          <path class="map-outline__echo" d="M326 60 C299 90 286 117 281 147 C275 181 294 204 283 235 C270 269 243 291 244 320 C246 351 269 370 264 400 C258 432 232 451 237 483 C243 515 280 532 281 567 C283 601 258 629 263 660 C268 692 299 711 299 747 C298 780 277 804 286 834" />
-        </g>
-
-        <g class="river-lines" aria-hidden="true">
-          <path d="M337 104 C321 164 327 221 314 280 C302 336 315 392 305 449 C294 510 311 566 302 627 C296 670 306 716 322 772" />
-          <path d="M320 326 C349 348 357 378 350 409" />
-          <path d="M304 538 C334 553 348 574 349 603" />
-        </g>
-
-        <g class="terrain-marks" aria-hidden="true">
-          <path d="M286 170 l12 -14 l12 15 M303 184 l15 -18 l14 17 M339 251 l13 -16 l13 16 M275 461 l12 -14 l12 15 M363 514 l14 -17 l14 17" />
-          <path d="M288 730 C309 719 333 719 353 730 M294 744 C315 734 337 735 358 747" />
-        </g>
-
-        {destinations.map((destination) => destination.status === 'open' ? (
-          <a class="destination destination--open" href={destination.href} aria-label={`Explore ${destination.name}`}>
-            <circle class="destination__pulse" cx={destination.x} cy={destination.y} r="18" />
-            <circle class="destination__dot" cx={destination.x} cy={destination.y} r="7" />
-            <path class="destination__leader" d={`M${destination.x + 10} ${destination.y - 3} C${destination.x + 28} ${destination.y - 13}, ${destination.x + 42} ${destination.y - 13}, ${destination.x + 54} ${destination.y - 13}`} />
-            <text class="destination__name" x={destination.x + 60} y={destination.y - 8}>{destination.name}</text>
-            <text class="destination__status" x={destination.x + 60} y={destination.y + 13}>explore</text>
-          </a>
-        ) : (
-          <g class="destination destination--future" aria-label={`${destination.name}, coming later`}>
-            <circle class="destination__dot" cx={destination.x} cy={destination.y} r="5" />
-            <path class="destination__leader" d={`M${destination.x + 9} ${destination.y - 2} C${destination.x + 25} ${destination.y - 12}, ${destination.x + 39} ${destination.y - 12}, ${destination.x + 51} ${destination.y - 12}`} />
-            <text class="destination__name" x={destination.x + 57} y={destination.y - 7}>{destination.name}</text>
-            <text class="destination__status" x={destination.x + 57} y={destination.y + 13}>later chapter</text>
-          </g>
-        ))}
-
-        <g class="map-compass" transform="translate(470 760)" aria-hidden="true">
-          <circle cx="0" cy="0" r="35" />
-          <path d="M0 -27 L6 -5 L0 0 L-6 -5 Z M0 27 L-6 5 L0 0 L6 5 Z M-27 0 L-5 -6 L0 0 L-5 6 Z M27 0 L5 6 L0 0 L5 -6 Z" />
-          <text x="0" y="-44">N</text>
-        </g>
-      </svg>
+          {destinations.map((destination) => destination.status === 'open' ? (
+            <a class="destination destination--open" href={destination.href} aria-label={`Explore ${destination.name}`}>
+              <circle class="destination__pulse" cx={destination.x} cy={destination.y} r="30" />
+              <circle class="destination__dot" cx={destination.x} cy={destination.y} r="11" />
+              <path class="destination__leader" d={`M${destination.x + 16} ${destination.y - 4} C${destination.x + 44} ${destination.y - 24}, ${destination.x + 70} ${destination.y - 24}, ${destination.x + 92} ${destination.y - 24}`} />
+              <text class="destination__name" x={destination.x + 103} y={destination.y - 14}>{destination.name}</text>
+              <text class="destination__status" x={destination.x + 103} y={destination.y + 18}>explore</text>
+            </a>
+          ) : (
+            <g class="destination destination--future" aria-label={`${destination.name}, future chapter`}>
+              <circle class="destination__dot" cx={destination.x} cy={destination.y} r="9" />
+              <path class="destination__leader" d={`M${destination.x + 15} ${destination.y - 3} C${destination.x + 42} ${destination.y - 22}, ${destination.x + 67} ${destination.y - 22}, ${destination.x + 88} ${destination.y - 22}`} />
+              <text class="destination__name" x={destination.x + 99} y={destination.y - 12}>{destination.name}</text>
+              <text class="destination__status" x={destination.x + 99} y={destination.y + 19}>later chapter</text>
+            </g>
+          ))}
+        </svg>
+      </div>
 
       <div class="map-legend" aria-label="Map legend">
         <span><i class="map-legend__dot map-legend__dot--open"></i> Open chapter</span>
@@ -114,32 +95,38 @@ const destinations = [
 
   .map-sheet {
     position: relative;
-    max-width: 920px;
+    max-width: 900px;
     margin: 0 auto;
     padding: clamp(1rem, 3vw, 2.5rem);
     border: 1px solid rgba(31, 41, 36, 0.18);
-    background:
-      linear-gradient(rgba(49, 85, 69, 0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(49, 85, 69, 0.025) 1px, transparent 1px),
-      #f7f2e6;
-    background-size: 28px 28px;
+    background: #f7f2e6;
   }
 
   .map-sheet::before,
   .map-sheet::after {
     content: '';
     position: absolute;
+    z-index: 3;
     width: 78px;
     height: 22px;
     background: rgba(199, 181, 143, 0.48);
+  }
+
+  .map-sheet::before {
+    top: -9px;
+    left: 8%;
     transform: rotate(-4deg);
   }
 
-  .map-sheet::before { top: -9px; left: 8%; }
-  .map-sheet::after { right: 8%; bottom: -8px; transform: rotate(3deg); }
+  .map-sheet::after {
+    right: 8%;
+    bottom: -8px;
+    transform: rotate(3deg);
+  }
 
   .map-sheet__note {
     position: absolute;
+    z-index: 4;
     top: 1.25rem;
     right: 1.5rem;
     font-family: Georgia, serif;
@@ -149,55 +136,42 @@ const destinations = [
     opacity: 0.58;
   }
 
-  .laos-map {
-    display: block;
-    width: min(100%, 650px);
-    height: auto;
+  .map-layers {
+    position: relative;
+    width: min(100%, 620px);
     margin: 0 auto;
+  }
+
+  .map-drawing {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .map-overlay {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
     overflow: visible;
-  }
-
-  .map-outline path {
-    fill: rgba(49, 85, 69, 0.055);
-    stroke: #26362e;
-    stroke-width: 3.2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .map-outline .map-outline__echo {
-    fill: none;
-    stroke-width: 0.9;
-    opacity: 0.34;
-  }
-
-  .river-lines path {
-    fill: none;
-    stroke: #64786f;
-    stroke-width: 1.3;
-    stroke-linecap: round;
-    stroke-dasharray: 2 5;
-    opacity: 0.55;
-  }
-
-  .terrain-marks path {
-    fill: none;
-    stroke: #59675f;
-    stroke-width: 1.4;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    opacity: 0.5;
+    pointer-events: none;
   }
 
   .destination {
     color: #315545;
+  }
+
+  a.destination {
+    pointer-events: auto;
+    cursor: pointer;
     text-decoration: none;
   }
 
   .destination__dot {
     fill: #f7f2e6;
     stroke: currentColor;
-    stroke-width: 3;
+    stroke-width: 5;
   }
 
   .destination--open .destination__dot {
@@ -205,9 +179,9 @@ const destinations = [
   }
 
   .destination__pulse {
-    fill: rgba(49, 85, 69, 0.09);
-    stroke: rgba(49, 85, 69, 0.32);
-    stroke-width: 1;
+    fill: rgba(49, 85, 69, 0.1);
+    stroke: rgba(49, 85, 69, 0.34);
+    stroke-width: 2;
     transform-box: fill-box;
     transform-origin: center;
     animation: map-pulse 2.8s ease-out infinite;
@@ -216,32 +190,28 @@ const destinations = [
   .destination__leader {
     fill: none;
     stroke: currentColor;
-    stroke-width: 1.2;
+    stroke-width: 2;
     stroke-linecap: round;
   }
 
   .destination__name {
     fill: currentColor;
     font-family: Georgia, serif;
-    font-size: 22px;
+    font-size: 34px;
     font-weight: 700;
   }
 
   .destination__status {
     fill: currentColor;
     font-family: Arial, sans-serif;
-    font-size: 10px;
+    font-size: 15px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
   }
 
   .destination--future {
     color: #7f857e;
-    opacity: 0.68;
-  }
-
-  a.destination {
-    cursor: pointer;
+    opacity: 0.72;
   }
 
   a.destination:hover,
@@ -252,23 +222,7 @@ const destinations = [
 
   a.destination:hover .destination__dot,
   a.destination:focus-visible .destination__dot {
-    stroke-width: 5;
-  }
-
-  .map-compass circle,
-  .map-compass path {
-    fill: none;
-    stroke: #59675f;
-    stroke-width: 1;
-    opacity: 0.55;
-  }
-
-  .map-compass text {
-    fill: #59675f;
-    font-family: Georgia, serif;
-    font-size: 13px;
-    text-anchor: middle;
-    opacity: 0.75;
+    stroke-width: 8;
   }
 
   .map-legend {
@@ -276,7 +230,7 @@ const destinations = [
     justify-content: center;
     gap: 1.5rem;
     flex-wrap: wrap;
-    padding: 0.75rem 0 0.25rem;
+    padding: 1rem 0 0.25rem;
     font-size: 0.76rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -291,7 +245,7 @@ const destinations = [
   .map-legend__dot {
     width: 9px;
     height: 9px;
-    border: 1.5px solid #7f857e;
+    border: 1px solid #7f857e;
     border-radius: 50%;
   }
 
@@ -301,35 +255,33 @@ const destinations = [
   }
 
   @keyframes map-pulse {
-    0% { transform: scale(0.7); opacity: 0.65; }
-    75%, 100% { transform: scale(1.3); opacity: 0; }
+    0% { opacity: 0.75; transform: scale(0.72); }
+    75%, 100% { opacity: 0; transform: scale(1.35); }
   }
 
   @media (max-width: 640px) {
     .laos-map-page {
-      padding-top: 3rem;
+      padding-top: 3.5rem;
     }
 
     .map-sheet {
-      padding: 2.75rem 0.25rem 1rem;
+      padding: 0.75rem;
     }
 
     .map-sheet__note {
-      top: 0.9rem;
-      right: 0.85rem;
-    }
-
-    .destination__name {
-      font-size: 19px;
-    }
-
-    .map-legend {
-      gap: 0.8rem;
+      top: 0.8rem;
+      right: 0.9rem;
       font-size: 0.65rem;
+    }
+
+    .map-layers {
+      width: 100%;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .destination__pulse { animation: none; }
+    .destination__pulse {
+      animation: none;
+    }
   }
 </style>
