@@ -11,262 +11,461 @@ const tripPlace = JSON.stringify({
 const cardNumber = String(index + 1).padStart(2, '0');
 const phoneHref = place.phone ? `tel:${place.phone.replace(/[^\d+]/g, '')}` : '';
 const verificationLabel = place.status === 'verified' ? 'Field checked' : 'Map saved';
+const dialogId = `place-dialog-${place.slug}`;
+const dialogTitleId = `${dialogId}-title`;
 ---
-<details class="place-card" id={place.slug}>
-  <summary class="place-card__summary">
-    <div class="place-card__image">
-      <img src={place.image} alt={place.imageAlt} loading="lazy" />
-      <span class="place-card__number" aria-hidden="true">{cardNumber}</span>
-      <span class="place-card__photo-note hand-note">{place.cardNote}</span>
-    </div>
-    <div class="place-card__preview">
-      <p class="place-card__type">{place.subcategory} · {place.city}</p>
-      <h2>{place.name}</h2>
-      <p>{place.shortDescription}</p>
-      <span class="place-card__toggle">
-        <span class="place-card__toggle-open">Open this address</span>
-        <span class="place-card__toggle-close">Close this address</span>
-        <b aria-hidden="true">→</b>
-      </span>
-    </div>
-  </summary>
-
-  <div class="place-card__details">
-    <div class="place-card__editorial">
-      <p class="eyebrow">Why it belongs in the atlas</p>
-      <p class="place-card__description">{place.description}</p>
-      <p class="place-card__recommend">{place.whyWeRecommend}</p>
-      <ul class="place-card__highlights" aria-label="Highlights">
-        {place.highlights.map((highlight: string) => <li>{highlight}</li>)}
-      </ul>
-    </div>
-
-    <aside class="place-card__practical" aria-label={`Practical information for ${place.name}`}>
-      <span class="place-card__checked">{verificationLabel} · {place.lastChecked}</span>
-      <dl>
-        <div><dt>Address</dt><dd>{place.address}</dd></div>
-        <div><dt>Hours</dt><dd>{place.hours}</dd></div>
-        <div><dt>Budget</dt><dd>{place.price}</dd></div>
-        <div><dt>Best for</dt><dd>{place.bestFor}</dd></div>
-      </dl>
-      <div class="place-card__actions">
-        <a class="place-card__map" href={place.mapsUrl} target="_blank" rel="noreferrer">Open Google Maps <span aria-hidden="true">↗</span></a>
-        {place.phone && <a class="place-card__phone" href={phoneHref}>Call the restaurant</a>}
-        <button class="trip-save-button" type="button" data-trip-add data-trip-id={place.slug} data-trip-place={tripPlace} aria-pressed="false">Add to My Trip</button>
-      </div>
-    </aside>
+<article class="place-card" id={place.slug}>
+  <div class="place-card__image">
+    <img src={place.image} alt={place.imageAlt} loading="lazy" width="720" height="520" />
+    <span class="place-card__number" aria-hidden="true">{cardNumber}</span>
+    <span class="place-card__photo-note hand-note">{place.cardNote}</span>
   </div>
-</details>
+
+  <div class="place-card__preview">
+    <p class="place-card__type">{place.subcategory} · {place.city}</p>
+    <h3>{place.name}</h3>
+    <p>{place.shortDescription}</p>
+    <span class="place-card__cta">Open this address <b aria-hidden="true">↗</b></span>
+  </div>
+
+  <button
+    class="place-card__open"
+    type="button"
+    data-place-open
+    data-place-dialog={dialogId}
+    aria-haspopup="dialog"
+    aria-controls={dialogId}
+    aria-label={`Open details for ${place.name}`}
+  ></button>
+
+  <dialog class="place-dialog" id={dialogId} aria-labelledby={dialogTitleId}>
+    <div class="place-dialog__shell">
+      <button class="place-dialog__close" type="button" data-place-close aria-label={`Close ${place.name}`}>×</button>
+
+      <div class="place-dialog__visual">
+        <img src={place.image} alt={place.imageAlt} loading="lazy" width="900" height="1200" />
+        <span class="place-dialog__number" aria-hidden="true">{cardNumber}</span>
+        <span class="place-dialog__photo-note hand-note">{place.cardNote}</span>
+      </div>
+
+      <div class="place-dialog__content">
+        <p class="eyebrow">{place.subcategory} · {place.city}</p>
+        <h2 id={dialogTitleId}>{place.name}</h2>
+        <p class="place-dialog__description">{place.description}</p>
+        <p class="place-dialog__recommend">{place.whyWeRecommend}</p>
+
+        <ul class="place-dialog__highlights" aria-label="Highlights">
+          {place.highlights.map((highlight: string) => <li>{highlight}</li>)}
+        </ul>
+
+        <div class="place-dialog__practical">
+          <span class="place-dialog__checked">{verificationLabel} · {place.lastChecked}</span>
+          <dl>
+            <div><dt>Address</dt><dd>{place.address}</dd></div>
+            <div><dt>Hours</dt><dd>{place.hours}</dd></div>
+            <div><dt>Budget</dt><dd>{place.price}</dd></div>
+            <div><dt>Best for</dt><dd>{place.bestFor}</dd></div>
+          </dl>
+        </div>
+
+        <div class="place-dialog__actions">
+          <a class="place-dialog__map" href={place.mapsUrl} target="_blank" rel="noreferrer">
+            Open Google Maps <span aria-hidden="true">↗</span>
+          </a>
+          <button
+            class="trip-save-button"
+            type="button"
+            data-trip-add
+            data-trip-id={place.slug}
+            data-trip-place={tripPlace}
+            aria-pressed="false"
+          >Add to My Trip</button>
+          {place.phone && <a class="place-dialog__phone" href={phoneHref}>Call the restaurant</a>}
+        </div>
+      </div>
+    </div>
+  </dialog>
+</article>
 
 <style>
   .place-card {
-    width: min(370px, 100%);
+    position: relative;
+    min-width: 0;
     overflow: hidden;
     border: 1px solid rgba(75, 81, 70, .22);
     background: #eee8dc;
-    box-shadow: 6px 8px 0 rgba(49, 85, 69, .08);
-    transition: width 420ms cubic-bezier(.22, .75, .2, 1), box-shadow 220ms ease;
+    box-shadow: 5px 7px 0 rgba(49, 85, 69, .07);
+    transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease;
   }
-  .place-card[open] {
-    display: grid;
-    grid-template-columns: minmax(290px, 370px) minmax(0, 1fr);
-    width: 100%;
-    box-shadow: 10px 14px 0 rgba(49, 85, 69, .09);
+  .place-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(49, 85, 69, .38);
+    box-shadow: 8px 11px 0 rgba(49, 85, 69, .09);
   }
-  .place-card__summary {
-    display: block;
-    min-width: 0;
-    list-style: none;
-    cursor: pointer;
+  .place-card:has(.place-card__open:focus-visible) {
+    outline: 2px solid var(--terracotta);
+    outline-offset: 4px;
   }
-  .place-card__summary::-webkit-details-marker { display: none; }
-  .place-card__summary:focus-visible { outline: 2px solid var(--terracotta); outline-offset: -4px; }
-  .place-card__image { position: relative; height: 220px; overflow: hidden; background: var(--paper-deep); }
+  .place-card__image {
+    position: relative;
+    height: 205px;
+    overflow: hidden;
+    background: var(--paper-deep);
+  }
   .place-card__image:after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, transparent 45%, rgba(24, 31, 26, .38));
+    background: linear-gradient(180deg, transparent 42%, rgba(24, 31, 26, .42));
     pointer-events: none;
   }
   .place-card__image img {
+    width: 100%;
     height: 100%;
+    object-fit: cover;
     filter: saturate(.72) contrast(.96);
     transition: transform 500ms ease, filter 300ms ease;
   }
-  .place-card__summary:hover .place-card__image img { transform: scale(1.025); filter: saturate(.86) contrast(.98); }
-  .place-card__number {
+  .place-card:hover .place-card__image img {
+    transform: scale(1.035);
+    filter: saturate(.86) contrast(.98);
+  }
+  .place-card__number,
+  .place-dialog__number {
     position: absolute;
     z-index: 2;
-    top: 15px;
-    left: 15px;
+    top: 14px;
+    left: 14px;
     display: grid;
     place-items: center;
-    width: 43px;
-    height: 43px;
+    width: 42px;
+    height: 42px;
     border: 1px solid rgba(255, 253, 248, .8);
     border-radius: 50%;
-    background: rgba(32, 60, 49, .76);
+    background: rgba(32, 60, 49, .78);
     color: var(--white);
-    font: 500 1rem/1 Fraunces, serif;
+    font: 500 .95rem/1 Fraunces, serif;
   }
-  .place-card__photo-note {
+  .place-card__photo-note,
+  .place-dialog__photo-note {
     position: absolute;
     z-index: 2;
-    right: 17px;
-    bottom: 13px;
+    right: 15px;
+    bottom: 12px;
     color: var(--white);
-    font-size: 1.08rem;
+    font-size: 1rem;
     transform: rotate(-3deg);
   }
-  .place-card__preview { min-height: 250px; padding: 28px 28px 25px; }
+  .place-card__preview {
+    display: flex;
+    min-height: 216px;
+    flex-direction: column;
+    padding: 25px 24px 23px;
+  }
   .place-card__type {
-    margin: 0 0 13px;
+    margin: 0 0 11px;
     color: var(--terracotta);
-    font-size: .61rem;
+    font-size: .58rem;
     font-weight: 700;
     letter-spacing: .13em;
     text-transform: uppercase;
   }
-  .place-card__preview h2 {
-    margin: 0 0 13px;
+  .place-card__preview h3 {
+    margin: 0 0 11px;
     color: var(--green);
-    font-size: clamp(2rem, 3vw, 2.7rem);
+    font: 500 clamp(1.62rem, 2.3vw, 2.12rem)/1.05 Fraunces, serif;
   }
   .place-card__preview > p:not(.place-card__type) {
-    min-height: 52px;
-    margin: 0 0 26px;
+    margin: 0 0 22px;
     color: var(--muted);
-    font-size: .86rem;
+    font-size: .79rem;
     line-height: 1.55;
   }
-  .place-card__toggle {
-    display: flex;
+  .place-card__cta {
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 9px;
     width: max-content;
+    margin-top: auto;
     padding-bottom: 5px;
     border-bottom: 1px solid var(--green);
     color: var(--green);
-    font-size: .65rem;
+    font-size: .61rem;
     font-weight: 700;
     letter-spacing: .1em;
     text-transform: uppercase;
   }
-  .place-card__toggle b { font-size: 1rem; transition: transform 280ms ease; }
-  .place-card__toggle-close { display: none; }
-  .place-card[open] .place-card__toggle-open { display: none; }
-  .place-card[open] .place-card__toggle-close { display: inline; }
-  .place-card[open] .place-card__toggle b { transform: rotate(180deg); }
-  .place-card__details {
-    min-width: 0;
-    border-left: 1px solid rgba(75, 81, 70, .18);
+  .place-card__cta b {
+    color: var(--terracotta);
+    font-size: .9rem;
+    transition: transform 220ms ease;
+  }
+  .place-card:hover .place-card__cta b { transform: translate(2px, -2px); }
+  .place-card__open {
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  .place-card__open:focus { outline: 0; }
+
+  .place-dialog {
+    width: min(1040px, calc(100vw - 42px));
+    max-width: none;
+    max-height: none;
+    margin: auto;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid rgba(49, 85, 69, .28);
     background: var(--paper);
+    color: var(--ink);
+    box-shadow: 0 28px 85px rgba(17, 29, 23, .35);
   }
-  .place-card[open] .place-card__details {
+  .place-dialog::backdrop {
+    background: rgba(20, 29, 24, .74);
+    backdrop-filter: blur(3px);
+  }
+  .place-dialog[open] { animation: place-dialog-in 240ms cubic-bezier(.22, .75, .2, 1) both; }
+  .place-dialog__shell {
+    position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(230px, .85fr);
-    animation: reveal-details 360ms 80ms ease both;
+    grid-template-columns: minmax(300px, .78fr) minmax(0, 1.22fr);
+    height: min(720px, 88svh);
   }
-  .place-card__editorial { padding: 42px clamp(28px, 4vw, 58px); }
-  .place-card__editorial .eyebrow { margin-bottom: 17px; }
-  .place-card__description {
-    max-width: 530px;
-    margin-bottom: 21px;
+  .place-dialog__close {
+    position: absolute;
+    z-index: 4;
+    top: 17px;
+    right: 17px;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    padding: 0 0 3px;
+    border: 1px solid rgba(49, 85, 69, .2);
+    border-radius: 50%;
+    background: rgba(247, 242, 230, .94);
     color: var(--green);
-    font: 500 clamp(1.25rem, 2vw, 1.7rem)/1.35 Fraunces, serif;
+    font: 400 1.75rem/1 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: transform 180ms ease, background 180ms ease;
   }
-  .place-card__recommend {
-    max-width: 560px;
-    margin-bottom: 28px;
+  .place-dialog__close:hover { transform: rotate(5deg); background: var(--white); }
+  .place-dialog__close:focus-visible { outline: 2px solid var(--terracotta); outline-offset: 3px; }
+  .place-dialog__visual {
+    position: relative;
+    min-height: 0;
+    overflow: hidden;
+    background: var(--green);
+  }
+  .place-dialog__visual:after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(17, 29, 23, .08) 35%, rgba(17, 29, 23, .5));
+    pointer-events: none;
+  }
+  .place-dialog__visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(.78) contrast(.97);
+  }
+  .place-dialog__number { top: 20px; left: 20px; width: 48px; height: 48px; }
+  .place-dialog__photo-note { right: 24px; bottom: 23px; font-size: 1.3rem; }
+  .place-dialog__content {
+    min-width: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 52px clamp(34px, 5vw, 62px) 42px;
+  }
+  .place-dialog__content .eyebrow { margin-bottom: 15px; }
+  .place-dialog__content h2 {
+    max-width: calc(100% - 38px);
+    margin: 0 0 18px;
+    color: var(--green);
+    font-size: clamp(2.45rem, 4.2vw, 4.2rem);
+    line-height: .98;
+  }
+  .place-dialog__description {
+    max-width: 620px;
+    margin: 0 0 17px;
+    color: var(--green);
+    font: 500 clamp(1.12rem, 1.8vw, 1.45rem)/1.38 Fraunces, serif;
+  }
+  .place-dialog__recommend {
+    max-width: 650px;
+    margin: 0 0 23px;
     color: var(--muted);
-    font-size: .87rem;
-    line-height: 1.7;
+    font-size: .82rem;
+    line-height: 1.68;
   }
-  .place-card__highlights {
+  .place-dialog__highlights {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin: 0;
+    gap: 7px;
+    margin: 0 0 29px;
     padding: 0;
     list-style: none;
   }
-  .place-card__highlights li {
-    padding: 7px 10px;
+  .place-dialog__highlights li {
+    padding: 6px 9px;
     border: 1px solid var(--line);
     color: var(--green);
-    font-size: .65rem;
+    font-size: .61rem;
   }
-  .place-card__practical {
-    padding: 42px clamp(24px, 3vw, 38px);
-    border-left: 1px solid var(--line);
-    background: #e7e1d4;
+  .place-dialog__practical {
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
   }
-  .place-card__checked {
+  .place-dialog__checked {
     display: block;
-    margin-bottom: 23px;
+    margin-bottom: 12px;
     color: var(--terracotta);
-    font-size: .57rem;
+    font-size: .55rem;
     font-weight: 700;
     letter-spacing: .12em;
     text-transform: uppercase;
   }
-  .place-card__practical dl { display: grid; gap: 0; margin: 0 0 26px; }
-  .place-card__practical dl div {
+  .place-dialog__practical dl {
     display: grid;
-    grid-template-columns: 70px 1fr;
-    gap: 12px;
-    padding: 11px 0;
-    border-top: 1px solid rgba(75, 81, 70, .18);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0;
+    border-top: 1px solid rgba(75, 81, 70, .16);
   }
-  .place-card__practical dt {
+  .place-dialog__practical dl div {
+    min-width: 0;
+    padding: 12px 14px 12px 0;
+    border-bottom: 1px solid rgba(75, 81, 70, .16);
+  }
+  .place-dialog__practical dl div:nth-child(even) {
+    padding-left: 16px;
+    border-left: 1px solid rgba(75, 81, 70, .16);
+  }
+  .place-dialog__practical dt {
+    margin-bottom: 4px;
     color: var(--muted);
-    font-size: .57rem;
+    font-size: .54rem;
     font-weight: 700;
-    letter-spacing: .1em;
+    letter-spacing: .09em;
     text-transform: uppercase;
   }
-  .place-card__practical dd { margin: 0; color: var(--ink); font-size: .75rem; line-height: 1.45; }
-  .place-card__actions { display: grid; justify-items: start; gap: 12px; }
-  .place-card__map, .trip-save-button {
+  .place-dialog__practical dd {
+    margin: 0;
+    color: var(--ink);
+    font-size: .71rem;
+    line-height: 1.45;
+  }
+  .place-dialog__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .place-dialog__map,
+  .trip-save-button {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
+    justify-content: center;
+    gap: 11px;
+    min-height: 39px;
     padding: 10px 13px;
     border: 0;
     background: var(--green);
     color: var(--white);
-    font: 700 .65rem/1 'DM Sans', sans-serif;
+    font: 700 .62rem/1 'DM Sans', sans-serif;
+    cursor: pointer;
   }
-  .place-card__phone {
-    padding-bottom: 4px;
+  .trip-save-button { background: var(--terracotta); }
+  .trip-save-button:disabled { background: #b8afa0; color: var(--white); cursor: default; }
+  .place-dialog__phone {
+    padding: 9px 2px 5px;
     border-bottom: 1px solid var(--line);
     color: var(--green);
-    font-size: .68rem;
+    font-size: .65rem;
     font-weight: 700;
   }
-  .trip-save-button { background: var(--terracotta); cursor: pointer; }
-  .trip-save-button:disabled { color: var(--muted); border-bottom-color: var(--line); cursor: default; }
-  @keyframes reveal-details {
-    from { opacity: 0; transform: translateX(-12px); }
-    to { opacity: 1; transform: translateX(0); }
+  :global(html.place-modal-open) { overflow: hidden; }
+
+  @keyframes place-dialog-in {
+    from { opacity: 0; transform: translateY(14px) scale(.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
   }
-  @media (max-width: 900px) {
-    .place-card[open] { grid-template-columns: minmax(260px, 330px) minmax(0, 1fr); }
-    .place-card[open] .place-card__details { grid-template-columns: 1fr; }
-    .place-card__practical { border-top: 1px solid var(--line); border-left: 0; }
+  @media (max-width: 980px) {
+    .place-card__preview { min-height: 205px; }
+    .place-dialog { width: min(880px, calc(100vw - 32px)); }
+    .place-dialog__shell { grid-template-columns: minmax(260px, .72fr) minmax(0, 1.28fr); }
+    .place-dialog__content { padding: 47px 34px 36px; }
   }
   @media (max-width: 700px) {
-    .place-card, .place-card[open] { display: block; width: 100%; }
-    .place-card__image { height: 230px; }
-    .place-card__preview { min-height: 0; padding: 24px 22px 23px; }
-    .place-card__preview > p:not(.place-card__type) { min-height: 0; margin-bottom: 22px; }
-    .place-card__details { border-top: 1px solid var(--line); border-left: 0; }
-    .place-card__editorial, .place-card__practical { padding: 30px 22px; }
-    .place-card__practical dl div { grid-template-columns: 66px 1fr; }
+    .place-card__image { height: 220px; }
+    .place-card__preview { min-height: 0; padding: 23px 21px 22px; }
+    .place-card__preview h3 { font-size: 1.95rem; }
+    .place-dialog {
+      width: calc(100vw - 20px);
+      height: min(92svh, 820px);
+    }
+    .place-dialog__shell {
+      grid-template-columns: 1fr;
+      grid-template-rows: 220px minmax(0, 1fr);
+      height: 100%;
+    }
+    .place-dialog__visual { min-height: 220px; }
+    .place-dialog__number { top: 14px; left: 14px; }
+    .place-dialog__photo-note { right: 18px; bottom: 15px; font-size: 1.1rem; }
+    .place-dialog__close { position: fixed; top: max(16px, env(safe-area-inset-top)); right: 16px; }
+    .place-dialog__content { padding: 30px 22px 32px; }
+    .place-dialog__content h2 { max-width: none; font-size: clamp(2.35rem, 12vw, 3.4rem); }
+    .place-dialog__practical dl { grid-template-columns: 1fr; }
+    .place-dialog__practical dl div,
+    .place-dialog__practical dl div:nth-child(even) {
+      padding: 10px 0;
+      border-left: 0;
+    }
+    .place-dialog__actions { align-items: stretch; }
+    .place-dialog__map, .trip-save-button { flex: 1 1 145px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .place-card, .place-card__image img, .place-card__toggle b { transition: none; }
-    .place-card[open] .place-card__details { animation: none; }
+    .place-card,
+    .place-card__image img,
+    .place-card__cta b,
+    .place-dialog[open],
+    .place-dialog__close { animation: none; transition: none; }
   }
 </style>
+
+<script>
+  let lastPlaceTrigger: HTMLElement | null = null;
+
+  const syncPageScroll = () => {
+    const hasOpenDialog = Boolean(document.querySelector('.place-dialog[open]'));
+    document.documentElement.classList.toggle('place-modal-open', hasOpenDialog);
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-place-open]').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const dialogId = trigger.dataset.placeDialog;
+      const dialog = dialogId ? document.getElementById(dialogId) : null;
+      if (!(dialog instanceof HTMLDialogElement)) return;
+      lastPlaceTrigger = trigger;
+      dialog.showModal();
+      syncPageScroll();
+    });
+  });
+
+  document.querySelectorAll<HTMLDialogElement>('.place-dialog').forEach((dialog) => {
+    dialog.querySelector('[data-place-close]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('close', () => {
+      syncPageScroll();
+      lastPlaceTrigger?.focus();
+    });
+  });
+</script>

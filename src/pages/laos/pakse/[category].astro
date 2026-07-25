@@ -89,7 +89,7 @@ const schema = {
     </header>
 
     <div class="restaurant-listing__rule">
-      <span>Click the card to unfold the full field note</span>
+      <span>Choose a card to open the full field note</span>
       <span>Pakse · updated July 2026</span>
     </div>
 
@@ -199,7 +199,15 @@ const schema = {
     letter-spacing: .1em;
     text-transform: uppercase;
   }
-  .place-list { display: grid; justify-items: start; gap: 22px; }
+  .place-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(20px, 2.6vw, 32px);
+    align-items: stretch;
+  }
+  @media (max-width: 980px) {
+    .place-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
   @media (max-width: 700px) {
     .restaurant-hero { padding: 94px 0 68px; }
     .restaurant-hero__grid { display: flex; flex-direction: column; gap: 52px; margin-top: 28px; }
@@ -212,5 +220,6 @@ const schema = {
     .restaurant-listing__header h2 { font-size: clamp(2.75rem, 12vw, 3.7rem); }
     .restaurant-listing__aside { display: none; }
     .restaurant-listing__rule { display: grid; gap: 7px; }
+    .place-list { grid-template-columns: 1fr; gap: 22px; }
   }
 </style>
