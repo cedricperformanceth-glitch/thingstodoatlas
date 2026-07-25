@@ -60,8 +60,8 @@ const luangPrabang = { x: 356, y: 576 };
           <g class="city-marker city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Vientiane guide coming soon">
             <circle class="city-marker__ring" cx={vientiane.x} cy={vientiane.y} r="22" />
             <circle class="city-marker__dot" cx={vientiane.x} cy={vientiane.y} r="9" />
-            <path class="city-marker__leader" d={`M${vientiane.x + 15} ${vientiane.y - 5} L${vientiane.x + 76} ${vientiane.y - 28}`} />
-            <text class="city-marker__label" x={vientiane.x + 84} y={vientiane.y - 32}>Vientiane</text>
+            <path class="city-marker__leader" d={`M${vientiane.x - 15} ${vientiane.y + 4} L${vientiane.x - 76} ${vientiane.y + 65}`} />
+            <text class="city-marker__label city-marker__label--left" x={vientiane.x - 84} y={vientiane.y + 73}>Vientiane</text>
             <foreignObject class="city-preview" x="34" y="830" width="470" height="430">
               <div class="city-note city-note--vientiane" xmlns="http://www.w3.org/1999/xhtml">
                 <span class="city-note__tape" aria-hidden="true"></span>
@@ -98,8 +98,8 @@ const luangPrabang = { x: 356, y: 576 };
           <g class="city-marker city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Don Det guide coming soon">
             <circle class="city-marker__ring" cx={donDet.x} cy={donDet.y} r="22" />
             <circle class="city-marker__dot" cx={donDet.x} cy={donDet.y} r="9" />
-            <path class="city-marker__leader" d={`M${donDet.x + 15} ${donDet.y - 5} L${donDet.x + 76} ${donDet.y - 28}`} />
-            <text class="city-marker__label" x={donDet.x + 84} y={donDet.y - 32}>Don Det</text>
+            <path class="city-marker__leader" d={`M${donDet.x + 15} ${donDet.y + 2} L${donDet.x + 76} ${donDet.y + 18}`} />
+            <text class="city-marker__label" x={donDet.x + 84} y={donDet.y + 27}>Don Det</text>
             <foreignObject class="city-preview" x="34" y="830" width="470" height="430">
               <div class="city-note city-note--dondet" xmlns="http://www.w3.org/1999/xhtml">
                 <span class="city-note__tape" aria-hidden="true"></span>
@@ -174,7 +174,7 @@ const luangPrabang = { x: 356, y: 576 };
   .map-layers {
     position: relative;
     width: 80vw;
-    aspect-ratio: 2 / 3;
+    height: 80vw;
     margin: 0 auto;
     background: #fff;
     box-shadow: 0 0 0 1px rgba(31, 41, 36, 0.2), 0 8px 22px rgba(31, 41, 36, 0.06);
@@ -363,7 +363,7 @@ const luangPrabang = { x: 356, y: 576 };
     .map-sheet__chapter { font-size: 12px; }
     .map-sheet__title { font-size: 42px; }
     .map-sheet__note { margin-left: auto; font-size: 13px; }
-    .map-layers { width: calc(100vw - 4rem); }
+    .map-layers { width: calc(100vw - 4rem); height: calc(100vw - 4rem); }
     .map-drawing,
     .map-overlay {
       width: calc((100vw - 4rem) * 0.765);
