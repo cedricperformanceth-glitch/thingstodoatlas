@@ -417,3 +417,8 @@
   .country-section #country-sri-lanka-3 .country-feature__sri-cta{margin:0 0 28px auto;font-size:1.04rem}
   .country-section #country-sri-lanka-3 .country-feature__sri-cta svg{width:36px}
 }
+
+
+/* Sri Lanka CH.03: bus ticket pinned to the upper-right of the right-hand notebook page. */
+.country-section #country-sri-lanka-3 .country-feature__sri-ticket{position:absolute;z-index:7;top:-82px;right:-72px;width:166px;height:auto;border:0!important;box-shadow:none!important;object-fit:contain;transform:rotate(7deg);filter:drop-shadow(0 8px 8px rgba(37,41,35,.16));pointer-events:none}
+@media(max-width:700px){.country-section #country-sri-lanka-3 .country-feature__sri-ticket{top:-38px;right:-6px;width:126px;transform:rotate(6deg)}}

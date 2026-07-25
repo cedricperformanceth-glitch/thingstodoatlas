@@ -111,6 +111,7 @@ const homepageCountryChapters = homepageCountries.map((country, index) => index 
             </>}
           </div>
           <div class="country-feature__copy">
+            {country.slug === 'sri-lanka' && <img class="country-feature__sri-ticket" src="/images/hand-drawn/sri-lanka-bus-ticket.webp" alt="" width="1024" height="1536" loading="lazy" aria-hidden="true" />}
             <p class:list={["eyebrow", ['thailand', 'laos', 'sri-lanka'].includes(country.slug) && "country-feature__mood-note"]}>{country.mood}</p>
             <h3>{country.name}</h3>
             <p>{country.description}</p>
