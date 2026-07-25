@@ -7,6 +7,7 @@ const pakse = { x: 679, y: 1024 };
 const vientiane = { x: 256, y: 657 };
 const tadLo = { x: 736, y: 970 };
 const donDet = { x: 696, y: 1152 };
+const luangPrabang = { x: 356, y: 576 };
 ---
 
 <BaseLayout
@@ -89,6 +90,13 @@ const donDet = { x: 696, y: 1152 };
             <circle class="temporary-marker__dot" cx={donDet.x} cy={donDet.y} r="9" />
             <path class="temporary-marker__leader" d={`M${donDet.x + 15} ${donDet.y - 5} L${donDet.x + 76} ${donDet.y - 28}`} />
             <text class="temporary-marker__label" x={donDet.x + 84} y={donDet.y - 32}>Don Det</text>
+          </g>
+
+          <g class="temporary-marker" aria-label="Luang Prabang reference point">
+            <circle class="temporary-marker__ring" cx={luangPrabang.x} cy={luangPrabang.y} r="22" />
+            <circle class="temporary-marker__dot" cx={luangPrabang.x} cy={luangPrabang.y} r="9" />
+            <path class="temporary-marker__leader" d={`M${luangPrabang.x + 15} ${luangPrabang.y - 5} L${luangPrabang.x + 76} ${luangPrabang.y - 28}`} />
+            <text class="temporary-marker__label" x={luangPrabang.x + 84} y={luangPrabang.y - 32}>Luang Prabang</text>
           </g>
         </svg>
       </div>
