@@ -9,7 +9,9 @@ export function getStaticPaths() {
     { params: { category: 'cafes' } },
     { params: { category: 'scooter-rental' } },
     { params: { category: 'gyms-fitness' } },
-    { params: { category: 'accommodation' } }
+    { params: { category: 'accommodation' } },
+    { params: { category: 'markets-shopping' } },
+    { params: { category: 'essential-information' } }
   ];
 }
 
@@ -29,6 +31,8 @@ const isRestaurantCategory = slug === 'restaurants';
 const isCafeCategory = slug === 'cafes';
 const isGymCategory = slug === 'gyms-fitness';
 const isAccommodationCategory = slug === 'accommodation';
+const isMarketCategory = slug === 'markets-shopping';
+const isInformationCategory = slug === 'essential-information';
 const pageDescription = isRestaurantCategory
   ? `${category.description} Discover practical details, what to order and why each restaurant belongs in the guide.`
   : isCafeCategory
@@ -37,7 +41,11 @@ const pageDescription = isRestaurantCategory
       ? `${category.description} Discover training styles, practical details and why each gym belongs in the guide.`
       : isAccommodationCategory
         ? `${category.description} Compare guesthouses, hostels and hotels, then save the stays that fit your trip.`
-        : `${category.description} Discover practical rental details and why each address belongs in the guide.`;
+        : isMarketCategory
+          ? `${category.description} Compare local markets, shopping centres and useful places to stock up.`
+          : isInformationCategory
+            ? `${category.description} Keep visa, hospital and healthcare locations ready before you need them.`
+            : `${category.description} Discover practical rental details and why each address belongs in the guide.`;
 const schemaPlaceType = isRestaurantCategory
   ? 'Restaurant'
   : isCafeCategory
@@ -47,6 +55,19 @@ const schemaPlaceType = isRestaurantCategory
       : isAccommodationCategory
         ? 'LodgingBusiness'
         : 'LocalBusiness';
+const getSchemaPlaceType = (place: (typeof places)[number]) => {
+  if (isMarketCategory) {
+    if (place.subcategory === 'Shopping centre') return 'ShoppingCenter';
+    if (place.subcategory === 'Supermarket') return 'GroceryStore';
+    return 'Store';
+  }
+  if (isInformationCategory) {
+    if (place.subcategory === 'Immigration office') return 'GovernmentOffice';
+    if (place.subcategory === 'Provincial hospital') return 'Hospital';
+    if (place.subcategory === 'Dental clinic') return 'Dentist';
+  }
+  return schemaPlaceType;
+};
 
 const schema = {
   '@context': 'https://schema.org',
@@ -56,7 +77,7 @@ const schema = {
     '@type': 'ListItem',
     position: index + 1,
     item: {
-      '@type': schemaPlaceType,
+      '@type': getSchemaPlaceType(place),
       name: place.name,
       ...(isRestaurantCategory || isCafeCategory ? { servesCuisine: place.cuisine } : {}),
       image: place.image,
