@@ -346,29 +346,74 @@
   .country-section #country-laos-2 .country-feature__laos-map{width:160px;margin:8px 0 16px;transform:rotate(-4deg)}
   .country-section #country-laos-2{height:650px;min-height:650px}
   .country-section #country-laos-2 .country-feature__photo-link--laos{transform:translate(12px,10px) rotate(-2deg)}
-.country-section #country-laos-2 .country-feature__copy img.journal-drawing--lotus{top:34px;right:-8px;width:88px}
-
-/* CH.03 Sri Lanka: keep the existing open-book treatment and replace only its chapter artwork. */
-.country-section #country-sri-lanka-3 .country-feature__image:after{display:none!important;background:none!important}
-.country-section #country-sri-lanka-3 .country-feature__image > img:first-child{position:relative;top:8px!important;width:190px!important;height:180px!important;object-fit:cover;transform:rotate(-2deg)}
-.country-section #country-sri-lanka-3 .country-feature__copy > .country-feature__route-note:not(.country-feature__sri-field-note){display:none!important}
-.country-section #country-sri-lanka-3 .country-feature__copy > .text-link--large{display:none!important}
-.country-section #country-sri-lanka-3 .country-feature__sri-assets{position:absolute;z-index:6;top:-22px;left:-520px;width:500px;height:550px;pointer-events:none}
-.country-section #country-sri-lanka-3 .country-feature__sri-assets img{position:absolute;display:block;height:auto;object-fit:contain;mix-blend-mode:multiply}
-.country-section #country-sri-lanka-3 .country-feature__sri-mask{left:-12px;top:198px;width:154px;opacity:.9;transform:rotate(-7deg)}
-.country-section #country-sri-lanka-3 .country-feature__sri-coast{left:205px;top:178px;width:188px;height:178px;padding:5px 5px 16px;background:#fbf7ef;border:1px solid rgba(112,96,71,.18);box-shadow:0 9px 16px rgba(37,41,35,.15),2px 4px 7px rgba(37,41,35,.08);transform:rotate(3deg)}
-.country-section #country-sri-lanka-3 .country-feature__sri-beach{left:105px;top:337px;width:176px;height:168px;padding:5px 5px 15px;background:#fbf7ef;border:1px solid rgba(112,96,71,.18);box-shadow:0 9px 16px rgba(37,41,35,.15),2px 4px 7px rgba(37,41,35,.08);transform:rotate(-5deg)}
-.country-section #country-sri-lanka-3 .country-feature__sri-field-note{display:block;position:relative;z-index:5;width:max-content;max-width:100%;margin:10px 0 0;padding:12px 0 0 10px;border-top:1px solid rgba(123,105,76,.28);border-left:1px solid rgba(177,103,77,.42);color:#934d37;font-weight:600;transform:rotate(-1deg)}
-.country-section #country-sri-lanka-3 .country-feature__sri-map{position:absolute;z-index:4;left:-2px;bottom:12px;width:112px;height:auto;opacity:.82;mix-blend-mode:multiply;transform:rotate(-5deg)}
-.country-section #country-sri-lanka-3 .country-feature__sri-cta{position:absolute;z-index:6;right:0;bottom:22px;display:inline-flex;align-items:center;gap:10px;color:var(--terracotta);font:500 1.24rem/1 Caveat,cursive;text-decoration:none;transform:rotate(-2deg)}
-.country-section #country-sri-lanka-3 .country-feature__sri-cta span{font:inherit}
-@media(max-width:700px){
-  .country-section #country-sri-lanka-3 .country-feature__image > img:first-child{top:8px!important;width:160px!important;height:150px!important}
-  .country-section #country-sri-lanka-3 .country-feature__sri-assets{top:-350px;left:0;width:100%;height:340px}
-  .country-section #country-sri-lanka-3 .country-feature__sri-mask{left:-4px;top:170px;width:112px}
-  .country-section #country-sri-lanka-3 .country-feature__sri-coast{left:auto;right:8px;top:130px;width:148px;height:140px;padding:4px 4px 12px}
-  .country-section #country-sri-lanka-3 .country-feature__sri-beach{left:74px;top:226px;width:140px;height:132px;padding:4px 4px 12px}
-  .country-section #country-sri-lanka-3 .country-feature__sri-map{position:relative;left:auto;bottom:auto;width:92px;margin:8px 0 0;transform:rotate(-4deg)}
-  .country-section #country-sri-lanka-3 .country-feature__sri-cta{position:relative;right:auto;bottom:auto;margin:12px 0 0 18px;font-size:1.04rem}
+  .country-section #country-laos-2 .country-feature__copy img.journal-drawing--lotus{top:34px;right:-8px;width:88px}
 }
+
+/* CH.03 Sri Lanka: a denser left-page collage balanced by a quieter field-note page. */
+.country-section #country-sri-lanka-3{height:650px;min-height:650px}
+.country-section #country-sri-lanka-3 .country-feature__image{width:auto;height:500px;margin:0 34px 0 4px;overflow:visible;box-shadow:none}
+.country-section #country-sri-lanka-3 .country-feature__image:after{display:none!important;content:none!important;background:none!important}
+.country-section #country-sri-lanka-3 .country-feature__number{top:-26px;left:4px}
+.country-section #country-sri-lanka-3 .country-feature__sri-gallery{position:absolute;z-index:3;inset:-6px 0 0;pointer-events:none}
+.country-section #country-sri-lanka-3 .country-feature__sri-polaroid{position:absolute;display:block;margin:0;height:auto!important;object-fit:contain;object-position:center;background:#fbf7ef;border:5px solid rgba(255,252,245,.97);border-bottom-width:12px;box-shadow:0 13px 19px rgba(37,41,35,.17),2px 6px 9px rgba(37,41,35,.08);filter:none}
+.country-section #country-sri-lanka-3 .country-feature__sri-polaroid--main{top:18px;left:28px;width:205px!important;height:182px!important;transform:rotate(-2.4deg)}
+.country-section #country-sri-lanka-3 .country-feature__sri-polaroid--coast{top:198px;right:-2px;width:184px!important;height:168px!important;transform:rotate(3.2deg)}
+.country-section #country-sri-lanka-3 .country-feature__sri-polaroid--beach{left:44px;bottom:2px;width:180px!important;height:162px!important;transform:rotate(-5deg)}
+.country-section #country-sri-lanka-3 .country-feature__sri-first-stop{position:absolute;z-index:8;top:42px;left:252px;color:var(--terracotta);font-size:1.05rem;line-height:1.35;transform:rotate(-5deg);white-space:nowrap}
+.country-section #country-sri-lanka-3 .country-feature__sri-first-stop b{font:inherit;font-size:.94rem}
+.country-section #country-sri-lanka-3 .country-feature__sri-mask{position:absolute;z-index:5;top:205px;left:-2px;width:154px!important;height:auto!important;border:0!important;box-shadow:none!important;object-fit:contain;filter:none;mix-blend-mode:multiply;transform:rotate(-7deg)}
+.country-section #country-sri-lanka-3 .country-feature__sri-tape{position:absolute;z-index:9;display:block;width:62px;height:13px;background:rgba(221,190,142,.66);clip-path:polygon(2% 12%,96% 0,100% 82%,8% 100%);filter:drop-shadow(0 1px 0 rgba(126,97,61,.12))}
+.country-section #country-sri-lanka-3 .country-feature__sri-tape--main{top:12px;left:165px;transform:rotate(4deg)}
+.country-section #country-sri-lanka-3 .country-feature__sri-tape--coast{top:191px;right:26px;transform:rotate(-5deg)}
+.country-section #country-sri-lanka-3 .country-feature__sri-tape--beach{left:70px;bottom:151px;transform:rotate(2deg)}
+.country-section #country-sri-lanka-3 .country-feature__copy{padding-top:22px;padding-bottom:4px}
+.country-section #country-sri-lanka-3 .country-feature__copy > .country-feature__mood-note{font:500 1.28rem/1 Caveat,cursive;letter-spacing:.02em;text-transform:none;color:var(--terracotta);margin-bottom:18px;transform:rotate(-3deg)}
+.country-section #country-sri-lanka-3 .country-feature__copy h3{margin-bottom:20px}
+.country-section #country-sri-lanka-3 .country-feature__copy > p:not(.eyebrow){margin-bottom:18px}
+.country-section #country-sri-lanka-3 .country-feature__sri-field-note{position:relative;z-index:5;width:max-content;max-width:100%;margin:10px 0 4px;padding:11px 0 0 10px;color:#934d37;font-weight:600;border-top:1px solid rgba(123,105,76,.28);border-left:1px solid rgba(177,103,77,.42);transform:rotate(-1deg)}
+.country-section #country-sri-lanka-3 .country-feature__sri-map-row{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;width:100%;min-height:136px;margin-top:4px}
+.country-section #country-sri-lanka-3 .country-feature__sri-map{position:relative;z-index:4;display:block;width:108px;height:auto;margin:0 0 -12px 2px;border:0;box-shadow:none;opacity:.84;filter:contrast(.96);mix-blend-mode:multiply;transform:rotate(-5deg)}
+.country-section #country-sri-lanka-3 .country-feature__sri-cta{position:relative;z-index:6;display:inline-flex;align-items:center;gap:11px;margin:0 0 24px auto;color:var(--terracotta);font:500 1.24rem/1 Caveat,cursive;text-decoration:none;white-space:nowrap;transform:rotate(-2deg)}
+.country-section #country-sri-lanka-3 .country-feature__sri-cta svg{width:42px;height:15px;fill:none;stroke:currentColor;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+
+@media(min-width:701px) and (max-width:900px){
+  .country-section #country-sri-lanka-3 .country-feature__image{margin-right:22px}
+  .country-section #country-sri-lanka-3 .country-feature__sri-polaroid--main{left:12px;width:160px!important;height:146px!important}
+  .country-section #country-sri-lanka-3 .country-feature__sri-first-stop{top:38px;left:180px;font-size:.92rem}
+  .country-section #country-sri-lanka-3 .country-feature__sri-polaroid--coast{top:186px;right:-4px;width:148px!important;height:138px!important}
+  .country-section #country-sri-lanka-3 .country-feature__sri-mask{top:194px;left:-12px;width:120px!important}
+  .country-section #country-sri-lanka-3 .country-feature__sri-polaroid--beach{left:44px;bottom:18px;width:148px!important;height:136px!important}
+  .country-section #country-sri-lanka-3 .country-feature__sri-tape--main{left:120px}
+  .country-section #country-sri-lanka-3 .country-feature__copy{padding-left:24px;padding-right:4px}
+  .country-section #country-sri-lanka-3 .country-feature__copy h3{font-size:4rem}
+  .country-section #country-sri-lanka-3 .country-feature__copy > p:not(.eyebrow){font-size:.9rem;line-height:1.6}
+  .country-section #country-sri-lanka-3 .country-feature__sri-field-note{font-size:.95rem}
+  .country-section #country-sri-lanka-3 .country-feature__sri-map{width:90px}
+  .country-section #country-sri-lanka-3 .country-feature__sri-cta{font-size:1.05rem}
+}
+
+@media(max-width:700px){
+  .country-section #country-sri-lanka-3{height:auto;min-height:0;padding-bottom:56px}
+  .country-section #country-sri-lanka-3 .country-feature__image{width:100%;height:438px;margin:0;align-self:stretch}
+  .country-section #country-sri-lanka-3 .country-feature__number{top:-20px;left:0}
+  .country-section #country-sri-lanka-3 .country-feature__sri-gallery{inset:0 0 0}
+  .country-section #country-sri-lanka-3 .country-feature__sri-polaroid{border-width:4px;border-bottom-width:10px}
+  .country-section #country-sri-lanka-3 .country-feature__sri-polaroid--main{top:6px;left:4px;width:158px!important;height:146px!important}
+  .country-section #country-sri-lanka-3 .country-feature__sri-first-stop{top:26px;left:174px;font-size:.9rem}
+  .country-section #country-sri-lanka-3 .country-feature__sri-first-stop b{font-size:.83rem}
+  .country-section #country-sri-lanka-3 .country-feature__sri-mask{top:170px;left:-8px;width:114px!important}
+  .country-section #country-sri-lanka-3 .country-feature__sri-polaroid--coast{top:158px;right:-4px;width:146px!important;height:134px!important}
+  .country-section #country-sri-lanka-3 .country-feature__sri-polaroid--beach{left:70px;bottom:4px;width:150px!important;height:136px!important}
+  .country-section #country-sri-lanka-3 .country-feature__sri-tape{width:48px;height:11px}
+  .country-section #country-sri-lanka-3 .country-feature__sri-tape--main{top:1px;left:112px}
+  .country-section #country-sri-lanka-3 .country-feature__sri-tape--coast{top:153px;right:18px}
+  .country-section #country-sri-lanka-3 .country-feature__sri-tape--beach{left:88px;bottom:129px}
+  .country-section #country-sri-lanka-3 .country-feature__copy{padding:34px 14px 0}
+  .country-section #country-sri-lanka-3 .country-feature__copy h3{font-size:clamp(3.2rem,15vw,4.5rem)}
+  .country-section #country-sri-lanka-3 .country-feature__copy > p:not(.eyebrow){margin-bottom:18px}
+  .country-section #country-sri-lanka-3 .country-feature__sri-field-note{width:100%;margin-top:8px;font-size:.92rem;line-height:1.25}
+  .country-section #country-sri-lanka-3 .country-feature__sri-map-row{min-height:126px;margin-top:8px}
+  .country-section #country-sri-lanka-3 .country-feature__sri-map{width:92px;margin:0}
+  .country-section #country-sri-lanka-3 .country-feature__sri-cta{margin:0 0 28px auto;font-size:1.04rem}
+  .country-section #country-sri-lanka-3 .country-feature__sri-cta svg{width:36px}
 }

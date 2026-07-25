@@ -17,8 +17,7 @@ const homepageCountryChapters = homepageCountries.map((country, index) => index 
   mood: 'Sunset · Serenity',
   description: 'From misty tea hills to the warm southern coast, Sri Lanka unfolds through slow train rides, ocean sunsets and stories shared along the way.',
   image: '/images/hand-drawn/sri-lanka-chapter-main.webp',
-  routeNote: 'FIELD NOTE — HILLSIDE TEA · CAMPFIRES ON THE BEACH',
-  status: 'open'
+  routeNote: 'HILLSIDE TEA · CAMPFIRES ON THE BEACH'
 } : country);
 ---
 
@@ -79,26 +78,57 @@ const homepageCountryChapters = homepageCountries.map((country, index) => index 
     </div>
     <div class="country-route" aria-hidden="true"><svg viewBox="0 0 100 1000" preserveAspectRatio="none"><path d="M50 0 C24 110 76 205 50 330 C24 455 76 555 50 675 C28 790 71 885 50 1000" /><circle cx="50" cy="0" r="5" /><circle cx="50" cy="500" r="5" /><circle cx="50" cy="1000" r="5" /></svg></div>
     <div class="country-list">
-      {homepageCountryChapters.map((country, index) => <article class:list={["country-feature", "country-feature--1"]} id={index === 0 ? `country-${country.slug}` : `country-${country.slug}-${index + 1}`}>
-        <span class="country-feature__stitching" aria-hidden="true"></span>
-        <div class="country-feature__image"><img src={country.image} alt={`${country.name} landscape`} width="1600" height="1100" loading="lazy" /><span class="country-feature__number"><small>CH.</small><b>0{index + 1}</b></span>{country.slug === 'thailand' && <><span class="country-feature__photo-note">First stop</span><span class="country-feature__sunrise-note" aria-hidden="true">← sunrise</span><a class="country-feature__photo-link" href={`/${country.slug}`} aria-label={`Explore ${country.name}`}><span>Explore {country.name}</span><svg viewBox="0 0 34 12" aria-hidden="true"><path d="M1 6 C9 5 18 7 31 5 M25 1 L32 5 L26 11" /></svg></a><img class="country-feature__under-drawing" src="/images/hand-drawn/bangkok-skytrain.webp" alt="" width="1536" height="1024" loading="lazy" aria-hidden="true" /><img class="country-feature__second-photo" src="/images/thailand-wat-arun.webp" alt="Wat Arun and Bangkok skyline" width="499" height="613" loading="lazy" /><svg class="country-feature__photo-connector" viewBox="0 0 120 80" aria-hidden="true"><path d="M3 9 C34 12 51 49 115 70" /></svg><svg class="country-feature__tape country-feature__tape--main" viewBox="0 0 72 18" aria-hidden="true"><path d="M2 3 L68 1 L70 15 L4 17 Z" /></svg><svg class="country-feature__tape country-feature__tape--second" viewBox="0 0 72 18" aria-hidden="true"><path d="M2 3 L68 1 L70 15 L4 17 Z" /></svg></>}{country.slug === 'laos' && <><svg class="country-feature__tape country-feature__tape--main" viewBox="0 0 72 18" aria-hidden="true"><path d="M2 3 L68 1 L70 15 L4 17 Z" /></svg><svg class="country-feature__tape country-feature__tape--second" viewBox="0 0 72 18" aria-hidden="true"><path d="M2 3 L68 1 L70 15 L4 17 Z" /></svg></>}</div>
-        <div class="country-feature__copy">
-          {country.slug === 'sri-lanka' && <div class="country-feature__sri-assets" aria-hidden="true"><img class="country-feature__sri-mask" src="/images/hand-drawn/sri-lanka-mask.webp" alt="" /><img class="country-feature__sri-coast" src="/images/hand-drawn/sri-lanka-coast-polaroid.webp" alt="" /><img class="country-feature__sri-beach" src="/images/hand-drawn/sri-lanka-beach-polaroid.webp" alt="" /></div>}
-          {country.slug === 'sri-lanka' && <span class="country-feature__route-note country-feature__sri-field-note hand-note">FIELD NOTE — HILLSIDE TEA · CAMPFIRES ON THE BEACH</span>}
-          {country.slug === 'sri-lanka' && <img class="country-feature__sri-map" src="/images/hand-drawn/sri-lanka-map.webp" alt="Hand-drawn map of Sri Lanka" width="676" height="1166" loading="lazy" />}
-          {country.slug === 'sri-lanka' && <a class="country-feature__sri-cta" href="#country-sri-lanka-3">Explore Sri Lanka <span aria-hidden="true">→</span></a>}
-          <p class:list={["eyebrow", (country.slug === 'thailand' || country.slug === 'laos') && "country-feature__mood-note"]}>{country.mood}</p>
-          <h3>{country.name}</h3>
-          <p>{country.description}</p>
-          {country.slug === 'laos' && <span class="country-feature__route-note hand-note">FIELD NOTE — River mist · quiet rhythms</span>}
-          {country.slug === 'laos' && <div class="country-feature__laos-map-row"><img class="journal-drawing journal-drawing--laos-map country-feature__laos-map" src="/images/hand-drawn/laos-map.webp" alt="" width="1024" height="1536" loading="lazy" aria-hidden="true" /><a class="country-feature__photo-link country-feature__photo-link--laos" href={`/${country.slug}`} aria-label={`Explore ${country.name}`}><span>Explore {country.name}</span><svg viewBox="0 0 34 12" aria-hidden="true"><path d="M1 6 C9 5 18 7 31 5 M25 1 L32 5 L26 11" /></svg></a></div>}
-          {country.slug === 'laos' && <img class="journal-drawing journal-drawing--lotus" src="/images/hand-drawn/lotus-field-note.webp" alt="" width="1200" height="1200" loading="lazy" aria-hidden="true" />}
-          {country.slug !== 'laos' && <span class="country-feature__route-note hand-note">field note — {country.routeNote}</span>}
-          {country.slug === 'thailand' && <img class="journal-drawing journal-drawing--thailand-map country-feature__margin-drawing" src="/images/hand-drawn/thailand-map.webp" alt="" width="1024" height="1536" loading="lazy" aria-hidden="true" />}
-          {country.slug === 'thailand' && <a class="country-feature__photo-link country-feature__photo-link--right-page" href={`/${country.slug}`} aria-label={`Explore ${country.name}`}><span>Explore {country.name}</span><svg viewBox="0 0 34 12" aria-hidden="true"><path d="M1 6 C9 5 18 7 31 5 M25 1 L32 5 L26 11" /></svg></a>}
-          {country.status === 'open' ? <a class="text-link text-link--large" href={`/${country.slug}`}>Enter the {country.name} chapter <span aria-hidden="true">→</span></a> : <span class="coming-note">Chapter opening soon <span aria-hidden="true">·</span> stay curious</span>}
-        </div>
-      </article>)}
+      {homepageCountryChapters.map((country, index) =>
+        <article class:list={["country-feature", "country-feature--1"]} id={index === 0 ? `country-${country.slug}` : `country-${country.slug}-${index + 1}`}>
+          <span class="country-feature__stitching" aria-hidden="true"></span>
+          <div class="country-feature__image">
+            {country.slug === 'sri-lanka'
+              ? <div class="country-feature__sri-gallery">
+                  <img class="country-feature__sri-polaroid country-feature__sri-polaroid--main" src="/images/hand-drawn/sri-lanka-chapter-main.webp" alt="A colourful Sri Lankan bus on a palm-lined road" width="1254" height="1254" loading="lazy" />
+                  <span class="country-feature__sri-first-stop hand-note">First stop<br /><b>— Weligama</b></span>
+                  <img class="country-feature__sri-polaroid country-feature__sri-polaroid--coast" src="/images/hand-drawn/sri-lanka-coast-polaroid.webp" alt="Surfboards beneath a palm tree on the Sri Lankan coast" width="1254" height="1254" loading="lazy" />
+                  <img class="country-feature__sri-polaroid country-feature__sri-polaroid--beach" src="/images/hand-drawn/sri-lanka-beach-polaroid.webp" alt="Beach volleyball beside the sea in Sri Lanka" width="1254" height="1254" loading="lazy" />
+                  <img class="country-feature__sri-mask" src="/images/hand-drawn/sri-lanka-mask.webp" alt="" width="720" height="820" loading="lazy" aria-hidden="true" />
+                  <span class="country-feature__sri-tape country-feature__sri-tape--main" aria-hidden="true"></span>
+                  <span class="country-feature__sri-tape country-feature__sri-tape--coast" aria-hidden="true"></span>
+                  <span class="country-feature__sri-tape country-feature__sri-tape--beach" aria-hidden="true"></span>
+                </div>
+              : <img src={country.image} alt={`${country.name} landscape`} width="1600" height="1100" loading="lazy" />}
+            <span class="country-feature__number"><small>CH.</small><b>0{index + 1}</b></span>
+            {country.slug === 'thailand' && <>
+              <span class="country-feature__photo-note">First stop</span>
+              <span class="country-feature__sunrise-note" aria-hidden="true">← sunrise</span>
+              <a class="country-feature__photo-link" href={`/${country.slug}`} aria-label={`Explore ${country.name}`}><span>Explore {country.name}</span><svg viewBox="0 0 34 12" aria-hidden="true"><path d="M1 6 C9 5 18 7 31 5 M25 1 L32 5 L26 11" /></svg></a>
+              <img class="country-feature__under-drawing" src="/images/hand-drawn/bangkok-skytrain.webp" alt="" width="1536" height="1024" loading="lazy" aria-hidden="true" />
+              <img class="country-feature__second-photo" src="/images/thailand-wat-arun.webp" alt="Wat Arun and Bangkok skyline" width="499" height="613" loading="lazy" />
+              <svg class="country-feature__photo-connector" viewBox="0 0 120 80" aria-hidden="true"><path d="M3 9 C34 12 51 49 115 70" /></svg>
+              <svg class="country-feature__tape country-feature__tape--main" viewBox="0 0 72 18" aria-hidden="true"><path d="M2 3 L68 1 L70 15 L4 17 Z" /></svg>
+              <svg class="country-feature__tape country-feature__tape--second" viewBox="0 0 72 18" aria-hidden="true"><path d="M2 3 L68 1 L70 15 L4 17 Z" /></svg>
+            </>}
+            {country.slug === 'laos' && <>
+              <svg class="country-feature__tape country-feature__tape--main" viewBox="0 0 72 18" aria-hidden="true"><path d="M2 3 L68 1 L70 15 L4 17 Z" /></svg>
+              <svg class="country-feature__tape country-feature__tape--second" viewBox="0 0 72 18" aria-hidden="true"><path d="M2 3 L68 1 L70 15 L4 17 Z" /></svg>
+            </>}
+          </div>
+          <div class="country-feature__copy">
+            <p class:list={["eyebrow", ['thailand', 'laos', 'sri-lanka'].includes(country.slug) && "country-feature__mood-note"]}>{country.mood}</p>
+            <h3>{country.name}</h3>
+            <p>{country.description}</p>
+            {country.slug === 'laos' && <span class="country-feature__route-note hand-note">FIELD NOTE — River mist · quiet rhythms</span>}
+            {country.slug === 'laos' && <div class="country-feature__laos-map-row"><img class="journal-drawing journal-drawing--laos-map country-feature__laos-map" src="/images/hand-drawn/laos-map.webp" alt="" width="1024" height="1536" loading="lazy" aria-hidden="true" /><a class="country-feature__photo-link country-feature__photo-link--laos" href={`/${country.slug}`} aria-label={`Explore ${country.name}`}><span>Explore {country.name}</span><svg viewBox="0 0 34 12" aria-hidden="true"><path d="M1 6 C9 5 18 7 31 5 M25 1 L32 5 L26 11" /></svg></a></div>}
+            {country.slug === 'laos' && <img class="journal-drawing journal-drawing--lotus" src="/images/hand-drawn/lotus-field-note.webp" alt="" width="1200" height="1200" loading="lazy" aria-hidden="true" />}
+            {country.slug === 'thailand' && <span class="country-feature__route-note hand-note">field note — {country.routeNote}</span>}
+            {country.slug === 'thailand' && <img class="journal-drawing journal-drawing--thailand-map country-feature__margin-drawing" src="/images/hand-drawn/thailand-map.webp" alt="" width="1024" height="1536" loading="lazy" aria-hidden="true" />}
+            {country.slug === 'thailand' && <a class="country-feature__photo-link country-feature__photo-link--right-page" href={`/${country.slug}`} aria-label={`Explore ${country.name}`}><span>Explore {country.name}</span><svg viewBox="0 0 34 12" aria-hidden="true"><path d="M1 6 C9 5 18 7 31 5 M25 1 L32 5 L26 11" /></svg></a>}
+            {country.slug === 'sri-lanka' && <span class="country-feature__route-note country-feature__sri-field-note hand-note">FIELD NOTE — {country.routeNote}</span>}
+            {country.slug === 'sri-lanka' && <div class="country-feature__sri-map-row">
+              <img class="country-feature__sri-map" src="/images/hand-drawn/sri-lanka-map.webp" alt="Hand-drawn map of Sri Lanka" width="676" height="1166" loading="lazy" />
+              <a class="country-feature__sri-cta" href="/sri-lanka" aria-label="Explore Sri Lanka"><span>Explore Sri Lanka</span><svg viewBox="0 0 34 12" aria-hidden="true"><path d="M1 6 C9 5 18 7 31 5 M25 1 L32 5 L26 11" /></svg></a>
+            </div>}
+            {country.slug !== 'sri-lanka' && (country.status === 'open' ? <a class="text-link text-link--large" href={`/${country.slug}`}>Enter the {country.name} chapter <span aria-hidden="true">→</span></a> : <span class="coming-note">Chapter opening soon <span aria-hidden="true">·</span> stay curious</span>)}
+          </div>
+        </article>
+      )}
     </div>
   </section>
 
