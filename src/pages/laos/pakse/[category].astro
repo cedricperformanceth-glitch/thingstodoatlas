@@ -13,7 +13,10 @@ const category = getCategory(slug!);
 const places = getPlacesForCategory(slug!);
 if (!category) throw new Error('Category not found');
 const placeCount = places.length;
-const placeCountWords = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
+const placeCountWords = [
+  'Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
+  'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen'
+];
 const placeCountLabel = placeCountWords[placeCount] ?? String(placeCount);
 
 const schema = {
