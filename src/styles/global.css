@@ -14,5 +14,5 @@
 .header-note{color:#3f4b42;font-weight:600}
 
 /* Pakse directory — traced gym notebook illustration. */
-.pakse-categories .category-grid > .category-note:nth-child(7) .category-note__illustration{background:url('/images/laos/pakse/gym-bag-dumbbell.svg') center/contain no-repeat}
-.pakse-categories .category-grid > .category-note:nth-child(7) .category-note__illustration > svg{opacity:0}
+.pakse-categories .category-grid > .category-note:nth-child(6) .category-note__illustration{background:url('/images/laos/pakse/gym-bag-dumbbell.svg') center/contain no-repeat}
+.pakse-categories .category-grid > .category-note:nth-child(6) .category-note__illustration > svg{opacity:0}
