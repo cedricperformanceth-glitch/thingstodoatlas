@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const gridColumns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
+const pakse = { x: 662, y: 1024 };
 ---
 
 <BaseLayout
@@ -57,6 +58,13 @@ const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
                 <text class="grid-label grid-label--row" x="994" y={index * 128 + 72}>{label}</text>
               </>
             ))}
+          </g>
+
+          <g class="temporary-marker" aria-label="Pakse reference point">
+            <circle class="temporary-marker__ring" cx={pakse.x} cy={pakse.y} r="22" />
+            <circle class="temporary-marker__dot" cx={pakse.x} cy={pakse.y} r="9" />
+            <path class="temporary-marker__leader" d={`M${pakse.x + 15} ${pakse.y - 5} L${pakse.x + 76} ${pakse.y - 28}`} />
+            <text class="temporary-marker__label" x={pakse.x + 84} y={pakse.y - 32}>Pakse</text>
           </g>
         </svg>
       </div>
@@ -190,6 +198,40 @@ const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
 
   .grid-label--row {
     dominant-baseline: middle;
+  }
+
+  .temporary-marker {
+    color: #315545;
+  }
+
+  .temporary-marker__ring {
+    fill: rgba(49, 85, 69, 0.1);
+    stroke: currentColor;
+    stroke-width: 3;
+  }
+
+  .temporary-marker__dot {
+    fill: currentColor;
+    stroke: #fff;
+    stroke-width: 3;
+  }
+
+  .temporary-marker__leader {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  .temporary-marker__label {
+    fill: currentColor;
+    font-family: Georgia, serif;
+    font-size: 34px;
+    font-weight: 700;
+    paint-order: stroke;
+    stroke: #fff;
+    stroke-width: 7px;
+    stroke-linejoin: round;
   }
 
   .grid-help {
