@@ -5,6 +5,7 @@ const gridColumns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
 const pakse = { x: 679, y: 1024 };
 const vientiane = { x: 256, y: 657 };
+const tadLo = { x: 736, y: 970 };
 ---
 
 <BaseLayout
@@ -73,6 +74,13 @@ const vientiane = { x: 256, y: 657 };
             <circle class="temporary-marker__dot" cx={vientiane.x} cy={vientiane.y} r="9" />
             <path class="temporary-marker__leader" d={`M${vientiane.x + 15} ${vientiane.y - 5} L${vientiane.x + 76} ${vientiane.y - 28}`} />
             <text class="temporary-marker__label" x={vientiane.x + 84} y={vientiane.y - 32}>Vientiane</text>
+          </g>
+
+          <g class="temporary-marker" aria-label="Tad Lo reference point">
+            <circle class="temporary-marker__ring" cx={tadLo.x} cy={tadLo.y} r="22" />
+            <circle class="temporary-marker__dot" cx={tadLo.x} cy={tadLo.y} r="9" />
+            <path class="temporary-marker__leader" d={`M${tadLo.x - 15} ${tadLo.y - 5} L${tadLo.x - 76} ${tadLo.y - 28}`} />
+            <text class="temporary-marker__label temporary-marker__label--left" x={tadLo.x - 84} y={tadLo.y - 32}>Tad Lo</text>
           </g>
         </svg>
       </div>
@@ -240,6 +248,10 @@ const vientiane = { x: 256, y: 657 };
     stroke: #fff;
     stroke-width: 7px;
     stroke-linejoin: round;
+  }
+
+  .temporary-marker__label--left {
+    text-anchor: end;
   }
 
   .grid-help {
