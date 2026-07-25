@@ -326,8 +326,9 @@
 
 /* Thailand spread: the tuk-tuk sits on the right page beneath the secondary photograph. */
 .country-section #country-laos-2 .country-feature__image > img:first-child{top:-67px!important}
-.country-section #country-laos-2 .country-feature__image{background-image:url('/images/hand-drawn/tuk-tuk-page.webp')!important;background-repeat:no-repeat;background-position:calc(50% + 38px) 242px;background-size:220px auto}
-@media(max-width:700px){.country-section #country-laos-2 .country-feature__image > img:first-child{top:-53px!important}.country-section #country-laos-2 .country-feature__image{background-position:calc(50% + 38px) 186px;background-size:178px auto}.country-section #country-laos-2 .country-feature__tape--main{top:-46px;left:calc(50% - 118px)}.country-section #country-laos-2 .country-feature__tape--second{right:calc(50% - 118px);left:auto;top:180px}}
+.country-section #country-laos-2 .country-feature__image{background-image:none!important}
+.country-section #country-laos-2 .country-feature__image:after{content:'';display:block!important;position:absolute;z-index:8;top:242px;left:calc(50% - 34px);width:220px;height:230px;background:url('/images/hand-drawn/tuk-tuk-page.webp') center/contain no-repeat;transform:rotate(7deg);filter:none;pointer-events:none}
+@media(max-width:700px){.country-section #country-laos-2 .country-feature__image > img:first-child{top:-53px!important}.country-section #country-laos-2 .country-feature__image{background-image:none!important}.country-section #country-laos-2 .country-feature__image:after{top:186px;left:calc(50% - 13px);width:178px;height:186px;transform:rotate(7deg)}.country-section #country-laos-2 .country-feature__tape--main{top:-46px;left:calc(50% - 118px)}.country-section #country-laos-2 .country-feature__tape--second{right:calc(50% - 118px);left:auto;top:180px}}
 
 /* Laos CH.02: keep the journal note high, with the map tucked below its copy. */
 .country-section #country-laos-2 .country-feature__copy{padding-top:20px}
