@@ -1,10 +1,15 @@
+body:has(.restaurant-listing--restaurants),
+body:has(.restaurant-listing--restaurants) main {
+  background: #eee8dc;
+}
+
 .restaurant-listing--restaurants .place-card {
   overflow: visible;
   padding: clamp(10px, 1.25vw, 14px) clamp(10px, 1.25vw, 14px) 0;
-  border: 1px solid rgba(72, 67, 57, .14);
+  border: 1px solid rgba(72, 67, 57, .12);
   background:
-    linear-gradient(rgba(255, 254, 250, .96), rgba(246, 242, 233, .98)),
-    repeating-linear-gradient(0deg, rgba(63, 56, 45, .018) 0 1px, transparent 1px 4px);
+    linear-gradient(rgba(255, 255, 255, .99), rgba(255, 255, 255, .99)),
+    repeating-linear-gradient(0deg, rgba(63, 56, 45, .012) 0 1px, transparent 1px 4px);
   box-shadow:
     0 18px 30px rgba(45, 48, 40, .12),
     0 3px 7px rgba(45, 48, 40, .09);
@@ -22,7 +27,7 @@
 }
 
 .restaurant-listing--restaurants .place-card:hover {
-  border-color: rgba(72, 67, 57, .19);
+  border-color: rgba(72, 67, 57, .18);
   box-shadow:
     0 24px 38px rgba(45, 48, 40, .16),
     0 5px 9px rgba(45, 48, 40, .1);
