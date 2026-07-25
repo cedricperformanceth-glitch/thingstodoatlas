@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 520" role="img" aria-labelledby="title desc">
+  <title id="title">Hand-drawn laptop</title>
+  <desc id="desc">A simple black ink illustration of an open laptop.</desc>
+  <g fill="none" stroke="#252923" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke-width="5" d="M154 107c-2-17 10-29 27-31l304-29c18-2 30 9 32 27l22 250c2 18-10 30-27 32l-301 28c-18 2-30-9-32-27z"/>
+    <path stroke-width="3" d="M169 112c-1-10 5-17 16-18l292-27c10-1 17 5 18 16l21 224c1 10-5 17-16 18l-289 27c-11 1-18-5-19-16z"/>
+    <path stroke-width="2.5" d="m184 110 294-27 21 225-292 27z"/>
+    <path stroke-width="5" d="m156 356-46 68c-8 12-2 24 13 25l350 26c14 1 25-3 38-12l80-57c12-9 9-21-7-24l-397-38c-13-1-23 3-31 12z"/>
+    <path stroke-width="3" d="m122 433 355 25c14 1 24-2 35-10l67-48-395-37c-12-1-19 2-25 11l-43 59c-3 5 0 0 6 0z"/>
+    <path stroke-width="2.5" d="m173 387 257 25-14 20-254-23z"/>
+    <path stroke-width="2" d="m192 394 11 1m9 1 11 1m9 1 11 1m9 1 11 1m9 1 11 1m9 1 11 1m9 1 11 1m9 1 11 1m9 1 11 1m9 1 11 1m-235-7 9 1m9 1 9 1m9 1 9 1m9 1 9 1m9 1 9 1m9 1 9 1m9 1 9 1m9 1 9 1m9 1 9 1m-218-3 9 1m9 1 9 1m9 1 9 1m9 1 9 1m9 1 9 1m9 1 9 1m9 1 9 1m9 1 9 1m9 1 9 1"/>
+    <path stroke-width="3" d="m340 431 66 6c7 1 11 7 7 12l-18 19c-3 4-8 6-14 5l-64-5c-7-1-10-7-6-12l17-19c3-4 7-6 12-6z"/>
+    <path stroke-width="2" d="m119 428 345 25m-365-7 350 26"/>
+    <path stroke-width="2.2" d="M151 101c18-8 51-8 81-11m-75 272-17 27m361-31 31 4m-354 59 24 2" opacity=".62"/>
+  </g>
+</svg>

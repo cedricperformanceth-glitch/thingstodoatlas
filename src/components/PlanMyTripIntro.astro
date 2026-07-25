@@ -1,11 +1,6 @@
-<section class="plan-trip-intro" aria-labelledby="plan-my-trip-title">
+<section class="plan-trip-intro" aria-label="Plan my trip">
   <div class="plan-trip-intro__identity">
-    <img class="plan-trip-intro__logo" src="/images/plan-my-trip-logo.webp" alt="Plan My Trip notebook logo" width="1024" height="1536" />
-    <div>
-      <p class="plan-trip-intro__eyebrow">PLAN MY TRIP · STEP 01</p>
-      <h2 id="plan-my-trip-title">Every trip starts somewhere.</h2>
-      <p class="plan-trip-intro__copy">Choose the place you want to explore first. Inside each city guide, save the restaurants, stays and experiences you like — we’ll keep every address together for you.</p>
-    </div>
+    <img class="plan-trip-intro__logo" src="/images/laptop-line-art.svg" alt="Hand-drawn laptop for planning a trip" width="640" height="520" />
   </div>
 
   <div class="plan-trip-intro__choice">
@@ -37,11 +32,8 @@
     background: rgba(247, 242, 230, .62);
   }
 
-  .plan-trip-intro__identity { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: clamp(1.2rem, 3vw, 2.3rem); align-items: center; }
-  .plan-trip-intro__logo { width: 112px; height: 126px; object-fit: cover; object-position: center; mix-blend-mode: multiply; }
-  .plan-trip-intro__eyebrow { margin: 0 0 .8rem; color: #b76645; font-size: .61rem; font-weight: 700; letter-spacing: .15em; }
-  .plan-trip-intro h2 { margin: 0 0 1rem; color: #315545; font-size: clamp(2.2rem, 4vw, 4.2rem); }
-  .plan-trip-intro__copy { max-width: 590px; margin: 0; color: #667068; font-size: .96rem; line-height: 1.7; }
+  .plan-trip-intro__identity { display: flex; align-items: center; justify-content: center; min-height: 330px; }
+  .plan-trip-intro__logo { display: block; width: min(100%, 460px); height: auto; mix-blend-mode: multiply; }
   .plan-trip-intro__choice { padding-left: clamp(1.2rem, 3vw, 2.5rem); border-left: 1px solid rgba(49, 85, 69, .22); }
   .plan-trip-intro__question { margin: 0 0 1.3rem; color: #252923; font: 500 clamp(1.5rem, 2.5vw, 2.1rem)/1.1 Fraunces, serif; }
   .plan-trip-intro__label { display: block; margin-bottom: .45rem; color: #70766d; font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
@@ -52,9 +44,8 @@
   .plan-trip-intro__note { margin: 1rem 0 0; color: #70766d; font: 400 1rem/1 Caveat, cursive; transform: rotate(-2deg); }
   @media (max-width: 700px) {
     .plan-trip-intro { width: calc(100% - 2rem); grid-template-columns: 1fr; gap: 2rem; margin-top: 1.8rem; padding: 2rem 1rem 2.4rem; }
-    .plan-trip-intro__identity { grid-template-columns: 82px minmax(0, 1fr); gap: 1rem; }
-    .plan-trip-intro__logo { width: 82px; height: 100px; }
-    .plan-trip-intro h2 { font-size: 2.45rem; }
+    .plan-trip-intro__identity { min-height: 220px; }
+    .plan-trip-intro__logo { width: min(100%, 360px); }
     .plan-trip-intro__choice { padding: 1.8rem 0 0; border-top: 1px solid rgba(49, 85, 69, .22); border-left: 0; }
   }
 </style>
