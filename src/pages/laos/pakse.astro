@@ -105,9 +105,6 @@ const categories = [
             aria-label={`Explore ${category.title} in Pakse`}
           >
             <span class="category-note__tape" aria-hidden="true"></span>
-            <span class="category-note__paper-line category-note__paper-line--top" aria-hidden="true"></span>
-            <span class="category-note__paper-line category-note__paper-line--bottom" aria-hidden="true"></span>
-
             <span class="category-note__illustration" aria-hidden="true">
               {category.icon === 'restaurants' && (
                 <svg viewBox="0 0 160 120" focusable="false">
@@ -371,13 +368,9 @@ const categories = [
     overflow: visible;
     color: #181a18;
     text-decoration: none;
-    background:
-      linear-gradient(rgba(255,255,255,.18), rgba(255,255,255,.18)),
-      #f8f5ec;
-    border: 1px solid rgba(24, 26, 24, 0.78);
-    box-shadow:
-      4px 5px 0 rgba(24, 26, 24, 0.07),
-      0 12px 22px rgba(31, 41, 36, 0.07);
+    background: #f8f5ec;
+    border: 1px solid rgba(24, 26, 24, 0.2);
+    box-shadow: 0 5px 12px rgba(31, 41, 36, 0.045);
     transition: transform 180ms ease, box-shadow 180ms ease;
     isolation: isolate;
   }
@@ -387,34 +380,27 @@ const categories = [
   .category-note--2 { transform: rotate(-0.2deg); }
   .category-note--3 { transform: rotate(0.5deg); }
 
-  .category-note::before,
   .category-note::after {
     content: '';
     position: absolute;
-    inset: 4px;
+    inset: 0;
     z-index: -1;
     pointer-events: none;
+    display: none;
+    border-radius: 50%;
+    background: radial-gradient(circle at 78% 28%, rgba(143, 102, 63, 0.09), transparent 0 18%, rgba(143, 102, 63, 0.035) 28%, transparent 43%);
+    transform: rotate(-8deg) scale(0.9);
   }
 
-  .category-note::before {
-    border: 1px solid rgba(24, 26, 24, 0.18);
-    transform: rotate(0.15deg);
-  }
-
-  .category-note::after {
-    background-image:
-      radial-gradient(circle at 18% 22%, rgba(24, 26, 24, 0.07) 0 0.7px, transparent 0.8px),
-      radial-gradient(circle at 82% 72%, rgba(24, 26, 24, 0.055) 0 0.6px, transparent 0.7px);
-    background-size: 18px 18px, 23px 23px;
-    opacity: 0.7;
+  .category-note:nth-child(2)::after,
+  .category-note:nth-child(5)::after {
+    display: block;
   }
 
   .category-note:hover,
   .category-note:focus-visible {
-    transform: translateY(-3px) rotate(0deg);
-    box-shadow:
-      6px 8px 0 rgba(24, 26, 24, 0.08),
-      0 18px 30px rgba(31, 41, 36, 0.11);
+    transform: translateY(-2px) rotate(0deg);
+    box-shadow: 0 8px 16px rgba(31, 41, 36, 0.075);
   }
 
   .category-note:focus-visible {
@@ -428,24 +414,26 @@ const categories = [
     left: 0.75rem;
     width: 4.3rem;
     height: 1.25rem;
-    background: rgba(213, 204, 184, 0.78);
-    border: 1px solid rgba(24, 26, 24, 0.18);
+    background: rgba(213, 204, 184, 0.72);
+    border: 0;
     clip-path: polygon(2% 12%, 95% 0, 100% 84%, 5% 100%);
     transform: rotate(-6deg);
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,.32);
+    box-shadow: none;
   }
 
-  .category-note__paper-line {
-    position: absolute;
-    left: 0.65rem;
-    right: 0.65rem;
-    height: 1px;
-    background: rgba(24, 26, 24, 0.11);
-    pointer-events: none;
+  .category-note:nth-child(2) .category-note__tape,
+  .category-note:nth-child(3) .category-note__tape,
+  .category-note:nth-child(5) .category-note__tape,
+  .category-note:nth-child(7) .category-note__tape,
+  .category-note:nth-child(8) .category-note__tape {
+    display: none;
   }
 
-  .category-note__paper-line--top { top: 0.6rem; }
-  .category-note__paper-line--bottom { bottom: 0.6rem; }
+  .category-note:nth-child(4) .category-note__tape {
+    left: auto;
+    right: 1rem;
+    transform: rotate(5deg);
+  }
 
   .category-note__illustration {
     display: flex;
@@ -535,15 +523,20 @@ const categories = [
   }
 
   .category-note__corner {
+    display: none;
+  }
+
+  .category-note:nth-child(3) .category-note__corner,
+  .category-note:nth-child(7) .category-note__corner {
+    display: block;
     position: absolute;
     right: -1px;
     bottom: -1px;
     width: 2rem;
     height: 2rem;
-    background:
-      linear-gradient(135deg, transparent 0 47%, rgba(24, 26, 24, 0.22) 48% 49%, #e8e2d5 50% 100%);
+    background: linear-gradient(135deg, transparent 0 47%, rgba(24, 26, 24, 0.14) 48% 49%, #e8e2d5 50% 100%);
     clip-path: polygon(0 100%, 100% 0, 100% 100%);
-    filter: drop-shadow(-2px -2px 1px rgba(24, 26, 24, 0.08));
+    filter: none;
   }
 
   @media (max-width: 900px) {
