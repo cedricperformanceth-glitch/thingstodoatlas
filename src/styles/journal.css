@@ -251,12 +251,12 @@
 .country-section #country-laos-2{grid-template-columns:.82fr 1.18fr}
 .country-section #country-laos-2 .country-feature__image{grid-column:2;grid-row:1;width:calc(100% - 72px);margin-left:auto;margin-right:auto;transform:translateX(60px) perspective(1600px) rotateY(-.65deg)}
 .country-section #country-laos-2 .country-feature__image > img:first-child{top:0;width:320px!important;height:300px!important;margin-left:auto!important;margin-right:auto!important;object-fit:cover;transform:rotate(1.4deg)}
-.country-section #country-laos-2 .country-feature__tape--main{top:-57px;left:calc(50% - 145px);transform:rotate(5deg)}
+.country-section #country-laos-2 .country-feature__tape--main{top:-64px;left:calc(50% - 145px);transform:rotate(5deg)}
 .country-section #country-laos-2 .country-feature__tape--second{right:calc(50% - 145px);left:auto;top:220px;transform:rotate(-4deg)}
 .country-section #country-laos-2 .country-feature__copy{grid-column:1;grid-row:1;padding-left:16px;padding-right:40px;transform:perspective(1600px) rotateY(.65deg) rotate(.15deg)}
 .country-section #country-laos-2 .country-feature__copy{background-image:none}
 .country-section #country-laos-2 .country-feature__route-note{border-left:0}
-.country-section #country-laos-2 .country-feature__number{left:16px!important;right:auto!important;top:0!important}
+.country-section #country-laos-2 .country-feature__number{left:16px!important;right:auto!important;top:-105px!important}
 @media(max-width:700px){.country-section #country-laos-2 .country-feature__image{grid-column:auto;grid-row:auto;width:calc(100% - 52px);height:370px;margin:0 8px 0 12px;transform:none}.country-section #country-laos-2 .country-feature__image > img:first-child{width:260px!important;height:240px!important}.country-section #country-laos-2 .country-feature__copy{grid-column:auto;grid-row:auto;padding:38px 20px 0;transform:none}}
 .country-section .country-feature--2 .country-feature__copy{transform:perspective(1600px) rotateY(.65deg) rotate(.6deg)}
 .country-section .country-feature--3 .country-feature__copy{transform:perspective(1600px) rotateY(-.65deg) rotate(-.4deg)}
