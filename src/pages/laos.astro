@@ -186,8 +186,8 @@ const luangPrabang = { x: 356, y: 576 };
   .map-overlay { position: absolute; inset: 0; display: block; width: 620px; height: 930px; overflow: visible; pointer-events: auto; }
 
   .city-marker { color: #315545; cursor: pointer; outline: none; }
-  .city-marker--inactive { color: #76837d; cursor: default; }
-  .city-marker__ring { fill: color-mix(in srgb, currentColor 12%, transparent); stroke: currentColor; stroke-width: 3; transition: opacity 180ms ease, transform 180ms ease; transform-box: fill-box; transform-origin: center; }
+  .city-marker--inactive { color: #7f6d33; cursor: default; }
+  .city-marker__ring { fill: color-mix(in srgb, currentColor 14%, transparent); stroke: currentColor; stroke-width: 3; transition: opacity 180ms ease, transform 180ms ease; transform-box: fill-box; transform-origin: center; }
   .city-marker__dot { fill: currentColor; stroke: #fff; stroke-width: 3; }
   .city-marker__leader { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
   .city-marker__label { fill: currentColor; font-family: Georgia, serif; font-size: 34px; font-weight: 700; paint-order: stroke; stroke: #fff; stroke-width: 7px; stroke-linejoin: round; }
@@ -195,7 +195,7 @@ const luangPrabang = { x: 356, y: 576 };
   .city-marker--inactive .city-marker__ring,
   .city-marker--inactive .city-marker__dot,
   .city-marker--inactive .city-marker__leader,
-  .city-marker--inactive .city-marker__label { opacity: 0.72; }
+  .city-marker--inactive .city-marker__label { opacity: 0.88; }
   .city-marker:hover .city-marker__ring,
   .city-marker:focus .city-marker__ring { transform: scale(1.18); }
 
@@ -219,7 +219,7 @@ const luangPrabang = { x: 356, y: 576 };
     width: 420px;
     min-height: 350px;
     padding: 24px 24px 22px;
-    background: #efe2aa;
+    background: #f6dc57;
     color: #29342f;
     box-shadow: 0 18px 36px rgba(32, 42, 36, 0.2);
     font-family: Arial, sans-serif;
@@ -228,10 +228,10 @@ const luangPrabang = { x: 356, y: 576 };
 
   .city-note--tadlo,
   .city-note--dondet { transform: rotate(1.2deg); }
-  .city-note--vientiane { background: #e8dfb0; }
-  .city-note--dondet { background: #ead7a5; }
-  .city-note--luang { background: #e4ddb5; }
-  .city-note--active { background: #f0dfa0; }
+  .city-note--vientiane,
+  .city-note--dondet,
+  .city-note--luang { background: #f6dc57; }
+  .city-note--active { background: #88acd1; }
 
   .city-note__tape {
     position: absolute;
@@ -240,7 +240,7 @@ const luangPrabang = { x: 356, y: 576 };
     left: 50%;
     width: 112px;
     height: 28px;
-    background: rgba(222, 207, 170, 0.72);
+    background: rgba(232, 224, 198, 0.76);
     transform: translateX(-50%) rotate(-2deg);
   }
 
@@ -256,10 +256,12 @@ const luangPrabang = { x: 356, y: 576 };
   }
 
   .city-note__body { padding: 18px 5px 0; }
-  .city-note__badge { display: inline-block; margin-bottom: 9px; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #746548; }
+  .city-note__badge { display: inline-block; margin-bottom: 9px; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #5f532d; }
+  .city-note--active .city-note__badge { color: #254864; }
   .city-note strong { display: block; margin-bottom: 8px; font-family: Georgia, serif; font-size: 29px; }
-  .city-note p { margin: 0 0 14px; font-size: 13px; line-height: 1.55; color: rgba(41, 52, 47, 0.78); }
-  .city-note small { display: block; font-family: Georgia, serif; font-size: 12px; font-style: italic; color: rgba(49, 85, 69, 0.78); }
+  .city-note p { margin: 0 0 14px; font-size: 13px; line-height: 1.55; color: rgba(41, 52, 47, 0.8); }
+  .city-note small { display: block; font-family: Georgia, serif; font-size: 12px; font-style: italic; color: rgba(49, 85, 69, 0.82); }
+  .city-note--active small { color: rgba(31, 63, 86, 0.86); }
 
   @media (max-width: 1100px) {
     .city-preview { display: none; }
