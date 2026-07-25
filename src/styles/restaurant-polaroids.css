@@ -7,6 +7,7 @@ body:has(.restaurant-listing--restaurants) main {
   overflow: visible;
   padding: clamp(10px, 1.25vw, 14px) clamp(10px, 1.25vw, 14px) 0;
   border: 0;
+  border-radius: 0;
   background: #fff;
   box-shadow:
     0 18px 30px rgba(45, 48, 40, .12),
@@ -18,7 +19,9 @@ body:has(.restaurant-listing--restaurants) main {
 
 .restaurant-listing--restaurants .place-card__open {
   border: 0;
-  background: #fff;
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none;
 }
 
 .restaurant-listing--restaurants .place-list__item:nth-child(even) .place-card {
@@ -45,6 +48,7 @@ body:has(.restaurant-listing--restaurants) main {
 .restaurant-listing--restaurants .place-card__image {
   height: clamp(215px, 19vw, 265px);
   border: 0;
+  border-radius: 0;
   background: #ddd7ca;
 }
 
@@ -84,7 +88,8 @@ body:has(.restaurant-listing--restaurants) main {
   min-height: 224px;
   padding: 25px 10px 27px;
   border: 0;
-  background: #fff;
+  border-radius: 0;
+  background: transparent;
 }
 
 .restaurant-listing--restaurants .place-card__type {
