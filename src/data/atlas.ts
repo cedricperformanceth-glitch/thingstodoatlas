@@ -39,7 +39,7 @@ export const categories: Category[] = [
   { slug: 'scooter-rental', name: 'Scooter Rental', description: 'Trusted rental addresses, practical advice and the right bike for exploring Pakse and the Bolaven Plateau.', icon: '07' },
   { slug: 'waterfalls', name: 'Waterfalls', description: 'The cascades and river landscapes worth the journey.', icon: '04' },
   { slug: 'things-to-do', name: 'Things to do', description: 'Ideas for a day, a weekend or a longer route.', icon: '05' },
-  { slug: 'muay-thai', name: 'Muay Thai', description: 'Gyms and training experiences for visitors who want to move.', icon: '06' }
+  { slug: 'gyms-fitness', name: 'Gyms & Fitness', description: 'Muay Lao camps, weight rooms and practical places to keep training in Pakse.', icon: '06' }
 ];
 
 export const places: Place[] = [
@@ -89,6 +89,30 @@ export const places: Place[] = [
     price: 'Not yet field-checked',
     address: '4R93+2JR, Pakse, Laos',
     bestFor: 'A coffee break in town'
+  },
+  {
+    slug: 'naga-muay-lao-boxing-gym',
+    name: 'Naga Muay Lao Boxing Gym',
+    category: 'gyms-fitness',
+    subcategory: 'Muay Lao & Muay Thai gym',
+    cuisine: 'Muay Lao and Muay Thai training',
+    city: 'Pakse',
+    country: 'Laos',
+    image: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=1200&q=84',
+    imageAlt: 'Boxers training together in a traditional combat sports gym',
+    cardNote: 'train with the local team',
+    shortDescription: 'A working Muay Lao camp where visitors can train alongside local fighters.',
+    description: 'Naga is a welcoming local boxing camp in Ban Sangnamman, built around coached Muay Lao and Muay Thai sessions rather than a polished fitness-club experience.',
+    whyWeRecommend: 'Save it when you want real pad rounds, a committed local team and a closer look at everyday gym life in Pakse. Visitors of different levels can join, but contact the gym first to confirm the right session.',
+    highlights: ['Muay Lao training', 'Local fighters', 'Coached sessions', 'Visitor friendly'],
+    mapsUrl: 'https://maps.app.goo.gl/zTfN5E9vqNGncYoz9',
+    status: 'needs-review',
+    lastChecked: 'July 2026',
+    hours: 'Monday–Saturday · opens 08:00; confirm training times',
+    price: 'Contact the gym for current session rates',
+    address: 'Ban Sangnamman, Pakse, Laos',
+    phone: '+856 20 76 221 975',
+    bestFor: 'Training Muay Lao with a local team'
   },
   {
     slug: 'la-boulange-garden',
