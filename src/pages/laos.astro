@@ -17,14 +17,14 @@ const luangPrabang = { x: 356, y: 576 };
     <div class="map-sheet">
       <div class="map-layers">
         <header class="map-sheet__header">
+          <span class="map-sheet__note">FIELD MAP · LAOS</span>
           <div class="map-sheet__title-block">
             <svg class="map-sheet__title-art" viewBox="0 0 680 112" role="presentation" aria-hidden="true">
-              <text class="map-sheet__chapter" x="3" y="20">LAOS · CHAPTER 02</text>
-              <text class="map-sheet__title" x="0" y="88">Choose a place on the map</text>
+              <text class="map-sheet__chapter" x="677" y="20" text-anchor="end">LAOS · CHAPTER 02</text>
+              <text class="map-sheet__title" x="680" y="88" text-anchor="end">Choose a place on the map</text>
             </svg>
             <h2 id="laos-map-title" class="visually-hidden">Choose a place on the map</h2>
           </div>
-          <span class="map-sheet__note">FIELD MAP · LAOS</span>
         </header>
         <img
           class="map-drawing"
@@ -194,7 +194,7 @@ const luangPrabang = { x: 356, y: 576 };
     pointer-events: none;
   }
 
-  .map-sheet__title-block { width: min(42rem, 70%); }
+  .map-sheet__title-block { width: min(42rem, 70%); margin-left: auto; text-align: right; }
   .map-sheet__title-art { display: block; width: 100%; height: auto; overflow: visible; }
   .map-sheet__chapter,
   .map-sheet__title {
@@ -359,10 +359,11 @@ const luangPrabang = { x: 356, y: 576 };
     .laos-map-page { padding-top: 3.5rem; }
     .map-sheet { width: auto; padding: 0.75rem 0.75rem 10px; }
     .map-sheet__header { gap: 0.15rem; flex-wrap: wrap; }
-    .map-sheet__title-block { width: 100%; }
+    .map-sheet__title-block { width: 100%; order: 2; }
+    .map-sheet__note { order: 1; margin-right: auto; margin-left: 0; }
     .map-sheet__chapter { font-size: 12px; }
     .map-sheet__title { font-size: 42px; }
-    .map-sheet__note { margin-left: auto; font-size: 13px; }
+    .map-sheet__note { font-size: 13px; }
     .map-layers { width: calc(100vw - 4rem); height: calc(100vw - 4rem); }
     .map-drawing,
     .map-overlay {
