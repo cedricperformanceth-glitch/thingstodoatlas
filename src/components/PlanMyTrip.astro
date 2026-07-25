@@ -16,8 +16,9 @@
 
 <style>
   .plan-trip-widget { position: fixed; z-index: 40; right: 1.25rem; bottom: 1.25rem; display: grid; justify-items: end; gap: .8rem; }
-  .plan-trip-fab { position: relative; width: 70px; height: 70px; padding: 0; overflow: visible; border: 1px solid rgba(49, 85, 69, .35); background: #3f4444; box-shadow: 0 10px 26px rgba(32, 60, 49, .2); cursor: pointer; }
-  .plan-trip-fab img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .plan-trip-fab { position: relative; width: 70px; height: 70px; padding: 0; overflow: visible; border: 0; background: transparent; box-shadow: none; cursor: pointer; transition: opacity 180ms ease; }
+  .plan-trip-widget.is-open .plan-trip-fab { visibility: hidden; pointer-events: none; opacity: 0; }
+  .plan-trip-fab img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
   .plan-trip-fab__count { position: absolute; top: -.35rem; right: -.35rem; min-width: 1.35rem; height: 1.35rem; display: grid; place-items: center; padding: 0 .2rem; border-radius: 50%; background: #b76645; color: #fffdf8; font: 700 .65rem/1 'DM Sans', sans-serif; }
   .plan-trip-drawer { width: min(410px, calc(100vw - 2rem)); max-height: min(620px, calc(100vh - 7rem)); overflow: hidden; background: #f7f2e6; color: #252923; border: 1px solid rgba(49, 85, 69, .25); box-shadow: 0 18px 50px rgba(32, 60, 49, .22); transform-origin: bottom right; animation: plan-trip-open 180ms ease-out both; }
   .plan-trip-drawer__head { display: grid; grid-template-columns: 52px 1fr auto; gap: .8rem; align-items: center; padding: 1rem; border-bottom: 1px solid rgba(49, 85, 69, .16); }
@@ -111,9 +112,14 @@
     writeTrip({ version: 1, started: true, startingCity: city, items: existing?.items || [] });
     window.location.href = cityRoutes[city];
   });
-  tripFab?.addEventListener('click', () => { tripDrawer.hidden = !tripDrawer.hidden; tripFab.setAttribute('aria-expanded', String(!tripDrawer.hidden)); });
-  document.querySelector('[data-trip-close]')?.addEventListener('click', () => { tripDrawer.hidden = true; tripFab.setAttribute('aria-expanded', 'false'); tripFab.focus(); });
-  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !tripDrawer.hidden) { tripDrawer.hidden = true; tripFab.setAttribute('aria-expanded', 'false'); tripFab.focus(); } });
+  const setDrawerOpen = (isOpen) => {
+    tripDrawer.hidden = !isOpen;
+    tripFab.setAttribute('aria-expanded', String(isOpen));
+    tripWidget.classList.toggle('is-open', isOpen);
+  };
+  tripFab?.addEventListener('click', () => setDrawerOpen(tripDrawer.hidden));
+  document.querySelector('[data-trip-close]')?.addEventListener('click', () => { setDrawerOpen(false); tripFab.focus(); });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !tripDrawer.hidden) { setDrawerOpen(false); tripFab.focus(); } });
   document.addEventListener('click', (event) => {
     const add = event.target.closest('[data-trip-add]');
     if (add) {
