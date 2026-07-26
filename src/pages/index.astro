@@ -142,37 +142,4 @@ const homepageCountryChapters = homepageCountries.map((country, index) => index 
       <span class="journey-transition__coordinates">Mekong · Indian Ocean · Gulf of Thailand</span>
     </div>
   </section>
-
-  <script is:inline>
-    (() => {
-      const ticket = document.querySelector('.country-feature__sri-ticket');
-      if (!ticket) return;
-
-      const source = ticket.getAttribute('src');
-      fetch(source)
-        .then((response) => response.arrayBuffer())
-        .then((buffer) => {
-          const bytes = new Uint8Array(buffer);
-          const isWebP = bytes.length > 12 &&
-            String.fromCharCode(...bytes.slice(0, 4)) === 'RIFF' &&
-            String.fromCharCode(...bytes.slice(8, 12)) === 'WEBP';
-
-          if (isWebP) return;
-
-          const text = new TextDecoder().decode(bytes);
-          const start = text.indexOf('UklGR');
-          if (start === -1) throw new Error('Embedded WebP payload not found');
-
-          const encoded = text.slice(start).replace(/[^A-Za-z0-9+/=]/g, '');
-          const binary = atob(encoded);
-          const repaired = new Uint8Array(binary.length);
-          for (let index = 0; index < binary.length; index += 1) repaired[index] = binary.charCodeAt(index);
-
-          ticket.src = URL.createObjectURL(new Blob([repaired], { type: 'image/webp' }));
-        })
-        .catch(() => {
-          ticket.style.display = 'none';
-        });
-    })();
-  </script>
 </BaseLayout>
