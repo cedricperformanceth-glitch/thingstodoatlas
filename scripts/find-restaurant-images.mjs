@@ -33,16 +33,16 @@ const readRestaurants = (source) => source.split('\n  {\n')
     slug: field(block, 'slug'),
     name: field(block, 'name'),
     city: field(block, 'city'),
-    country: field(block, 'country')
+    country: field(block, 'country'),
+    subcategory: field(block, 'subcategory'),
+    cuisine: field(block, 'cuisine')
   }));
 
-const searchWeb = async (restaurant) => {
-  const query = restaurant.name + ' ' + restaurant.city + ' ' + restaurant.country + ' official';
+const searchWeb = async (query) => {
   const html = await fetchText('https://html.duckduckgo.com/html/?' + new URLSearchParams({ q: query }));
-  return [...html.matchAll(/<a rel="nofollow" class="result__a" href="([^"]+)">([\s\S]*?)<\/a>/g)].slice(0, 8).map((match) => ({
-    url: match[1],
-    title: match[2].replace(/<[^>]+>/g, '')
-  }));
+  return [...html.matchAll(/<a rel="nofollow" class="result__a" href="([^"]+)">([\s\S]*?)<\/a>/g)]
+    .slice(0, 8)
+    .map((match) => ({ url: match[1], title: match[2].replace(/<[^>]+>/g, '') }));
 };
 
 const metaImage = (html) => {
@@ -89,39 +89,58 @@ const findWikimedia = async (restaurant) => {
   };
 };
 
-const findCandidate = async (restaurant) => {
+const candidateFromSearch = async (restaurant, query, sourceType, generic = false) => {
   let results;
-  try {
-    results = await searchWeb(restaurant);
-  } catch (error) {
-    return { selectedImage: null, sourcePage: null, sourceType: 'none', confidence: 0, status: 'none', note: 'Search unavailable: ' + error.message };
-  }
+  try { results = await searchWeb(query); } catch { return null; }
   for (const result of results) {
+    if (!generic && sourceType === 'official-site' && /facebook\.com|instagram\.com/i.test(result.url)) continue;
     let html;
     try { html = await fetchText(result.url); } catch { continue; }
     if (!pageMatches(html, restaurant)) continue;
     const image = metaImage(html);
     if (!image) continue;
-    let sourceType = 'official-site';
-    if (/facebook\.com/i.test(result.url)) sourceType = 'facebook';
-        if (/instagram\.com/i.test(result.url)) sourceType = 'instagram';
     return {
       selectedImage: image,
       sourcePage: result.url,
       sourceType,
-      sourceName: restaurant.name,
+      sourceName: generic ? 'Generic ' + restaurant.subcategory : restaurant.name,
       author: null,
       license: null,
-      confidence: 0.65,
-      status: 'needs-review',
-      note: 'Image found, but reuse rights are not clear enough for automatic approval.'
+      confidence: generic ? 0.55 : 0.65,
+      status: generic ? 'approved' : 'needs-review',
+      note: generic
+        ? 'Generic category image only; this is not presented as a photo of the restaurant.'
+        : 'Public image found, but reuse rights are not clear enough for automatic approval.'
     };
   }
+  return null;
+};
+
+const findCandidate = async (restaurant) => {
+  const exact = restaurant.name + ' ' + restaurant.city + ' ' + restaurant.country;
+  const official = await candidateFromSearch(restaurant, exact + ' official', 'official-site');
+  if (official) return official;
+  const facebook = await candidateFromSearch(restaurant, exact + ' site:facebook.com', 'facebook');
+  if (facebook) return facebook;
+  const instagram = await candidateFromSearch(restaurant, exact + ' site:instagram.com', 'instagram');
+  if (instagram) return instagram;
   try {
     const wikimedia = await findWikimedia(restaurant);
     if (wikimedia) return wikimedia;
   } catch {}
-  return { selectedImage: null, sourcePage: null, sourceType: 'none', confidence: 0, status: 'none', note: 'No reliable reusable public image found.' };
+  const genericQuery = restaurant.subcategory + ' ' + restaurant.cuisine + ' ' + restaurant.city + ' Laos';
+  const unsplash = await candidateFromSearch(restaurant, genericQuery + ' site:unsplash.com/photos', 'unsplash', true);
+  if (unsplash) return unsplash;
+  const pexels = await candidateFromSearch(restaurant, genericQuery + ' site:pexels.com/photo', 'pexels', true);
+  if (pexels) return pexels;
+  return {
+    selectedImage: null,
+    sourcePage: null,
+    sourceType: 'none',
+    confidence: 0,
+    status: 'none',
+    note: 'No reliable reusable public image found.'
+  };
 };
 
 let existing = [];
