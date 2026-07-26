@@ -1,4 +1,9 @@
 /* Restore only the Lao tuk-tuk illustration beneath the CH.02 photograph. */
+.country-section #country-laos-2,
+.country-section #country-laos-2 .country-feature__image {
+  overflow: visible !important;
+}
+
 .country-section #country-laos-2 .country-feature__image {
   background-image: none !important;
 }
@@ -10,10 +15,11 @@
   z-index: 8 !important;
   top: 202px !important;
   left: calc(50% - 34px) !important;
-  width: 220px !important;
-  height: 230px !important;
+  width: 250px !important;
+  height: 270px !important;
   background: url('/images/hand-drawn/tuk-tuk-page.webp') center / contain no-repeat !important;
   transform: rotate(7deg) !important;
+  transform-origin: center center !important;
   filter: none !important;
   pointer-events: none !important;
 }
@@ -22,7 +28,7 @@
   .country-section #country-laos-2 .country-feature__image::after {
     top: 146px !important;
     left: calc(50% - 13px) !important;
-    width: 178px !important;
-    height: 186px !important;
+    width: 204px !important;
+    height: 222px !important;
   }
 }
