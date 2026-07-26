@@ -24,13 +24,21 @@ const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
             <h2 id="thailand-map-title" class="visually-hidden">Choose a place on the map</h2>
           </div>
         </header>
-        <img
-          class="map-drawing"
-          src="/images/hand-drawn/thailand-map.svg"
-          alt="Hand-drawn map of Thailand"
-          width="1024"
-          height="1536"
-        />
+
+        <svg class="map-drawing" viewBox="0 0 1024 1536" role="img" aria-labelledby="thailand-art-title thailand-art-desc">
+          <title id="thailand-art-title">Hand-drawn map of Thailand</title>
+          <desc id="thailand-art-desc">Illustrated Thailand map based on the original notebook artwork.</desc>
+          <defs>
+            <filter id="thailand-hand-drawn" x="-8%" y="-8%" width="116%" height="116%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.008 0.025" numOctaves="2" seed="17" result="noise" />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+          </defs>
+          <g filter="url(#thailand-hand-drawn)">
+            <image href="/images/hand-drawn/thailand-map.webp" x="0" y="0" width="1024" height="1536" preserveAspectRatio="xMidYMid meet" />
+          </g>
+        </svg>
+
         <svg class="map-grid" viewBox="0 0 1024 1536" aria-hidden="true">
           <g class="map-grid__lines">
             {Array.from({ length: 9 }, (_, index) => (
@@ -111,7 +119,7 @@ const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
     transform: translate(-50%, -43%);
   }
 
-  .map-drawing { object-fit: contain; }
+  .map-drawing { overflow: visible; }
 
   .map-grid {
     z-index: 1;
