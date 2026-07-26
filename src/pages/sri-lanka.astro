@@ -79,11 +79,11 @@ import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
 
   .map-drawing {
     position: absolute;
-    left: 50%;
+    left: calc(50% + 45px);
     top: 50%;
     display: block;
-    width: 46vw;
-    height: 69vw;
+    width: 39.1vw;
+    height: 58.65vw;
     object-fit: contain;
     transform: translate(-50%, -42%);
   }
@@ -149,8 +149,9 @@ import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
     .map-sheet__note { font-size: 13px; }
     .map-layers { width: calc(100vw - 4rem); height: calc(100vw - 4rem); }
     .map-drawing {
-      width: calc((100vw - 4rem) * 0.575);
-      height: calc((100vw - 4rem) * 0.8625);
+      left: calc(50% + 45px);
+      width: calc((100vw - 4rem) * 0.48875);
+      height: calc((100vw - 4rem) * 0.733125);
     }
   }
 </style>
