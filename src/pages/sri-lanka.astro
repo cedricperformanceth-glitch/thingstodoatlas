@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
+---
+
+<BaseLayout
+  title="Explore Sri Lanka"
+  description="Choose your next stop on the Sri Lanka map. More destinations will be added as the atlas grows."
+  canonical="https://thingstodoatlas.com/sri-lanka"
+>
+  <section class="laos-map-page" aria-labelledby="sri-lanka-map-title">
+    <div class="map-sheet">
+      <div class="map-layers">
+        <header class="map-sheet__header">
+          <span class="map-sheet__note">FIELD MAP · SRI LANKA</span>
+          <div class="map-sheet__title-block">
+            <svg class="map-sheet__title-art" viewBox="0 0 680 112" role="presentation" aria-hidden="true">
+              <text class="map-sheet__chapter" x="677" y="20" text-anchor="end">SRI LANKA · CHAPTER 03</text>
+              <text class="map-sheet__title" x="680" y="88" text-anchor="end">Choose a place on the map</text>
+            </svg>
+            <h2 id="sri-lanka-map-title" class="visually-hidden">Choose a place on the map</h2>
+          </div>
+        </header>
+        <div class="map-placeholder" aria-hidden="true"></div>
+      </div>
+    </div>
+    <PlanMyTripIntro />
+  </section>
+</BaseLayout>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
+
+  .laos-map-page {
+    min-height: 100vh;
+    padding: clamp(4rem, 8vw, 7rem) max(1.25rem, calc((100vw - 1180px) / 2));
+    background: #f2eee3;
+    color: #1f2924;
+  }
+
+  .map-sheet {
+    position: relative;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 26px 26px 10px;
+    border: 1px solid rgba(31, 41, 36, 0.14);
+    background: #f7f2e6;
+    overflow: visible;
+  }
+
+  .map-sheet::before,
+  .map-sheet::after {
+    content: '';
+    position: absolute;
+    z-index: 3;
+    width: 78px;
+    height: 22px;
+    background: rgba(199, 181, 143, 0.48);
+  }
+
+  .map-sheet::before { top: -9px; left: 8%; transform: rotate(-4deg); }
+  .map-sheet::after { right: 8%; bottom: -8px; transform: rotate(3deg); }
+
+  .map-layers {
+    position: relative;
+    width: 80vw;
+    height: 80vw;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(31, 41, 36, 0.2), 0 8px 22px rgba(31, 41, 36, 0.06);
+    overflow: hidden;
+  }
+
+  .map-placeholder {
+    position: absolute;
+    inset: 0;
+    background: #fff;
+  }
+
+  .map-sheet__header {
+    position: absolute;
+    z-index: 2;
+    top: clamp(1.4rem, 3vw, 2.5rem);
+    left: clamp(1.25rem, 4vw, 3.25rem);
+    right: clamp(1.25rem, 4vw, 3.25rem);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.25rem;
+    color: #1f392d;
+    pointer-events: none;
+  }
+
+  .map-sheet__title-block { width: min(42rem, 70%); margin-left: auto; text-align: right; }
+  .map-sheet__title-art { display: block; width: 100%; height: auto; overflow: visible; }
+  .map-sheet__chapter,
+  .map-sheet__title {
+    fill: #1f392d;
+    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+    font-style: normal;
+  }
+  .map-sheet__chapter { font-size: 15px; font-weight: 500; letter-spacing: 0.12em; opacity: 0.62; }
+  .map-sheet__title { font-size: 51px; font-weight: 550; letter-spacing: 0.01em; opacity: 0.93; }
+  .map-sheet__note {
+    position: static;
+    flex: 0 0 auto;
+    margin-top: 0.15rem;
+    color: #1f392d;
+    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    opacity: 0.58;
+    white-space: nowrap;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 700px) {
+    .laos-map-page { padding-top: 3.5rem; }
+    .map-sheet { width: auto; padding: 0.75rem 0.75rem 10px; }
+    .map-sheet__header { gap: 0.15rem; flex-wrap: wrap; }
+    .map-sheet__title-block { width: 100%; order: 2; }
+    .map-sheet__note { order: 1; margin-right: auto; margin-left: 0; }
+    .map-sheet__chapter { font-size: 12px; }
+    .map-sheet__title { font-size: 42px; }
+    .map-sheet__note { font-size: 13px; }
+    .map-layers { width: calc(100vw - 4rem); height: calc(100vw - 4rem); }
+  }
+</style>
