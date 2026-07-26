@@ -77,8 +77,8 @@ const arugamBay = { x: 896, y: 1172 };
           <g class="city-marker city-marker--inactive" aria-label="Arugam Bay coming soon">
             <circle class="city-marker__ring" cx={arugamBay.x} cy={arugamBay.y} r="22" />
             <circle class="city-marker__dot" cx={arugamBay.x} cy={arugamBay.y} r="9" />
-            <path class="city-marker__leader" d={`M${arugamBay.x + 12} ${arugamBay.y + 12} L${arugamBay.x + 54} ${arugamBay.y + 54}`} />
-            <text class="city-marker__label city-marker__label--down-right" x={arugamBay.x + 62} y={arugamBay.y + 92}>Arugam Bay</text>
+            <path class="city-marker__leader" d={`M${arugamBay.x + 12} ${arugamBay.y - 12} L${arugamBay.x + 54} ${arugamBay.y - 54}`} />
+            <text class="city-marker__label city-marker__label--up-right" x={arugamBay.x + 62} y={arugamBay.y - 66}>Arugam Bay</text>
           </g>
 
           <a class="city-marker city-marker--active" href="/sri-lanka/negombo" aria-label="Explore Negombo">
@@ -227,6 +227,7 @@ const arugamBay = { x: 896, y: 1172 };
   .city-marker__label--down-left { text-anchor: end; }
   .city-marker__label--down-right { text-anchor: start; }
   .city-marker__label--up-left { text-anchor: end; }
+  .city-marker__label--up-right { text-anchor: start; }
   .city-marker:hover .city-marker__ring,
   .city-marker:focus .city-marker__ring { transform: scale(1.18); }
 
