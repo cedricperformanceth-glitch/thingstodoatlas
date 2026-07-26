@@ -4,6 +4,7 @@ import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
 
 const gridColumns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
+const mirissa = { x: 448, y: 1472 };
 ---
 
 <BaseLayout
@@ -31,8 +32,10 @@ const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
           width="676"
           height="1166"
         />
-        <svg class="map-grid" viewBox="0 0 1024 1536" aria-hidden="true">
-          <g class="map-grid__lines">
+        <svg class="map-grid" viewBox="0 0 1024 1536" role="img" aria-labelledby="sri-lanka-grid-title sri-lanka-grid-description">
+          <title id="sri-lanka-grid-title">Destinations on the Sri Lanka map</title>
+          <desc id="sri-lanka-grid-description">Mirissa is available in the centre of grid square D12.</desc>
+          <g class="map-grid__lines" aria-hidden="true">
             {Array.from({ length: 9 }, (_, index) => (
               <line x1={index * 128} y1="0" x2={index * 128} y2="1536" />
             ))}
@@ -40,16 +43,23 @@ const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
               <line x1="0" y1={index * 128} x2="1024" y2={index * 128} />
             ))}
           </g>
-          <g class="map-grid__labels map-grid__labels--columns">
+          <g class="map-grid__labels map-grid__labels--columns" aria-hidden="true">
             {gridColumns.map((label, index) => (
               <text x={(index * 128) + 64} y="34" text-anchor="middle">{label}</text>
             ))}
           </g>
-          <g class="map-grid__labels map-grid__labels--rows">
+          <g class="map-grid__labels map-grid__labels--rows" aria-hidden="true">
             {gridRows.map((label, index) => (
               <text x="18" y={(index * 128) + 74}>{label}</text>
             ))}
           </g>
+
+          <a class="city-marker city-marker--active" href="/sri-lanka/mirissa" aria-label="Explore Mirissa">
+            <circle class="city-marker__ring" cx={mirissa.x} cy={mirissa.y} r="22" />
+            <circle class="city-marker__dot" cx={mirissa.x} cy={mirissa.y} r="9" />
+            <path class="city-marker__leader" d={`M${mirissa.x} ${mirissa.y + 16} L${mirissa.x} ${mirissa.y + 54}`} />
+            <text class="city-marker__label city-marker__label--below" x={mirissa.x} y={mirissa.y + 92}>Mirissa</text>
+          </a>
         </svg>
       </div>
     </div>
@@ -116,8 +126,11 @@ const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
   .map-grid {
     z-index: 1;
     overflow: visible;
-    pointer-events: none;
+    pointer-events: auto;
   }
+
+  .map-grid__lines,
+  .map-grid__labels { pointer-events: none; }
 
   .map-grid__lines line {
     stroke: rgba(42, 75, 61, 0.22);
@@ -139,9 +152,32 @@ const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
 
   .map-grid__labels--rows text { text-anchor: start; }
 
-  /* City marker rules for the next placement steps. */
+  .city-marker { color: #d97745; cursor: pointer; outline: none; }
   .city-marker--active { color: #d97745; }
-  .city-marker--inactive { color: #7f6d33; }
+  .city-marker--inactive { color: #7f6d33; cursor: default; }
+  .city-marker__ring {
+    fill: color-mix(in srgb, currentColor 14%, transparent);
+    stroke: currentColor;
+    stroke-width: 3;
+    transition: opacity 180ms ease, transform 180ms ease;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .city-marker__dot { fill: currentColor; stroke: #fff; stroke-width: 3; }
+  .city-marker__leader { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+  .city-marker__label {
+    fill: currentColor;
+    font-family: Georgia, serif;
+    font-size: 34px;
+    font-weight: 700;
+    paint-order: stroke;
+    stroke: #fff;
+    stroke-width: 7px;
+    stroke-linejoin: round;
+  }
+  .city-marker__label--below { text-anchor: middle; }
+  .city-marker:hover .city-marker__ring,
+  .city-marker:focus .city-marker__ring { transform: scale(1.18); }
 
   .map-sheet__header {
     position: absolute;
