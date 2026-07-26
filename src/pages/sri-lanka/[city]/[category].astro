@@ -2,15 +2,14 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import CityCategoryListing from '../../../components/CityCategoryListing.astro';
 
-const cities = [
-  { slug: 'negombo', name: 'Negombo' },
-  { slug: 'colombo', name: 'Colombo' },
-  { slug: 'mirissa', name: 'Mirissa' },
-  { slug: 'ahangama', name: 'Ahangama' },
-];
-const categories = ['restaurants','cafes','accommodation','scooter-rental','things-to-do','gyms-fitness','markets-shopping','essential-information'];
-
 export function getStaticPaths() {
+  const categories = ['restaurants','cafes','accommodation','scooter-rental','things-to-do','gyms-fitness','markets-shopping','essential-information'];
+  const cities = [
+    { slug: 'negombo', name: 'Negombo' },
+    { slug: 'colombo', name: 'Colombo' },
+    { slug: 'mirissa', name: 'Mirissa' },
+    { slug: 'ahangama', name: 'Ahangama' },
+  ];
   return cities.flatMap((city) => categories.map((category) => ({ params: { city: city.slug, category }, props: { cityName: city.name } })));
 }
 
