@@ -1,9 +1,5 @@
 ---
 const { place, index = 0 } = Astro.props;
-const isRestaurant = place.category === 'restaurants';
-const googlePhotoUrl = isRestaurant
-  ? `/api/google-place-photo?name=${encodeURIComponent(place.name)}&mapsUrl=${encodeURIComponent(place.mapsUrl)}&city=${encodeURIComponent(place.city)}`
-  : place.image;
 const tripPlace = JSON.stringify({
   id: place.slug,
   name: place.name,
@@ -21,16 +17,7 @@ const dialogTitleId = `${dialogId}-title`;
 ---
 <article class="place-card" id={place.slug}>
   <div class="place-card__image">
-    <img
-      src={googlePhotoUrl}
-      alt={place.imageAlt}
-      loading="lazy"
-      width="720"
-      height="520"
-      data-google-photo={isRestaurant ? place.slug : undefined}
-      data-google-photo-url={isRestaurant ? googlePhotoUrl : undefined}
-      data-google-photo-fallback={isRestaurant ? place.image : undefined}
-    />
+    <img src={place.image} alt={place.imageAlt} loading="lazy" width="720" height="520" />
     <span class="place-card__number" aria-hidden="true">{cardNumber}</span>
     <span class="place-card__photo-note hand-note">{place.cardNote}</span>
   </div>
@@ -57,16 +44,7 @@ const dialogTitleId = `${dialogId}-title`;
       <button class="place-dialog__close" type="button" data-place-close aria-label={`Close ${place.name}`}>×</button>
 
       <div class="place-dialog__visual">
-        <img
-          src={googlePhotoUrl}
-          alt={place.imageAlt}
-          loading="lazy"
-          width="900"
-          height="1200"
-          data-google-photo={isRestaurant ? place.slug : undefined}
-          data-google-photo-url={isRestaurant ? googlePhotoUrl : undefined}
-          data-google-photo-fallback={isRestaurant ? place.image : undefined}
-        />
+        <img src={place.image} alt={place.imageAlt} loading="lazy" width="900" height="1200" />
         <span class="place-dialog__number" aria-hidden="true">{cardNumber}</span>
         <span class="place-dialog__photo-note hand-note">{place.cardNote}</span>
       </div>
@@ -105,7 +83,6 @@ const dialogTitleId = `${dialogId}-title`;
           >Add to My Trip</button>
           {place.phone && <a class="place-dialog__phone" href={phoneHref}>Call this place</a>}
         </div>
-        <p class="place-dialog__google-attribution" data-google-attribution-for={isRestaurant ? place.slug : undefined} hidden></p>
       </div>
     </div>
   </dialog>
@@ -414,16 +391,6 @@ const dialogTitleId = `${dialogId}-title`;
     font-size: .65rem;
     font-weight: 700;
   }
-  .place-dialog__google-attribution {
-    margin: 13px 0 0;
-    color: var(--muted);
-    font-size: .54rem;
-    line-height: 1.4;
-  }
-  .place-dialog__google-attribution a {
-    color: inherit;
-    text-decoration: underline;
-  }
   :global(html.place-modal-open) { overflow: hidden; }
 
   @keyframes place-dialog-in {
@@ -475,63 +442,6 @@ const dialogTitleId = `${dialogId}-title`;
 
 <script>
   let lastPlaceTrigger: HTMLElement | null = null;
-  type GoogleAttribution = { displayName?: string; uri?: string };
-  type GooglePhotoResult = { blob: Blob; attributions: GoogleAttribution[] };
-  const googlePhotoRequests = new Map<string, Promise<GooglePhotoResult>>();
-
-  const fallbackGooglePhoto = (image: HTMLImageElement) => {
-    const fallback = image.dataset.googlePhotoFallback;
-    image.onerror = null;
-    if (fallback && image.src !== fallback) image.src = fallback;
-  };
-
-  const requestGooglePhoto = (url: string) => {
-    const existing = googlePhotoRequests.get(url);
-    if (existing) return existing;
-    const request = fetch(url, { credentials: 'same-origin' }).then(async (response) => {
-      if (!response.ok) throw new Error('Google photo request failed');
-      const rawAttributions = response.headers.get('X-Google-Photo-Attributions');
-      const attributions = rawAttributions
-        ? JSON.parse(decodeURIComponent(rawAttributions)) as GoogleAttribution[]
-        : [];
-      return { blob: await response.blob(), attributions };
-    });
-    googlePhotoRequests.set(url, request);
-    return request;
-  };
-
-  const renderGoogleAttribution = (placeSlug: string, attributions: GoogleAttribution[]) => {
-    const target = Array.from(document.querySelectorAll<HTMLElement>('[data-google-attribution-for]'))
-      .find((element) => element.dataset.googleAttributionFor === placeSlug);
-    if (!target || attributions.length === 0) return;
-    target.replaceChildren();
-    target.append(document.createTextNode('Photo: '));
-    attributions.forEach((attribution, index) => {
-      if (index > 0) target.append(document.createTextNode(', '));
-      if (attribution.uri && attribution.displayName) {
-        const link = document.createElement('a');
-        link.href = attribution.uri;
-        link.target = '_blank';
-        link.rel = 'noreferrer';
-        link.textContent = attribution.displayName;
-        target.append(link);
-      } else if (attribution.displayName) {
-        target.append(document.createTextNode(attribution.displayName));
-      }
-    });
-    target.hidden = false;
-  };
-
-  document.querySelectorAll<HTMLImageElement>('[data-google-photo]').forEach((image) => {
-    const url = image.dataset.googlePhotoUrl;
-    const placeSlug = image.dataset.googlePhoto;
-    if (!url || !placeSlug) return;
-    image.addEventListener('error', () => fallbackGooglePhoto(image), { once: true });
-    requestGooglePhoto(url).then(({ blob, attributions }) => {
-      image.src = URL.createObjectURL(blob);
-      renderGoogleAttribution(placeSlug, attributions);
-    }).catch(() => fallbackGooglePhoto(image));
-  });
 
   const syncPageScroll = () => {
     const hasOpenDialog = Boolean(document.querySelector('.place-dialog[open]'));
