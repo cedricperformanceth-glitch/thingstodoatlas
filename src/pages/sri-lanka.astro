@@ -8,7 +8,7 @@ const mirissa = { x: 448, y: 1472 };
 const ahangama = { x: 384, y: 1472 };
 const sigiriya = { x: 408, y: 768 };
 const adamsPeak = { x: 448, y: 1048 };
-const colombo = { x: 224, y: 960 };
+const negombo = { x: 224, y: 960 };
 ---
 
 <BaseLayout
@@ -38,7 +38,7 @@ const colombo = { x: 224, y: 960 };
         />
         <svg class="map-grid" viewBox="0 0 1024 1536" role="img" aria-labelledby="sri-lanka-grid-title sri-lanka-grid-description">
           <title id="sri-lanka-grid-title">Destinations on the Sri Lanka map</title>
-          <desc id="sri-lanka-grid-description">Mirissa and Ahangama are available along the southern coast, Sigiriya is available in the centre of the island, Adam's Peak is available in the central highlands, and Colombo is available on the west coast.</desc>
+          <desc id="sri-lanka-grid-description">Mirissa and Ahangama are available along the southern coast, Sigiriya is available in the centre of the island, Adam's Peak is available in the central highlands, and Negombo is available on the west coast.</desc>
           <g class="map-grid__lines" aria-hidden="true">
             {Array.from({ length: 9 }, (_, index) => (
               <line x1={index * 128} y1="0" x2={index * 128} y2="1536" />
@@ -72,11 +72,11 @@ const colombo = { x: 224, y: 960 };
             <text class="city-marker__label city-marker__label--down-right" x={adamsPeak.x + 62} y={adamsPeak.y + 92}>Adam's Peak</text>
           </a>
 
-          <a class="city-marker city-marker--active" href="/sri-lanka/colombo" aria-label="Explore Colombo">
-            <circle class="city-marker__ring" cx={colombo.x} cy={colombo.y} r="22" />
-            <circle class="city-marker__dot" cx={colombo.x} cy={colombo.y} r="9" />
-            <path class="city-marker__leader" d={`M${colombo.x - 12} ${colombo.y + 12} L${colombo.x - 54} ${colombo.y + 54}`} />
-            <text class="city-marker__label city-marker__label--down-left" x={colombo.x - 62} y={colombo.y + 92}>Colombo</text>
+          <a class="city-marker city-marker--active" href="/sri-lanka/negombo" aria-label="Explore Negombo">
+            <circle class="city-marker__ring" cx={negombo.x} cy={negombo.y} r="22" />
+            <circle class="city-marker__dot" cx={negombo.x} cy={negombo.y} r="9" />
+            <path class="city-marker__leader" d={`M${negombo.x - 12} ${negombo.y - 14} L${negombo.x - 58} ${negombo.y - 67}`} />
+            <text class="city-marker__label city-marker__label--up-left" x={negombo.x - 66} y={negombo.y - 77}>Negombo</text>
           </a>
 
           <a class="city-marker city-marker--active" href="/sri-lanka/ahangama" aria-label="Explore Ahangama">
@@ -210,6 +210,7 @@ const colombo = { x: 224, y: 960 };
   .city-marker__label--below { text-anchor: middle; }
   .city-marker__label--down-left { text-anchor: end; }
   .city-marker__label--down-right { text-anchor: start; }
+  .city-marker__label--up-left { text-anchor: end; }
   .city-marker:hover .city-marker__ring,
   .city-marker:focus .city-marker__ring { transform: scale(1.18); }
 
