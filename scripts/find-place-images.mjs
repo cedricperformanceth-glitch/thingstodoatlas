@@ -3,7 +3,7 @@ import { constants } from 'node:fs';
 import { URLSearchParams } from 'node:url';
 
 const ATLAS_FILE = 'src/data/atlas.ts';
-const OUTPUT_FILE = 'src/data/restaurant-images.generated.json';
+const OUTPUT_FILE = 'src/data/place-images.generated.json';
 const REQUEST_TIMEOUT_MS = 9000;
 const SOURCE_TYPES = ['official-site', 'facebook', 'instagram', 'wikimedia', 'unsplash', 'pexels', 'generic', 'none'];
 
@@ -27,8 +27,7 @@ const field = (block, name) => {
   return match ? match[1] : null;
 };
 
-const readRestaurants = (source) => source.split('\n  {\n')
-  .filter((block) => block.includes("category: 'restaurants'"))
+const readPlaces = (source) => source.split('\n  {\n').filter((block) => block.includes("category: '"))
   .map((block) => ({
     slug: field(block, 'slug'),
     name: field(block, 'name'),
@@ -58,15 +57,15 @@ const metaImage = (html) => {
   return null;
 };
 
-const pageMatches = (html, restaurant) => {
+const pageMatches = (html, place) => {
   const text = html.toLowerCase();
-  return text.includes(restaurant.name.toLowerCase()) &&
-    text.includes(restaurant.city.toLowerCase()) &&
-    text.includes(restaurant.country.toLowerCase());
+  return text.includes(place.name.toLowerCase()) &&
+    text.includes(place.city.toLowerCase()) &&
+    text.includes(place.country.toLowerCase());
 };
 
-const findWikimedia = async (restaurant) => {
-  const query = encodeURIComponent(restaurant.name + ' ' + restaurant.city + ' ' + restaurant.country);
+const findWikimedia = async (place) => {
+  const query = encodeURIComponent(place.name + ' ' + place.city + ' ' + place.country);
   const endpoint = 'https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=' + query + '&gsrnamespace=6&gsrlimit=5&prop=imageinfo&iiprop=url|extmetadata&format=json&origin=*';
   const data = JSON.parse(await fetchText(endpoint));
   const pages = Object.values(data.query?.pages || {});
@@ -89,49 +88,49 @@ const findWikimedia = async (restaurant) => {
   };
 };
 
-const candidateFromSearch = async (restaurant, query, sourceType, generic = false) => {
+const candidateFromSearch = async (place, query, sourceType, generic = false) => {
   let results;
   try { results = await searchWeb(query); } catch { return null; }
   for (const result of results) {
     if (!generic && sourceType === 'official-site' && /facebook\.com|instagram\.com/i.test(result.url)) continue;
     let html;
     try { html = await fetchText(result.url); } catch { continue; }
-    if (!pageMatches(html, restaurant)) continue;
+    if (!pageMatches(html, place)) continue;
     const image = metaImage(html);
     if (!image) continue;
     return {
       selectedImage: image,
       sourcePage: result.url,
       sourceType,
-      sourceName: generic ? 'Generic ' + restaurant.subcategory : restaurant.name,
+      sourceName: generic ? 'Generic ' + place.subcategory : place.name,
       author: null,
       license: null,
       confidence: generic ? 0.55 : 0.65,
       status: generic ? 'approved' : 'needs-review',
       note: generic
-        ? 'Generic category image only; this is not presented as a photo of the restaurant.'
+        ? 'Generic category image only; this is not presented as a photo of the place.'
         : 'Public image found, but reuse rights are not clear enough for automatic approval.'
     };
   }
   return null;
 };
 
-const findCandidate = async (restaurant) => {
-  const exact = restaurant.name + ' ' + restaurant.city + ' ' + restaurant.country;
-  const official = await candidateFromSearch(restaurant, exact + ' official', 'official-site');
+const findCandidate = async (place) => {
+  const exact = place.name + ' ' + place.city + ' ' + place.country;
+  const official = await candidateFromSearch(place, exact + ' official', 'official-site');
   if (official) return official;
-  const facebook = await candidateFromSearch(restaurant, exact + ' site:facebook.com', 'facebook');
+  const facebook = await candidateFromSearch(place, exact + ' site:facebook.com', 'facebook');
   if (facebook) return facebook;
-  const instagram = await candidateFromSearch(restaurant, exact + ' site:instagram.com', 'instagram');
+  const instagram = await candidateFromSearch(place, exact + ' site:instagram.com', 'instagram');
   if (instagram) return instagram;
   try {
-    const wikimedia = await findWikimedia(restaurant);
+    const wikimedia = await findWikimedia(place);
     if (wikimedia) return wikimedia;
   } catch {}
-  const genericQuery = restaurant.subcategory + ' ' + restaurant.cuisine + ' ' + restaurant.city + ' Laos';
-  const unsplash = await candidateFromSearch(restaurant, genericQuery + ' site:unsplash.com/photos', 'unsplash', true);
+  const genericQuery = place.subcategory + ' ' + place.cuisine + ' ' + place.city + ' Laos';
+  const unsplash = await candidateFromSearch(place, genericQuery + ' site:unsplash.com/photos', 'unsplash', true);
   if (unsplash) return unsplash;
-  const pexels = await candidateFromSearch(restaurant, genericQuery + ' site:pexels.com/photo', 'pexels', true);
+  const pexels = await candidateFromSearch(place, genericQuery + ' site:pexels.com/photo', 'pexels', true);
   if (pexels) return pexels;
   return {
     selectedImage: null,
@@ -149,14 +148,14 @@ try {
   existing = JSON.parse(await readFile(OUTPUT_FILE, 'utf8'));
 } catch {}
 const previous = new Map(existing.map((item) => [item.slug, item]));
-const restaurants = readRestaurants(await readFile(ATLAS_FILE, 'utf8'));
+const places = readPlaces(await readFile(ATLAS_FILE, 'utf8'));
 const results = [];
-for (const restaurant of restaurants) {
-  const old = previous.get(restaurant.slug);
-  const result = old?.status === 'approved' || old?.status === 'needs-review' ? old : await findCandidate(restaurant);
+for (const place of places) {
+  const old = previous.get(place.slug);
+  const result = old?.status === 'approved' || old?.status === 'needs-review' ? old : await findCandidate(place);
   results.push({
-    slug: restaurant.slug,
-    restaurantName: restaurant.name,
+    slug: place.slug,
+    placeName: place.name,
     selectedImage: result.selectedImage || null,
     sourcePage: result.sourcePage || null,
     sourceType: SOURCE_TYPES.includes(result.sourceType) ? result.sourceType : 'none',
@@ -174,7 +173,7 @@ for (const restaurant of restaurants) {
   });
 }
 await writeFile(OUTPUT_FILE, JSON.stringify(results, null, 2) + '\n');
-console.log('Wrote ' + results.length + ' restaurant image research records to ' + OUTPUT_FILE);
+console.log('Wrote ' + results.length + ' place image research records to ' + OUTPUT_FILE);
 console.log(JSON.stringify(results.reduce((summary, item) => {
   summary[item.status] = (summary[item.status] || 0) + 1;
   return summary;

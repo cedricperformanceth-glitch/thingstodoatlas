@@ -24,7 +24,7 @@ pnpm preview
 /                                  Homepage
 /laos                              Country hub (useful once several destinations exist)
 /laos/pakse                        City guide hub
-/laos/pakse/restaurants            Direct category listing
+/laos/pakse/places            Direct category listing
 /laos/pakse/:category              Future category listings
 /laos/:city                        Future city hubs
 ```
@@ -43,8 +43,10 @@ The route model is `country → city → category → list`, with no unnecessary
 4. Define the single-user editorial workflow and Supabase schema only after the content fields settle.
 5. Add search and map enhancements after the core static guide is useful without them.
 
-## Restaurant image sourcing
+## Place image sourcing
 
-This workflow researches restaurant images before deployment. It does not use Google Places, Google Cloud or paid API keys. Run `npm run images:restaurants` to read the 18 restaurant records and write `src/data/restaurant-images.generated.json`.
+This workflow researches place images before deployment. It does not use Google Places, Google Cloud or paid API keys. Run `npm run images:places` to read the 18 place records and write `src/data/place-images.generated.json`.
 
 Sources are checked in this order: official site, official Facebook page, official Instagram account, Wikimedia Commons, then generic Unsplash/Pexels. Only `status: "approved"` records with a selected image replace the existing `image`; every other record keeps the current fallback from `src/data/atlas.ts`. Ambiguous social pages remain `needs-review` and are not scraped aggressively or accessed with authentication.
+
+The same workflow applies to restaurants, cafés, scooter rentals, accommodation, gyms, markets and essential-information fiches. Use `npm run images:places`.

@@ -1,4 +1,4 @@
-import restaurantImageResults from './restaurant-images.generated.json';
+import placeImageResults from './place-images.generated.json';
 
 export type EditorialStatus = 'demo' | 'verified' | 'needs-review';
 
@@ -1447,7 +1447,7 @@ export const laos = { slug: 'laos', name: 'Laos', eyebrow: 'The first atlas chap
 export const pakse = { slug: 'pakse', name: 'Pakse', country: 'Laos', intro: 'A compact riverside base for exploring southern Laos — and a good place to take the day at your own pace.', essential: ['Mekong and Xe Don rivers', 'Gateway to the Bolaven Plateau', 'Best explored with flexible day plans'] };
 
 
-const restaurantImageBySlug = new Map(restaurantImageResults.map((result) => [result.slug, result]));
+const restaurantImageBySlug = new Map(placeImageResults.map((result) => [result.slug, result]));
 for (const place of places) {
   if (place.category !== 'restaurants') continue;
   const result = restaurantImageBySlug.get(place.slug);
