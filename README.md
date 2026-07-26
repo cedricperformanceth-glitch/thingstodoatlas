@@ -42,3 +42,9 @@ The route model is `country → city → category → list`, with no unnecessary
 3. Add structured data per page, a generated sitemap, and a real domain/canonical configuration before launch.
 4. Define the single-user editorial workflow and Supabase schema only after the content fields settle.
 5. Add search and map enhancements after the core static guide is useful without them.
+
+## Restaurant image sourcing
+
+This workflow researches restaurant images before deployment. It does not use Google Places, Google Cloud or paid API keys. Run `npm run images:restaurants` to read the 18 restaurant records and write `src/data/restaurant-images.generated.json`.
+
+Sources are checked in this order: official site, official Facebook page, official Instagram account, Wikimedia Commons, then generic Unsplash/Pexels. Only `status: "approved"` records with a selected image replace the existing `image`; every other record keeps the current fallback from `src/data/atlas.ts`. Ambiguous social pages remain `needs-review` and are not scraped aggressively or accessed with authentication.

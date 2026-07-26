@@ -82,6 +82,9 @@ const dialogTitleId = `${dialogId}-title`;
             aria-pressed="false"
           >Add to My Trip</button>
           {place.phone && <a class="place-dialog__phone" href={phoneHref}>Call this place</a>}
+          {place.imageSourceType === 'wikimedia' && place.imageAuthor && place.imageSourceUrl && (
+            <p class="place-dialog__image-attribution">Photo: <a href={place.imageSourceUrl} target="_blank" rel="noreferrer">{place.imageAuthor}</a>{place.imageLicense && <span> · {place.imageLicense}</span>}</p>
+          )}
         </div>
       </div>
     </div>
@@ -391,6 +394,8 @@ const dialogTitleId = `${dialogId}-title`;
     font-size: .65rem;
     font-weight: 700;
   }
+  .place-dialog__image-attribution { flex-basis: 100%; margin: 0; color: var(--muted); font-size: .54rem; line-height: 1.4; }
+  .place-dialog__image-attribution a { color: inherit; text-decoration: underline; }
   :global(html.place-modal-open) { overflow: hidden; }
 
   @keyframes place-dialog-in {

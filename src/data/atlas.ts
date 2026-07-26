@@ -1,3 +1,5 @@
+import restaurantImageResults from './restaurant-images.generated.json';
+
 export type EditorialStatus = 'demo' | 'verified' | 'needs-review';
 
 export type Category = {
@@ -30,6 +32,11 @@ export type Place = {
   address: string;
   phone?: string;
   bestFor: string;
+  imageSourceUrl?: string | null;
+  imageSourceType?: string;
+  imageAuthor?: string | null;
+  imageLicense?: string | null;
+  imageIsGeneric?: boolean;
 };
 
 export const categories: Category[] = [
@@ -1438,6 +1445,20 @@ export const laos = { slug: 'laos', name: 'Laos', eyebrow: 'The first atlas chap
 ] };
 
 export const pakse = { slug: 'pakse', name: 'Pakse', country: 'Laos', intro: 'A compact riverside base for exploring southern Laos — and a good place to take the day at your own pace.', essential: ['Mekong and Xe Don rivers', 'Gateway to the Bolaven Plateau', 'Best explored with flexible day plans'] };
+
+
+const restaurantImageBySlug = new Map(restaurantImageResults.map((result) => [result.slug, result]));
+for (const place of places) {
+  if (place.category !== 'restaurants') continue;
+  const result = restaurantImageBySlug.get(place.slug);
+  if (!result) continue;
+  place.imageSourceUrl = result.imageSourceUrl;
+  place.imageSourceType = result.imageSourceType;
+  place.imageAuthor = result.imageAuthor;
+  place.imageLicense = result.imageLicense;
+  place.imageIsGeneric = result.imageIsGeneric;
+  if (result.status === 'approved' && result.selectedImage) place.image = result.selectedImage;
+}
 
 export const getCategory = (slug: string) => categories.find((category) => category.slug === slug);
 export const getPlacesForCategory = (slug: string) => places.filter((place) => place.category === slug);
