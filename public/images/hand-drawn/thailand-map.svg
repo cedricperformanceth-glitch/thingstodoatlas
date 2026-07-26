@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1024 1536" role="img" aria-labelledby="title desc">
+  <title id="title">Hand-drawn map of Thailand</title>
+  <desc id="desc">A hand-drawn atlas-style map of Thailand based on the original notebook artwork.</desc>
+  <defs>
+    <filter id="handDrawn" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008 0.025" numOctaves="2" seed="17" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="paperSoft" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur stdDeviation="0.15"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#handDrawn)">
+    <image href="/images/hand-drawn/thailand-map.webp" xlink:href="/images/hand-drawn/thailand-map.webp" x="0" y="0" width="1024" height="1536" preserveAspectRatio="xMidYMid meet"/>
+  </g>
+
+  <g fill="none" stroke="#1f392d" stroke-linecap="round" stroke-linejoin="round" opacity="0.18" filter="url(#paperSoft)">
+    <path d="M280 218 C337 184 408 170 466 188" stroke-width="1.4"/>
+    <path d="M650 348 C704 388 724 443 714 502" stroke-width="1.2"/>
+    <path d="M523 1008 C505 1096 502 1192 532 1280" stroke-width="1.35"/>
+    <path d="M427 1362 C460 1380 493 1390 530 1394" stroke-width="1.1"/>
+  </g>
+</svg>
