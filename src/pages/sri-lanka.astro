@@ -2,8 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
 
-const gridColumns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
 const mirissa = { x: 448, y: 1472 };
 const ahangama = { x: 384, y: 1472 };
 const sigiriya = { x: 408, y: 768 };
@@ -31,84 +29,68 @@ const arugamBay = { x: 896, y: 1172 };
             <h2 id="sri-lanka-map-title" class="visually-hidden">Choose a place on the map</h2>
           </div>
         </header>
-        <img
-          class="map-drawing"
-          src="/images/hand-drawn/sri-lanka-map.webp"
-          alt="Hand-drawn map of Sri Lanka"
-          width="676"
-          height="1166"
-        />
-        <svg class="map-grid" viewBox="0 0 1024 1536" role="img" aria-labelledby="sri-lanka-grid-title sri-lanka-grid-description">
-          <title id="sri-lanka-grid-title">Destinations on the Sri Lanka map</title>
-          <desc id="sri-lanka-grid-description">Mirissa and Ahangama are available along the southern coast, Sigiriya is available in the centre of the island, Adam's Peak is available in the central highlands, Negombo and Colombo are available on the west coast, and Arugam Bay is marked as an upcoming destination on the east coast.</desc>
-          <g class="map-grid__lines" aria-hidden="true">
-            {Array.from({ length: 9 }, (_, index) => (
-              <line x1={index * 128} y1="0" x2={index * 128} y2="1536" />
-            ))}
-            {Array.from({ length: 13 }, (_, index) => (
-              <line x1="0" y1={index * 128} x2="1024" y2={index * 128} />
-            ))}
-          </g>
-          <g class="map-grid__labels map-grid__labels--columns" aria-hidden="true">
-            {gridColumns.map((label, index) => (
-              <text x={(index * 128) + 64} y="34" text-anchor="middle">{label}</text>
-            ))}
-          </g>
-          <g class="map-grid__labels map-grid__labels--rows" aria-hidden="true">
-            {gridRows.map((label, index) => (
-              <text x="18" y={(index * 128) + 74}>{label}</text>
-            ))}
-          </g>
+        <div class="map-country-layer">
+          <img
+            class="map-drawing"
+            src="/images/hand-drawn/sri-lanka-map.webp"
+            alt="Hand-drawn map of Sri Lanka"
+            width="676"
+            height="1166"
+          />
+          <svg class="map-overlay" viewBox="0 0 1024 1536" role="img" aria-labelledby="sri-lanka-map-svg-title sri-lanka-map-description">
+            <title id="sri-lanka-map-svg-title">Destinations on the Sri Lanka map</title>
+            <desc id="sri-lanka-map-description">Mirissa and Ahangama are available along the southern coast, Sigiriya is available in the centre of the island, Adam's Peak is available in the central highlands, Negombo and Colombo are available on the west coast, and Arugam Bay is marked as an upcoming destination on the east coast.</desc>
 
-          <a class="city-marker city-marker--active" href="/sri-lanka/sigiriya" aria-label="Explore Sigiriya">
-            <circle class="city-marker__ring" cx={sigiriya.x} cy={sigiriya.y} r="22" />
-            <circle class="city-marker__dot" cx={sigiriya.x} cy={sigiriya.y} r="9" />
-            <path class="city-marker__leader" d={`M${sigiriya.x + 12} ${sigiriya.y + 12} L${sigiriya.x + 54} ${sigiriya.y + 54}`} />
-            <text class="city-marker__label city-marker__label--down-right" x={sigiriya.x + 62} y={sigiriya.y + 92}>Sigiriya</text>
-          </a>
+            <a class="city-marker city-marker--active" href="/sri-lanka/sigiriya" aria-label="Explore Sigiriya">
+              <circle class="city-marker__ring" cx={sigiriya.x} cy={sigiriya.y} r="22" />
+              <circle class="city-marker__dot" cx={sigiriya.x} cy={sigiriya.y} r="9" />
+              <path class="city-marker__leader" d={`M${sigiriya.x + 12} ${sigiriya.y + 12} L${sigiriya.x + 54} ${sigiriya.y + 54}`} />
+              <text class="city-marker__label city-marker__label--down-right" x={sigiriya.x + 62} y={sigiriya.y + 92}>Sigiriya</text>
+            </a>
 
-          <a class="city-marker city-marker--active" href="/sri-lanka/adams-peak" aria-label="Explore Adam's Peak">
-            <circle class="city-marker__ring" cx={adamsPeak.x} cy={adamsPeak.y} r="22" />
-            <circle class="city-marker__dot" cx={adamsPeak.x} cy={adamsPeak.y} r="9" />
-            <path class="city-marker__leader" d={`M${adamsPeak.x + 12} ${adamsPeak.y + 12} L${adamsPeak.x + 54} ${adamsPeak.y + 54}`} />
-            <text class="city-marker__label city-marker__label--down-right" x={adamsPeak.x + 62} y={adamsPeak.y + 92}>Adam's Peak</text>
-          </a>
+            <a class="city-marker city-marker--active" href="/sri-lanka/adams-peak" aria-label="Explore Adam's Peak">
+              <circle class="city-marker__ring" cx={adamsPeak.x} cy={adamsPeak.y} r="22" />
+              <circle class="city-marker__dot" cx={adamsPeak.x} cy={adamsPeak.y} r="9" />
+              <path class="city-marker__leader" d={`M${adamsPeak.x + 12} ${adamsPeak.y + 12} L${adamsPeak.x + 54} ${adamsPeak.y + 54}`} />
+              <text class="city-marker__label city-marker__label--down-right" x={adamsPeak.x + 62} y={adamsPeak.y + 92}>Adam's Peak</text>
+            </a>
 
-          <g class="city-marker city-marker--inactive" aria-label="Arugam Bay coming soon">
-            <circle class="city-marker__ring" cx={arugamBay.x} cy={arugamBay.y} r="22" />
-            <circle class="city-marker__dot" cx={arugamBay.x} cy={arugamBay.y} r="9" />
-            <path class="city-marker__leader" d={`M${arugamBay.x + 12} ${arugamBay.y - 12} L${arugamBay.x + 54} ${arugamBay.y - 54}`} />
-            <text class="city-marker__label city-marker__label--up-right" x={arugamBay.x + 62} y={arugamBay.y - 66}>Arugam Bay</text>
-          </g>
+            <g class="city-marker city-marker--inactive" aria-label="Arugam Bay coming soon">
+              <circle class="city-marker__ring" cx={arugamBay.x} cy={arugamBay.y} r="22" />
+              <circle class="city-marker__dot" cx={arugamBay.x} cy={arugamBay.y} r="9" />
+              <path class="city-marker__leader" d={`M${arugamBay.x + 12} ${arugamBay.y - 12} L${arugamBay.x + 54} ${arugamBay.y - 54}`} />
+              <text class="city-marker__label city-marker__label--up-right" x={arugamBay.x + 62} y={arugamBay.y - 66}>Arugam Bay</text>
+            </g>
 
-          <a class="city-marker city-marker--active" href="/sri-lanka/negombo" aria-label="Explore Negombo">
-            <circle class="city-marker__ring" cx={negombo.x} cy={negombo.y} r="22" />
-            <circle class="city-marker__dot" cx={negombo.x} cy={negombo.y} r="9" />
-            <path class="city-marker__leader" d={`M${negombo.x - 12} ${negombo.y - 14} L${negombo.x - 58} ${negombo.y - 67}`} />
-            <text class="city-marker__label city-marker__label--up-left" x={negombo.x - 66} y={negombo.y - 77}>Negombo</text>
-          </a>
+            <a class="city-marker city-marker--active" href="/sri-lanka/negombo" aria-label="Explore Negombo">
+              <circle class="city-marker__ring" cx={negombo.x} cy={negombo.y} r="22" />
+              <circle class="city-marker__dot" cx={negombo.x} cy={negombo.y} r="9" />
+              <path class="city-marker__leader" d={`M${negombo.x - 12} ${negombo.y - 14} L${negombo.x - 58} ${negombo.y - 67}`} />
+              <text class="city-marker__label city-marker__label--up-left" x={negombo.x - 66} y={negombo.y - 77}>Negombo</text>
+            </a>
 
-          <a class="city-marker city-marker--active" href="/sri-lanka/colombo" aria-label="Explore Colombo">
-            <circle class="city-marker__ring" cx={colombo.x} cy={colombo.y} r="22" />
-            <circle class="city-marker__dot" cx={colombo.x} cy={colombo.y} r="9" />
-            <path class="city-marker__leader" d={`M${colombo.x - 13} ${colombo.y + 11} L${colombo.x - 63} ${colombo.y + 52}`} />
-            <text class="city-marker__label city-marker__label--down-left" x={colombo.x - 71} y={colombo.y + 84}>Colombo</text>
-          </a>
+            <a class="city-marker city-marker--active" href="/sri-lanka/colombo" aria-label="Explore Colombo">
+              <circle class="city-marker__ring" cx={colombo.x} cy={colombo.y} r="22" />
+              <circle class="city-marker__dot" cx={colombo.x} cy={colombo.y} r="9" />
+              <path class="city-marker__leader" d={`M${colombo.x - 13} ${colombo.y + 11} L${colombo.x - 63} ${colombo.y + 52}`} />
+              <text class="city-marker__label city-marker__label--down-left" x={colombo.x - 71} y={colombo.y + 84}>Colombo</text>
+            </a>
 
-          <a class="city-marker city-marker--active" href="/sri-lanka/ahangama" aria-label="Explore Ahangama">
-            <circle class="city-marker__ring" cx={ahangama.x} cy={ahangama.y} r="22" />
-            <circle class="city-marker__dot" cx={ahangama.x} cy={ahangama.y} r="9" />
-            <path class="city-marker__leader" d={`M${ahangama.x - 12} ${ahangama.y + 12} L${ahangama.x - 54} ${ahangama.y + 54}`} />
-            <text class="city-marker__label city-marker__label--down-left" x={ahangama.x - 62} y={ahangama.y + 92}>Ahangama</text>
-          </a>
+            <a class="city-marker city-marker--active" href="/sri-lanka/ahangama" aria-label="Explore Ahangama">
+              <circle class="city-marker__ring" cx={ahangama.x} cy={ahangama.y} r="22" />
+              <circle class="city-marker__dot" cx={ahangama.x} cy={ahangama.y} r="9" />
+              <path class="city-marker__leader" d={`M${ahangama.x - 12} ${ahangama.y + 12} L${ahangama.x - 54} ${ahangama.y + 54}`} />
+              <text class="city-marker__label city-marker__label--down-left" x={ahangama.x - 62} y={ahangama.y + 92}>Ahangama</text>
+            </a>
 
-          <a class="city-marker city-marker--active" href="/sri-lanka/mirissa" aria-label="Explore Mirissa">
-            <circle class="city-marker__ring" cx={mirissa.x} cy={mirissa.y} r="22" />
-            <circle class="city-marker__dot" cx={mirissa.x} cy={mirissa.y} r="9" />
-            <path class="city-marker__leader" d={`M${mirissa.x} ${mirissa.y + 16} L${mirissa.x} ${mirissa.y + 54}`} />
-            <text class="city-marker__label city-marker__label--below" x={mirissa.x} y={mirissa.y + 92}>Mirissa</text>
-          </a>
-        </svg>
+            <a class="city-marker city-marker--active" href="/sri-lanka/mirissa" aria-label="Explore Mirissa">
+              <circle class="city-marker__ring" cx={mirissa.x} cy={mirissa.y} r="22" />
+              <circle class="city-marker__dot" cx={mirissa.x} cy={mirissa.y} r="9" />
+              <path class="city-marker__leader" d={`M${mirissa.x} ${mirissa.y + 16} L${mirissa.x} ${mirissa.y + 54}`} />
+              <text class="city-marker__label city-marker__label--below" x={mirissa.x} y={mirissa.y + 92}>Mirissa</text>
+            </a>
+          </svg>
+        </div>
       </div>
     </div>
     <PlanMyTripIntro />
@@ -158,47 +140,31 @@ const arugamBay = { x: 896, y: 1172 };
     overflow: hidden;
   }
 
-  .map-drawing,
-  .map-grid {
+  .map-country-layer {
     position: absolute;
     left: calc(50% + 85px);
     top: 50%;
-    display: block;
     width: 33.235vw;
-    height: 49.8525vw;
+    aspect-ratio: 1024 / 1536;
     transform: translate(-50%, -42%);
+  }
+
+  .map-drawing,
+  .map-overlay {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 
   .map-drawing { object-fit: contain; }
 
-  .map-grid {
+  .map-overlay {
     z-index: 1;
     overflow: visible;
     pointer-events: auto;
   }
-
-  .map-grid__lines,
-  .map-grid__labels { pointer-events: none; }
-
-  .map-grid__lines line {
-    stroke: rgba(42, 75, 61, 0.22);
-    stroke-width: 1.5;
-    stroke-dasharray: 8 10;
-    vector-effect: non-scaling-stroke;
-  }
-
-  .map-grid__labels text {
-    fill: rgba(42, 75, 61, 0.58);
-    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
-    font-size: 27px;
-    font-weight: 600;
-    paint-order: stroke;
-    stroke: rgba(255, 255, 255, 0.9);
-    stroke-width: 5px;
-    stroke-linejoin: round;
-  }
-
-  .map-grid__labels--rows text { text-anchor: start; }
 
   .city-marker { color: #d97745; cursor: pointer; outline: none; }
   .city-marker--active { color: #d97745; }
@@ -291,12 +257,9 @@ const arugamBay = { x: 896, y: 1172 };
     .map-sheet__title { font-size: 42px; }
     .map-sheet__note { font-size: 13px; }
     .map-layers { width: calc(100vw - 4rem); height: calc(100vw - 4rem); }
-    .map-drawing,
-    .map-grid {
+    .map-country-layer {
       left: calc(50% + 85px);
       width: calc((100vw - 4rem) * 0.4154375);
-      height: calc((100vw - 4rem) * 0.62315625);
     }
-    .map-grid__labels text { font-size: 34px; }
   }
 </style>
