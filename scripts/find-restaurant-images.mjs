@@ -23,11 +23,11 @@ const fetchText = async (url) => {
 };
 
 const field = (block, name) => {
-  const match = block.match(new RegExp(name + ':\\s*[\\'"]([^\\'"]+)[\\'"]'));
+  const match = block.match(new RegExp(name + ':\\s*[\'"]([^\'"]+)[\'"]'));
   return match ? match[1] : null;
 };
 
-const readRestaurants = (source) => source.split('\\n  {\\n')
+const readRestaurants = (source) => source.split('\n  {\n')
   .filter((block) => block.includes("category: 'restaurants'"))
   .map((block) => ({
     slug: field(block, 'slug'),
@@ -39,7 +39,7 @@ const readRestaurants = (source) => source.split('\\n  {\\n')
 const searchWeb = async (restaurant) => {
   const query = restaurant.name + ' ' + restaurant.city + ' ' + restaurant.country + ' official';
   const html = await fetchText('https://html.duckduckgo.com/html/?' + new URLSearchParams({ q: query }));
-  return [...html.matchAll(/<a rel="nofollow" class="result__a" href="([^"]+)">([\\s\\S]*?)<\\/a>/g)].slice(0, 8).map((match) => ({
+  return [...html.matchAll(/<a rel="nofollow" class="result__a" href="([^"]+)">([\s\S]*?)<\/a>/g)].slice(0, 8).map((match) => ({
     url: match[1],
     title: match[2].replace(/<[^>]+>/g, '')
   }));
@@ -103,8 +103,8 @@ const findCandidate = async (restaurant) => {
     const image = metaImage(html);
     if (!image) continue;
     let sourceType = 'official-site';
-    if (/facebook\\.com/i.test(result.url)) sourceType = 'facebook';
-    if (/instagram\\.com/i.test(result.url)) sourceType = 'instagram';
+    if (/facebook\.com/i.test(result.url)) sourceType = 'facebook';
+        if (/instagram\.com/i.test(result.url)) sourceType = 'instagram';
     return {
       selectedImage: image,
       sourcePage: result.url,
@@ -154,7 +154,7 @@ for (const restaurant of restaurants) {
     note: result.note || null
   });
 }
-await writeFile(OUTPUT_FILE, JSON.stringify(results, null, 2) + '\\n');
+await writeFile(OUTPUT_FILE, JSON.stringify(results, null, 2) + '\n');
 console.log('Wrote ' + results.length + ' restaurant image research records to ' + OUTPUT_FILE);
 console.log(JSON.stringify(results.reduce((summary, item) => {
   summary[item.status] = (summary[item.status] || 0) + 1;
