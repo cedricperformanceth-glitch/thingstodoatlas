@@ -106,7 +106,7 @@ const candidateFromSearch = async (place, query, sourceType, generic = false) =>
       author: null,
       license: null,
       confidence: generic ? 0.55 : 0.65,
-      status: 'approved',
+      status: generic ? 'approved' : 'needs-review',
       note: generic
         ? 'Generic category image only; this is not presented as a photo of the place.'
         : 'Public image found, but reuse rights are not clear enough for automatic approval.'
@@ -152,7 +152,7 @@ const places = readPlaces(await readFile(ATLAS_FILE, 'utf8'));
 const results = [];
 for (const place of places) {
   const old = previous.get(place.slug);
-  const result = await findCandidate(place);
+  const result = old?.status === 'approved' || old?.status === 'needs-review' ? old : await findCandidate(place);
   results.push({
     slug: place.slug,
     placeName: place.name,
