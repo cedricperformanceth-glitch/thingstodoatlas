@@ -7,9 +7,10 @@ const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
 const mirissa = { x: 448, y: 1472 };
 const ahangama = { x: 384, y: 1472 };
 const sigiriya = { x: 408, y: 768 };
-const adamsPeak = { x: 448, y: 1048 };
+const adamsPeak = { x: 448, y: 1172 };
 const negombo = { x: 224, y: 969 };
 const colombo = { x: 224, y: 1152 };
+const arugamBay = { x: 768, y: 1172 };
 ---
 
 <BaseLayout
@@ -39,7 +40,7 @@ const colombo = { x: 224, y: 1152 };
         />
         <svg class="map-grid" viewBox="0 0 1024 1536" role="img" aria-labelledby="sri-lanka-grid-title sri-lanka-grid-description">
           <title id="sri-lanka-grid-title">Destinations on the Sri Lanka map</title>
-          <desc id="sri-lanka-grid-description">Mirissa and Ahangama are available along the southern coast, Sigiriya is available in the centre of the island, Adam's Peak is available in the central highlands, and Negombo and Colombo are available on the west coast.</desc>
+          <desc id="sri-lanka-grid-description">Mirissa and Ahangama are available along the southern coast, Sigiriya is available in the centre of the island, Adam's Peak is available in the central highlands, Negombo and Colombo are available on the west coast, and Arugam Bay is marked as an upcoming destination on the east coast.</desc>
           <g class="map-grid__lines" aria-hidden="true">
             {Array.from({ length: 9 }, (_, index) => (
               <line x1={index * 128} y1="0" x2={index * 128} y2="1536" />
@@ -72,6 +73,13 @@ const colombo = { x: 224, y: 1152 };
             <path class="city-marker__leader" d={`M${adamsPeak.x + 12} ${adamsPeak.y + 12} L${adamsPeak.x + 54} ${adamsPeak.y + 54}`} />
             <text class="city-marker__label city-marker__label--down-right" x={adamsPeak.x + 62} y={adamsPeak.y + 92}>Adam's Peak</text>
           </a>
+
+          <g class="city-marker city-marker--inactive" aria-label="Arugam Bay coming soon">
+            <circle class="city-marker__ring" cx={arugamBay.x} cy={arugamBay.y} r="22" />
+            <circle class="city-marker__dot" cx={arugamBay.x} cy={arugamBay.y} r="9" />
+            <path class="city-marker__leader" d={`M${arugamBay.x + 12} ${arugamBay.y + 12} L${arugamBay.x + 54} ${arugamBay.y + 54}`} />
+            <text class="city-marker__label city-marker__label--down-right" x={arugamBay.x + 62} y={arugamBay.y + 92}>Arugam Bay</text>
+          </g>
 
           <a class="city-marker city-marker--active" href="/sri-lanka/negombo" aria-label="Explore Negombo">
             <circle class="city-marker__ring" cx={negombo.x} cy={negombo.y} r="22" />
