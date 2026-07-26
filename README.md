@@ -35,6 +35,18 @@ The route model is `country → city → category → list`, with no unnecessary
 
 `Country`, `City`, `Category` and `Place` are intentionally separate. A `City` exposes `activeCategories`; a `Place` carries editorial status (`demo`, `verified`, `needs-review`) so placeholders cannot be mistaken for checked commercial information.
 
+
+## Google Places photos
+
+Restaurant cards and their detail modals try to load the matching Google Places photo through a server-side Cloudflare Pages Function. If Google returns no photo, the API fails, or the key is missing, the existing image in `src/data/atlas.ts` remains the fallback. Cafés and other categories continue to use their current images.
+
+Before deploying, enable the Google Places API in Google Cloud and add this encrypted Cloudflare Pages secret:
+
+- **Settings** → **Variables and Secrets** → **Add**
+- Variable name: `GOOGLE_PLACES_API_KEY`
+- Choose **Encrypt / Secret**, then **Save**
+- **Redeploy** the Pages project
+
 ## Next steps
 
 1. Replace demo entries with researched, verified Pakse data and licensed/owned photography.
