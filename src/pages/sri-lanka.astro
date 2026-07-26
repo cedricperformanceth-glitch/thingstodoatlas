@@ -232,7 +232,7 @@ const arugamBay = { x: 896, y: 1172 };
   .city-marker__ring { fill: color-mix(in srgb, currentColor 14%, transparent); stroke: currentColor; stroke-width: 3; transition: opacity 180ms ease, transform 180ms ease; transform-box: fill-box; transform-origin: center; }
   .city-marker__dot { fill: currentColor; stroke: #fff; stroke-width: 3; }
   .city-marker__leader { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
-  .city-marker__label { fill: currentColor; font-family: Georgia, serif; font-size: 40px; font-weight: 700; paint-order: stroke; stroke: #fff; stroke-width: 8px; stroke-linejoin: round; }
+  .city-marker__label { fill: currentColor; font-family: Georgia, serif; font-size: 44px; font-weight: 700; paint-order: stroke; stroke: #fff; stroke-width: 9px; stroke-linejoin: round; }
   .city-marker__label--below { text-anchor: middle; }
   .city-marker__label--down-left { text-anchor: end; }
   .city-marker__label--down-right { text-anchor: start; }
@@ -268,17 +268,13 @@ const arugamBay = { x: 896, y: 1172 };
   @media (max-width: 700px) {
     .laos-map-page { padding-top: 3.5rem; }
     .map-sheet { width: auto; padding: 0.75rem 0.75rem 10px; }
-    .map-sheet__header { gap: 0.15rem; flex-wrap: wrap; }
-    .map-sheet__title-block { width: 100%; order: 2; }
-    .map-sheet__note { order: 1; margin-right: auto; margin-left: 0; }
-    .map-sheet__chapter { font-size: 12px; }
-    .map-sheet__title { font-size: 42px; }
+    .map-layers { width: calc(100vw - 2.5rem); height: calc(100vw - 2.5rem); }
+    .map-country-layer { left: calc(50% + 24px); width: 42vw; }
+    .city-marker__label { font-size: 40px; stroke-width: 8px; }
+    .map-sheet__header { top: 1rem; left: 1rem; right: 1rem; }
+    .map-sheet__title-block { width: min(78%, 28rem); }
     .map-sheet__note { font-size: 13px; }
-    .map-layers { width: calc(100vw - 4rem); height: calc(100vw - 4rem); }
-    .map-country-layer {
-      left: calc(50% + 85px);
-      width: calc((100vw - 4rem) * 0.4154375);
-    }
-    .city-marker__label { font-size: 42px; stroke-width: 8.5px; }
+    .map-sheet__chapter { font-size: 13px; }
+    .map-sheet__title { font-size: 44px; }
   }
 </style>
