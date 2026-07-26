@@ -7,6 +7,7 @@ const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
 const mirissa = { x: 448, y: 1472 };
 const ahangama = { x: 384, y: 1472 };
 const sigiriya = { x: 408, y: 768 };
+const adamsPeak = { x: 448, y: 1048 };
 ---
 
 <BaseLayout
@@ -36,7 +37,7 @@ const sigiriya = { x: 408, y: 768 };
         />
         <svg class="map-grid" viewBox="0 0 1024 1536" role="img" aria-labelledby="sri-lanka-grid-title sri-lanka-grid-description">
           <title id="sri-lanka-grid-title">Destinations on the Sri Lanka map</title>
-          <desc id="sri-lanka-grid-description">Mirissa and Ahangama are available along the southern coast, and Sigiriya is available in the centre of the island.</desc>
+          <desc id="sri-lanka-grid-description">Mirissa and Ahangama are available along the southern coast, Sigiriya is available in the centre of the island, and Adam's Peak is available in the central highlands.</desc>
           <g class="map-grid__lines" aria-hidden="true">
             {Array.from({ length: 9 }, (_, index) => (
               <line x1={index * 128} y1="0" x2={index * 128} y2="1536" />
@@ -61,6 +62,13 @@ const sigiriya = { x: 408, y: 768 };
             <circle class="city-marker__dot" cx={sigiriya.x} cy={sigiriya.y} r="9" />
             <path class="city-marker__leader" d={`M${sigiriya.x + 12} ${sigiriya.y + 12} L${sigiriya.x + 54} ${sigiriya.y + 54}`} />
             <text class="city-marker__label city-marker__label--down-right" x={sigiriya.x + 62} y={sigiriya.y + 92}>Sigiriya</text>
+          </a>
+
+          <a class="city-marker city-marker--active" href="/sri-lanka/adams-peak" aria-label="Explore Adam's Peak">
+            <circle class="city-marker__ring" cx={adamsPeak.x} cy={adamsPeak.y} r="22" />
+            <circle class="city-marker__dot" cx={adamsPeak.x} cy={adamsPeak.y} r="9" />
+            <path class="city-marker__leader" d={`M${adamsPeak.x + 12} ${adamsPeak.y + 12} L${adamsPeak.x + 54} ${adamsPeak.y + 54}`} />
+            <text class="city-marker__label city-marker__label--down-right" x={adamsPeak.x + 62} y={adamsPeak.y + 92}>Adam's Peak</text>
           </a>
 
           <a class="city-marker city-marker--active" href="/sri-lanka/ahangama" aria-label="Explore Ahangama">
