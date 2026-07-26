@@ -232,7 +232,7 @@ const arugamBay = { x: 896, y: 1172 };
   .city-marker__ring { fill: color-mix(in srgb, currentColor 14%, transparent); stroke: currentColor; stroke-width: 3; transition: opacity 180ms ease, transform 180ms ease; transform-box: fill-box; transform-origin: center; }
   .city-marker__dot { fill: currentColor; stroke: #fff; stroke-width: 3; }
   .city-marker__leader { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
-  .city-marker__label { fill: currentColor; font-family: Georgia, serif; font-size: 34px; font-weight: 700; paint-order: stroke; stroke: #fff; stroke-width: 7px; stroke-linejoin: round; }
+  .city-marker__label { fill: currentColor; font-family: Georgia, serif; font-size: 40px; font-weight: 700; paint-order: stroke; stroke: #fff; stroke-width: 8px; stroke-linejoin: round; }
   .city-marker__label--below { text-anchor: middle; }
   .city-marker__label--down-left { text-anchor: end; }
   .city-marker__label--down-right { text-anchor: start; }
@@ -275,6 +275,10 @@ const arugamBay = { x: 896, y: 1172 };
     .map-sheet__title { font-size: 42px; }
     .map-sheet__note { font-size: 13px; }
     .map-layers { width: calc(100vw - 4rem); height: calc(100vw - 4rem); }
-    .map-country-layer { left: calc(50% + 85px); width: calc((100vw - 4rem) * 0.4154375); }
+    .map-country-layer {
+      left: calc(50% + 85px);
+      width: calc((100vw - 4rem) * 0.4154375);
+    }
+    .city-marker__label { font-size: 42px; stroke-width: 8.5px; }
   }
 </style>
