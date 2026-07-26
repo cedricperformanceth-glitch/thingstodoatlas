@@ -94,9 +94,9 @@
   .country-section .country-feature--3 .country-feature__image{margin-left:18px;margin-right:0}
   .country-section .country-feature__image img{height:100%}
   .country-section .country-feature__number{top:-22px;left:-10px;padding-top:6px;font-size:1.85rem}
-  .country-section .country-feature--2 .country-feature__number{left:auto;right:-8px}
-  .country-section .country-feature__copy,.country-section .country-feature--1 .country-feature__copy,.country-section .country-feature--2 .country-feature__copy,.country-section .country-feature--3 .country-feature__copy{max-width:none;padding:0 20px;transform:none}
-  .country-section .country-feature__copy h3{font-size:clamp(3rem,14vw,4.3rem);margin-bottom:18px}
+  .country-section .country-feature--2 .country-feature__number{right:-10px;left:auto}
+  .country-section .country-feature__copy,.country-section .country-feature:nth-child(even) .country-feature__copy{order:1;padding:22px 20px 0;max-width:none}
+  .country-section .country-feature__copy h3{font-size:3.3rem}
   .country-section .country-feature__copy>p:not(.eyebrow){line-height:1.65;margin-bottom:22px}
   .country-section .country-feature .text-link--large{font-size:.62rem;padding-bottom:6px}
   .country-section .country-feature--3 .country-feature__copy img.journal-drawing--lotus{width:122px;margin:-4px auto 12px 0}
@@ -219,137 +219,8 @@
 .country-section .country-feature--1 .country-feature__copy > .text-link--large,.country-section .country-feature--1 .country-feature__copy > .coming-note{display:none}
 .country-section .country-feature__photo-link{position:absolute;z-index:6;right:10px;left:auto;bottom:8px;display:inline-flex;align-items:center;gap:12px;color:var(--terracotta);font:500 1.24rem/1 Caveat,cursive;text-decoration:none;transform:rotate(-2deg)}
 .country-section .country-feature__photo-link svg{width:42px;height:15px;fill:none;stroke:currentColor;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
-.country-section .country-feature--1 .country-feature__copy:after{z-index:1;right:-18px;bottom:24px;width:112px;height:82px;background:repeating-linear-gradient(180deg,transparent 0 14px,rgba(123,105,76,.2) 14px 15px),linear-gradient(166deg,transparent 0 58%,rgba(177,103,77,.34) 59% 60%,transparent 61%);opacity:.82;transform:rotate(-2deg)}
-.country-section .country-feature--1:before{background:radial-gradient(ellipse at 49.5% 50%,rgba(76,63,45,.34),transparent 12%),radial-gradient(ellipse at 50% 50%,rgba(190,164,119,.08),transparent 64%),linear-gradient(90deg,transparent 0 48.6%,rgba(81,67,49,.2) 49.35%,rgba(255,255,255,.82) 50%,rgba(87,72,52,.18) 50.65%,transparent 51.4%)}
-.country-section .country-feature--1:after{width:6px;left:calc(50% - 3px);background:linear-gradient(90deg,rgba(95,82,61,.03),rgba(104,89,65,.34),rgba(255,255,255,.9));box-shadow:6px 0 16px rgba(71,60,43,.13),-5px 0 12px rgba(255,255,255,.62);filter:blur(.15px)}
 
-/* Open-book volume: a paper edge, gentle page bow and a living gutter. */
-.country-section .country-feature{
-  border-bottom:2px solid rgba(103,88,66,.16);
-  box-shadow:0 25px 48px rgba(37,41,35,.12),0 3px 0 rgba(112,96,71,.12),0 5px 0 rgba(112,96,71,.045),0 9px 18px rgba(37,41,35,.05),inset 0 1px 0 rgba(255,255,255,.68),inset 0 -1px 0 rgba(100,88,66,.08);
-}
-.country-section .country-feature:before{
-  background:
-    radial-gradient(ellipse at 49.7% 50%,rgba(76,63,45,.25),transparent 10%),
-    radial-gradient(ellipse at 2% 45%,rgba(255,255,255,.2),transparent 18%),
-    radial-gradient(ellipse at 98% 55%,rgba(255,255,255,.15),transparent 20%),
-    radial-gradient(ellipse at 50% 52%,rgba(190,164,119,.07),transparent 68%),
-    linear-gradient(90deg,transparent 0 48.85%,rgba(81,67,49,.16) 49.45%,rgba(255,255,255,.78) 50%,rgba(87,72,52,.14) 50.55%,transparent 51.2%),
-    linear-gradient(180deg,transparent 0 6%,rgba(255,255,255,.18) 9%,transparent 12%,transparent 88%,rgba(88,75,56,.07) 96%,transparent 100%);
-}
-.country-section .country-feature__image{transform:perspective(1600px) rotateY(.65deg);transform-origin:right center;box-shadow:inset -12px 0 20px -18px rgba(75,61,43,.42)}
-.country-section .country-feature:nth-child(even) .country-feature__image{transform:perspective(1600px) rotateY(-.65deg);transform-origin:left center}
-.country-section .country-feature__copy{box-shadow:inset 12px 0 20px -18px rgba(75,61,43,.36);transform:perspective(1600px) rotateY(-.65deg) rotate(-.15deg);transform-origin:left center}
-.country-section .country-feature:nth-child(even) .country-feature__copy{transform:perspective(1600px) rotateY(.65deg) rotate(.15deg);transform-origin:right center}
-.country-section .country-feature--1 .country-feature__copy{transform:perspective(1600px) rotateY(-.65deg) rotate(-.5deg)}
-.country-section .country-feature--1:nth-child(even){grid-template-columns:1.18fr .82fr}
-.country-section .country-feature--1:nth-child(even) .country-feature__image{order:initial;transform:perspective(1600px) rotateY(.65deg)}
-.country-section .country-feature--1:nth-child(even) .country-feature__copy{transform:perspective(1600px) rotateY(-.65deg) rotate(-.5deg)}
-.country-section .country-feature--1:nth-child(even){grid-template-columns:1fr 1fr}
-.country-section .country-feature--1:nth-child(even) .country-feature__image{grid-column:1;grid-row:1;height:500px;width:calc(100% - 184px);margin-left:22px;margin-right:162px}
-.country-section .country-feature--1:nth-child(even) .country-feature__copy{grid-column:2;grid-row:1;padding-left:40px;padding-right:16px}
-.country-section #country-laos-2{grid-template-columns:.82fr 1.18fr}
-.country-section #country-laos-2 .country-feature__image{grid-column:2;grid-row:1;width:calc(100% - 72px);margin-left:auto;margin-right:auto;transform:translateX(60px) perspective(1600px) rotateY(-.65deg)}
-.country-section #country-laos-2 .country-feature__image > img:first-child{top:0;width:320px!important;height:300px!important;margin-left:auto!important;margin-right:auto!important;object-fit:cover;transform:rotate(1.4deg)}
-.country-section #country-laos-2 .country-feature__tape--main{top:-64px;left:calc(50% - 145px);transform:rotate(5deg)}
-.country-section #country-laos-2 .country-feature__tape--second{right:calc(50% - 145px);left:auto;top:220px;transform:rotate(-4deg)}
-.country-section #country-laos-2 .country-feature__copy{grid-column:1;grid-row:1;padding-left:16px;padding-right:40px;transform:perspective(1600px) rotateY(.65deg) rotate(.15deg)}
-.country-section #country-laos-2 .country-feature__copy{background-image:none}
-.country-section #country-laos-2 .country-feature__route-note{border-left:0}
-.country-section #country-laos-2 .country-feature__number{left:16px!important;right:auto!important;top:-105px!important}
-@media(max-width:700px){.country-section #country-laos-2 .country-feature__image{grid-column:auto;grid-row:auto;width:calc(100% - 52px);height:370px;margin:0 8px 0 12px;transform:none}.country-section #country-laos-2 .country-feature__image > img:first-child{width:260px!important;height:240px!important}.country-section #country-laos-2 .country-feature__copy{grid-column:auto;grid-row:auto;padding:38px 20px 0;transform:none}}
-.country-section .country-feature--2 .country-feature__copy{transform:perspective(1600px) rotateY(.65deg) rotate(.6deg)}
-.country-section .country-feature--3 .country-feature__copy{transform:perspective(1600px) rotateY(-.65deg) rotate(-.4deg)}
-.country-section .country-feature{border-radius:2px 3px 2px 4px / 1px 3px 2px 4px;transform:perspective(2200px) rotateX(.2deg)}
-.country-section .country-feature--1{transform:perspective(2200px) rotateX(.24deg) rotateZ(-.15deg)}
-.country-section .country-feature--2{transform:perspective(2200px) rotateX(.18deg) rotateZ(.12deg)}
-.country-section .country-feature--3{transform:perspective(2200px) rotateX(.22deg) rotateZ(-.1deg)}
-.country-section .country-feature{width:calc(100% - 72px);margin-inline:auto}
-.country-section .country-feature:before{background:radial-gradient(ellipse at 2% 48%,rgba(255,255,255,.16),transparent 19%),radial-gradient(ellipse at 98% 54%,rgba(255,255,255,.12),transparent 20%),radial-gradient(ellipse at 50% 50%,rgba(103,84,58,.22),transparent 10%),radial-gradient(ellipse at 22% 22%,rgba(255,255,255,.08),transparent 22%),radial-gradient(ellipse at 78% 78%,rgba(122,98,62,.04),transparent 20%),linear-gradient(90deg,transparent 0 48.85%,rgba(81,67,49,.18) 49.45%,rgba(255,255,255,.8) 50%,rgba(87,72,52,.16) 50.55%,transparent 51.2%),repeating-linear-gradient(113deg,rgba(255,255,255,.018) 0 1px,transparent 1px 7px)}
-.country-section .country-feature__copy{background-image:linear-gradient(90deg,rgba(123,105,76,.13) 0 1px,transparent 1px),linear-gradient(90deg,rgba(123,105,76,.045) 0 1px,transparent 1px),linear-gradient(rgba(123,105,76,.045) 0 1px,transparent 1px);background-size:1px 100%,64px 64px,64px 64px;background-position:12px 0,48px 78px,48px 78px;background-repeat:no-repeat}
-.country-section .country-feature--1:after,.country-section .country-feature--2:after,.country-section .country-feature--3:after{box-shadow:6px 0 16px rgba(71,60,43,.13),-5px 0 12px rgba(255,255,255,.62);filter:blur(.2px)}
-@media(max-width:700px){
-  .country-section .country-feature,.country-section .country-feature:nth-child(even){display:flex;flex-direction:column;gap:0;min-height:0;padding:44px 20px 56px;overflow:visible;background:linear-gradient(180deg,#f1ede3 0%,#f8f4ec 48%,#e4dfd2 49.5%,#f9f5ed 50.5%,#f8f4eb 100%)}
-  .country-section .country-feature{width:100%;margin-inline:0}
-  .country-section .country-feature:before{background:linear-gradient(180deg,transparent 0 49.1%,rgba(100,91,72,.12) 49.7%,rgba(255,255,255,.7) 50%,transparent 50.8%)}
-  .country-section .country-feature:after{top:calc(360px + 44px);bottom:auto;left:24px;right:24px;width:auto;height:1px;background:rgba(120,109,86,.2);box-shadow:0 1px 0 rgba(255,255,255,.55)}
-  .country-section .country-feature__image,.country-section .country-feature:nth-child(even) .country-feature__image{order:0;grid-column:auto;grid-row:auto;width:calc(100% - 8px);height:360px;margin:0 4px 44px;align-self:stretch}
-  .country-section .country-feature__copy,.country-section .country-feature:nth-child(even) .country-feature__copy{order:1;grid-column:auto;grid-row:auto;padding:38px 8px 0;align-self:stretch}
-  .country-section .country-feature__number,.country-section .country-feature:nth-child(even) .country-feature__number{top:-18px;left:-8px;right:auto}
-  .country-section .country-feature:nth-child(even) .country-feature__number{left:auto;right:-8px}
-  .country-section .country-feature--1 .country-feature__copy,.country-section .country-feature--2 .country-feature__copy,.country-section .country-feature--3 .country-feature__copy{transform:none;padding-top:38px}
-  .country-section .country-feature--3 .country-feature__copy img.journal-drawing--lotus{margin:-2px auto 12px 0}
-  .country-section .country-feature__copy:before{left:8px;top:20px}
-  .country-section .country-feature__copy:after{right:2px;bottom:0;width:82px;height:62px}
-  .country-section .country-feature__route-note{margin-top:26px;padding-top:10px}
-  .country-section .country-feature__margin-drawing{position:relative;right:auto;bottom:auto;display:block;width:112px;margin:-10px 8px 6px auto;opacity:.78;transform:rotate(-7deg)}
-  .country-section .country-feature--1 .country-feature__copy:before{left:8px;right:auto;top:20px;bottom:auto;width:34px;height:1px;border:0;content:'';transform:rotate(-2deg)}
-  .country-section .country-feature--2 .country-feature__route-note{width:max-content;max-width:100%;margin-right:0;transform:rotate(-2deg)}
-  .country-section .country-feature--3 .country-feature__copy img.journal-drawing--lotus{right:auto;margin-right:0;transform:rotate(8deg)}
-  .country-section .country-feature--1 .country-feature__image{height:370px;width:calc(100% - 52px);margin:0 8px 0 12px}
-  .country-section .country-feature--1 .country-feature__number{font-size:1.78rem}
-  .country-section .country-feature--1 .country-feature__number small{font-size:.58rem}
-  .country-section .country-feature--1 .country-feature__number b{font-size:1.74rem}
-  .country-section .country-feature--1 .country-feature__image:before,.country-section .country-feature--1 .country-feature__image:after{display:none}
-  .country-section .country-feature--1 .country-feature__image > img:first-child{top:8px;height:150px!important;width:160px!important;object-fit:cover;transform:rotate(-2deg)}
-  .country-section .country-feature--1 .country-feature__photo-note{top:24px;left:170px;font-size:.9rem}
-  .country-section .country-feature--1 .country-feature__sunrise-note{top:47px;left:168px;font-size:.8rem}
-  .country-section .country-feature--1 .country-feature__sunrise-note:after{font-size:.8rem}
-  .country-section .country-feature--1 .country-feature__image{background-position:left 42px bottom 22px;background-size:128px auto}
-  .country-section .country-feature--1 .country-feature__image:after{left:6px;top:auto!important;bottom:6px;width:145px;height:84px;transform:rotate(-45deg)}
-  .country-section .country-feature--1 .country-feature__under-drawing{top:150px;left:-10px;width:195px!important}
-  .country-section .country-feature--1 .country-feature__mood-note{font-size:1.12rem;margin-bottom:16px}
-  .country-section .country-feature--1 .country-feature__margin-drawing.journal-drawing--thailand-map{position:relative!important;width:100px;right:8px;top:2px;bottom:auto;margin:0;transform:rotate(5deg)}
-  .country-section .country-feature--1 .country-feature__second-photo{position:absolute!important;top:192px;right:-52px;width:160px!important;height:150px!important;margin:0;transform:rotate(3deg)!important}
-  .country-section .country-feature--1 .country-feature__second-photo{transform:rotate(3deg)}
-  .country-section .country-feature--1 .country-feature__photo-connector{top:138px;left:126px;width:92px;height:62px;transform:rotate(-2deg)}
-  .country-section .country-feature--1 .country-feature__tape{width:54px;height:14px}
-  .country-section .country-feature--1 .country-feature__tape--main{top:8px;left:104px}
-  .country-section .country-feature--1 .country-feature__tape--second{top:184px;right:-38px;width:66px}
-  .country-section .country-feature--1 .country-feature__stitching{top:44px;bottom:auto;left:24px;right:24px;width:auto;height:6px;background:radial-gradient(circle,rgba(123,105,76,.52) 0 1.25px,transparent 1.5px) 0 0/13px 6px repeat-x}
-  .country-section .country-feature--1:after{width:auto;left:24px;right:24px;transform:none;filter:none}
-  .country-section .country-feature,.country-section .country-feature--1,.country-section .country-feature--2,.country-section .country-feature--3{transform:none;border-radius:2px 3px 2px 4px / 1px 3px 2px 4px}
-  .country-section .country-feature--1 .country-feature__image:before{top:8px;right:-2px;width:56px;height:11px}
-  .country-section .country-feature--1 .country-feature__image:after{top:230px;left:4px;width:56px;height:11px}
-  .country-section .country-feature__photo-link{right:8px;left:auto;bottom:8px;font-size:1.04rem;gap:10px}
-  .country-section .country-feature--1 .country-feature__photo-link--right-page{right:18px;bottom:22px;left:auto;top:auto}
-  .country-section .country-feature__photo-link svg{width:38px;height:14px}
-  .country-section .country-feature__image,.country-section .country-feature:nth-child(even) .country-feature__image{transform:none;box-shadow:none}
-  .country-section .country-feature__copy,.country-section .country-feature:nth-child(even) .country-feature__copy,.country-section .country-feature--1 .country-feature__copy,.country-section .country-feature--2 .country-feature__copy,.country-section .country-feature--3 .country-feature__copy{transform:none;box-shadow:none}
-}
-
-/* Laos CH.02 keeps the Thailand spread structure without the stray margin stroke. */
-.country-section #country-laos-2 .country-feature__copy{background-image:none!important}
-.country-section #country-laos-2 .country-feature__route-note{border-left:0!important}
-.country-section #country-laos-2 .country-feature__copy:before{display:none!important;content:none!important;border:0!important;background:none!important}
-.country-section #country-laos-2 .country-feature__copy{border-left:0!important}
-
-/* Thailand spread: the tuk-tuk sits on the right page beneath the secondary photograph. */
-.country-section #country-laos-2 .country-feature__image > img:first-child{top:-67px!important}
-.country-section #country-laos-2 .country-feature__image{background-image:none!important}
-.country-section #country-laos-2 .country-feature__image:after{content:'';display:block!important;position:absolute;z-index:8;top:242px;left:calc(50% - 34px);width:220px;height:230px;background:url('/images/hand-drawn/tuk-tuk-page.webp') center/contain no-repeat;transform:rotate(7deg);filter:none;pointer-events:none}
-@media(max-width:700px){.country-section #country-laos-2 .country-feature__image > img:first-child{top:-53px!important}.country-section #country-laos-2 .country-feature__image{background-image:none!important}.country-section #country-laos-2 .country-feature__image:after{top:186px;left:calc(50% - 13px);width:178px;height:186px;transform:rotate(7deg)}.country-section #country-laos-2 .country-feature__tape--main{top:-46px;left:calc(50% - 118px)}.country-section #country-laos-2 .country-feature__tape--second{right:calc(50% - 118px);left:auto;top:180px}}
-
-/* Laos CH.02: keep the journal note high, with the map tucked below its copy. */
-.country-section #country-laos-2 .country-feature__copy{padding-top:20px}
-.country-section #country-laos-2 .country-feature__route-note{display:block;width:max-content;max-width:100%;margin:10px 0 10px;padding:12px 0 0 10px;border-top:1px solid rgba(123,105,76,.28)!important;border-left:0!important;transform:rotate(-1deg)}
-.country-section #country-laos-2 .country-feature__copy:after{display:none!important;content:none!important;background:none!important;border:0!important}
-.country-section #country-laos-2 .country-feature__laos-map-row{display:flex;align-items:center;gap:16px;width:max-content;max-width:100%;margin-left:0;transform:translateX(-12px)}
-.country-section #country-laos-2 .country-feature__laos-map{position:relative;display:block;width:200px;height:auto;margin:10px 0 18px;opacity:.78;filter:contrast(.96);transform:rotate(-5deg);mix-blend-mode:multiply}
-.country-section #country-laos-2{height:650px;min-height:650px}
-.country-section #country-laos-2 .country-feature__photo-link--laos{position:relative;display:inline-flex!important;right:auto;left:auto;bottom:auto;top:auto;width:max-content;margin:0;white-space:nowrap;flex-shrink:0;transform:translate(18px,12px) rotate(-2deg)}
-.country-section #country-laos-2 .country-feature__copy img.journal-drawing--lotus{position:absolute;z-index:3;top:34px;right:-28px;width:112px;margin:0;opacity:.82;transform:rotate(8deg)}
-@media(max-width:700px){
-  .country-section #country-laos-2 .country-feature__copy{padding-top:20px}
-  .country-section #country-laos-2 .country-feature__route-note{margin:8px 0 8px;padding-top:10px}
-  .country-section #country-laos-2 .country-feature__laos-map-row{gap:10px;margin-left:0;transform:translateX(-8px)}
-  .country-section #country-laos-2 .country-feature__laos-map{width:160px;margin:8px 0 16px;transform:rotate(-4deg)}
-  .country-section #country-laos-2{height:650px;min-height:650px}
-  .country-section #country-laos-2 .country-feature__photo-link--laos{transform:translate(12px,10px) rotate(-2deg)}
-  .country-section #country-laos-2 .country-feature__copy img.journal-drawing--lotus{top:34px;right:-8px;width:88px}
-}
-
-/* CH.03 Sri Lanka: a denser left-page collage balanced by a quieter field-note page. */
+/* Sri Lanka CH.03: a denser left-page collage balanced by a quieter field-note page. */
 .country-section #country-sri-lanka-3{height:650px;min-height:650px}
 .country-section #country-sri-lanka-3 .country-feature__image{width:auto;height:500px;margin:0 34px 0 4px;overflow:visible;box-shadow:none}
 .country-section #country-sri-lanka-3 .country-feature__image:after{display:none!important;content:none!important;background:none!important}
@@ -418,7 +289,7 @@
   .country-section #country-sri-lanka-3 .country-feature__sri-cta svg{width:36px}
 }
 
-
-/* Sri Lanka CH.03: bus ticket pinned to the upper-right of the right-hand notebook page. */
-.country-section #country-sri-lanka-3 .country-feature__sri-ticket{position:absolute;z-index:7;top:-82px;right:-72px;width:166px;height:auto;border:0!important;box-shadow:none!important;object-fit:contain;transform:rotate(7deg);filter:drop-shadow(0 8px 8px rgba(37,41,35,.16));pointer-events:none}
-@media(max-width:700px){.country-section #country-sri-lanka-3 .country-feature__sri-ticket{top:-38px;right:-6px;width:126px;transform:rotate(6deg)}}
+/* Sri Lanka CH.03: bus ticket kept inside the upper-right corner of the right-hand page. */
+.country-section #country-sri-lanka-3 .country-feature__sri-ticket{position:absolute;z-index:7;top:14px;right:18px;width:138px;height:auto;border:0!important;box-shadow:none!important;object-fit:contain;transform:rotate(6deg);filter:drop-shadow(0 7px 7px rgba(37,41,35,.14));pointer-events:none}
+@media(min-width:701px) and (max-width:900px){.country-section #country-sri-lanka-3 .country-feature__sri-ticket{top:10px;right:10px;width:116px}}
+@media(max-width:700px){.country-section #country-sri-lanka-3 .country-feature__sri-ticket{top:8px;right:10px;width:104px;transform:rotate(5deg)}}
