@@ -5,6 +5,7 @@ import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
 const gridColumns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
 const mirissa = { x: 448, y: 1472 };
+const ahangama = { x: 320, y: 1472 };
 ---
 
 <BaseLayout
@@ -34,7 +35,7 @@ const mirissa = { x: 448, y: 1472 };
         />
         <svg class="map-grid" viewBox="0 0 1024 1536" role="img" aria-labelledby="sri-lanka-grid-title sri-lanka-grid-description">
           <title id="sri-lanka-grid-title">Destinations on the Sri Lanka map</title>
-          <desc id="sri-lanka-grid-description">Mirissa is available in the centre of grid square D12.</desc>
+          <desc id="sri-lanka-grid-description">Mirissa and Ahangama are available along the southern coast.</desc>
           <g class="map-grid__lines" aria-hidden="true">
             {Array.from({ length: 9 }, (_, index) => (
               <line x1={index * 128} y1="0" x2={index * 128} y2="1536" />
@@ -53,6 +54,13 @@ const mirissa = { x: 448, y: 1472 };
               <text x="18" y={(index * 128) + 74}>{label}</text>
             ))}
           </g>
+
+          <a class="city-marker city-marker--active" href="/sri-lanka/ahangama" aria-label="Explore Ahangama">
+            <circle class="city-marker__ring" cx={ahangama.x} cy={ahangama.y} r="22" />
+            <circle class="city-marker__dot" cx={ahangama.x} cy={ahangama.y} r="9" />
+            <path class="city-marker__leader" d={`M${ahangama.x - 12} ${ahangama.y + 12} L${ahangama.x - 54} ${ahangama.y + 54}`} />
+            <text class="city-marker__label city-marker__label--down-left" x={ahangama.x - 62} y={ahangama.y + 92}>Ahangama</text>
+          </a>
 
           <a class="city-marker city-marker--active" href="/sri-lanka/mirissa" aria-label="Explore Mirissa">
             <circle class="city-marker__ring" cx={mirissa.x} cy={mirissa.y} r="22" />
@@ -176,6 +184,7 @@ const mirissa = { x: 448, y: 1472 };
     stroke-linejoin: round;
   }
   .city-marker__label--below { text-anchor: middle; }
+  .city-marker__label--down-left { text-anchor: end; }
   .city-marker:hover .city-marker__ring,
   .city-marker:focus .city-marker__ring { transform: scale(1.18); }
 
