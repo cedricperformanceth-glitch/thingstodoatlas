@@ -31,10 +31,27 @@ const isPakseCafePage = currentPath === '/laos/pakse/cafes' || currentPath === '
         <a class="site-logo" href="/" aria-label="ThingsToDoAtlas home">
           <img src="https://raw.githubusercontent.com/cedricperformanceth-glitch/thingstodoatlas/master/calque%20SVG/ChatGPT%20Image%2026%20juil.%202026%2C%2001_49_26_result.webp" alt="ThingsToDoAtlas" width="1536" height="1024" />
         </a>
-        <button class="language-switcher" type="button" aria-label="Current language: French" aria-haspopup="true" aria-expanded="false">
-          <svg class="language-switcher__flag" viewBox="0 0 3 2" aria-hidden="true"><path fill="#002395" d="M0 0h1v2H0z"/><path fill="#fff" d="M1 0h1v2H1z"/><path fill="#ed2939" d="M2 0h1v2H2z"/></svg>
-          <svg class="language-switcher__arrow" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" /></svg>
-        </button>
+        <div class="language-menu">
+          <button class="language-switcher" type="button" aria-label="Choose language" aria-haspopup="true" aria-expanded="false" aria-controls="language-dropdown">
+            <svg class="language-switcher__flag" viewBox="0 0 60 30" aria-hidden="true">
+              <clipPath id="uk-flag-clip"><path d="M0 0v30h60V0z" /></clipPath>
+              <g clip-path="url(#uk-flag-clip)">
+                <path fill="#012169" d="M0 0v30h60V0z" />
+                <path stroke="#fff" stroke-width="6" d="M0 0l60 30M60 0L0 30" />
+                <path stroke="#c8102e" stroke-width="4" d="M0 0l60 30M60 0L0 30" />
+                <path stroke="#fff" stroke-width="10" d="M30 0v30M0 15h60" />
+                <path stroke="#c8102e" stroke-width="6" d="M30 0v30M0 15h60" />
+              </g>
+            </svg>
+            <svg class="language-switcher__arrow" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" /></svg>
+          </button>
+          <div class="language-dropdown" id="language-dropdown" hidden>
+            <a class="language-dropdown__item" href="/fr/" hreflang="fr" lang="en">
+              <svg class="language-dropdown__flag" viewBox="0 0 3 2" aria-hidden="true"><path fill="#002395" d="M0 0h1v2H0z"/><path fill="#fff" d="M1 0h1v2H1z"/><path fill="#ed2939" d="M2 0h1v2H2z"/></svg>
+              <span>French</span>
+            </a>
+          </div>
+        </div>
       </div>
       <nav class="country-nav" aria-label="Choose a country">
         {countries.map((country) => <a class:list={[{ 'is-active': currentPath.startsWith(`/${country.slug}`), 'is-coming-soon': country.slug !== 'laos' }]} href={country.href} aria-current={currentPath.startsWith(`/${country.slug}`) ? 'page' : undefined}><span class="nav-chapter">{country.number}</span>{country.name}{country.slug !== 'laos' && <sup>soon</sup>}</a>)}
@@ -101,6 +118,32 @@ const isPakseCafePage = currentPath === '/laos/pakse/cafes' || currentPath === '
     <nav class="bottom-country-bar" aria-label="Country chapters">
       {countries.map((country) => <a class:list={[{ 'is-active': currentPath.startsWith(`/${country.slug}`), 'is-coming-soon': country.slug !== 'laos' }]} href={country.href} aria-current={currentPath.startsWith(`/${country.slug}`) ? 'page' : undefined}><span class="bottom-chapter">{country.number}</span>{country.name}</a>)}
     </nav>
+    <script is:inline>
+      const languageButton = document.querySelector('.language-switcher');
+      const languageDropdown = document.querySelector('.language-dropdown');
+
+      if (languageButton && languageDropdown) {
+        const closeLanguageMenu = () => {
+          languageDropdown.hidden = true;
+          languageButton.setAttribute('aria-expanded', 'false');
+        };
+
+        languageButton.addEventListener('click', (event) => {
+          event.stopPropagation();
+          const willOpen = languageDropdown.hidden;
+          languageDropdown.hidden = !willOpen;
+          languageButton.setAttribute('aria-expanded', String(willOpen));
+        });
+
+        document.addEventListener('click', (event) => {
+          if (!event.target.closest('.language-menu')) closeLanguageMenu();
+        });
+
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') closeLanguageMenu();
+        });
+      }
+    </script>
   </body>
 </html>
 
@@ -110,6 +153,11 @@ const isPakseCafePage = currentPath === '/laos/pakse/cafes' || currentPath === '
     align-items: center;
     gap: clamp(8px, 1vw, 14px);
     min-width: 0;
+  }
+
+  .language-menu {
+    position: relative;
+    z-index: 20;
   }
 
   .language-switcher {
@@ -123,12 +171,14 @@ const isPakseCafePage = currentPath === '/laos/pakse/cafes' || currentPath === '
     cursor: pointer;
   }
 
-  .language-switcher__flag {
+  .language-switcher__flag,
+  .language-dropdown__flag {
     display: block;
     width: 24px;
     height: 16px;
     border: 1px solid rgba(28, 35, 31, .22);
     box-shadow: 0 1px 2px rgba(28, 35, 31, .08);
+    flex: 0 0 auto;
   }
 
   .language-switcher__arrow {
@@ -140,6 +190,44 @@ const isPakseCafePage = currentPath === '/laos/pakse/cafes' || currentPath === '
     stroke-width: 1.4;
     stroke-linecap: round;
     stroke-linejoin: round;
+    transition: transform .2s ease;
+  }
+
+  .language-switcher[aria-expanded="true"] .language-switcher__arrow {
+    transform: rotate(180deg);
+  }
+
+  .language-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 132px;
+    padding: 6px;
+    border: 1px solid rgba(28, 35, 31, .16);
+    background: #f4f0e5;
+    box-shadow: 0 12px 30px rgba(28, 35, 31, .14);
+  }
+
+  .language-dropdown[hidden] {
+    display: none;
+  }
+
+  .language-dropdown__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    color: inherit;
+    text-decoration: none;
+    font-size: .82rem;
+    letter-spacing: .03em;
+    white-space: nowrap;
+  }
+
+  .language-dropdown__item:hover,
+  .language-dropdown__item:focus-visible {
+    background: rgba(28, 35, 31, .07);
+    outline: none;
   }
 
   .plan-trip-widget[hidden],
@@ -184,13 +272,19 @@ const isPakseCafePage = currentPath === '/laos/pakse/cafes' || currentPath === '
       gap: 7px;
     }
 
-    .language-switcher__flag {
+    .language-switcher__flag,
+    .language-dropdown__flag {
       width: 21px;
       height: 14px;
     }
 
     .language-switcher__arrow {
       width: 8px;
+    }
+
+    .language-dropdown {
+      left: auto;
+      right: 0;
     }
 
     body.cafe-category-page .chapter-sheet__title {
