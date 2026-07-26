@@ -1449,7 +1449,6 @@ export const pakse = { slug: 'pakse', name: 'Pakse', country: 'Laos', intro: 'A 
 
 const restaurantImageBySlug = new Map(placeImageResults.map((result) => [result.slug, result]));
 for (const place of places) {
-  if (place.category !== 'restaurants') continue;
   const result = restaurantImageBySlug.get(place.slug);
   if (!result) continue;
   place.imageSourceUrl = result.imageSourceUrl;

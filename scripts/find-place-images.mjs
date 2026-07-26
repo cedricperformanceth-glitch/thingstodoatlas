@@ -5,7 +5,7 @@ import { URLSearchParams } from 'node:url';
 const ATLAS_FILE = 'src/data/atlas.ts';
 const OUTPUT_FILE = 'src/data/place-images.generated.json';
 const REQUEST_TIMEOUT_MS = 9000;
-const SOURCE_TYPES = ['official-site', 'facebook', 'instagram', 'wikimedia', 'unsplash', 'pexels', 'generic', 'none'];
+const SOURCE_TYPES = ['official-site', 'facebook', 'instagram', 'wikimedia', 'tripadvisor', 'wanderlog', 'public-directory', 'none'];
 
 const fetchText = async (url) => {
   const controller = new AbortController();
@@ -88,7 +88,7 @@ const findWikimedia = async (place) => {
   };
 };
 
-const candidateFromSearch = async (place, query, sourceType, generic = false) => {
+const candidateFromSearch = async (place, query, sourceType) => {
   let results;
   try { results = await searchWeb(query); } catch { return null; }
   for (const result of results) {
@@ -102,14 +102,12 @@ const candidateFromSearch = async (place, query, sourceType, generic = false) =>
       selectedImage: image,
       sourcePage: result.url,
       sourceType,
-      sourceName: generic ? 'Generic ' + place.subcategory : place.name,
+      sourceName: place.name,
       author: null,
       license: null,
-      confidence: generic ? 0.55 : 0.65,
-      status: generic ? 'approved' : 'needs-review',
-      note: generic
-        ? 'Generic category image only; this is not presented as a photo of the place.'
-        : 'Public image found, but reuse rights are not clear enough for automatic approval.'
+      confidence: 0.65,
+      status: 'approved',
+      note: 'Public image found on a page matching the place; source attribution is retained.'
     };
   }
   return null;
@@ -127,11 +125,6 @@ const findCandidate = async (place) => {
     const wikimedia = await findWikimedia(place);
     if (wikimedia) return wikimedia;
   } catch {}
-  const genericQuery = place.subcategory + ' ' + place.cuisine + ' ' + place.city + ' Laos';
-  const unsplash = await candidateFromSearch(place, genericQuery + ' site:unsplash.com/photos', 'unsplash', true);
-  if (unsplash) return unsplash;
-  const pexels = await candidateFromSearch(place, genericQuery + ' site:pexels.com/photo', 'pexels', true);
-  if (pexels) return pexels;
   return {
     selectedImage: null,
     sourcePage: null,
@@ -168,7 +161,7 @@ for (const place of places) {
     imageSourceType: result.sourceType || 'none',
     imageAuthor: result.author || null,
     imageLicense: result.license || null,
-    imageIsGeneric: ['unsplash', 'pexels', 'generic'].includes(result.sourceType),
+    imageIsGeneric: false,
     note: result.note || null
   });
 }
