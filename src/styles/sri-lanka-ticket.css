@@ -1,0 +1,43 @@
+/* CH.03 Sri Lanka only: keep the bus ticket inside the upper-right corner of the right notebook page. */
+.country-section #country-sri-lanka-3 .country-feature__copy {
+  position: relative;
+}
+
+.country-section #country-sri-lanka-3 .country-feature__sri-ticket {
+  display: block !important;
+  position: absolute !important;
+  z-index: 20 !important;
+  top: 18px !important;
+  right: 18px !important;
+  left: auto !important;
+  bottom: auto !important;
+  width: 118px !important;
+  height: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  object-fit: contain !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: rotate(6deg) !important;
+  filter: drop-shadow(0 7px 7px rgba(37, 41, 35, .15)) !important;
+  pointer-events: none;
+}
+
+@media (min-width: 701px) and (max-width: 900px) {
+  .country-section #country-sri-lanka-3 .country-feature__sri-ticket {
+    top: 14px !important;
+    right: 12px !important;
+    width: 96px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .country-section #country-sri-lanka-3 .country-feature__sri-ticket {
+    top: 12px !important;
+    right: 10px !important;
+    width: 88px !important;
+    transform: rotate(5deg) !important;
+  }
+}
