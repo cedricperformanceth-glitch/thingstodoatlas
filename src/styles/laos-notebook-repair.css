@@ -1,4 +1,4 @@
-/* Restore only the Lao tuk-tuk illustration beneath the CH.02 photograph. */
+/* Laos CH.02: render the tuk-tuk as a normal image so no wheel is clipped. */
 .country-section #country-laos-2,
 .country-section #country-laos-2 .country-feature__image {
   overflow: visible !important;
@@ -9,26 +9,33 @@
 }
 
 .country-section #country-laos-2 .country-feature__image::after {
-  content: '' !important;
-  display: block !important;
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+.country-section #country-laos-2 .country-feature__laos-tuktuk {
   position: absolute !important;
   z-index: 8 !important;
   top: 202px !important;
   left: calc(50% - 34px) !important;
   width: 250px !important;
-  height: 270px !important;
-  background: url('/images/hand-drawn/tuk-tuk-page.webp') center / contain no-repeat !important;
+  height: auto !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  overflow: visible !important;
   transform: rotate(7deg) !important;
   transform-origin: center center !important;
   filter: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
   pointer-events: none !important;
 }
 
 @media (max-width: 700px) {
-  .country-section #country-laos-2 .country-feature__image::after {
+  .country-section #country-laos-2 .country-feature__laos-tuktuk {
     top: 146px !important;
     left: calc(50% - 13px) !important;
     width: 204px !important;
-    height: 222px !important;
   }
 }
