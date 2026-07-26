@@ -21,7 +21,13 @@ import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
             <h2 id="sri-lanka-map-title" class="visually-hidden">Choose a place on the map</h2>
           </div>
         </header>
-        <div class="map-placeholder" aria-hidden="true"></div>
+        <img
+          class="map-drawing"
+          src="/images/hand-drawn/sri-lanka-map.webp"
+          alt="Hand-drawn map of Sri Lanka"
+          width="676"
+          height="1166"
+        />
       </div>
     </div>
     <PlanMyTripIntro />
@@ -71,10 +77,15 @@ import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
     overflow: hidden;
   }
 
-  .map-placeholder {
+  .map-drawing {
     position: absolute;
-    inset: 0;
-    background: #fff;
+    left: 50%;
+    top: 50%;
+    display: block;
+    width: 46vw;
+    height: 69vw;
+    object-fit: contain;
+    transform: translate(-50%, -42%);
   }
 
   .map-sheet__header {
@@ -137,5 +148,9 @@ import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
     .map-sheet__title { font-size: 42px; }
     .map-sheet__note { font-size: 13px; }
     .map-layers { width: calc(100vw - 4rem); height: calc(100vw - 4rem); }
+    .map-drawing {
+      width: calc((100vw - 4rem) * 0.575);
+      height: calc((100vw - 4rem) * 0.8625);
+    }
   }
 </style>
