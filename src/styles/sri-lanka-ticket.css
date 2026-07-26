@@ -8,10 +8,10 @@
   position: absolute !important;
   z-index: 20 !important;
   top: -6px !important;
-  right: -20px !important;
+  right: -43px !important;
   left: auto !important;
   bottom: auto !important;
-  width: 58px !important;
+  width: 65px !important;
   height: auto !important;
   max-width: none !important;
   margin: 0 !important;
@@ -28,16 +28,16 @@
 @media (min-width: 701px) and (max-width: 900px) {
   .country-section #country-sri-lanka-3 .country-feature__sri-ticket {
     top: -4px !important;
-    right: -14px !important;
-    width: 48px !important;
+    right: -37px !important;
+    width: 54px !important;
   }
 }
 
 @media (max-width: 700px) {
   .country-section #country-sri-lanka-3 .country-feature__sri-ticket {
     top: -2px !important;
-    right: -8px !important;
-    width: 44px !important;
+    right: -31px !important;
+    width: 49px !important;
     transform: rotate(5deg) !important;
   }
 }
