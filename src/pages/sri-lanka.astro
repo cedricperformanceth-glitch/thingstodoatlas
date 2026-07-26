@@ -1,6 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
+
+const gridColumns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
 ---
 
 <BaseLayout
@@ -28,6 +31,26 @@ import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
           width="676"
           height="1166"
         />
+        <svg class="map-grid" viewBox="0 0 1024 1536" aria-hidden="true">
+          <g class="map-grid__lines">
+            {Array.from({ length: 9 }, (_, index) => (
+              <line x1={index * 128} y1="0" x2={index * 128} y2="1536" />
+            ))}
+            {Array.from({ length: 13 }, (_, index) => (
+              <line x1="0" y1={index * 128} x2="1024" y2={index * 128} />
+            ))}
+          </g>
+          <g class="map-grid__labels map-grid__labels--columns">
+            {gridColumns.map((label, index) => (
+              <text x={(index * 128) + 64} y="34" text-anchor="middle">{label}</text>
+            ))}
+          </g>
+          <g class="map-grid__labels map-grid__labels--rows">
+            {gridRows.map((label, index) => (
+              <text x="18" y={(index * 128) + 74}>{label}</text>
+            ))}
+          </g>
+        </svg>
       </div>
     </div>
     <PlanMyTripIntro />
@@ -77,16 +100,48 @@ import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
     overflow: hidden;
   }
 
-  .map-drawing {
+  .map-drawing,
+  .map-grid {
     position: absolute;
     left: calc(50% + 85px);
     top: 50%;
     display: block;
     width: 33.235vw;
     height: 49.8525vw;
-    object-fit: contain;
     transform: translate(-50%, -42%);
   }
+
+  .map-drawing { object-fit: contain; }
+
+  .map-grid {
+    z-index: 1;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .map-grid__lines line {
+    stroke: rgba(42, 75, 61, 0.22);
+    stroke-width: 1.5;
+    stroke-dasharray: 8 10;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .map-grid__labels text {
+    fill: rgba(42, 75, 61, 0.58);
+    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: 27px;
+    font-weight: 600;
+    paint-order: stroke;
+    stroke: rgba(255, 255, 255, 0.9);
+    stroke-width: 5px;
+    stroke-linejoin: round;
+  }
+
+  .map-grid__labels--rows text { text-anchor: start; }
+
+  /* City marker rules for the next placement steps. */
+  .city-marker--active { color: #d97745; }
+  .city-marker--inactive { color: #7f6d33; }
 
   .map-sheet__header {
     position: absolute;
@@ -148,10 +203,12 @@ import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
     .map-sheet__title { font-size: 42px; }
     .map-sheet__note { font-size: 13px; }
     .map-layers { width: calc(100vw - 4rem); height: calc(100vw - 4rem); }
-    .map-drawing {
+    .map-drawing,
+    .map-grid {
       left: calc(50% + 85px);
       width: calc((100vw - 4rem) * 0.4154375);
       height: calc((100vw - 4rem) * 0.62315625);
     }
+    .map-grid__labels text { font-size: 34px; }
   }
 </style>
