@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
+import LandmarkModal from '../components/LandmarkModal.astro';
 
 const mirissa = { x: 448, y: 1472 };
 const ahangama = { x: 384, y: 1472 };
@@ -41,19 +42,19 @@ const arugamBay = { x: 896, y: 1172 };
             <title id="sri-lanka-map-svg-title">Destinations on the Sri Lanka map</title>
             <desc id="sri-lanka-map-description">Mirissa and Ahangama are available along the southern coast, Sigiriya is available in the centre of the island, Adam's Peak is available in the central highlands, Negombo and Colombo are available on the west coast, and Arugam Bay is marked as an upcoming destination on the east coast.</desc>
 
-            <a class="city-marker city-marker--active" href="/sri-lanka/sigiriya" aria-label="Explore Sigiriya">
+            <g class="city-marker city-marker--active" role="button" tabindex="0" aria-label="Open Sigiriya landmark details" data-open-landmark="sigiriya-modal">
               <circle class="city-marker__ring" cx={sigiriya.x} cy={sigiriya.y} r="22" />
               <circle class="city-marker__dot" cx={sigiriya.x} cy={sigiriya.y} r="9" />
               <path class="city-marker__leader" d={`M${sigiriya.x + 12} ${sigiriya.y + 12} L${sigiriya.x + 54} ${sigiriya.y + 54}`} />
               <text class="city-marker__label city-marker__label--down-right" x={sigiriya.x + 62} y={sigiriya.y + 92}>Sigiriya</text>
-            </a>
+            </g>
 
-            <a class="city-marker city-marker--active" href="/sri-lanka/adams-peak" aria-label="Explore Adam's Peak">
+            <g class="city-marker city-marker--active" role="button" tabindex="0" aria-label="Open Adam's Peak landmark details" data-open-landmark="adams-peak-modal">
               <circle class="city-marker__ring" cx={adamsPeak.x} cy={adamsPeak.y} r="22" />
               <circle class="city-marker__dot" cx={adamsPeak.x} cy={adamsPeak.y} r="9" />
               <path class="city-marker__leader" d={`M${adamsPeak.x + 12} ${adamsPeak.y + 12} L${adamsPeak.x + 54} ${adamsPeak.y + 54}`} />
               <text class="city-marker__label city-marker__label--down-right" x={adamsPeak.x + 62} y={adamsPeak.y + 92}>Adam's Peak</text>
-            </a>
+            </g>
 
             <g class="city-marker city-marker--inactive" aria-label="Arugam Bay coming soon">
               <circle class="city-marker__ring" cx={arugamBay.x} cy={arugamBay.y} r="22" />
@@ -95,7 +96,71 @@ const arugamBay = { x: 896, y: 1172 };
     </div>
     <PlanMyTripIntro />
   </section>
+
+  <LandmarkModal
+    id="sigiriya-modal"
+    name="Sigiriya"
+    region="Central Province · Sri Lanka"
+    description="A monumental rock fortress rising above the plains, combining ancient ruins, gardens, frescoes and a steep climb to the summit. This field card will be expanded with verified local notes."
+    mapsUrl="https://www.google.com/maps/search/?api=1&query=Sigiriya%2C%20Sri%20Lanka"
+    facts={[
+      { label: 'Getting there', value: 'Commonly reached from Dambulla, Habarana or nearby guesthouses by tuk-tuk, bus or private driver.' },
+      { label: 'Best time', value: 'Early morning is generally the most comfortable time for the climb.' },
+      { label: 'What to wear', value: 'Light clothing, sun protection and shoes suitable for many stairs.' },
+      { label: 'Price', value: 'Paid entrance. Confirm the current official ticket price before visiting.' },
+      { label: 'Duration', value: 'Allow roughly two to three hours for the full visit.' },
+      { label: 'Difficulty', value: 'Moderate climb with exposed stairways and limited shade.' }
+    ]}
+  />
+
+  <LandmarkModal
+    id="adams-peak-modal"
+    name="Adam's Peak"
+    region="Central Highlands · Sri Lanka"
+    description="A sacred mountain and demanding pilgrimage climb, usually approached at night to reach the summit around sunrise. This field card will be expanded with verified seasonal and transport notes."
+    mapsUrl="https://www.google.com/maps/search/?api=1&query=Adam%27s%20Peak%2C%20Sri%20Lanka"
+    facts={[
+      { label: 'Getting there', value: 'Most visitors begin from Nallathanniya or Dalhousie, reached by bus, train connections and local transport.' },
+      { label: 'Best time', value: 'The main pilgrimage season and weather conditions should be checked before setting out.' },
+      { label: 'What to wear', value: 'Warm layers for the summit, comfortable clothing and reliable walking shoes.' },
+      { label: 'Price', value: 'The climb itself is generally free, but transport and local services cost extra.' },
+      { label: 'Duration', value: 'Plan several hours for the ascent and descent.' },
+      { label: 'Difficulty', value: 'Demanding, with a long staircase and substantial elevation gain.' }
+    ]}
+  />
 </BaseLayout>
+
+<script>
+  const openLandmark = (trigger) => {
+    const id = trigger.dataset.openLandmark;
+    const dialog = id ? document.getElementById(id) : null;
+    if (dialog instanceof HTMLDialogElement && !dialog.open) dialog.showModal();
+  };
+
+  document.querySelectorAll('[data-open-landmark]').forEach((trigger) => {
+    trigger.addEventListener('click', () => openLandmark(trigger));
+    trigger.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openLandmark(trigger);
+      }
+    });
+  });
+
+  document.querySelectorAll('.landmark-modal').forEach((dialog) => {
+    if (!(dialog instanceof HTMLDialogElement)) return;
+    dialog.querySelector('[data-close-landmark]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    dialog.querySelector('[data-add-landmark]')?.addEventListener('click', (event) => {
+      const button = event.currentTarget;
+      if (!(button instanceof HTMLButtonElement)) return;
+      button.textContent = 'Added to my trip ✓';
+      button.disabled = true;
+    });
+  });
+</script>
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
@@ -159,36 +224,15 @@ const arugamBay = { x: 896, y: 1172 };
   }
 
   .map-drawing { object-fit: contain; }
-
-  .map-overlay {
-    z-index: 1;
-    overflow: visible;
-    pointer-events: auto;
-  }
+  .map-overlay { z-index: 1; overflow: visible; pointer-events: auto; }
 
   .city-marker { color: #d97745; cursor: pointer; outline: none; }
   .city-marker--active { color: #d97745; }
   .city-marker--inactive { color: #7f6d33; cursor: default; }
-  .city-marker__ring {
-    fill: color-mix(in srgb, currentColor 14%, transparent);
-    stroke: currentColor;
-    stroke-width: 3;
-    transition: opacity 180ms ease, transform 180ms ease;
-    transform-box: fill-box;
-    transform-origin: center;
-  }
+  .city-marker__ring { fill: color-mix(in srgb, currentColor 14%, transparent); stroke: currentColor; stroke-width: 3; transition: opacity 180ms ease, transform 180ms ease; transform-box: fill-box; transform-origin: center; }
   .city-marker__dot { fill: currentColor; stroke: #fff; stroke-width: 3; }
   .city-marker__leader { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
-  .city-marker__label {
-    fill: currentColor;
-    font-family: Georgia, serif;
-    font-size: 34px;
-    font-weight: 700;
-    paint-order: stroke;
-    stroke: #fff;
-    stroke-width: 7px;
-    stroke-linejoin: round;
-  }
+  .city-marker__label { fill: currentColor; font-family: Georgia, serif; font-size: 34px; font-weight: 700; paint-order: stroke; stroke: #fff; stroke-width: 7px; stroke-linejoin: round; }
   .city-marker__label--below { text-anchor: middle; }
   .city-marker__label--down-left { text-anchor: end; }
   .city-marker__label--down-right { text-anchor: start; }
@@ -214,38 +258,12 @@ const arugamBay = { x: 896, y: 1172 };
   .map-sheet__title-block { width: min(42rem, 70%); margin-left: auto; text-align: right; }
   .map-sheet__title-art { display: block; width: 100%; height: auto; overflow: visible; }
   .map-sheet__chapter,
-  .map-sheet__title {
-    fill: #1f392d;
-    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
-    font-style: normal;
-  }
+  .map-sheet__title { fill: #1f392d; font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive; font-style: normal; }
   .map-sheet__chapter { font-size: 15px; font-weight: 500; letter-spacing: 0.12em; opacity: 0.62; }
   .map-sheet__title { font-size: 51px; font-weight: 550; letter-spacing: 0.01em; opacity: 0.93; }
-  .map-sheet__note {
-    position: static;
-    flex: 0 0 auto;
-    margin-top: 0.15rem;
-    color: #1f392d;
-    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    opacity: 0.58;
-    white-space: nowrap;
-  }
+  .map-sheet__note { position: static; flex: 0 0 auto; margin-top: 0.15rem; color: #1f392d; font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive; font-size: 16px; font-style: normal; font-weight: 500; letter-spacing: 0.08em; opacity: 0.58; white-space: nowrap; }
 
-  .visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
   @media (max-width: 700px) {
     .laos-map-page { padding-top: 3.5rem; }
@@ -257,9 +275,6 @@ const arugamBay = { x: 896, y: 1172 };
     .map-sheet__title { font-size: 42px; }
     .map-sheet__note { font-size: 13px; }
     .map-layers { width: calc(100vw - 4rem); height: calc(100vw - 4rem); }
-    .map-country-layer {
-      left: calc(50% + 85px);
-      width: calc((100vw - 4rem) * 0.4154375);
-    }
+    .map-country-layer { left: calc(50% + 85px); width: calc((100vw - 4rem) * 0.4154375); }
   }
 </style>
