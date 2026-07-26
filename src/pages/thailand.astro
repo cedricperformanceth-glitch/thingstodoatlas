@@ -15,13 +15,19 @@ import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
           <span class="map-sheet__note">FIELD MAP · THAILAND</span>
           <div class="map-sheet__title-block">
             <svg class="map-sheet__title-art" viewBox="0 0 680 112" role="presentation" aria-hidden="true">
-              <text class="map-sheet__chapter" x="677" y="20" text-anchor="end">THAILAND · CHAPTER 03</text>
+              <text class="map-sheet__chapter" x="677" y="20" text-anchor="end">THAILAND · CHAPTER 01</text>
               <text class="map-sheet__title" x="680" y="88" text-anchor="end">Choose a place on the map</text>
             </svg>
             <h2 id="thailand-map-title" class="visually-hidden">Choose a place on the map</h2>
           </div>
         </header>
-        <div class="map-placeholder" aria-hidden="true"></div>
+        <img
+          class="map-drawing"
+          src="/images/hand-drawn/thailand-map.svg"
+          alt="Hand-drawn map of Thailand"
+          width="1024"
+          height="1536"
+        />
       </div>
     </div>
     <PlanMyTripIntro />
@@ -71,10 +77,15 @@ import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
     overflow: hidden;
   }
 
-  .map-placeholder {
+  .map-drawing {
     position: absolute;
-    inset: 0;
-    background: #fff;
+    left: 50%;
+    top: 50%;
+    display: block;
+    width: 46vw;
+    height: 69vw;
+    object-fit: contain;
+    transform: translate(-50%, -43%);
   }
 
   .map-sheet__header {
@@ -137,5 +148,9 @@ import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
     .map-sheet__title { font-size: 42px; }
     .map-sheet__note { font-size: 13px; }
     .map-layers { width: calc(100vw - 4rem); height: calc(100vw - 4rem); }
+    .map-drawing {
+      width: calc((100vw - 4rem) * 0.575);
+      height: calc((100vw - 4rem) * 0.8625);
+    }
   }
 </style>
