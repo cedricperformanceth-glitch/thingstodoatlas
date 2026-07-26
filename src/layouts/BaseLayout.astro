@@ -28,9 +28,6 @@ const isPakseCafePage = currentPath === '/laos/pakse/cafes' || currentPath === '
   <body class:list={[{ 'cafe-category-page': isPakseCafePage }]}>
     <header class="site-header">
       <div class="site-brand-cluster">
-        <a class="site-logo" href="/" aria-label="ThingsToDoAtlas home">
-          <img src="https://raw.githubusercontent.com/cedricperformanceth-glitch/thingstodoatlas/master/calque%20SVG/ChatGPT%20Image%2026%20juil.%202026%2C%2001_49_26_result.webp" alt="ThingsToDoAtlas" width="1536" height="1024" />
-        </a>
         <div class="language-menu">
           <button class="language-switcher" type="button" aria-label="Choose language" aria-haspopup="true" aria-expanded="false" aria-controls="language-dropdown">
             <svg class="language-switcher__flag" viewBox="0 0 60 30" aria-hidden="true">
@@ -56,6 +53,9 @@ const isPakseCafePage = currentPath === '/laos/pakse/cafes' || currentPath === '
             </a>
           </div>
         </div>
+        <a class="site-logo" href="/" aria-label="ThingsToDoAtlas home">
+          <img src="https://raw.githubusercontent.com/cedricperformanceth-glitch/thingstodoatlas/master/calque%20SVG/ChatGPT%20Image%2026%20juil.%202026%2C%2001_49_26_result.webp" alt="ThingsToDoAtlas" width="1536" height="1024" />
+        </a>
       </div>
       <nav class="country-nav" aria-label="Choose a country">
         {countries.map((country) => <a class:list={[{ 'is-active': currentPath.startsWith(`/${country.slug}`), 'is-coming-soon': country.slug !== 'laos' }]} href={country.href} aria-current={currentPath.startsWith(`/${country.slug}`) ? 'page' : undefined}><span class="nav-chapter">{country.number}</span>{country.name}{country.slug !== 'laos' && <sup>soon</sup>}</a>)}
@@ -287,8 +287,8 @@ const isPakseCafePage = currentPath === '/laos/pakse/cafes' || currentPath === '
     }
 
     .language-dropdown {
-      left: auto;
-      right: 0;
+      left: 0;
+      right: auto;
     }
 
     body.cafe-category-page .chapter-sheet__title {
