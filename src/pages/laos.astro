@@ -14,7 +14,8 @@ const luangPrabang = { x: 356, y: 576 };
 
 const bolavenPlateau = { x: 800, y: 930 };
 const watPhou = { x: 586, y: 1060 };
-const khonePhapheng = { x: 760, y: 1210 };
+const khonePhapheng = { x: 696, y: 1188 };
+const xeBangFai = { x: 708, y: 832 };
 
 const bolavenGallery = [
   {
@@ -54,7 +55,7 @@ const khoneGallery = [
 
 <BaseLayout
   title="Explore Laos"
-  description="Choose your next stop on an illustrated map of Laos. Begin with Pakse or Tad Lo, then open field cards for landmarks across southern Laos."
+  description="Choose your next stop on an illustrated map of Laos. Begin with Pakse or Tad Lo, then open field cards for landmarks across the country."
   canonical="https://thingstodoatlas.com/laos"
 >
   <section class="laos-map-page" aria-labelledby="laos-map-title">
@@ -102,7 +103,7 @@ const khoneGallery = [
 
         <svg class="map-overlay" viewBox="0 0 1024 1536" role="img" aria-labelledby="map-title map-description">
           <title id="map-title">Destinations and landmarks on the Laos map</title>
-          <desc id="map-description">Pakse and Tad Lo open city guides. Bolaven Plateau, Wat Phou and Khone Phapheng Falls open landmark field cards. Vientiane, Don Det and Luang Prabang are being documented.</desc>
+          <desc id="map-description">Pakse and Tad Lo open city guides. Bolaven Plateau, Wat Phou, Khone Phapheng Falls and Xe Bang Fai Cave open landmark field cards. Vientiane, Don Det and Luang Prabang are being documented.</desc>
 
           <a class="city-marker city-marker--city city-marker--active" href="/laos/pakse" aria-label="Explore Pakse">
             <circle class="city-marker__ring" cx={pakse.x} cy={pakse.y} r="22" />
@@ -140,8 +141,15 @@ const khoneGallery = [
           <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Khone Phapheng Falls landmark details" data-open-landmark="khone-phapheng-modal">
             <circle class="city-marker__ring" cx={khonePhapheng.x} cy={khonePhapheng.y} r="20" />
             <circle class="city-marker__dot" cx={khonePhapheng.x} cy={khonePhapheng.y} r="8" />
-            <path class="city-marker__leader" d={`M${khonePhapheng.x + 12} ${khonePhapheng.y + 10} L${khonePhapheng.x + 50} ${khonePhapheng.y + 40}`} />
-            <text class="city-marker__label city-marker__label--landmark" x={khonePhapheng.x + 58} y={khonePhapheng.y + 52}>Khone Phapheng</text>
+            <path class="city-marker__leader" d={`M${khonePhapheng.x - 12} ${khonePhapheng.y + 8} L${khonePhapheng.x - 58} ${khonePhapheng.y + 42}`} />
+            <text class="city-marker__label city-marker__label--left city-marker__label--landmark" x={khonePhapheng.x - 66} y={khonePhapheng.y + 54}>Khone Phapheng</text>
+          </g>
+
+          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Xe Bang Fai Cave landmark details" data-open-landmark="xe-bang-fai-modal">
+            <circle class="city-marker__ring" cx={xeBangFai.x} cy={xeBangFai.y} r="20" />
+            <circle class="city-marker__dot" cx={xeBangFai.x} cy={xeBangFai.y} r="8" />
+            <path class="city-marker__leader" d={`M${xeBangFai.x + 12} ${xeBangFai.y} L${xeBangFai.x + 74} ${xeBangFai.y}`} />
+            <text class="city-marker__label city-marker__label--landmark" x={xeBangFai.x + 82} y={xeBangFai.y + 8}>Xe Bang Fai</text>
           </g>
 
           <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Vientiane guide coming soon">
@@ -279,6 +287,24 @@ const khoneGallery = [
       { label: 'Price', value: 'Paid entrance. Check the current local ticket price before setting out.' },
       { label: 'Duration', value: 'Allow around one to two hours to walk the main viewpoints without rushing.' },
       { label: 'Difficulty', value: 'Easy walking, but the river itself is dangerous and not a swimming area.' }
+    ]}
+  />
+
+  <LandmarkModal
+    id="xe-bang-fai-modal"
+    name="Xe Bang Fai Cave"
+    country="Laos"
+    fieldCardNumber="06"
+    region="Boualapha District · Khammouane"
+    description="A colossal active river cave hidden near the Lao–Vietnamese border. The underground river runs through enormous chambers, giant formations and black-water passages that are explored with a local guide."
+    mapsUrl="https://maps.app.goo.gl/wbVnr9MAxdNBvwwZA"
+    facts={[
+      { label: 'Getting there', value: 'The cave is near Ban Nyabaet–Nong Ping, roughly 154 km east of Thakhek via Route 12. The final roads are remote and can be rough; arrange a local guide rather than entering alone.' },
+      { label: 'Best time', value: 'Dry-season conditions are usually better for the boat trip. Boat access can stop during the wet season or when river levels are unsafe, so confirm locally before travelling.' },
+      { label: 'What to wear', value: 'Quick-dry clothing and shoes with grip. Local operators commonly provide a life jacket and a strong headlamp for the boat and cave sections.' },
+      { label: 'Price', value: 'Entrance, guide and boat prices are arranged locally and may vary. Confirm the full price and route before setting out.' },
+      { label: 'Duration', value: 'Expect about a 15-minute riverside walk before boarding. The cave visit itself commonly takes one to two hours, but the remote journey makes this a full-day or multi-day expedition.' },
+      { label: 'Difficulty', value: 'Adventure-level access: rough roads, darkness, boat travel and uneven walking inside the cave. Do not attempt the forest or cave route without a guide.' }
     ]}
   />
 </BaseLayout>
