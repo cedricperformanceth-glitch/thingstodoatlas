@@ -51,6 +51,30 @@ const khoneGallery = [
     author: 'Wikimedia Commons'
   }
 ];
+
+const xeBangFaiGallery = [
+  {
+    src: 'https://whc.unesco.org/uploads/thumbs/site_0951_0031-1000-667-20250617115722.jpg',
+    alt: 'Lower entrance of Xe Bang Fai Cave in Hin Nam No National Park',
+    sourcePage: 'https://whc.unesco.org/en/documents/219851',
+    author: 'GIZ ProFEB / Lucas Wahl',
+    license: 'Attribution · NoDerivatives'
+  },
+  {
+    src: 'https://whc.unesco.org/document/219859',
+    alt: 'Underground Xe Bang Fai river passage inside the cave',
+    sourcePage: 'https://whc.unesco.org/en/documents/219859',
+    author: 'GIZ ProFEB',
+    license: 'Attribution · NoDerivatives'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/XeBanFai.jpg?width=1600',
+    alt: 'Xe Bang Fai River downstream from Ban Chalou in Khammouane',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:XeBanFai.jpg',
+    author: 'Italian walrus-63',
+    license: 'CC BY-SA 3.0'
+  }
+];
 ---
 
 <BaseLayout
@@ -298,6 +322,7 @@ const khoneGallery = [
     region="Boualapha District · Khammouane"
     description="A colossal active river cave hidden near the Lao–Vietnamese border. The underground river runs through enormous chambers, giant formations and black-water passages that are explored with a local guide."
     mapsUrl="https://maps.app.goo.gl/wbVnr9MAxdNBvwwZA"
+    gallery={xeBangFaiGallery}
     facts={[
       { label: 'Getting there', value: 'The cave is near Ban Nyabaet–Nong Ping, roughly 154 km east of Thakhek via Route 12. The final roads are remote and can be rough; arrange a local guide rather than entering alone.' },
       { label: 'Best time', value: 'Dry-season conditions are usually better for the boat trip. Boat access can stop during the wet season or when river levels are unsafe, so confirm locally before travelling.' },
@@ -333,6 +358,49 @@ const khoneGallery = [
       if (event.target === dialog) dialog.close();
     });
   });
+
+  const setupXeBangFaiNotes = () => {
+    const dialog = document.getElementById('xe-bang-fai-modal');
+    if (!(dialog instanceof HTMLDialogElement) || dialog.dataset.notesReady === 'true') return;
+    dialog.dataset.notesReady = 'true';
+
+    const annotations = dialog.querySelector('.landmark-story__annotations');
+    if (annotations && !annotations.children.length) {
+      annotations.innerHTML = `
+        <article class="landmark-story-note">
+          <span class="landmark-story-note__mark" aria-hidden="true"><svg viewBox="0 0 36 36"><circle cx="8" cy="27" r="3"></circle><circle cx="28" cy="8" r="3"></circle><path d="M11 26c6-2 2-9 8-9s4-5 6-7m-8 4 4 4-4 4"></path></svg></span>
+          <div><span>Expedition note</span><p>Guide and boat should be arranged before the final remote road.</p></div>
+        </article>
+        <article class="landmark-story-note landmark-story-note--tilted">
+          <span class="landmark-story-note__mark" aria-hidden="true"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="7"></circle><path d="M18 3v6m0 18v6M3 18h6m18 0h6M7.5 7.5l4.2 4.2m12.6 12.6 4.2 4.2m0-21-4.2 4.2M11.7 24.3l-4.2 4.2"></path></svg></span>
+          <div><span>Best rhythm</span><p>Confirm river levels locally, then keep the entire day free.</p></div>
+        </article>
+        <article class="landmark-story-note">
+          <span class="landmark-story-note__mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M12 6 8 9 5 18l4 2 2-5v16h14V15l2 5 4-2-3-9-4-3M12 6c1 4 4 6 6 8 2-2 5-4 6-8M18 14v17"></path></svg></span>
+          <div><span>Margin note</span><p>Quick-dry clothes, grip shoes and a strong headlamp.</p></div>
+        </article>`;
+    }
+
+    const scribble = dialog.querySelector('.landmark-story__scribble span');
+    if (scribble) scribble.textContent = 'the road is part of the expedition';
+
+    const footer = dialog.querySelector('.landmark-notes__footer span');
+    if (footer) footer.textContent = 'confirm the river before leaving';
+
+    const notes = [...dialog.querySelectorAll('.landmark-note')];
+    const bestTime = notes.find((note) => note.querySelector('dt')?.textContent?.trim() === 'Best time');
+    const difficulty = notes.find((note) => note.querySelector('dt')?.textContent?.trim() === 'Difficulty');
+
+    if (bestTime && !bestTime.querySelector('.landmark-note__annotation')) {
+      bestTime.querySelector('.landmark-note__copy')?.insertAdjacentHTML('beforeend', '<p class="landmark-note__annotation"><span class="landmark-note__crossed" aria-hidden="true">Any season works</span><span class="landmark-note__correction">No — check the river first.</span></p>');
+    }
+    if (difficulty && !difficulty.querySelector('.landmark-note__annotation')) {
+      difficulty.querySelector('.landmark-note__copy')?.insertAdjacentHTML('beforeend', '<p class="landmark-note__annotation"><span class="landmark-note__aside">Guide, boat, darkness and rough roads.</span></p>');
+    }
+  };
+
+  setupXeBangFaiNotes();
+  document.addEventListener('astro:page-load', setupXeBangFaiNotes);
 </script>
 
 <style>
