@@ -111,6 +111,11 @@
   transform: scale(.6) !important;
 }
 
+/* Pha Pa Tou: 45 degrees upper-left of Luang Prabang, with about 6.7px between the rendered circles. */
+.laos-map-page [data-open-landmark="pha-pa-tou-modal"] {
+  transform: translate(-99.5px, 50.5px);
+}
+
 /* Align the southern landmark points with their nearby city chapters. */
 .laos-map-page [data-open-landmark="wat-phou-modal"] {
   transform: translate(93px, 0);
