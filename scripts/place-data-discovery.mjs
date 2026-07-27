@@ -171,14 +171,6 @@ export const discoverPlaces = async ({ roots } = {}) => {
   };
 };
 
-export const finderSourceForPlaces = (places) => `export const places = ${JSON.stringify(places.map((place) => ({
-  slug: place.slug,
-  name: place.name,
-  category: place.category,
-  city: place.city,
-  country: place.country,
-  subcategory: place.subcategory,
-  cuisine: place.cuisine,
-  image: place.image,
-  mapsUrl: place.mapsUrl
-})), null, 2)};\n`;
+const serializeValue = (value) => value == null ? 'null' : JSON.stringify(value);
+
+export const finderSourceForPlaces = (places) => `export const places = [\n${places.map((place) => `  {\n    slug: ${serializeValue(place.slug)},\n    name: ${serializeValue(place.name)},\n    category: ${serializeValue(place.category)},\n    city: ${serializeValue(place.city)},\n    country: ${serializeValue(place.country)},\n    subcategory: ${serializeValue(place.subcategory)},\n    cuisine: ${serializeValue(place.cuisine)},\n    image: ${serializeValue(place.image)},\n    mapsUrl: ${serializeValue(place.mapsUrl)}\n  }`).join(',\n')}\n];\n`;
