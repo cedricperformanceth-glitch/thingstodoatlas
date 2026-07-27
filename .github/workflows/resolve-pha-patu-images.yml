@@ -1,4 +1,4 @@
-name: Build Pha Patu gallery images
+name: Finalise Pha Patu landmark
 
 on:
   push:
@@ -9,53 +9,71 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  finalise:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install image tools
-        run: python -m pip install --quiet requests pillow
-      - name: Download and optimise exact Pha Patu images
+      - name: Update gallery and marker geometry
         shell: bash
         run: |
           python - <<'PY'
-          import io
           from pathlib import Path
-          import requests
-          from PIL import Image, ImageOps
 
-          headers = {'User-Agent': 'Mozilla/5.0'}
-          images = [
-              (
-                  'https://f.ptcdn.info/949/067/000/q4zfcth9fGTOzjddHui-o.jpg',
-                  'public/images/laos/landmarks/pha-pa-tou-01.jpg',
-              ),
-              (
-                  'https://laosuki.com/wp-content/uploads/2025/12/pha-patu-viewpoint-sea-of-mist-luang-prabang.jpg',
-                  'public/images/laos/landmarks/pha-pa-tou-02.jpg',
-              ),
-              (
-                  'https://p19-common-sign.tiktokcdn-us.com/tos-alisg-p-0037/o0UuixAMEEx57OAB6qpE3DKCNIBHUeAfgA6FAR~tplv-tiktokx-origin.image?dr=9636&x-expires=1785333600&x-signature=TzyBMG2Ckm01iGyJZG1vxOZwLfk%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=useast8',
-                  'public/images/laos/landmarks/pha-pa-tou-03.jpg',
-              ),
-          ]
+          path = Path('src/pages/laos.astro')
+          text = path.read_text(encoding='utf-8')
 
-          for url, path_str in images:
-              response = requests.get(url, headers=headers, timeout=60)
-              response.raise_for_status()
-              image = Image.open(io.BytesIO(response.content))
-              image = ImageOps.exif_transpose(image).convert('RGB')
-              image.thumbnail((1800, 1400), Image.Resampling.LANCZOS)
-              path = Path(path_str)
-              path.parent.mkdir(parents=True, exist_ok=True)
-              image.save(path, 'JPEG', quality=88, optimize=True, progressive=True)
-              print(path, image.size, path.stat().st_size)
+          old_gallery = """const phaPaTouGallery = [
+  {
+    src: 'https://f.ptcdn.info/949/067/000/q4zfcth9fGTOzjddHui-o.jpg',
+    alt: 'Sunrise over the mountain landscape from Pha Pa Tou in Luang Prabang Province',
+    sourcePage: 'https://pantip.com/topic/39606086',
+    author: 'Pantip travel report'
+  }
+];"""
+
+          new_gallery = """const phaPaTouGallery = [
+  {
+    src: '/images/laos/landmarks/pha-pa-tou-01.jpg',
+    alt: 'Sunrise over the mountain landscape from Pha Pa Tou in Luang Prabang Province',
+    sourcePage: 'https://pantip.com/topic/39606086',
+    author: 'Sittichai · Pantip travel report'
+  },
+  {
+    src: '/images/laos/landmarks/pha-pa-tou-02.jpg',
+    alt: 'Sea of mist surrounding Pha Patu in Luang Prabang Province',
+    sourcePage: 'https://laosuki.com/pha-patu-viewpoint-luang-prabang-sea-of-mist/',
+    author: 'OKIHIRO · Laosuki'
+  },
+  {
+    src: '/images/laos/landmarks/pha-pa-tou-03.jpg',
+    alt: 'Mountain viewpoint scenery at Pha Patu above Pak Ou',
+    sourcePage: 'https://www.tiktok.com/@makame__/video/7581713947250855176',
+    author: 'makame__ · TikTok'
+  }
+];"""
+
+          old_marker = """            <path class=\"city-marker__leader\" d={`M${phaPaTou.x + 12} ${phaPaTou.y} L${phaPaTou.x + 74} ${phaPaTou.y}`} />
+            <text class=\"city-marker__label city-marker__label--landmark\" x={phaPaTou.x + 82} y={phaPaTou.y + 8}>Pha Pa Tou</text>"""
+
+          new_marker = """            <path class=\"city-marker__leader\" d={`M${phaPaTou.x + 10} ${phaPaTou.y} L${phaPaTou.x + 66} ${phaPaTou.y - 41}`} />
+            <text class=\"city-marker__label city-marker__label--landmark\" x={phaPaTou.x + 74} y={phaPaTou.y - 45}>Pha Pa Tou</text>"""
+
+          if text.count(old_gallery) != 1:
+              raise RuntimeError(f'Expected one Pha Pa Tou gallery, found {text.count(old_gallery)}')
+          if text.count(old_marker) != 1:
+              raise RuntimeError(f'Expected one Pha Pa Tou marker, found {text.count(old_marker)}')
+
+          text = text.replace(old_gallery, new_gallery, 1)
+          text = text.replace(old_marker, new_marker, 1)
+          path.write_text(text, encoding='utf-8')
           PY
-      - name: Commit gallery files
+      - name: Remove temporary files and commit
         run: |
+          rm -f pha-patu-image-candidates.txt
+          rm -f .github/workflows/resolve-pha-patu-images.yml
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add public/images/laos/landmarks/pha-pa-tou-01.jpg public/images/laos/landmarks/pha-pa-tou-02.jpg public/images/laos/landmarks/pha-pa-tou-03.jpg
-          git commit -m "Add stable Pha Patu gallery images"
+          git add -A
+          git commit -m "Fix Pha Patu leader and add gallery photos"
           git push
