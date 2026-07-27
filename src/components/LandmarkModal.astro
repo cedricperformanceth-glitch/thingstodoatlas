@@ -39,10 +39,13 @@ const storyAnnotations = {
 const landmarkAnnotations = annotations[name] ?? {};
 const landmarkStoryAnnotations = storyAnnotations[name] ?? [];
 const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weather before leaving';
+const fieldCardNumber = name === 'Sigiriya' ? '01' : '02';
 ---
 
 <dialog class="landmark-modal" id={id} aria-labelledby={`${id}-title`}>
-  <button class="landmark-modal__close" type="button" aria-label={`Close ${name}`} data-close-landmark>×</button>
+  <button class="landmark-modal__close" type="button" aria-label={`Close ${name}`} data-close-landmark>
+    <span>close</span><b aria-hidden="true">×</b>
+  </button>
 
   <div class="landmark-modal__grid">
     <section class="landmark-modal__story">
@@ -58,55 +61,44 @@ const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weath
 
       <div class="landmark-story__annotations" aria-label={`${name} quick notes`}>
         {landmarkStoryAnnotations.map((note, index) => (
-          <article class:list={['landmark-story-note', `landmark-story-note--${note.icon}`, { 'landmark-story-note--tilted': index === 1 }]}>
+          <article class:list={['landmark-story-note', { 'landmark-story-note--tilted': index === 1 }]}>
             <span class="landmark-story-note__mark" aria-hidden="true">
-              {note.icon === 'ticket' && (
-                <svg viewBox="0 0 36 36"><path d="M5 10 C8 10 9 7 9 5 H30 V12 C26 12 26 17 30 17 V29 H9 C9 25 8 24 5 24 Z"/><path d="M14 9v3 M14 15v3 M14 21v3 M20 14h6 M20 20h6"/></svg>
-              )}
-              {note.icon === 'sun' && (
-                <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="7"/><path d="M18 3v6 M18 27v6 M3 18h6 M27 18h6 M7.5 7.5l4.2 4.2 M24.3 24.3l4.2 4.2 M28.5 7.5l-4.2 4.2 M11.7 24.3l-4.2 4.2"/></svg>
-              )}
-              {note.icon === 'shade' && (
-                <svg viewBox="0 0 36 36"><path d="M5 18 C8 8, 15 5, 18 5 C23 5, 30 9, 32 18 Z"/><path d="M18 18v13 M18 31c-1 3-5 2-5-1"/><path d="M9 18c1-3 3-5 5-6 M22 12c2 1 4 3 5 6"/></svg>
-              )}
-              {note.icon === 'moon' && (
-                <svg viewBox="0 0 36 36"><path d="M25 27 C15 30, 7 22, 9 13 C10 8, 14 5, 18 4 C14 12, 18 21, 25 27 Z"/><path d="M27 7l1 3 3 1-3 1-1 3-1-3-3-1 3-1z"/></svg>
-              )}
-              {note.icon === 'jacket' && (
-                <svg viewBox="0 0 36 36"><path d="M12 6 L8 9 5 18 9 20 11 15 11 31 H25 V15 L27 20 31 18 28 9 24 6"/><path d="M12 6 C13 10, 16 12, 18 14 C20 12, 23 10, 24 6 M18 14v17"/></svg>
-              )}
+              {note.icon === 'ticket' && <svg viewBox="0 0 36 36"><path d="M5 10C8 10 9 7 9 5h21v7c-4 0-4 5 0 5v12H9c0-4-1-5-4-5z"/><path d="M14 9v3m0 3v3m0 3v3m6-10h6m-6 6h6"/></svg>}
+              {note.icon === 'sun' && <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="7"/><path d="M18 3v6m0 18v6M3 18h6m18 0h6M7.5 7.5l4.2 4.2m12.6 12.6 4.2 4.2m0-21-4.2 4.2M11.7 24.3l-4.2 4.2"/></svg>}
+              {note.icon === 'shade' && <svg viewBox="0 0 36 36"><path d="M5 18C8 8 15 5 18 5c5 0 12 4 14 13zM18 18v13c-1 3-5 2-5-1M9 18c1-3 3-5 5-6m8 0c2 1 4 3 5 6"/></svg>}
+              {note.icon === 'moon' && <svg viewBox="0 0 36 36"><path d="M25 27C15 30 7 22 9 13c1-5 5-8 9-9-4 8 0 17 7 23zM27 7l1 3 3 1-3 1-1 3-1-3-3-1 3-1z"/></svg>}
+              {note.icon === 'jacket' && <svg viewBox="0 0 36 36"><path d="M12 6 8 9 5 18l4 2 2-5v16h14V15l2 5 4-2-3-9-4-3M12 6c1 4 4 6 6 8 2-2 5-4 6-8M18 14v17"/></svg>}
             </span>
-            <div>
-              <span>{note.label}</span>
-              <p>{note.value}</p>
-            </div>
+            <div><span>{note.label}</span><p>{note.value}</p></div>
           </article>
         ))}
       </div>
 
       <p class="landmark-story__scribble">
         <span>not just the summit</span>
-        <svg viewBox="0 0 88 28" aria-hidden="true"><path d="M3 20 C20 5, 43 6, 70 17"/><path d="M65 11l7 6-8 4"/></svg>
+        <svg viewBox="0 0 88 28" aria-hidden="true"><path d="M3 20C20 5 43 6 70 17"/><path d="m65 11 7 6-8 4"/></svg>
       </p>
     </section>
 
     <section class="landmark-modal__visual">
+      <div class="landmark-visual__meta">
+        <span>FIELD CARD · {fieldCardNumber}</span>
+        <i aria-hidden="true"></i>
+      </div>
+
       {primaryImage ? (
         <div class="landmark-gallery" data-landmark-gallery>
           <div class="landmark-gallery__stage">
-            <img
-              src={primaryImage.src}
-              alt={primaryImage.alt || `${name} landscape`}
-              width="900"
-              height="720"
-              loading="eager"
-              data-gallery-main
-            />
+            <img src={primaryImage.src} alt={primaryImage.alt || `${name} landscape`} width="900" height="720" loading="eager" data-gallery-main />
             {galleryItems.length > 1 && (
               <>
-                <button class="landmark-gallery__arrow landmark-gallery__arrow--previous" type="button" aria-label={`Previous ${name} photo`} data-gallery-previous>←</button>
-                <button class="landmark-gallery__arrow landmark-gallery__arrow--next" type="button" aria-label={`Next ${name} photo`} data-gallery-next>→</button>
-                <span class="landmark-gallery__counter" aria-live="polite" data-gallery-counter>1 / {galleryItems.length}</span>
+                <button class="landmark-gallery__arrow landmark-gallery__arrow--previous" type="button" aria-label={`Previous ${name} photo`} data-gallery-previous>
+                  <svg viewBox="0 0 28 20" aria-hidden="true"><path d="M24 10H5m0 0 6-6m-6 6 6 6"/></svg><span>previous view</span>
+                </button>
+                <button class="landmark-gallery__arrow landmark-gallery__arrow--next" type="button" aria-label={`Next ${name} photo`} data-gallery-next>
+                  <svg viewBox="0 0 28 20" aria-hidden="true"><path d="M4 10h19m0 0-6-6m6 6-6 6"/></svg><span>next view</span>
+                </button>
+                <span class="landmark-gallery__counter" aria-live="polite" data-gallery-counter>PHOTO 01 / {String(galleryItems.length).padStart(2, '0')}</span>
               </>
             )}
           </div>
@@ -128,7 +120,8 @@ const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weath
                   data-gallery-author={image.author || ''}
                   data-gallery-license={image.license || ''}
                 >
-                  <img src={image.src} alt="" width="180" height="120" loading="lazy" />
+                  <span class="landmark-gallery__thumb-paper"><img src={image.src} alt="" width="180" height="120" loading="lazy" /></span>
+                  <small>{String(index + 1).padStart(2, '0')}</small>
                 </button>
               ))}
             </div>
@@ -140,15 +133,23 @@ const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weath
           </p>
         </div>
       ) : (
-        <div class="landmark-modal__placeholder" role="img" aria-label={`${name} photo placeholder`}>
-          <span>Photo coming soon</span>
-        </div>
+        <div class="landmark-modal__placeholder" role="img" aria-label={`${name} photo placeholder`}><span>Photo coming soon</span></div>
       )}
 
-      <div class="landmark-modal__actions">
-        <a href={mapsUrl} target="_blank" rel="noreferrer">Open in Google Maps</a>
-        <button type="button" data-add-landmark data-landmark-name={name}>Add to my trip</button>
+      <div class="landmark-actions__annotation" aria-hidden="true">
+        <span>save this field card for later</span>
+        <svg viewBox="0 0 110 28"><path d="M3 8C34 2 64 8 99 21"/><path d="m91 15 9 6-10 3"/></svg>
       </div>
+
+      <div class="landmark-modal__actions">
+        <a class="landmark-action landmark-action--maps" href={mapsUrl} target="_blank" rel="noreferrer">
+          <span aria-hidden="true">↗</span> Open in Google Maps
+        </a>
+        <button class="landmark-action landmark-action--save" type="button" data-add-landmark data-landmark-name={name}>
+          <span aria-hidden="true">＋</span> Add to My Trip
+        </button>
+      </div>
+      <p class="landmark-visual__closing">Keep it for the road.</p>
     </section>
 
     <aside class="landmark-modal__facts" aria-label={`${name} practical information`}>
@@ -156,10 +157,7 @@ const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weath
       <header class="landmark-notes__heading">
         <span>FIELD NOTES · CHECKED ON THE ROAD</span>
         <h3>Things worth knowing</h3>
-        <svg viewBox="0 0 190 16" aria-hidden="true">
-          <path d="M4 8 C42 13, 74 2, 112 8 S162 12, 186 6" />
-          <path d="M20 12 C65 15, 118 8, 171 12" />
-        </svg>
+        <svg viewBox="0 0 190 16" aria-hidden="true"><path d="M4 8C42 13 74 2 112 8s50 4 74-2"/><path d="M20 12c45 3 98-4 151 0"/></svg>
       </header>
 
       <dl>
@@ -169,26 +167,13 @@ const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weath
           return (
             <div class:list={['landmark-note', `landmark-note--${icon}`]}>
               <span class="landmark-note__icon" aria-hidden="true">
-                {icon === 'route' && (
-                  <svg viewBox="0 0 32 32"><circle cx="7" cy="23" r="2.6"/><circle cx="25" cy="8" r="2.6"/><path d="M9.5 22 C14 20, 11 14, 16 14 S20 10, 22.5 9"/><path d="M17 11 l3 3 -3 3"/></svg>
-                )}
-                {icon === 'weather' && (
-                  <svg viewBox="0 0 32 32"><circle cx="12" cy="11" r="5"/><path d="M12 2.5v3 M12 16.5v3 M3.5 11h3 M17.5 11h3 M5.8 4.8l2.1 2.1 M16.1 15.1l2.1 2.1"/><path d="M13 24 C14 20, 18 19, 20.5 21 C24 19.8, 28 22, 27 25.5 H12.5"/><path d="M17 28l-1 2 M23 28l-1 2"/></svg>
-                )}
-                {icon === 'jacket' && (
-                  <svg viewBox="0 0 32 32"><path d="M11 5 L7 8 4 17 8 19 10 14 10 28 H22 V14 L24 19 28 17 25 8 21 5"/><path d="M11 5 C12 9, 14 10, 16 12 C18 10, 20 9, 21 5 M16 12v16 M13 17h-2 M21 17h-2"/></svg>
-                )}
-                {icon === 'ticket' && (
-                  <svg viewBox="0 0 32 32"><path d="M5 9 C7 9, 8 7, 8 5 H26 V11 C23 11, 23 15, 26 15 V25 H8 C8 22, 7 21, 5 21 Z"/><path d="M12 8v2 M12 13v2 M12 18v2 M12 23v1 M17 12h5 M17 17h5"/></svg>
-                )}
-                {icon === 'clock' && (
-                  <svg viewBox="0 0 32 32"><circle cx="16" cy="17" r="11"/><path d="M16 10v7l5 3 M12 3h8 M16 3v3"/></svg>
-                )}
-                {icon === 'stairs' && (
-                  <svg viewBox="0 0 32 32"><path d="M4 27h6v-5h6v-5h6v-5h6"/><path d="M7 10 C12 5, 19 4, 24 7"/><path d="M21 4l3 3-4 2"/></svg>
-                )}
+                {icon === 'route' && <svg viewBox="0 0 32 32"><circle cx="7" cy="23" r="2.6"/><circle cx="25" cy="8" r="2.6"/><path d="M9.5 22c4.5-2 1.5-8 6.5-8s4-4 6.5-5M17 11l3 3-3 3"/></svg>}
+                {icon === 'weather' && <svg viewBox="0 0 32 32"><circle cx="12" cy="11" r="5"/><path d="M12 2.5v3m0 11v3M3.5 11h3m11 0h3M5.8 4.8l2.1 2.1m8.2 8.2 2.1 2.1M13 24c1-4 5-5 7.5-3 3.5-1.2 7.5 1 6.5 4.5H12.5M17 28l-1 2m7-2-1 2"/></svg>}
+                {icon === 'jacket' && <svg viewBox="0 0 32 32"><path d="M11 5 7 8 4 17l4 2 2-5v14h12V14l2 5 4-2-3-9-4-3M11 5c1 4 3 5 5 7 2-2 4-3 5-7M16 12v16"/></svg>}
+                {icon === 'ticket' && <svg viewBox="0 0 32 32"><path d="M5 9c2 0 3-2 3-4h18v6c-3 0-3 4 0 4v10H8c0-3-1-4-3-4zM12 8v2m0 3v2m0 3v2m0 3v1m5-12h5m-5 5h5"/></svg>}
+                {icon === 'clock' && <svg viewBox="0 0 32 32"><circle cx="16" cy="17" r="11"/><path d="M16 10v7l5 3M12 3h8m-4 0v3"/></svg>}
+                {icon === 'stairs' && <svg viewBox="0 0 32 32"><path d="M4 27h6v-5h6v-5h6v-5h6M7 10c5-5 12-6 17-3M21 4l3 3-4 2"/></svg>}
               </span>
-
               <div class="landmark-note__copy">
                 <dt>{fact.label}</dt>
                 <dd>{fact.value}</dd>
@@ -206,7 +191,7 @@ const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weath
       </dl>
 
       <p class="landmark-notes__footer">
-        <svg viewBox="0 0 54 24" aria-hidden="true"><path d="M3 17 C17 5, 32 6, 47 14"/><path d="M42 9l6 5-7 3"/></svg>
+        <svg viewBox="0 0 54 24" aria-hidden="true"><path d="M3 17C17 5 32 6 47 14"/><path d="m42 9 6 5-7 3"/></svg>
         <span>{footerNote}</span>
       </p>
     </aside>
@@ -235,8 +220,7 @@ const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weath
         const thumb = thumbs[index];
         if (!(thumb instanceof HTMLButtonElement)) return;
 
-        const nextSrc = thumb.dataset.gallerySrc;
-        if (nextSrc) main.src = nextSrc;
+        if (thumb.dataset.gallerySrc) main.src = thumb.dataset.gallerySrc;
         main.alt = thumb.dataset.galleryAlt || main.alt;
 
         thumbs.forEach((item, itemIndex) => {
@@ -244,7 +228,7 @@ const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weath
           item.setAttribute('aria-pressed', itemIndex === index ? 'true' : 'false');
         });
 
-        if (counter) counter.textContent = `${index + 1} / ${thumbs.length}`;
+        if (counter) counter.textContent = `PHOTO ${String(index + 1).padStart(2, '0')} / ${String(thumbs.length).padStart(2, '0')}`;
         if (source instanceof HTMLAnchorElement) {
           source.href = thumb.dataset.gallerySourcePage || '#';
           source.textContent = thumb.dataset.galleryAuthor || 'Wikimedia Commons';
@@ -271,148 +255,93 @@ const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weath
     });
   };
 
+  const setupLandmarkSaveButtons = () => {
+    document.querySelectorAll('[data-add-landmark]').forEach((button) => {
+      if (!(button instanceof HTMLButtonElement) || button.dataset.saveReady === 'true') return;
+      button.dataset.saveReady = 'true';
+      button.addEventListener('click', () => {
+        window.setTimeout(() => {
+          button.textContent = '✓ Saved to My Trip';
+          button.classList.add('is-saved');
+          button.disabled = true;
+        }, 0);
+      });
+    });
+  };
+
   setupLandmarkGalleries();
-  document.addEventListener('astro:page-load', setupLandmarkGalleries);
+  setupLandmarkSaveButtons();
+  document.addEventListener('astro:page-load', () => {
+    setupLandmarkGalleries();
+    setupLandmarkSaveButtons();
+  });
 </script>
 
 <style>
-  .landmark-modal {
-    position:relative;
-    width:min(1260px,calc(100vw - 28px));
-    height:min(720px,calc(100vh - 28px));
-    max-height:none;
-    padding:0;
-    border:0;
-    background:#f4ecd9;
-    color:#1f2924;
-    box-shadow:0 28px 80px rgba(18,24,21,.34);
-    overflow:hidden;
-  }
-  .landmark-modal::backdrop { background:rgba(20,27,24,.66); backdrop-filter:blur(4px); }
-  .landmark-modal__close { position:absolute; top:14px; right:14px; z-index:8; display:grid; place-items:center; width:42px; height:42px; padding:0; border:1px solid rgba(31,57,45,.16); border-radius:50%; background:rgba(255,255,255,.92); color:#1f392d; font-size:1.75rem; line-height:1; cursor:pointer; box-shadow:0 5px 16px rgba(31,41,36,.12); }
-  .landmark-modal__grid { display:grid; grid-template-columns:minmax(280px,.88fr) minmax(360px,1.18fr) minmax(300px,.94fr); height:100%; min-height:0; }
-  .landmark-modal__story,.landmark-modal__visual,.landmark-modal__facts { min-width:0; min-height:0; }
+  .landmark-modal{position:relative;width:min(1260px,calc(100vw - 28px));height:min(720px,calc(100vh - 28px));max-height:none;padding:0;border:0;background:#f4ecd9;color:#1f2924;box-shadow:0 28px 80px rgba(18,24,21,.34);overflow:hidden}
+  .landmark-modal::backdrop{background:rgba(20,27,24,.66);backdrop-filter:blur(4px)}
+  .landmark-modal__close{position:absolute;top:13px;right:13px;z-index:8;display:flex;align-items:center;gap:5px;padding:7px 10px 6px;border:1px solid rgba(31,57,45,.35);border-radius:2px;background:#f7f0df;color:#315545;font-family:'Caveat','Segoe Print',cursive;font-size:.92rem;line-height:1;cursor:pointer;box-shadow:2px 3px 0 rgba(49,85,69,.11);transform:rotate(1.5deg);transition:transform 160ms ease,background 160ms ease}
+  .landmark-modal__close b{font-size:1.15rem;font-weight:500}
+  .landmark-modal__close:hover{background:#fffaf0;transform:rotate(-1.5deg) translateY(-1px)}
+  .landmark-modal__grid{display:grid;grid-template-columns:minmax(280px,.88fr) minmax(360px,1.18fr) minmax(300px,.94fr);height:100%;min-height:0}
+  .landmark-modal__story,.landmark-modal__visual,.landmark-modal__facts{min-width:0;min-height:0}
 
-  .landmark-modal__story,
-  .landmark-modal__facts {
-    position:relative;
-    isolation:isolate;
-    overflow:hidden;
-    color:#22382e;
-    background-color:#f4ecd9;
-    background-image:radial-gradient(circle at 17% 18%,rgba(217,119,69,.07) 0 1px,transparent 1.5px),radial-gradient(circle at 74% 62%,rgba(31,57,45,.06) 0 1px,transparent 1.5px),repeating-linear-gradient(to bottom,transparent 0 31px,rgba(49,85,69,.07) 32px,transparent 33px);
-    background-size:23px 21px,29px 27px,100% 33px;
-  }
-  .landmark-modal__story { padding:clamp(34px,3.2vw,48px) clamp(27px,2.8vw,42px); box-shadow:inset -12px 0 22px rgba(80,65,42,.045); }
-  .landmark-modal__story::before,.landmark-modal__facts::before { content:''; position:absolute; z-index:-1; top:0; bottom:0; width:1px; background:rgba(217,119,69,.34); box-shadow:3px 0 0 rgba(217,119,69,.07); }
-  .landmark-modal__story::before { left:23px; }
-  .landmark-modal__facts::before { left:24px; }
-  .landmark-modal__story::after,.landmark-modal__facts::after { content:''; position:absolute; z-index:-1; bottom:-20px; width:60px; height:60px; background:linear-gradient(135deg,rgba(216,203,174,.08) 0 49%,#ddd0b6 50% 100%); box-shadow:-5px -5px 12px rgba(72,59,39,.07); }
-  .landmark-modal__story::after { left:-18px; transform:rotate(88deg); }
-  .landmark-modal__facts::after { right:-18px; transform:rotate(2deg); }
-  .landmark-story__tape,.landmark-notes__tape { position:absolute; top:10px; left:50%; width:92px; height:24px; background:rgba(196,174,132,.42); transform:translateX(-50%) rotate(-2deg); box-shadow:0 1px 1px rgba(70,55,34,.08); }
-  .landmark-modal__eyebrow { margin:4px 0 17px; color:rgba(31,57,45,.58); font:700 .58rem/1.2 'DM Sans',sans-serif; letter-spacing:.14em; }
-  .landmark-modal__story h2 { margin:0; color:#1f392d; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:clamp(3.7rem,5vw,5.9rem); font-weight:600; line-height:.8; letter-spacing:-.035em; transform:rotate(-1deg); }
-  .landmark-modal__region { margin:17px 0 0!important; color:#b8653e!important; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:1.3rem!important; font-weight:600; line-height:1.05!important; transform:rotate(.5deg); }
-  .landmark-story__underline { display:block; width:min(210px,86%); margin:8px 0 15px; fill:none; stroke:#d97745; stroke-width:1.5; stroke-linecap:round; opacity:.76; }
-  .landmark-story__description { margin:0; color:#263b32; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:1.18rem; font-weight:500; line-height:1.28; }
-  .landmark-story__annotations { display:grid; gap:8px; margin-top:18px; }
-  .landmark-story-note { display:grid; grid-template-columns:33px minmax(0,1fr); gap:8px; align-items:start; padding:8px 9px 8px 5px; border-top:1px dashed rgba(31,57,45,.18); }
-  .landmark-story-note--tilted { transform:rotate(-1deg); }
-  .landmark-story-note__mark { display:grid; place-items:center; width:31px; height:31px; color:#315545; transform:rotate(-4deg); }
-  .landmark-story-note:nth-child(even) .landmark-story-note__mark { color:#d97745; transform:rotate(4deg); }
-  .landmark-story-note__mark svg { width:29px; height:29px; overflow:visible; fill:none; stroke:currentColor; stroke-width:1.55; stroke-linecap:round; stroke-linejoin:round; }
-  .landmark-story-note div > span { display:block; margin-bottom:2px; color:#a45d3a; font:700 .54rem/1.2 'DM Sans',sans-serif; letter-spacing:.11em; text-transform:uppercase; }
-  .landmark-story-note p { margin:0; color:#315545; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:1rem; font-weight:600; line-height:1.08; }
-  .landmark-story__scribble { display:flex; align-items:center; justify-content:flex-end; gap:3px; margin:10px 0 0; color:#b8653e; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:1rem; font-weight:700; transform:rotate(-2deg); }
-  .landmark-story__scribble svg { width:68px; height:23px; fill:none; stroke:#315545; stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; }
+  .landmark-modal__story,.landmark-modal__facts{position:relative;isolation:isolate;overflow:hidden;color:#22382e;background-color:#f4ecd9;background-image:radial-gradient(circle at 17% 18%,rgba(217,119,69,.07) 0 1px,transparent 1.5px),radial-gradient(circle at 74% 62%,rgba(31,57,45,.06) 0 1px,transparent 1.5px),repeating-linear-gradient(to bottom,transparent 0 31px,rgba(49,85,69,.07) 32px,transparent 33px);background-size:23px 21px,29px 27px,100% 33px}
+  .landmark-modal__story{padding:clamp(34px,3.2vw,48px) clamp(27px,2.8vw,42px);box-shadow:inset -12px 0 22px rgba(80,65,42,.045)}
+  .landmark-modal__story::before,.landmark-modal__facts::before{content:'';position:absolute;z-index:-1;top:0;bottom:0;width:1px;background:rgba(217,119,69,.34);box-shadow:3px 0 0 rgba(217,119,69,.07)}
+  .landmark-modal__story::before{left:23px}.landmark-modal__facts::before{left:24px}
+  .landmark-story__tape,.landmark-notes__tape{position:absolute;top:10px;left:50%;width:92px;height:24px;background:rgba(196,174,132,.42);transform:translateX(-50%) rotate(-2deg);box-shadow:0 1px 1px rgba(70,55,34,.08)}
+  .landmark-modal__eyebrow{margin:4px 0 17px;color:rgba(31,57,45,.58);font:700 .58rem/1.2 'DM Sans',sans-serif;letter-spacing:.14em}
+  .landmark-modal__story h2{margin:0;color:#1f392d;font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:clamp(3.7rem,5vw,5.9rem);font-weight:600;line-height:.8;letter-spacing:-.035em;transform:rotate(-1deg)}
+  .landmark-modal__region{margin:17px 0 0!important;color:#b8653e!important;font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:1.3rem!important;font-weight:600;line-height:1.05!important}
+  .landmark-story__underline{display:block;width:min(210px,86%);margin:8px 0 15px;fill:none;stroke:#d97745;stroke-width:1.5;stroke-linecap:round;opacity:.76}
+  .landmark-story__description{margin:0;color:#263b32;font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:1.18rem;font-weight:500;line-height:1.28}
+  .landmark-story__annotations{display:grid;gap:8px;margin-top:18px}.landmark-story-note{display:grid;grid-template-columns:33px minmax(0,1fr);gap:8px;align-items:start;padding:8px 9px 8px 5px;border-top:1px dashed rgba(31,57,45,.18)}.landmark-story-note--tilted{transform:rotate(-1deg)}
+  .landmark-story-note__mark{display:grid;place-items:center;width:31px;height:31px;color:#315545;transform:rotate(-4deg)}.landmark-story-note:nth-child(even) .landmark-story-note__mark{color:#d97745;transform:rotate(4deg)}.landmark-story-note__mark svg{width:29px;height:29px;fill:none;stroke:currentColor;stroke-width:1.55;stroke-linecap:round;stroke-linejoin:round}
+  .landmark-story-note div>span{display:block;margin-bottom:2px;color:#a45d3a;font:700 .54rem/1.2 'DM Sans',sans-serif;letter-spacing:.11em;text-transform:uppercase}.landmark-story-note p{margin:0;color:#315545;font-family:'Caveat','Segoe Print',cursive;font-size:1rem;font-weight:600;line-height:1.08}
+  .landmark-story__scribble{display:flex;align-items:center;justify-content:flex-end;gap:3px;margin:10px 0 0;color:#b8653e;font-family:'Caveat','Segoe Print',cursive;font-size:1rem;font-weight:700;transform:rotate(-2deg)}.landmark-story__scribble svg{width:68px;height:23px;fill:none;stroke:#315545;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
 
-  .landmark-modal__visual { display:flex; flex-direction:column; justify-content:center; padding:clamp(26px,3vw,40px); background:#eee7d7; box-shadow:inset 11px 0 20px rgba(80,65,42,.045),inset -11px 0 20px rgba(80,65,42,.045); }
-  .landmark-modal__placeholder { display:grid; place-items:center; min-height:360px; background:linear-gradient(145deg,#d9d0bc,#c4b99f); color:rgba(31,57,45,.65); font-family:'Caveat',cursive; font-size:2rem; box-shadow:inset 0 0 0 12px rgba(255,255,255,.5); }
-  .landmark-gallery__stage { position:relative; min-height:360px; overflow:hidden; background:#c8bea8; box-shadow:0 10px 26px rgba(31,41,36,.14); touch-action:pan-y; }
-  .landmark-gallery__stage > img { display:block; width:100%; height:360px; object-fit:cover; transition:opacity 180ms ease; }
-  .landmark-gallery__arrow { position:absolute; z-index:2; top:50%; display:grid; place-items:center; width:40px; height:40px; padding:0; border:1px solid rgba(255,255,255,.7); border-radius:50%; background:rgba(31,57,45,.76); color:#fff; font-size:1.1rem; cursor:pointer; transform:translateY(-50%); backdrop-filter:blur(4px); }
-  .landmark-gallery__arrow--previous { left:12px; }
-  .landmark-gallery__arrow--next { right:12px; }
-  .landmark-gallery__counter { position:absolute; right:12px; bottom:12px; padding:6px 9px; background:rgba(31,57,45,.78); color:#fff; font:700 .6rem/1 'DM Sans',sans-serif; letter-spacing:.08em; }
-  .landmark-gallery__thumbnails { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:7px; margin-top:9px; }
-  .landmark-gallery__thumbnail { position:relative; min-width:0; padding:0; overflow:hidden; border:2px solid transparent; background:#d5ccba; cursor:pointer; opacity:.66; transition:opacity 160ms ease,border-color 160ms ease,transform 160ms ease; }
-  .landmark-gallery__thumbnail:hover,.landmark-gallery__thumbnail.is-active { opacity:1; border-color:#315545; transform:translateY(-1px); }
-  .landmark-gallery__thumbnail img { display:block; width:100%; height:58px; object-fit:cover; }
-  .landmark-gallery__credit { min-height:15px; margin:7px 0 0; color:rgba(31,41,36,.58); font-size:.59rem; line-height:1.3; }
-  .landmark-gallery__credit a { color:#315545; }
-  .landmark-modal__actions { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:14px; }
-  .landmark-modal__actions a,.landmark-modal__actions button { display:flex; align-items:center; justify-content:center; min-height:44px; padding:8px 10px; border:1px solid #315545; background:transparent; color:#315545; font:700 .63rem/1.1 'DM Sans',sans-serif; letter-spacing:.07em; text-align:center; text-decoration:none; text-transform:uppercase; cursor:pointer; }
-  .landmark-modal__actions button { background:#315545; color:#fff; }
+  .landmark-modal__visual{display:flex;flex-direction:column;justify-content:center;padding:24px clamp(24px,2.7vw,36px) 20px;background:#eee7d7;box-shadow:inset 11px 0 20px rgba(80,65,42,.045),inset -11px 0 20px rgba(80,65,42,.045)}
+  .landmark-visual__meta{display:flex;align-items:center;gap:9px;margin:0 1px 8px;color:rgba(31,57,45,.64);font:700 .56rem/1 'DM Sans',sans-serif;letter-spacing:.13em}.landmark-visual__meta i{flex:1;height:1px;background:rgba(49,85,69,.2);transform:rotate(-.4deg)}
+  .landmark-modal__placeholder{display:grid;place-items:center;min-height:340px;background:linear-gradient(145deg,#d9d0bc,#c4b99f);font-family:'Caveat',cursive;font-size:2rem}
+  .landmark-gallery__stage{position:relative;min-height:340px;padding:7px;background:#f8f2e5;box-shadow:0 11px 24px rgba(31,41,36,.16),0 0 0 1px rgba(49,85,69,.13);touch-action:pan-y;transform:rotate(-.2deg)}
+  .landmark-gallery__stage>img{display:block;width:100%;height:326px;object-fit:cover;transition:opacity 180ms ease}
+  .landmark-gallery__arrow{position:absolute;z-index:2;top:50%;display:grid;place-items:center;width:35px;height:35px;padding:0;border:1px solid rgba(247,242,230,.82);border-radius:50%;background:rgba(31,57,45,.72);color:#fff;cursor:pointer;transform:translateY(-50%) rotate(-2deg);backdrop-filter:blur(4px);transition:transform 150ms ease,background 150ms ease}
+  .landmark-gallery__arrow svg{width:22px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.landmark-gallery__arrow span{position:absolute;bottom:-23px;width:max-content;padding:2px 5px;background:#f7f0df;color:#315545;font-family:'Caveat',cursive;font-size:.8rem;opacity:0;pointer-events:none;transition:opacity 150ms ease}
+  .landmark-gallery__arrow:hover{background:rgba(31,57,45,.88);transform:translateY(-50%) rotate(2deg) scale(1.03)}.landmark-gallery__arrow:hover span{opacity:1}
+  .landmark-gallery__arrow--previous{left:14px}.landmark-gallery__arrow--next{right:14px}
+  .landmark-gallery__counter{position:absolute;right:3px;bottom:-13px;padding:6px 9px 5px;background:#315545;color:#f7f2e6;font:700 .56rem/1 'DM Sans',sans-serif;letter-spacing:.1em;box-shadow:2px 3px 0 rgba(31,41,36,.13);transform:rotate(1.4deg)}
+  .landmark-gallery__thumbnails{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:16px;padding:0 2px}
+  .landmark-gallery__thumbnail{position:relative;min-width:0;padding:0 2px 3px;border:0;background:transparent;color:#315545;cursor:pointer;opacity:.73;transition:opacity 160ms ease,transform 160ms ease}
+  .landmark-gallery__thumbnail:nth-child(1){transform:rotate(-1deg)}.landmark-gallery__thumbnail:nth-child(2){transform:rotate(.5deg) translateY(2px)}.landmark-gallery__thumbnail:nth-child(3){transform:rotate(-.5deg) translateY(-1px)}.landmark-gallery__thumbnail:nth-child(4){transform:rotate(1deg) translateY(1px)}
+  .landmark-gallery__thumb-paper{position:relative;display:block;padding:3px;background:#f8f2e5;box-shadow:0 3px 8px rgba(31,41,36,.11)}.landmark-gallery__thumb-paper::after{content:'';position:absolute;inset:0;border:1px solid transparent;pointer-events:none}
+  .landmark-gallery__thumbnail img{display:block;width:100%;height:48px;object-fit:cover}.landmark-gallery__thumbnail small{display:block;margin-top:2px;font-family:'Caveat',cursive;font-size:.78rem;line-height:1}
+  .landmark-gallery__thumbnail:hover,.landmark-gallery__thumbnail.is-active{opacity:1}.landmark-gallery__thumbnail.is-active .landmark-gallery__thumb-paper::after{inset:-2px;border-color:#315545;transform:rotate(-.7deg);box-shadow:1px 0 0 #315545}
+  .landmark-gallery__credit{min-height:14px;margin:6px 0 0;color:rgba(31,41,36,.58);font-size:.57rem;line-height:1.25}.landmark-gallery__credit a{color:#315545}
+  .landmark-actions__annotation{display:flex;align-items:flex-end;justify-content:flex-end;height:29px;margin:2px 4px -3px;color:#b8653e;font-family:'Caveat','Segoe Print',cursive;font-size:.92rem;font-weight:600;transform:rotate(-1deg)}.landmark-actions__annotation svg{width:84px;height:24px;fill:none;stroke:#315545;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+  .landmark-modal__actions{display:grid;grid-template-columns:.92fr 1.08fr;gap:9px}.landmark-action{display:flex;align-items:center;justify-content:center;gap:5px;min-height:47px;padding:8px 10px;text-align:center;text-decoration:none;cursor:pointer;transition:transform 150ms ease,background 150ms ease,box-shadow 150ms ease}
+  .landmark-action--maps{border:1px solid #315545;background:transparent;color:#315545;font-family:'Caveat','Segoe Print',cursive;font-size:1.02rem;font-weight:650;box-shadow:1px 1px 0 rgba(49,85,69,.12);transform:rotate(-.3deg)}.landmark-action--maps:hover{background:rgba(49,85,69,.07);transform:rotate(.35deg) translateY(-1px)}
+  .landmark-action--save{border:1px solid #1f392d;background:#315545;color:#f7f2e6;font-family:'Caveat','Segoe Print',cursive;font-size:1.08rem;font-weight:700;box-shadow:3px 4px 0 rgba(31,57,45,.18);transform:rotate(.25deg)}.landmark-action--save:hover{background:#284b3c;transform:rotate(-.25deg) translateY(-1px);box-shadow:4px 5px 0 rgba(31,57,45,.16)}.landmark-action--save:disabled{background:#e7ddc7;color:#315545;border-color:#315545;box-shadow:1px 2px 0 rgba(49,85,69,.13);cursor:default;opacity:1}
+  .landmark-visual__closing{margin:7px 0 -3px;text-align:center;color:rgba(49,85,69,.62);font-family:'Caveat','Segoe Print',cursive;font-size:.91rem;transform:rotate(-.6deg)}
 
-  .landmark-modal__facts { padding:clamp(33px,3.2vw,48px) clamp(24px,2.5vw,38px); box-shadow:inset 12px 0 22px rgba(80,65,42,.045); }
-  .landmark-notes__heading { position:relative; margin:5px 0 15px; padding-left:10px; }
-  .landmark-notes__heading > span { color:rgba(31,57,45,.58); font:700 .54rem/1.2 'DM Sans',sans-serif; letter-spacing:.12em; }
-  .landmark-notes__heading h3 { margin:4px 0 0; color:#1f392d; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:clamp(1.9rem,2.5vw,2.35rem); font-weight:600; line-height:.9; transform:rotate(-1deg); }
-  .landmark-notes__heading svg { display:block; width:min(180px,85%); margin-top:6px; overflow:visible; fill:none; stroke:#d97745; stroke-width:1.5; stroke-linecap:round; opacity:.78; }
-  .landmark-modal__facts dl { display:grid; gap:0; margin:0; }
-  .landmark-note { display:grid; grid-template-columns:37px minmax(0,1fr); gap:9px; align-items:start; padding:9px 0 10px 8px; border-bottom:1px dashed rgba(31,57,45,.18); }
-  .landmark-note:last-child { border-bottom:0; }
-  .landmark-note__icon { display:grid; place-items:center; width:34px; height:34px; color:#315545; transform:rotate(-4deg); }
-  .landmark-note:nth-child(even) .landmark-note__icon { color:#d97745; transform:rotate(4deg); }
-  .landmark-note__icon svg { width:31px; height:31px; overflow:visible; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
-  .landmark-note__copy { min-width:0; }
-  .landmark-note dt { margin:0 0 2px; color:#a45d3a; font:700 .54rem/1.2 'DM Sans',sans-serif; letter-spacing:.11em; text-transform:uppercase; }
-  .landmark-note dd { margin:0; color:#263b32; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:1rem; font-weight:500; line-height:1.12; }
-  .landmark-note__annotation { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 7px; margin:4px 0 0; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:.93rem; line-height:1.02; transform:rotate(-1deg); }
-  .landmark-note__crossed { position:relative; color:rgba(38,59,50,.5); white-space:nowrap; }
-  .landmark-note__crossed::before,.landmark-note__crossed::after { content:''; position:absolute; left:-2px; right:-3px; top:52%; height:1.5px; background:#a45d3a; transform:rotate(-5deg); }
-  .landmark-note__crossed::after { top:60%; transform:rotate(3deg); opacity:.72; }
-  .landmark-note__correction { color:#b8653e; font-weight:700; }
-  .landmark-note__correction::before { content:'→ '; }
-  .landmark-note__aside { color:#315545; font-weight:600; }
-  .landmark-note__aside::before { content:'↳ '; color:#d97745; }
-  .landmark-notes__footer { display:flex; align-items:center; justify-content:flex-end; gap:3px; margin:10px 1px -4px 0; color:#315545; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:.96rem; font-weight:600; transform:rotate(-2deg); }
-  .landmark-notes__footer svg { width:43px; height:21px; fill:none; stroke:#d97745; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+  .landmark-modal__facts{padding:clamp(33px,3.2vw,48px) clamp(24px,2.5vw,38px);box-shadow:inset 12px 0 22px rgba(80,65,42,.045)}
+  .landmark-notes__heading{position:relative;margin:5px 0 15px;padding-left:10px}.landmark-notes__heading>span{color:rgba(31,57,45,.58);font:700 .54rem/1.2 'DM Sans',sans-serif;letter-spacing:.12em}.landmark-notes__heading h3{margin:4px 0 0;color:#1f392d;font-family:'Caveat','Segoe Print',cursive;font-size:clamp(1.9rem,2.5vw,2.35rem);font-weight:600;line-height:.9;transform:rotate(-1deg)}.landmark-notes__heading svg{display:block;width:min(180px,85%);margin-top:6px;fill:none;stroke:#d97745;stroke-width:1.5;stroke-linecap:round;opacity:.78}
+  .landmark-modal__facts dl{display:grid;gap:0;margin:0}.landmark-note{display:grid;grid-template-columns:37px minmax(0,1fr);gap:9px;align-items:start;padding:9px 0 10px 8px;border-bottom:1px dashed rgba(31,57,45,.18)}.landmark-note:last-child{border-bottom:0}
+  .landmark-note__icon{display:grid;place-items:center;width:34px;height:34px;color:#315545;transform:rotate(-4deg)}.landmark-note:nth-child(even) .landmark-note__icon{color:#d97745;transform:rotate(4deg)}.landmark-note__icon svg{width:31px;height:31px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  .landmark-note dt{margin:0 0 2px;color:#a45d3a;font:700 .54rem/1.2 'DM Sans',sans-serif;letter-spacing:.11em;text-transform:uppercase}.landmark-note dd{margin:0;color:#263b32;font-family:'Caveat','Segoe Print',cursive;font-size:1rem;font-weight:500;line-height:1.12}
+  .landmark-note__annotation{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 7px;margin:4px 0 0;font-family:'Caveat','Segoe Print',cursive;font-size:.93rem;line-height:1.02;transform:rotate(-1deg)}.landmark-note__crossed{position:relative;color:rgba(38,59,50,.5);white-space:nowrap}.landmark-note__crossed::before,.landmark-note__crossed::after{content:'';position:absolute;left:-2px;right:-3px;top:52%;height:1.5px;background:#a45d3a;transform:rotate(-5deg)}.landmark-note__crossed::after{top:60%;transform:rotate(3deg);opacity:.72}.landmark-note__correction{color:#b8653e;font-weight:700}.landmark-note__correction::before{content:'→ '}.landmark-note__aside{color:#315545;font-weight:600}.landmark-note__aside::before{content:'↳ ';color:#d97745}
+  .landmark-notes__footer{display:flex;align-items:center;justify-content:flex-end;gap:3px;margin:10px 1px -4px;color:#315545;font-family:'Caveat','Segoe Print',cursive;font-size:.96rem;font-weight:600;transform:rotate(-2deg)}.landmark-notes__footer svg{width:43px;height:21px;fill:none;stroke:#d97745;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 
   @media(max-height:700px) and (min-width:901px){
-    .landmark-modal { height:calc(100vh - 24px); }
-    .landmark-modal__story { padding-top:28px; padding-bottom:24px; }
-    .landmark-modal__story h2 { font-size:4.4rem; }
-    .landmark-story__description { font-size:1.05rem; line-height:1.18; }
-    .landmark-story__annotations { gap:4px; margin-top:11px; }
-    .landmark-story-note { padding-top:5px; padding-bottom:5px; }
-    .landmark-story-note p { font-size:.91rem; }
-    .landmark-modal__visual { padding-top:24px; padding-bottom:24px; }
-    .landmark-gallery__stage,.landmark-modal__placeholder { min-height:290px; }
-    .landmark-gallery__stage > img { height:290px; }
-    .landmark-gallery__thumbnail img { height:45px; }
-    .landmark-modal__facts { padding-top:28px; padding-bottom:23px; }
-    .landmark-notes__heading { margin-bottom:8px; }
-    .landmark-note { padding-top:6px; padding-bottom:6px; }
-    .landmark-note dd { font-size:.9rem; }
-    .landmark-note__annotation { font-size:.85rem; }
+    .landmark-modal{height:calc(100vh - 24px)}.landmark-modal__story{padding-top:28px;padding-bottom:24px}.landmark-modal__story h2{font-size:4.4rem}.landmark-story__description{font-size:1.05rem;line-height:1.18}.landmark-story__annotations{gap:4px;margin-top:11px}.landmark-story-note{padding-top:5px;padding-bottom:5px}.landmark-story-note p{font-size:.91rem}
+    .landmark-modal__visual{padding-top:17px;padding-bottom:14px}.landmark-gallery__stage{min-height:284px}.landmark-gallery__stage>img{height:270px}.landmark-gallery__thumbnail img{height:40px}.landmark-actions__annotation{height:23px;font-size:.82rem}.landmark-action{min-height:42px}.landmark-visual__closing{margin-top:4px}
+    .landmark-modal__facts{padding-top:28px;padding-bottom:23px}.landmark-notes__heading{margin-bottom:8px}.landmark-note{padding-top:6px;padding-bottom:6px}.landmark-note dd{font-size:.9rem}.landmark-note__annotation{font-size:.85rem}
   }
-
   @media(max-width:900px){
-    .landmark-modal { width:min(860px,calc(100vw - 20px)); height:auto; max-height:calc(100vh - 20px); overflow:auto; }
-    .landmark-modal__grid { grid-template-columns:1fr 1fr; height:auto; }
-    .landmark-modal__story { order:1; }
-    .landmark-modal__visual { order:2; }
-    .landmark-modal__facts { order:3; grid-column:1/-1; }
-    .landmark-modal__facts dl { grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:28px; }
-    .landmark-note:nth-last-child(-n+2) { border-bottom:0; }
+    .landmark-modal{width:min(860px,calc(100vw - 20px));height:auto;max-height:calc(100vh - 20px);overflow:auto}.landmark-modal__grid{grid-template-columns:1fr 1fr;height:auto}.landmark-modal__story{order:1}.landmark-modal__visual{order:2}.landmark-modal__facts{order:3;grid-column:1/-1}.landmark-modal__facts dl{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px}.landmark-note:nth-last-child(-n+2){border-bottom:0}
   }
-
   @media(max-width:650px){
-    .landmark-modal { width:calc(100vw - 14px); max-height:calc(100vh - 14px); }
-    .landmark-modal__grid { grid-template-columns:1fr; }
-    .landmark-modal__story,.landmark-modal__visual,.landmark-modal__facts { grid-column:auto; }
-    .landmark-modal__story { padding:34px 26px 30px; }
-    .landmark-modal__story h2 { font-size:4rem; }
-    .landmark-modal__visual { padding:24px; }
-    .landmark-gallery__stage,.landmark-modal__placeholder { min-height:270px; }
-    .landmark-gallery__stage > img { height:270px; }
-    .landmark-gallery__thumbnail img { height:52px; }
-    .landmark-modal__actions { grid-template-columns:1fr; }
-    .landmark-modal__facts { padding:34px 22px 30px 25px; }
-    .landmark-modal__facts dl { grid-template-columns:1fr; }
-    .landmark-note:nth-last-child(-n+2) { border-bottom:1px dashed rgba(31,57,45,.18); }
-    .landmark-note:last-child { border-bottom:0; }
+    .landmark-modal{width:calc(100vw - 14px);max-height:calc(100vh - 14px)}.landmark-modal__close span{display:none}.landmark-modal__grid{grid-template-columns:1fr}.landmark-modal__story,.landmark-modal__visual,.landmark-modal__facts{grid-column:auto}.landmark-modal__story{padding:34px 26px 30px}.landmark-modal__story h2{font-size:4rem}.landmark-modal__visual{padding:24px}.landmark-gallery__stage{min-height:270px}.landmark-gallery__stage>img{height:256px}.landmark-gallery__thumbnail img{height:46px}.landmark-modal__actions{grid-template-columns:1fr}.landmark-actions__annotation{justify-content:center}.landmark-modal__facts{padding:34px 22px 30px 25px}.landmark-modal__facts dl{grid-template-columns:1fr}.landmark-note:nth-last-child(-n+2){border-bottom:1px dashed rgba(31,57,45,.18)}.landmark-note:last-child{border-bottom:0}
   }
+  @media(prefers-reduced-motion:reduce){.landmark-modal__close,.landmark-gallery__arrow,.landmark-gallery__thumbnail,.landmark-action{transition:none}}
 </style>
