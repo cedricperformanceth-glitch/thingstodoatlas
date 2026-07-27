@@ -1,3 +1,4 @@
+# Refreshes the 18 Pakse restaurant image records and commits verified matches.
 name: Research restaurant images
 
 on:
