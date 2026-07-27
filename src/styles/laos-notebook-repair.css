@@ -38,7 +38,7 @@
 }
 
 .laos-map-page .city-marker--landmark {
-  color: #91504a !important;
+  color: #a6534b !important;
 }
 
 .laos-map-page .city-marker--active .city-marker__dot,
@@ -74,6 +74,15 @@
 .laos-map-page .city-marker--landmark:hover .city-marker__ring,
 .laos-map-page .city-marker--landmark:focus .city-marker__ring {
   transform: scale(.6) !important;
+}
+
+/* Align the southern landmark points with their nearby city chapters. */
+.laos-map-page [data-open-landmark="wat-phou-modal"] {
+  transform: translate(93px, 0);
+}
+
+.laos-map-page [data-open-landmark="bolaven-plateau-modal"] {
+  transform: translate(-58px, 76px);
 }
 
 @media (max-width: 700px) {
