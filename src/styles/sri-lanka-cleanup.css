@@ -21,13 +21,18 @@
   color: #df7500 !important;
 }
 
+/*
+ * The Sri Lanka SVG is rendered at roughly 54% of the Laos SVG width.
+ * These compensated values produce the same visible hierarchy: 25 / 20 / 15.
+ */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__label {
-  font-size: 25px !important;
+  font-size: 46px !important;
+  stroke-width: 9px !important;
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive .city-marker__label {
-  font-size: 15px !important;
-  stroke-width: 4px !important;
+  font-size: 28px !important;
+  stroke-width: 6px !important;
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] {
@@ -35,11 +40,28 @@
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] .city-marker__label {
-  font-size: 20px !important;
-  stroke-width: 5px !important;
+  font-size: 37px !important;
+  stroke-width: 7px !important;
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__dot,
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] .city-marker__dot {
   stroke: #f4ecd9 !important;
+}
+
+@media (max-width: 700px) {
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__label {
+    font-size: 38px !important;
+    stroke-width: 8px !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] .city-marker__label {
+    font-size: 30px !important;
+    stroke-width: 6px !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive .city-marker__label {
+    font-size: 23px !important;
+    stroke-width: 5px !important;
+  }
 }
