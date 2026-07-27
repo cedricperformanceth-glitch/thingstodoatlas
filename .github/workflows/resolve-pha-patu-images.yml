@@ -1,4 +1,4 @@
-name: Resolve Pha Patu images
+name: Build Pha Patu gallery images
 
 on:
   push:
@@ -9,80 +9,53 @@ permissions:
   contents: write
 
 jobs:
-  resolve:
+  build:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Extract exact image URLs
+      - name: Install image tools
+        run: python -m pip install --quiet requests pillow
+      - name: Download and optimise exact Pha Patu images
         shell: bash
         run: |
           python - <<'PY'
-          import requests, re, html, json
+          import io
           from pathlib import Path
+          import requests
+          from PIL import Image, ImageOps
 
-          headers = {
-              'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/126 Safari/537.36'
-          }
-          page = 'https://laosuki.com/pha-patu-viewpoint-luang-prabang-sea-of-mist/'
-          r = requests.get(page, headers=headers, allow_redirects=True, timeout=40)
-          decoded = html.unescape(r.text).replace('\\/', '/').replace('\\u0026', '&').replace('\\x3d', '=').replace('\\x26', '&')
-          out = [f'PAGE={page}', f'STATUS={r.status_code}', f'FINAL={r.url}', f'LENGTH={len(decoded)}']
+          headers = {'User-Agent': 'Mozilla/5.0'}
+          images = [
+              (
+                  'https://f.ptcdn.info/949/067/000/q4zfcth9fGTOzjddHui-o.jpg',
+                  'public/images/laos/landmarks/pha-pa-tou-01.jpg',
+              ),
+              (
+                  'https://laosuki.com/wp-content/uploads/2025/12/pha-patu-viewpoint-sea-of-mist-luang-prabang.jpg',
+                  'public/images/laos/landmarks/pha-pa-tou-02.jpg',
+              ),
+              (
+                  'https://p19-common-sign.tiktokcdn-us.com/tos-alisg-p-0037/o0UuixAMEEx57OAB6qpE3DKCNIBHUeAfgA6FAR~tplv-tiktokx-origin.image?dr=9636&x-expires=1785333600&x-signature=TzyBMG2Ckm01iGyJZG1vxOZwLfk%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=useast8',
+                  'public/images/laos/landmarks/pha-pa-tou-03.jpg',
+              ),
+          ]
 
-          candidates = []
-          for pattern in [
-              r'<meta[^>]+property=["\']og:image(?::secure_url)?["\'][^>]+content=["\']([^"\']+)',
-              r'<img[^>]+(?:src|data-src|data-lazy-src|data-original)=["\']([^"\']+)',
-              r'(?:srcset|data-srcset)=["\']([^"\']+)',
-              r'https?://[^\s"\'<>\\]+',
-          ]:
-              candidates.extend(re.findall(pattern, decoded, re.I))
-
-          social_urls = []
-          for candidate in candidates:
-              candidate = str(candidate).strip().rstrip(']});,')
-              if any(domain in candidate for domain in ('tiktok.com/', 'instagram.com/', 'facebook.com/', 'youtu.be/', 'youtube.com/')):
-                  if candidate not in social_urls:
-                      social_urls.append(candidate)
-                      out.append('SOCIAL=' + candidate)
-
-          # Try public oEmbed endpoints for any exact video found in the article.
-          for social in social_urls:
-              try:
-                  if 'tiktok.com/' in social:
-                      endpoint = 'https://www.tiktok.com/oembed'
-                  elif 'youtube.com/' in social or 'youtu.be/' in social:
-                      endpoint = 'https://www.youtube.com/oembed'
-                  else:
-                      continue
-                  data = requests.get(endpoint, params={'url': social, 'format': 'json'}, headers=headers, timeout=30).json()
-                  thumb = data.get('thumbnail_url')
-                  if thumb:
-                      out.append('OEMBED_SOURCE=' + social)
-                      out.append('IMAGE=' + thumb)
-              except Exception as exc:
-                  out.append('OEMBED_ERROR=' + social + ' :: ' + repr(exc))
-
-          seen = set()
-          for raw in candidates:
-              for candidate in str(raw).split(','):
-                  candidate = candidate.strip().split(' ')[0].rstrip(']});,')
-                  if candidate.startswith('//'):
-                      candidate = 'https:' + candidate
-                  if not candidate.startswith('http') or candidate in seen:
-                      continue
-                  low = candidate.lower()
-                  if not any(ext in low.split('?')[0] for ext in ('.jpg', '.jpeg', '.png', '.webp', '.avif')):
-                      continue
-                  seen.add(candidate)
-                  out.append('IMAGE=' + candidate)
-
-          Path('pha-patu-image-candidates.txt').write_text('\n'.join(out), encoding='utf-8')
+          for url, path_str in images:
+              response = requests.get(url, headers=headers, timeout=60)
+              response.raise_for_status()
+              image = Image.open(io.BytesIO(response.content))
+              image = ImageOps.exif_transpose(image).convert('RGB')
+              image.thumbnail((1800, 1400), Image.Resampling.LANCZOS)
+              path = Path(path_str)
+              path.parent.mkdir(parents=True, exist_ok=True)
+              image.save(path, 'JPEG', quality=88, optimize=True, progressive=True)
+              print(path, image.size, path.stat().st_size)
           PY
-      - name: Commit result
+      - name: Commit gallery files
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add pha-patu-image-candidates.txt
-          git commit -m "Resolve Pha Patu social video thumbnail"
+          git add public/images/laos/landmarks/pha-pa-tou-01.jpg public/images/laos/landmarks/pha-pa-tou-02.jpg public/images/laos/landmarks/pha-pa-tou-03.jpg
+          git commit -m "Add stable Pha Patu gallery images"
           git push
