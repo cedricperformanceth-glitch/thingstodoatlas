@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CityCategoryListing from '../../../components/CityCategoryListing.astro';
+
+const cities = [
+  { slug: 'tad-lo', name: 'Tad Lo' },
+];
+const categories = [
+  'restaurants',
+  'cafes',
+  'accommodation',
+  'scooter-rental',
+  'bolaven-loop',
+  'waterfalls',
+  'things-to-do',
+  'gyms-fitness',
+  'markets-shopping',
+  'essential-information',
+];
+
+export function getStaticPaths() {
+  return cities.flatMap((city) => categories.map((category) => ({
+    params: { city: city.slug, category },
+    props: { cityName: city.name },
+  })));
+}
+
+const { city, category } = Astro.params;
+const { cityName } = Astro.props;
+const categoryName = category?.split('-').map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(' ') ?? 'Guide';
+---
+
+<BaseLayout
+  title={`${categoryName} in ${cityName}, Laos`}
+  description={`Explore ${categoryName.toLowerCase()} in ${cityName}. Save the useful addresses for your route.`}
+  canonical={`https://thingstodoatlas.com/laos/${city}/${category}`}
+>
+  <CityCategoryListing
+    country="Laos"
+    countrySlug="laos"
+    city={cityName}
+    citySlug={city}
+    categorySlug={category}
+  />
+</BaseLayout>
