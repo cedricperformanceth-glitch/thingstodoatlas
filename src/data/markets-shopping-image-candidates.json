@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "dao-hueng-market",
+    "selectedImage": "https://itin-dev.wanderlogstatic.com/freeImage/QOMGqwNSRlmzcgVdng4WQUi7DXBCC6cU",
+    "sourcePage": "https://wanderlog.com/place/details/293953/dao-hueng-market-main-pakse-market",
+    "sourceType": "wanderlog",
+    "status": "approved",
+    "imageSourceUrl": "https://itin-dev.wanderlogstatic.com/freeImage/QOMGqwNSRlmzcgVdng4WQUi7DXBCC6cU",
+    "imageSourceType": "wanderlog",
+    "imageAuthor": null,
+    "imageLicense": null,
+    "imageIsGeneric": false
+  },
+  {
+    "slug": "pakse-night-market",
+    "selectedImage": "https://itin-dev.wanderlogstatic.com/freeImage/eIreECalUk5WNEa6OZ5I75mKCDcH0zbP",
+    "sourcePage": "https://wanderlog.com/place/details/12336608/m-park-night-market-pakse",
+    "sourceType": "wanderlog",
+    "status": "approved",
+    "imageSourceUrl": "https://itin-dev.wanderlogstatic.com/freeImage/eIreECalUk5WNEa6OZ5I75mKCDcH0zbP",
+    "imageSourceType": "wanderlog",
+    "imageAuthor": null,
+    "imageLicense": null,
+    "imageIsGeneric": true
+  },
+  {
+    "slug": "bai-don-pakse-market",
+    "selectedImage": "https://itin-dev.wanderlogstatic.com/freeImage/FVew6BLHOnGyxrNKAHXVq8AFGAukDiLK",
+    "sourcePage": "https://wanderlog.com/place/details/8659923/bai-don-pakse-market",
+    "sourceType": "wanderlog",
+    "status": "approved",
+    "imageSourceUrl": "https://itin-dev.wanderlogstatic.com/freeImage/FVew6BLHOnGyxrNKAHXVq8AFGAukDiLK",
+    "imageSourceType": "wanderlog",
+    "imageAuthor": null,
+    "imageLicense": null,
+    "imageIsGeneric": false
+  },
+  {
+    "slug": "friendship-mall-pakse",
+    "selectedImage": "https://itin-dev.wanderlogstatic.com/freeImage/KiQ905WddWq5IPhGaAWEvvAkmfImK8dv",
+    "sourcePage": "https://wanderlog.com/place/details/4240005/friendship-mall",
+    "sourceType": "wanderlog",
+    "status": "approved",
+    "imageSourceUrl": "https://itin-dev.wanderlogstatic.com/freeImage/KiQ905WddWq5IPhGaAWEvvAkmfImK8dv",
+    "imageSourceType": "wanderlog",
+    "imageAuthor": null,
+    "imageLicense": null,
+    "imageIsGeneric": false
+  },
+  {
+    "slug": "bestco-supermarket-pakse",
+    "selectedImage": "https://lh3.googleusercontent.com/places/ANXAkqH0946rZW1-M9szcCuRuIbA8-V19zlH-aAJFjDR4bhTGL9-WoKmcr-k2_NKsmla_XELkhmd-_HwMXOxqj88uOCyLD8C4spGFCI=s1600-w640",
+    "sourcePage": "https://mapstr.com/place/EQHctsJVdU",
+    "sourceType": "public-directory",
+    "status": "approved",
+    "imageSourceUrl": "https://lh3.googleusercontent.com/places/ANXAkqH0946rZW1-M9szcCuRuIbA8-V19zlH-aAJFjDR4bhTGL9-WoKmcr-k2_NKsmla_XELkhmd-_HwMXOxqj88uOCyLD8C4spGFCI=s1600-w640",
+    "imageSourceType": "public-directory",
+    "imageAuthor": null,
+    "imageLicense": null,
+    "imageIsGeneric": false
+  }
+]
