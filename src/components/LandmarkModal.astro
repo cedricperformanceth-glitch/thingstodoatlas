@@ -43,6 +43,10 @@ const annotations = {
   'Khone Phapheng Falls': {
     'What to wear': { note: 'Light clothes + sun protection.' },
     'Difficulty': { crossed: 'A swimming stop', correction: 'Viewpoint only — respect the river.' }
+  },
+  'Xe Bang Fai Cave': {
+    'Best time': { crossed: 'Any season works', correction: 'No — check the river first.' },
+    'Difficulty': { note: 'Guide, boat, darkness and rough roads.' }
   }
 };
 
@@ -71,6 +75,11 @@ const storyAnnotations = {
     { label: 'Entry note', value: 'Paid viewpoint area — check the current entrance fee.', icon: 'ticket' },
     { label: 'Best rhythm', value: 'Give yourself time to walk between the viewpoints.', icon: 'sun' },
     { label: 'Margin note', value: 'The Mekong is powerful here; stay behind barriers.', icon: 'route' }
+  ],
+  'Xe Bang Fai Cave': [
+    { label: 'Expedition note', value: 'Arrange the guide and boat before the final remote road.', icon: 'route' },
+    { label: 'Best rhythm', value: 'Confirm river levels locally, then keep the whole day free.', icon: 'sun' },
+    { label: 'Margin note', value: 'Quick-dry clothes, grip shoes and a strong headlamp.', icon: 'jacket' }
   ]
 };
 
@@ -79,7 +88,8 @@ const defaultCardNumbers = {
   "Adam's Peak": '02',
   'Bolaven Plateau': '03',
   'Wat Phou': '04',
-  'Khone Phapheng Falls': '05'
+  'Khone Phapheng Falls': '05',
+  'Xe Bang Fai Cave': '06'
 };
 
 const footerNotes = {
@@ -87,7 +97,8 @@ const footerNotes = {
   "Adam's Peak": 'check weather before leaving',
   'Bolaven Plateau': 'leave room for one more waterfall',
   'Wat Phou': 'slow down on the old steps',
-  'Khone Phapheng Falls': 'watch the river from a distance'
+  'Khone Phapheng Falls': 'watch the river from a distance',
+  'Xe Bang Fai Cave': 'confirm the river before leaving'
 };
 
 const storyScribbles = {
@@ -95,7 +106,8 @@ const storyScribbles = {
   "Adam's Peak": 'the road begins at night',
   'Bolaven Plateau': 'follow the road, not the clock',
   'Wat Phou': 'read the stones slowly',
-  'Khone Phapheng Falls': 'the river sets the scale'
+  'Khone Phapheng Falls': 'the river sets the scale',
+  'Xe Bang Fai Cave': 'the road is part of the expedition'
 };
 
 const landmarkAnnotations = annotations[name] ?? {};
@@ -105,7 +117,12 @@ const cardNumber = fieldCardNumber ?? defaultCardNumbers[name] ?? '01';
 const storyScribble = storyScribbles[name] ?? 'keep looking beyond the obvious';
 ---
 
-<dialog class="landmark-modal" id={id} aria-labelledby={`${id}-title`}>
+<dialog
+  class="landmark-modal"
+  id={id}
+  aria-labelledby={`${id}-title`}
+  data-notes-ready={name === 'Xe Bang Fai Cave' ? 'true' : undefined}
+>
   <button class="landmark-modal__close" type="button" aria-label={`Close ${name}`} data-close-landmark>
     <span>close</span><b aria-hidden="true">×</b>
   </button>
