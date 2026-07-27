@@ -8,7 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "images:restaurants": "node scripts/find-place-images.mjs",
+    "images:restaurants": "node scripts/find-place-images.mjs --category=restaurants",
     "images:places": "node scripts/find-place-images.mjs"
   },
   "dependencies": {
