@@ -1,0 +1,188 @@
+@import './sri-lanka-ticket.css';
+@import './laos-notebook-repair.css';
+@import './header-refinement.css';
+
+/* Sri Lanka notebook: keep the right page clean around the map and CTA. */
+.country-section #country-sri-lanka-3 .country-feature__copy {
+  background: none !important;
+  background-image: none !important;
+}
+
+.country-section #country-sri-lanka-3 .country-feature__copy::before,
+.country-section #country-sri-lanka-3 .country-feature__copy::after {
+  display: none !important;
+  content: none !important;
+  border: 0 !important;
+  background: none !important;
+}
+
+/* Sri Lanka field map only: use the saffron and teal from the national flag. */
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active {
+  color: #df7500 !important;
+}
+
+/*
+ * The Sri Lanka SVG is rendered at roughly 54% of the Laos SVG width.
+ * These compensated values produce the same visible hierarchy: 25 / 20 / 15.
+ */
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__label {
+  font-size: 46px !important;
+  stroke-width: 9px !important;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive .city-marker__label {
+  font-size: 28px !important;
+  stroke-width: 6px !important;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] {
+  color: #005f4b !important;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] .city-marker__label {
+  font-size: 37px !important;
+  stroke-width: 7px !important;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__dot,
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] .city-marker__dot {
+  stroke: #f4ecd9 !important;
+}
+
+/*
+ * Match the visible Laos circle sizes despite the smaller Sri Lanka SVG.
+ * Laos reference: active 88%, inactive 80%, landmark 50%.
+ */
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__ring,
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__dot,
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive .city-marker__ring,
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive .city-marker__dot,
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] .city-marker__ring,
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] .city-marker__dot {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__ring,
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__dot {
+  transform: scale(1.62) !important;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active:hover .city-marker__ring,
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active:focus .city-marker__ring {
+  transform: scale(1.91) !important;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive .city-marker__ring,
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive .city-marker__dot,
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive:hover .city-marker__ring,
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive:focus .city-marker__ring {
+  transform: scale(1.47) !important;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] .city-marker__ring {
+  transform: scale(.84) !important;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] .city-marker__dot {
+  transform: scale(.82) !important;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark]:hover .city-marker__ring,
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark]:focus .city-marker__ring {
+  transform: scale(1) !important;
+}
+
+@media (min-width: 501px) and (max-width: 700px) {
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__label {
+    font-size: 38px !important;
+    stroke-width: 8px !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] .city-marker__label {
+    font-size: 30px !important;
+    stroke-width: 6px !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive .city-marker__label {
+    font-size: 23px !important;
+    stroke-width: 5px !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__ring,
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__dot {
+    transform: scale(1.42) !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active:hover .city-marker__ring,
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active:focus .city-marker__ring {
+    transform: scale(1.68) !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive .city-marker__ring,
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive .city-marker__dot,
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive:hover .city-marker__ring,
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive:focus .city-marker__ring {
+    transform: scale(1.29) !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] .city-marker__ring {
+    transform: scale(.74) !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] .city-marker__dot {
+    transform: scale(.72) !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark]:hover .city-marker__ring,
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark]:focus .city-marker__ring {
+    transform: scale(.89) !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__label {
+    font-size: 38px !important;
+    stroke-width: 8px !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] .city-marker__label {
+    font-size: 30px !important;
+    stroke-width: 6px !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive .city-marker__label {
+    font-size: 23px !important;
+    stroke-width: 5px !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__ring,
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__dot {
+    transform: scale(1.34) !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active:hover .city-marker__ring,
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active:focus .city-marker__ring {
+    transform: scale(1.58) !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive .city-marker__ring,
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive .city-marker__dot,
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive:hover .city-marker__ring,
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive:focus .city-marker__ring {
+    transform: scale(1.22) !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] .city-marker__ring {
+    transform: scale(.69) !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] .city-marker__dot {
+    transform: scale(.67) !important;
+  }
+
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark]:hover .city-marker__ring,
+  .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark]:focus .city-marker__ring {
+    transform: scale(.83) !important;
+  }
+}
