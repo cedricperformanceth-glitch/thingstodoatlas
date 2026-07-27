@@ -4,9 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "predev": "npm run images:sync",
     "dev": "astro dev",
-    "prebuild": "npm run images:sync",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
