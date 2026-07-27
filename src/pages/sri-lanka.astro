@@ -10,6 +10,68 @@ const adamsPeak = { x: 448, y: 1172 };
 const negombo = { x: 224, y: 969 };
 const colombo = { x: 224, y: 1152 };
 const arugamBay = { x: 896, y: 1172 };
+
+const sigiriyaGallery = [
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Sigiriya_Rock_Fortress.jpg?width=1600',
+    alt: 'Sigiriya Rock Fortress rising above the surrounding green landscape',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Sigiriya_Rock_Fortress.jpg',
+    author: 'Satheesha J.',
+    license: 'CC BY-SA 4.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Sigiriya%2C_Rock_Fortress.jpg?width=1600',
+    alt: 'View across the ruins and plains from the summit of Sigiriya',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Sigiriya,_Rock_Fortress.jpg',
+    author: 'Tlbatt',
+    license: 'CC BY-SA 4.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Sigiriya_rock_fortress.jpg?width=1600',
+    alt: 'The lion gate and staircase leading higher up Sigiriya Rock',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Sigiriya_rock_fortress.jpg',
+    author: 'Himam123',
+    license: 'CC BY-SA 4.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Rock_Fortress.jpg?width=1600',
+    alt: 'Sigiriya Rock Fortress seen from a distance across the countryside',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Rock_Fortress.jpg',
+    author: 'Jithma Kalingu',
+    license: 'CC BY-SA 4.0'
+  }
+];
+
+const adamsPeakGallery = [
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Sunrise_from_the_top_of_Sri_Pada_%28Adam%27s_Peak%29_Sri_Lanka.jpg?width=1600',
+    alt: "Sunrise viewed from the summit of Adam's Peak",
+    sourcePage: "https://commons.wikimedia.org/wiki/File:Sunrise_from_the_top_of_Sri_Pada_(Adam's_Peak)_Sri_Lanka.jpg",
+    author: 'Eli Solidum',
+    license: 'CC BY-SA 4.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Shadow_of_the_peak_when_sun_rising.jpg?width=1600',
+    alt: "The triangular shadow of Adam's Peak at sunrise",
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Shadow_of_the_peak_when_sun_rising.jpg',
+    author: 'Sameera Madusanka',
+    license: 'CC BY-SA 4.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Adams_peak_sripada_footpath_to_climb.jpg?width=1600',
+    alt: "The long staircase and pilgrimage path climbing Adam's Peak",
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Adams_peak_sripada_footpath_to_climb.jpg',
+    author: 'Nisal Senanayaka',
+    license: 'CC BY-SA 4.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Top_of_Adams_peak_in_Srilanka.jpg?width=1600',
+    alt: "The summit area and shrine at the top of Adam's Peak",
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Top_of_Adams_peak_in_Srilanka.jpg',
+    author: 'Dharshana',
+    license: 'CC BY-SA 4.0'
+  }
+];
 ---
 
 <BaseLayout
@@ -103,6 +165,7 @@ const arugamBay = { x: 896, y: 1172 };
     region="Central Province · Sri Lanka"
     description="A monumental rock fortress rising above the plains, combining ancient ruins, gardens, frescoes and a steep climb to the summit. This field card will be expanded with verified local notes."
     mapsUrl="https://www.google.com/maps/search/?api=1&query=Sigiriya%2C%20Sri%20Lanka"
+    gallery={sigiriyaGallery}
     facts={[
       { label: 'Getting there', value: 'Commonly reached from Dambulla, Habarana or nearby guesthouses by tuk-tuk, bus or private driver.' },
       { label: 'Best time', value: 'Early morning is generally the most comfortable time for the climb.' },
@@ -119,6 +182,7 @@ const arugamBay = { x: 896, y: 1172 };
     region="Central Highlands · Sri Lanka"
     description="A sacred mountain and demanding pilgrimage climb, usually approached at night to reach the summit around sunrise. This field card will be expanded with verified seasonal and transport notes."
     mapsUrl="https://www.google.com/maps/search/?api=1&query=Adam%27s%20Peak%2C%20Sri%20Lanka"
+    gallery={adamsPeakGallery}
     facts={[
       { label: 'Getting there', value: 'Most visitors begin from Nallathanniya or Dalhousie, reached by bus, train connections and local transport.' },
       { label: 'Best time', value: 'The main pilgrimage season and weather conditions should be checked before setting out.' },
