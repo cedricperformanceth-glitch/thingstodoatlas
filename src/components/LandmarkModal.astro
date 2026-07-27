@@ -23,12 +23,73 @@ const annotations = {
   }
 };
 
+const storyAnnotations = {
+  Sigiriya: [
+    { label: 'Entry note', value: 'Paid entrance — check the official price before going.', icon: 'ticket' },
+    { label: 'Best rhythm', value: 'Start early, climb slowly, keep time for the gardens.', icon: 'sun' },
+    { label: 'Margin note', value: 'Almost no shade on the exposed stairs.', icon: 'shade' }
+  ],
+  "Adam's Peak": [
+    { label: 'Entry note', value: 'The climb is free; transport and small services are not.', icon: 'ticket' },
+    { label: 'Best rhythm', value: 'Leave at night and do not race the staircase.', icon: 'moon' },
+    { label: 'Margin note', value: 'The summit can feel much colder than the trail below.', icon: 'jacket' }
+  ]
+};
+
 const landmarkAnnotations = annotations[name] ?? {};
+const landmarkStoryAnnotations = storyAnnotations[name] ?? [];
 const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weather before leaving';
 ---
+
 <dialog class="landmark-modal" id={id} aria-labelledby={`${id}-title`}>
   <button class="landmark-modal__close" type="button" aria-label={`Close ${name}`} data-close-landmark>×</button>
+
   <div class="landmark-modal__grid">
+    <section class="landmark-modal__story">
+      <span class="landmark-story__tape" aria-hidden="true"></span>
+      <p class="landmark-modal__eyebrow">SRI LANKA · LANDMARK</p>
+      <h2 id={`${id}-title`}>{name}</h2>
+      <p class="landmark-modal__region">{region}</p>
+      <svg class="landmark-story__underline" viewBox="0 0 210 18" aria-hidden="true">
+        <path d="M5 9 C44 14, 82 2, 124 9 S177 13, 205 6" />
+        <path d="M29 14 C76 17, 128 9, 190 13" />
+      </svg>
+      <p class="landmark-story__description">{description}</p>
+
+      <div class="landmark-story__annotations" aria-label={`${name} quick notes`}>
+        {landmarkStoryAnnotations.map((note, index) => (
+          <article class:list={['landmark-story-note', `landmark-story-note--${note.icon}`, { 'landmark-story-note--tilted': index === 1 }]}>
+            <span class="landmark-story-note__mark" aria-hidden="true">
+              {note.icon === 'ticket' && (
+                <svg viewBox="0 0 36 36"><path d="M5 10 C8 10 9 7 9 5 H30 V12 C26 12 26 17 30 17 V29 H9 C9 25 8 24 5 24 Z"/><path d="M14 9v3 M14 15v3 M14 21v3 M20 14h6 M20 20h6"/></svg>
+              )}
+              {note.icon === 'sun' && (
+                <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="7"/><path d="M18 3v6 M18 27v6 M3 18h6 M27 18h6 M7.5 7.5l4.2 4.2 M24.3 24.3l4.2 4.2 M28.5 7.5l-4.2 4.2 M11.7 24.3l-4.2 4.2"/></svg>
+              )}
+              {note.icon === 'shade' && (
+                <svg viewBox="0 0 36 36"><path d="M5 18 C8 8, 15 5, 18 5 C23 5, 30 9, 32 18 Z"/><path d="M18 18v13 M18 31c-1 3-5 2-5-1"/><path d="M9 18c1-3 3-5 5-6 M22 12c2 1 4 3 5 6"/></svg>
+              )}
+              {note.icon === 'moon' && (
+                <svg viewBox="0 0 36 36"><path d="M25 27 C15 30, 7 22, 9 13 C10 8, 14 5, 18 4 C14 12, 18 21, 25 27 Z"/><path d="M27 7l1 3 3 1-3 1-1 3-1-3-3-1 3-1z"/></svg>
+              )}
+              {note.icon === 'jacket' && (
+                <svg viewBox="0 0 36 36"><path d="M12 6 L8 9 5 18 9 20 11 15 11 31 H25 V15 L27 20 31 18 28 9 24 6"/><path d="M12 6 C13 10, 16 12, 18 14 C20 12, 23 10, 24 6 M18 14v17"/></svg>
+              )}
+            </span>
+            <div>
+              <span>{note.label}</span>
+              <p>{note.value}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p class="landmark-story__scribble">
+        <span>not just the summit</span>
+        <svg viewBox="0 0 88 28" aria-hidden="true"><path d="M3 20 C20 5, 43 6, 70 17"/><path d="M65 11l7 6-8 4"/></svg>
+      </p>
+    </section>
+
     <section class="landmark-modal__visual">
       {primaryImage ? (
         <div class="landmark-gallery" data-landmark-gallery>
@@ -90,13 +151,6 @@ const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weath
       </div>
     </section>
 
-    <section class="landmark-modal__story">
-      <p class="landmark-modal__eyebrow">SRI LANKA · LANDMARK</p>
-      <h2 id={`${id}-title`}>{name}</h2>
-      <p class="landmark-modal__region">{region}</p>
-      <p>{description}</p>
-    </section>
-
     <aside class="landmark-modal__facts" aria-label={`${name} practical information`}>
       <span class="landmark-notes__tape" aria-hidden="true"></span>
       <header class="landmark-notes__heading">
@@ -116,45 +170,22 @@ const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weath
             <div class:list={['landmark-note', `landmark-note--${icon}`]}>
               <span class="landmark-note__icon" aria-hidden="true">
                 {icon === 'route' && (
-                  <svg viewBox="0 0 32 32">
-                    <circle cx="7" cy="23" r="2.6" />
-                    <circle cx="25" cy="8" r="2.6" />
-                    <path d="M9.5 22 C14 20, 11 14, 16 14 S20 10, 22.5 9" />
-                    <path d="M17 11 l3 3 -3 3" />
-                  </svg>
+                  <svg viewBox="0 0 32 32"><circle cx="7" cy="23" r="2.6"/><circle cx="25" cy="8" r="2.6"/><path d="M9.5 22 C14 20, 11 14, 16 14 S20 10, 22.5 9"/><path d="M17 11 l3 3 -3 3"/></svg>
                 )}
                 {icon === 'weather' && (
-                  <svg viewBox="0 0 32 32">
-                    <circle cx="12" cy="11" r="5" />
-                    <path d="M12 2.5v3 M12 16.5v3 M3.5 11h3 M17.5 11h3 M5.8 4.8l2.1 2.1 M16.1 15.1l2.1 2.1" />
-                    <path d="M13 24 C14 20, 18 19, 20.5 21 C24 19.8, 28 22, 27 25.5 H12.5" />
-                    <path d="M17 28l-1 2 M23 28l-1 2" />
-                  </svg>
+                  <svg viewBox="0 0 32 32"><circle cx="12" cy="11" r="5"/><path d="M12 2.5v3 M12 16.5v3 M3.5 11h3 M17.5 11h3 M5.8 4.8l2.1 2.1 M16.1 15.1l2.1 2.1"/><path d="M13 24 C14 20, 18 19, 20.5 21 C24 19.8, 28 22, 27 25.5 H12.5"/><path d="M17 28l-1 2 M23 28l-1 2"/></svg>
                 )}
                 {icon === 'jacket' && (
-                  <svg viewBox="0 0 32 32">
-                    <path d="M11 5 L7 8 4 17 8 19 10 14 10 28 H22 V14 L24 19 28 17 25 8 21 5" />
-                    <path d="M11 5 C12 9, 14 10, 16 12 C18 10, 20 9, 21 5 M16 12v16 M13 17h-2 M21 17h-2" />
-                  </svg>
+                  <svg viewBox="0 0 32 32"><path d="M11 5 L7 8 4 17 8 19 10 14 10 28 H22 V14 L24 19 28 17 25 8 21 5"/><path d="M11 5 C12 9, 14 10, 16 12 C18 10, 20 9, 21 5 M16 12v16 M13 17h-2 M21 17h-2"/></svg>
                 )}
                 {icon === 'ticket' && (
-                  <svg viewBox="0 0 32 32">
-                    <path d="M5 9 C7 9, 8 7, 8 5 H26 V11 C23 11, 23 15, 26 15 V25 H8 C8 22, 7 21, 5 21 Z" />
-                    <path d="M12 8v2 M12 13v2 M12 18v2 M12 23v1 M17 12h5 M17 17h5" />
-                  </svg>
+                  <svg viewBox="0 0 32 32"><path d="M5 9 C7 9, 8 7, 8 5 H26 V11 C23 11, 23 15, 26 15 V25 H8 C8 22, 7 21, 5 21 Z"/><path d="M12 8v2 M12 13v2 M12 18v2 M12 23v1 M17 12h5 M17 17h5"/></svg>
                 )}
                 {icon === 'clock' && (
-                  <svg viewBox="0 0 32 32">
-                    <circle cx="16" cy="17" r="11" />
-                    <path d="M16 10v7l5 3 M12 3h8 M16 3v3" />
-                  </svg>
+                  <svg viewBox="0 0 32 32"><circle cx="16" cy="17" r="11"/><path d="M16 10v7l5 3 M12 3h8 M16 3v3"/></svg>
                 )}
                 {icon === 'stairs' && (
-                  <svg viewBox="0 0 32 32">
-                    <path d="M4 27h6v-5h6v-5h6v-5h6" />
-                    <path d="M7 10 C12 5, 19 4, 24 7" />
-                    <path d="M21 4l3 3-4 2" />
-                  </svg>
+                  <svg viewBox="0 0 32 32"><path d="M4 27h6v-5h6v-5h6v-5h6"/><path d="M7 10 C12 5, 19 4, 24 7"/><path d="M21 4l3 3-4 2"/></svg>
                 )}
               </span>
 
@@ -175,7 +206,7 @@ const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weath
       </dl>
 
       <p class="landmark-notes__footer">
-        <svg viewBox="0 0 54 24" aria-hidden="true"><path d="M3 17 C17 5, 32 6, 47 14" /><path d="M42 9l6 5-7 3" /></svg>
+        <svg viewBox="0 0 54 24" aria-hidden="true"><path d="M3 17 C17 5, 32 6, 47 14"/><path d="M42 9l6 5-7 3"/></svg>
         <span>{footerNote}</span>
       </p>
     </aside>
@@ -245,52 +276,90 @@ const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weath
 </script>
 
 <style>
-  .landmark-modal { width:min(1200px,calc(100vw - 28px)); max-height:min(880px,calc(100vh - 28px)); padding:0; border:0; background:#f7f2e6; color:#1f2924; box-shadow:0 28px 80px rgba(18,24,21,.34); overflow:auto; }
+  .landmark-modal {
+    position:relative;
+    width:min(1260px,calc(100vw - 28px));
+    height:min(720px,calc(100vh - 28px));
+    max-height:none;
+    padding:0;
+    border:0;
+    background:#f4ecd9;
+    color:#1f2924;
+    box-shadow:0 28px 80px rgba(18,24,21,.34);
+    overflow:hidden;
+  }
   .landmark-modal::backdrop { background:rgba(20,27,24,.66); backdrop-filter:blur(4px); }
-  .landmark-modal__close { position:sticky; top:14px; float:right; z-index:5; width:44px; height:44px; margin:14px 14px -58px 0; border:1px solid rgba(31,57,45,.16); border-radius:50%; background:#fff; color:#1f392d; font-size:1.8rem; cursor:pointer; }
-  .landmark-modal__grid { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) minmax(290px,.82fr); gap:0; min-height:620px; }
-  .landmark-modal__visual,.landmark-modal__story,.landmark-modal__facts { padding:clamp(28px,4vw,54px); }
-  .landmark-modal__visual { background:#eee7d7; }
-  .landmark-modal__placeholder { display:grid; place-items:center; min-height:390px; background:linear-gradient(145deg,#d9d0bc,#c4b99f); color:rgba(31,57,45,.65); font-family:'Caveat',cursive; font-size:2rem; box-shadow:inset 0 0 0 12px rgba(255,255,255,.5); }
-  .landmark-gallery__stage { position:relative; min-height:390px; overflow:hidden; background:#c8bea8; box-shadow:0 10px 26px rgba(31,41,36,.14); touch-action:pan-y; }
-  .landmark-gallery__stage > img { display:block; width:100%; height:390px; object-fit:cover; transition:opacity 180ms ease; }
-  .landmark-gallery__arrow { position:absolute; z-index:2; top:50%; display:grid; place-items:center; width:42px; height:42px; padding:0; border:1px solid rgba(255,255,255,.7); border-radius:50%; background:rgba(31,57,45,.76); color:#fff; font-size:1.15rem; cursor:pointer; transform:translateY(-50%); backdrop-filter:blur(4px); }
-  .landmark-gallery__arrow--previous { left:14px; }
-  .landmark-gallery__arrow--next { right:14px; }
-  .landmark-gallery__counter { position:absolute; right:14px; bottom:13px; padding:6px 9px; background:rgba(31,57,45,.78); color:#fff; font:700 .62rem/1 'DM Sans',sans-serif; letter-spacing:.08em; }
-  .landmark-gallery__thumbnails { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin-top:10px; }
+  .landmark-modal__close { position:absolute; top:14px; right:14px; z-index:8; display:grid; place-items:center; width:42px; height:42px; padding:0; border:1px solid rgba(31,57,45,.16); border-radius:50%; background:rgba(255,255,255,.92); color:#1f392d; font-size:1.75rem; line-height:1; cursor:pointer; box-shadow:0 5px 16px rgba(31,41,36,.12); }
+  .landmark-modal__grid { display:grid; grid-template-columns:minmax(280px,.88fr) minmax(360px,1.18fr) minmax(300px,.94fr); height:100%; min-height:0; }
+  .landmark-modal__story,.landmark-modal__visual,.landmark-modal__facts { min-width:0; min-height:0; }
+
+  .landmark-modal__story,
+  .landmark-modal__facts {
+    position:relative;
+    isolation:isolate;
+    overflow:hidden;
+    color:#22382e;
+    background-color:#f4ecd9;
+    background-image:radial-gradient(circle at 17% 18%,rgba(217,119,69,.07) 0 1px,transparent 1.5px),radial-gradient(circle at 74% 62%,rgba(31,57,45,.06) 0 1px,transparent 1.5px),repeating-linear-gradient(to bottom,transparent 0 31px,rgba(49,85,69,.07) 32px,transparent 33px);
+    background-size:23px 21px,29px 27px,100% 33px;
+  }
+  .landmark-modal__story { padding:clamp(34px,3.2vw,48px) clamp(27px,2.8vw,42px); box-shadow:inset -12px 0 22px rgba(80,65,42,.045); }
+  .landmark-modal__story::before,.landmark-modal__facts::before { content:''; position:absolute; z-index:-1; top:0; bottom:0; width:1px; background:rgba(217,119,69,.34); box-shadow:3px 0 0 rgba(217,119,69,.07); }
+  .landmark-modal__story::before { left:23px; }
+  .landmark-modal__facts::before { left:24px; }
+  .landmark-modal__story::after,.landmark-modal__facts::after { content:''; position:absolute; z-index:-1; bottom:-20px; width:60px; height:60px; background:linear-gradient(135deg,rgba(216,203,174,.08) 0 49%,#ddd0b6 50% 100%); box-shadow:-5px -5px 12px rgba(72,59,39,.07); }
+  .landmark-modal__story::after { left:-18px; transform:rotate(88deg); }
+  .landmark-modal__facts::after { right:-18px; transform:rotate(2deg); }
+  .landmark-story__tape,.landmark-notes__tape { position:absolute; top:10px; left:50%; width:92px; height:24px; background:rgba(196,174,132,.42); transform:translateX(-50%) rotate(-2deg); box-shadow:0 1px 1px rgba(70,55,34,.08); }
+  .landmark-modal__eyebrow { margin:4px 0 17px; color:rgba(31,57,45,.58); font:700 .58rem/1.2 'DM Sans',sans-serif; letter-spacing:.14em; }
+  .landmark-modal__story h2 { margin:0; color:#1f392d; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:clamp(3.7rem,5vw,5.9rem); font-weight:600; line-height:.8; letter-spacing:-.035em; transform:rotate(-1deg); }
+  .landmark-modal__region { margin:17px 0 0!important; color:#b8653e!important; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:1.3rem!important; font-weight:600; line-height:1.05!important; transform:rotate(.5deg); }
+  .landmark-story__underline { display:block; width:min(210px,86%); margin:8px 0 15px; fill:none; stroke:#d97745; stroke-width:1.5; stroke-linecap:round; opacity:.76; }
+  .landmark-story__description { margin:0; color:#263b32; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:1.18rem; font-weight:500; line-height:1.28; }
+  .landmark-story__annotations { display:grid; gap:8px; margin-top:18px; }
+  .landmark-story-note { display:grid; grid-template-columns:33px minmax(0,1fr); gap:8px; align-items:start; padding:8px 9px 8px 5px; border-top:1px dashed rgba(31,57,45,.18); }
+  .landmark-story-note--tilted { transform:rotate(-1deg); }
+  .landmark-story-note__mark { display:grid; place-items:center; width:31px; height:31px; color:#315545; transform:rotate(-4deg); }
+  .landmark-story-note:nth-child(even) .landmark-story-note__mark { color:#d97745; transform:rotate(4deg); }
+  .landmark-story-note__mark svg { width:29px; height:29px; overflow:visible; fill:none; stroke:currentColor; stroke-width:1.55; stroke-linecap:round; stroke-linejoin:round; }
+  .landmark-story-note div > span { display:block; margin-bottom:2px; color:#a45d3a; font:700 .54rem/1.2 'DM Sans',sans-serif; letter-spacing:.11em; text-transform:uppercase; }
+  .landmark-story-note p { margin:0; color:#315545; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:1rem; font-weight:600; line-height:1.08; }
+  .landmark-story__scribble { display:flex; align-items:center; justify-content:flex-end; gap:3px; margin:10px 0 0; color:#b8653e; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:1rem; font-weight:700; transform:rotate(-2deg); }
+  .landmark-story__scribble svg { width:68px; height:23px; fill:none; stroke:#315545; stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; }
+
+  .landmark-modal__visual { display:flex; flex-direction:column; justify-content:center; padding:clamp(26px,3vw,40px); background:#eee7d7; box-shadow:inset 11px 0 20px rgba(80,65,42,.045),inset -11px 0 20px rgba(80,65,42,.045); }
+  .landmark-modal__placeholder { display:grid; place-items:center; min-height:360px; background:linear-gradient(145deg,#d9d0bc,#c4b99f); color:rgba(31,57,45,.65); font-family:'Caveat',cursive; font-size:2rem; box-shadow:inset 0 0 0 12px rgba(255,255,255,.5); }
+  .landmark-gallery__stage { position:relative; min-height:360px; overflow:hidden; background:#c8bea8; box-shadow:0 10px 26px rgba(31,41,36,.14); touch-action:pan-y; }
+  .landmark-gallery__stage > img { display:block; width:100%; height:360px; object-fit:cover; transition:opacity 180ms ease; }
+  .landmark-gallery__arrow { position:absolute; z-index:2; top:50%; display:grid; place-items:center; width:40px; height:40px; padding:0; border:1px solid rgba(255,255,255,.7); border-radius:50%; background:rgba(31,57,45,.76); color:#fff; font-size:1.1rem; cursor:pointer; transform:translateY(-50%); backdrop-filter:blur(4px); }
+  .landmark-gallery__arrow--previous { left:12px; }
+  .landmark-gallery__arrow--next { right:12px; }
+  .landmark-gallery__counter { position:absolute; right:12px; bottom:12px; padding:6px 9px; background:rgba(31,57,45,.78); color:#fff; font:700 .6rem/1 'DM Sans',sans-serif; letter-spacing:.08em; }
+  .landmark-gallery__thumbnails { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:7px; margin-top:9px; }
   .landmark-gallery__thumbnail { position:relative; min-width:0; padding:0; overflow:hidden; border:2px solid transparent; background:#d5ccba; cursor:pointer; opacity:.66; transition:opacity 160ms ease,border-color 160ms ease,transform 160ms ease; }
   .landmark-gallery__thumbnail:hover,.landmark-gallery__thumbnail.is-active { opacity:1; border-color:#315545; transform:translateY(-1px); }
-  .landmark-gallery__thumbnail img { display:block; width:100%; height:66px; object-fit:cover; }
-  .landmark-gallery__credit { min-height:17px; margin:10px 0 0; color:rgba(31,41,36,.58); font-size:.62rem; line-height:1.45; }
+  .landmark-gallery__thumbnail img { display:block; width:100%; height:58px; object-fit:cover; }
+  .landmark-gallery__credit { min-height:15px; margin:7px 0 0; color:rgba(31,41,36,.58); font-size:.59rem; line-height:1.3; }
   .landmark-gallery__credit a { color:#315545; }
-  .landmark-modal__actions { display:grid; gap:12px; margin-top:22px; }
-  .landmark-modal__actions a,.landmark-modal__actions button { display:flex; align-items:center; justify-content:center; min-height:48px; border:1px solid #315545; background:transparent; color:#315545; font:700 .72rem/1 'DM Sans',sans-serif; letter-spacing:.08em; text-decoration:none; text-transform:uppercase; cursor:pointer; }
+  .landmark-modal__actions { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:14px; }
+  .landmark-modal__actions a,.landmark-modal__actions button { display:flex; align-items:center; justify-content:center; min-height:44px; padding:8px 10px; border:1px solid #315545; background:transparent; color:#315545; font:700 .63rem/1.1 'DM Sans',sans-serif; letter-spacing:.07em; text-align:center; text-decoration:none; text-transform:uppercase; cursor:pointer; }
   .landmark-modal__actions button { background:#315545; color:#fff; }
-  .landmark-modal__story { display:flex; flex-direction:column; justify-content:center; background:#fff; }
-  .landmark-modal__eyebrow { margin:0 0 18px; color:#d97745; font:700 .65rem/1.2 'DM Sans',sans-serif; letter-spacing:.15em; }
-  .landmark-modal__story h2 { margin:0; color:#1f392d; font-size:clamp(3.4rem,6vw,6.8rem); line-height:.88; letter-spacing:-.05em; }
-  .landmark-modal__region { margin:20px 0 30px!important; color:#315545!important; font-family:'Caveat',cursive; font-size:1.4rem!important; }
-  .landmark-modal__story p:last-child { margin:0; color:rgba(31,41,36,.75); font-size:1rem; line-height:1.75; }
 
-  .landmark-modal__facts { position:relative; isolation:isolate; overflow:hidden; padding:clamp(34px,4vw,52px) clamp(26px,3vw,42px); color:#22382e; background-color:#f4ecd9; background-image:radial-gradient(circle at 17% 18%,rgba(217,119,69,.08) 0 1px,transparent 1.5px),radial-gradient(circle at 74% 62%,rgba(31,57,45,.07) 0 1px,transparent 1.5px),repeating-linear-gradient(to bottom,transparent 0 31px,rgba(49,85,69,.075) 32px,transparent 33px); background-size:23px 21px,29px 27px,100% 33px; box-shadow:inset 12px 0 22px rgba(80,65,42,.055); }
-  .landmark-modal__facts::before { content:''; position:absolute; z-index:-1; top:0; bottom:0; left:24px; width:1px; background:rgba(217,119,69,.35); box-shadow:3px 0 0 rgba(217,119,69,.08); }
-  .landmark-modal__facts::after { content:''; position:absolute; z-index:-1; right:-18px; bottom:-18px; width:58px; height:58px; background:linear-gradient(135deg,rgba(216,203,174,.1) 0 49%,#ddd0b6 50% 100%); box-shadow:-5px -5px 12px rgba(72,59,39,.08); transform:rotate(2deg); }
-  .landmark-notes__tape { position:absolute; top:10px; left:50%; width:92px; height:24px; background:rgba(196,174,132,.42); transform:translateX(-50%) rotate(-2deg); box-shadow:0 1px 1px rgba(70,55,34,.08); }
-  .landmark-notes__heading { position:relative; margin:8px 0 21px; padding-left:12px; }
-  .landmark-notes__heading > span { color:rgba(31,57,45,.58); font:700 .56rem/1.2 'DM Sans',sans-serif; letter-spacing:.13em; }
-  .landmark-notes__heading h3 { margin:5px 0 0; color:#1f392d; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:clamp(2rem,3vw,2.55rem); font-weight:600; line-height:.9; transform:rotate(-1deg); }
-  .landmark-notes__heading svg { display:block; width:min(190px,88%); margin-top:7px; overflow:visible; fill:none; stroke:#d97745; stroke-width:1.6; stroke-linecap:round; opacity:.78; }
+  .landmark-modal__facts { padding:clamp(33px,3.2vw,48px) clamp(24px,2.5vw,38px); box-shadow:inset 12px 0 22px rgba(80,65,42,.045); }
+  .landmark-notes__heading { position:relative; margin:5px 0 15px; padding-left:10px; }
+  .landmark-notes__heading > span { color:rgba(31,57,45,.58); font:700 .54rem/1.2 'DM Sans',sans-serif; letter-spacing:.12em; }
+  .landmark-notes__heading h3 { margin:4px 0 0; color:#1f392d; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:clamp(1.9rem,2.5vw,2.35rem); font-weight:600; line-height:.9; transform:rotate(-1deg); }
+  .landmark-notes__heading svg { display:block; width:min(180px,85%); margin-top:6px; overflow:visible; fill:none; stroke:#d97745; stroke-width:1.5; stroke-linecap:round; opacity:.78; }
   .landmark-modal__facts dl { display:grid; gap:0; margin:0; }
-  .landmark-note { display:grid; grid-template-columns:42px minmax(0,1fr); gap:11px; align-items:start; padding:13px 0 14px 10px; border-bottom:1px dashed rgba(31,57,45,.18); }
+  .landmark-note { display:grid; grid-template-columns:37px minmax(0,1fr); gap:9px; align-items:start; padding:9px 0 10px 8px; border-bottom:1px dashed rgba(31,57,45,.18); }
   .landmark-note:last-child { border-bottom:0; }
-  .landmark-note__icon { display:grid; place-items:center; width:38px; height:38px; margin-top:1px; color:#315545; transform:rotate(-4deg); }
+  .landmark-note__icon { display:grid; place-items:center; width:34px; height:34px; color:#315545; transform:rotate(-4deg); }
   .landmark-note:nth-child(even) .landmark-note__icon { color:#d97745; transform:rotate(4deg); }
-  .landmark-note__icon svg { width:34px; height:34px; overflow:visible; fill:none; stroke:currentColor; stroke-width:1.65; stroke-linecap:round; stroke-linejoin:round; }
+  .landmark-note__icon svg { width:31px; height:31px; overflow:visible; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
   .landmark-note__copy { min-width:0; }
-  .landmark-note dt { margin:0 0 3px; color:#a45d3a; font:700 .57rem/1.2 'DM Sans',sans-serif; letter-spacing:.12em; text-transform:uppercase; }
-  .landmark-note dd { margin:0; color:#263b32; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:1.08rem; font-weight:500; line-height:1.18; }
-  .landmark-note__annotation { display:flex; flex-wrap:wrap; align-items:baseline; gap:5px 8px; margin:6px 0 0; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:1rem; line-height:1.05; transform:rotate(-1deg); }
+  .landmark-note dt { margin:0 0 2px; color:#a45d3a; font:700 .54rem/1.2 'DM Sans',sans-serif; letter-spacing:.11em; text-transform:uppercase; }
+  .landmark-note dd { margin:0; color:#263b32; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:1rem; font-weight:500; line-height:1.12; }
+  .landmark-note__annotation { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 7px; margin:4px 0 0; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:.93rem; line-height:1.02; transform:rotate(-1deg); }
   .landmark-note__crossed { position:relative; color:rgba(38,59,50,.5); white-space:nowrap; }
   .landmark-note__crossed::before,.landmark-note__crossed::after { content:''; position:absolute; left:-2px; right:-3px; top:52%; height:1.5px; background:#a45d3a; transform:rotate(-5deg); }
   .landmark-note__crossed::after { top:60%; transform:rotate(3deg); opacity:.72; }
@@ -298,24 +367,52 @@ const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weath
   .landmark-note__correction::before { content:'→ '; }
   .landmark-note__aside { color:#315545; font-weight:600; }
   .landmark-note__aside::before { content:'↳ '; color:#d97745; }
-  .landmark-notes__footer { display:flex; align-items:center; justify-content:flex-end; gap:3px; margin:15px 1px -4px 0; color:#315545; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:1.02rem; font-weight:600; transform:rotate(-2deg); }
-  .landmark-notes__footer svg { width:46px; height:22px; fill:none; stroke:#d97745; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+  .landmark-notes__footer { display:flex; align-items:center; justify-content:flex-end; gap:3px; margin:10px 1px -4px 0; color:#315545; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:.96rem; font-weight:600; transform:rotate(-2deg); }
+  .landmark-notes__footer svg { width:43px; height:21px; fill:none; stroke:#d97745; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+
+  @media(max-height:700px) and (min-width:901px){
+    .landmark-modal { height:calc(100vh - 24px); }
+    .landmark-modal__story { padding-top:28px; padding-bottom:24px; }
+    .landmark-modal__story h2 { font-size:4.4rem; }
+    .landmark-story__description { font-size:1.05rem; line-height:1.18; }
+    .landmark-story__annotations { gap:4px; margin-top:11px; }
+    .landmark-story-note { padding-top:5px; padding-bottom:5px; }
+    .landmark-story-note p { font-size:.91rem; }
+    .landmark-modal__visual { padding-top:24px; padding-bottom:24px; }
+    .landmark-gallery__stage,.landmark-modal__placeholder { min-height:290px; }
+    .landmark-gallery__stage > img { height:290px; }
+    .landmark-gallery__thumbnail img { height:45px; }
+    .landmark-modal__facts { padding-top:28px; padding-bottom:23px; }
+    .landmark-notes__heading { margin-bottom:8px; }
+    .landmark-note { padding-top:6px; padding-bottom:6px; }
+    .landmark-note dd { font-size:.9rem; }
+    .landmark-note__annotation { font-size:.85rem; }
+  }
 
   @media(max-width:900px){
-    .landmark-modal__grid{grid-template-columns:1fr 1fr}
-    .landmark-modal__facts{grid-column:1/-1}
-    .landmark-modal__facts dl{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px}
-    .landmark-note:nth-last-child(-n+2){border-bottom:0}
+    .landmark-modal { width:min(860px,calc(100vw - 20px)); height:auto; max-height:calc(100vh - 20px); overflow:auto; }
+    .landmark-modal__grid { grid-template-columns:1fr 1fr; height:auto; }
+    .landmark-modal__story { order:1; }
+    .landmark-modal__visual { order:2; }
+    .landmark-modal__facts { order:3; grid-column:1/-1; }
+    .landmark-modal__facts dl { grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:28px; }
+    .landmark-note:nth-last-child(-n+2) { border-bottom:0; }
   }
+
   @media(max-width:650px){
-    .landmark-modal__grid{grid-template-columns:1fr}
-    .landmark-modal__facts{grid-column:auto;padding-left:25px;padding-right:22px}
-    .landmark-modal__facts dl{grid-template-columns:1fr}
-    .landmark-note:nth-last-child(-n+2){border-bottom:1px dashed rgba(31,57,45,.18)}
-    .landmark-note:last-child{border-bottom:0}
-    .landmark-gallery__stage{min-height:270px}
-    .landmark-gallery__stage>img{height:270px}
-    .landmark-gallery__thumbnail img{height:56px}
-    .landmark-modal__story h2{font-size:3.8rem}
+    .landmark-modal { width:calc(100vw - 14px); max-height:calc(100vh - 14px); }
+    .landmark-modal__grid { grid-template-columns:1fr; }
+    .landmark-modal__story,.landmark-modal__visual,.landmark-modal__facts { grid-column:auto; }
+    .landmark-modal__story { padding:34px 26px 30px; }
+    .landmark-modal__story h2 { font-size:4rem; }
+    .landmark-modal__visual { padding:24px; }
+    .landmark-gallery__stage,.landmark-modal__placeholder { min-height:270px; }
+    .landmark-gallery__stage > img { height:270px; }
+    .landmark-gallery__thumbnail img { height:52px; }
+    .landmark-modal__actions { grid-template-columns:1fr; }
+    .landmark-modal__facts { padding:34px 22px 30px 25px; }
+    .landmark-modal__facts dl { grid-template-columns:1fr; }
+    .landmark-note:nth-last-child(-n+2) { border-bottom:1px dashed rgba(31,57,45,.18); }
+    .landmark-note:last-child { border-bottom:0; }
   }
 </style>
