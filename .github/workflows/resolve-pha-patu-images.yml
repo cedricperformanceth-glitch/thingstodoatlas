@@ -18,52 +18,64 @@ jobs:
         shell: bash
         run: |
           python - <<'PY'
-          import requests, re, html
+          import requests, re, html, json
           from pathlib import Path
 
           headers = {
               'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/126 Safari/537.36'
           }
-          pages = [
-              'https://laosuki.com/pha-patu-viewpoint-luang-prabang-sea-of-mist/',
-              'https://laosuki.com/wp-json/wp/v2/posts?slug=pha-patu-viewpoint-luang-prabang-sea-of-mist&_embed=1',
-              'https://maps.app.goo.gl/khjXjfTfGsjUcGM4A',
-          ]
-          out = []
-          for page in pages:
-              r = requests.get(page, headers=headers, allow_redirects=True, timeout=40)
-              decoded = html.unescape(r.text).replace('\\/', '/').replace('\\u0026', '&').replace('\\x3d', '=').replace('\\x26', '&')
-              out.extend([f'PAGE={page}', f'STATUS={r.status_code}', f'FINAL={r.url}', f'LENGTH={len(decoded)}'])
+          page = 'https://laosuki.com/pha-patu-viewpoint-luang-prabang-sea-of-mist/'
+          r = requests.get(page, headers=headers, allow_redirects=True, timeout=40)
+          decoded = html.unescape(r.text).replace('\\/', '/').replace('\\u0026', '&').replace('\\x3d', '=').replace('\\x26', '&')
+          out = [f'PAGE={page}', f'STATUS={r.status_code}', f'FINAL={r.url}', f'LENGTH={len(decoded)}']
 
-              candidates = []
-              for pattern in [
-                  r'<meta[^>]+property=["\']og:image(?::secure_url)?["\'][^>]+content=["\']([^"\']+)',
-                  r'<img[^>]+(?:src|data-src|data-lazy-src|data-original)=["\']([^"\']+)',
-                  r'(?:srcset|data-srcset)=["\']([^"\']+)',
-                  r'https?://[^\s"\'<>\\]+',
-              ]:
-                  candidates.extend(re.findall(pattern, decoded, re.I))
+          candidates = []
+          for pattern in [
+              r'<meta[^>]+property=["\']og:image(?::secure_url)?["\'][^>]+content=["\']([^"\']+)',
+              r'<img[^>]+(?:src|data-src|data-lazy-src|data-original)=["\']([^"\']+)',
+              r'(?:srcset|data-srcset)=["\']([^"\']+)',
+              r'https?://[^\s"\'<>\\]+',
+          ]:
+              candidates.extend(re.findall(pattern, decoded, re.I))
 
-              # Google Maps often stores only the photo token in page data.
-              for token in re.findall(r'AF1Qip[0-9A-Za-z_-]{20,}', decoded):
-                  candidates.append(f'https://lh5.googleusercontent.com/p/{token}=w1600-h1200-k-no')
+          social_urls = []
+          for candidate in candidates:
+              candidate = str(candidate).strip().rstrip(']});,')
+              if any(domain in candidate for domain in ('tiktok.com/', 'instagram.com/', 'facebook.com/', 'youtu.be/', 'youtube.com/')):
+                  if candidate not in social_urls:
+                      social_urls.append(candidate)
+                      out.append('SOCIAL=' + candidate)
 
-              seen = set()
-              for raw in candidates:
-                  for candidate in str(raw).split(','):
-                      candidate = candidate.strip().split(' ')[0].rstrip(']});,')
-                      if candidate.startswith('//'):
-                          candidate = 'https:' + candidate
-                      if not candidate.startswith('http') or candidate in seen:
-                          continue
-                      low = candidate.lower()
-                      is_file = any(ext in low.split('?')[0] for ext in ('.jpg', '.jpeg', '.png', '.webp', '.avif'))
-                      is_google_photo = ('googleusercontent.com/p/' in low or 'ggpht.com/p/' in low or 'googleusercontent.com/proxy/' in low)
-                      if not (is_file or is_google_photo):
-                          continue
-                      seen.add(candidate)
-                      out.append('IMAGE=' + candidate)
-              out.append('---')
+          # Try public oEmbed endpoints for any exact video found in the article.
+          for social in social_urls:
+              try:
+                  if 'tiktok.com/' in social:
+                      endpoint = 'https://www.tiktok.com/oembed'
+                  elif 'youtube.com/' in social or 'youtu.be/' in social:
+                      endpoint = 'https://www.youtube.com/oembed'
+                  else:
+                      continue
+                  data = requests.get(endpoint, params={'url': social, 'format': 'json'}, headers=headers, timeout=30).json()
+                  thumb = data.get('thumbnail_url')
+                  if thumb:
+                      out.append('OEMBED_SOURCE=' + social)
+                      out.append('IMAGE=' + thumb)
+              except Exception as exc:
+                  out.append('OEMBED_ERROR=' + social + ' :: ' + repr(exc))
+
+          seen = set()
+          for raw in candidates:
+              for candidate in str(raw).split(','):
+                  candidate = candidate.strip().split(' ')[0].rstrip(']});,')
+                  if candidate.startswith('//'):
+                      candidate = 'https:' + candidate
+                  if not candidate.startswith('http') or candidate in seen:
+                      continue
+                  low = candidate.lower()
+                  if not any(ext in low.split('?')[0] for ext in ('.jpg', '.jpeg', '.png', '.webp', '.avif')):
+                      continue
+                  seen.add(candidate)
+                  out.append('IMAGE=' + candidate)
 
           Path('pha-patu-image-candidates.txt').write_text('\n'.join(out), encoding='utf-8')
           PY
@@ -72,5 +84,5 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add pha-patu-image-candidates.txt
-          git commit -m "Decode Google Maps Pha Patu photo ids"
+          git commit -m "Resolve Pha Patu social video thumbnail"
           git push
