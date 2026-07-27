@@ -1,0 +1,63 @@
+name: Patch Pha Patu gallery once
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Connect local Pha Patu images
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('src/pages/laos.astro')
+          text = path.read_text(encoding='utf-8')
+          old = """const phaPaTouGallery = [
+  {
+    src: 'https://f.ptcdn.info/949/067/000/q4zfcth9fGTOzjddHui-o.jpg',
+    alt: 'Sunrise over the mountain landscape from Pha Pa Tou in Luang Prabang Province',
+    sourcePage: 'https://pantip.com/topic/39606086',
+    author: 'Pantip travel report'
+  }
+];"""
+          new = """const phaPaTouGallery = [
+  {
+    src: '/images/laos/landmarks/pha-pa-tou-01.jpg',
+    alt: 'Sunrise over the mountain landscape from Pha Pa Tou in Luang Prabang Province',
+    sourcePage: 'https://pantip.com/topic/39606086',
+    author: 'Sittichai · Pantip travel report'
+  },
+  {
+    src: '/images/laos/landmarks/pha-pa-tou-02.jpg',
+    alt: 'Sea of mist surrounding Pha Patu in Luang Prabang Province',
+    sourcePage: 'https://laosuki.com/pha-patu-viewpoint-luang-prabang-sea-of-mist/',
+    author: 'OKIHIRO · Laosuki'
+  },
+  {
+    src: '/images/laos/landmarks/pha-pa-tou-03.jpg',
+    alt: 'Mountain viewpoint scenery at Pha Patu above Pak Ou',
+    sourcePage: 'https://www.tiktok.com/@makame__/video/7581713947250855176',
+    author: 'makame__ · TikTok'
+  }
+];"""
+          if text.count(old) != 1:
+              raise RuntimeError(f'Expected one gallery block, found {text.count(old)}')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+      - name: Commit and remove one-time workflow
+        run: |
+          rm -f .github/workflows/patch-pha-patu-gallery-once.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git commit -m "Connect Pha Patu gallery photos"
+          git push
