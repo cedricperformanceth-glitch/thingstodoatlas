@@ -47,6 +47,14 @@ const annotations = {
   'Xe Bang Fai Cave': {
     'Best time': { crossed: 'Any season works', correction: 'No — check the river first.' },
     'Difficulty': { note: 'Guide, boat, darkness and rough roads.' }
+  },
+  'Pha Pa Tou': {
+    'Best time': { crossed: 'A quick afternoon hike', correction: 'No — plan the crossing and climb.' },
+    'Difficulty': { note: 'Boat crossing + a long uphill trail.' }
+  },
+  'Kong Lor Cave': {
+    'Best time': { crossed: 'The river is always the same', correction: 'Check water levels first.' },
+    'What to wear': { note: 'Water shoes + quick-dry layers.' }
   }
 };
 
@@ -80,6 +88,16 @@ const storyAnnotations = {
     { label: 'Expedition note', value: 'Arrange the guide and boat before the final remote road.', icon: 'route' },
     { label: 'Best rhythm', value: 'Confirm river levels locally, then keep the whole day free.', icon: 'sun' },
     { label: 'Margin note', value: 'Quick-dry clothes, grip shoes and a strong headlamp.', icon: 'jacket' }
+  ],
+  'Pha Pa Tou': [
+    { label: 'Route note', value: 'The journey includes a river crossing before the mountain trail.', icon: 'route' },
+    { label: 'Best rhythm', value: 'Go with a local guide and stay overnight for sunrise.', icon: 'sun' },
+    { label: 'Margin note', value: 'Carry water and food; facilities at the top are very basic.', icon: 'jacket' }
+  ],
+  'Kong Lor Cave': [
+    { label: 'Entry note', value: 'Ticket, boat and local boatman are arranged at the entrance.', icon: 'ticket' },
+    { label: 'Best rhythm', value: 'Keep two to three hours free for the return journey.', icon: 'sun' },
+    { label: 'Margin note', value: 'Life jacket, headlamp and water-friendly shoes.', icon: 'jacket' }
   ]
 };
 
@@ -89,7 +107,9 @@ const defaultCardNumbers = {
   'Bolaven Plateau': '03',
   'Wat Phou': '04',
   'Khone Phapheng Falls': '05',
-  'Xe Bang Fai Cave': '06'
+  'Xe Bang Fai Cave': '06',
+  'Pha Pa Tou': '07',
+  'Kong Lor Cave': '08'
 };
 
 const footerNotes = {
@@ -98,7 +118,9 @@ const footerNotes = {
   'Bolaven Plateau': 'leave room for one more waterfall',
   'Wat Phou': 'slow down on the old steps',
   'Khone Phapheng Falls': 'watch the river from a distance',
-  'Xe Bang Fai Cave': 'confirm the river before leaving'
+  'Xe Bang Fai Cave': 'confirm the river before leaving',
+  'Pha Pa Tou': 'pack before crossing the river',
+  'Kong Lor Cave': 'check the river before boarding'
 };
 
 const storyScribbles = {
@@ -107,7 +129,9 @@ const storyScribbles = {
   'Bolaven Plateau': 'follow the road, not the clock',
   'Wat Phou': 'read the stones slowly',
   'Khone Phapheng Falls': 'the river sets the scale',
-  'Xe Bang Fai Cave': 'the road is part of the expedition'
+  'Xe Bang Fai Cave': 'the road is part of the expedition',
+  'Pha Pa Tou': 'sunrise is earned on foot',
+  'Kong Lor Cave': 'the mountain opens into darkness'
 };
 
 const landmarkAnnotations = annotations[name] ?? {};
