@@ -1,5 +1,16 @@
 ---
-const { id, name, region, description, mapsUrl = '#', facts = [], gallery = [] } = Astro.props;
+const {
+  id,
+  name,
+  region,
+  description,
+  mapsUrl = '#',
+  facts = [],
+  gallery = [],
+  country = 'Sri Lanka',
+  fieldCardNumber
+} = Astro.props;
+
 const galleryItems = Array.isArray(gallery) ? gallery.filter((item) => item?.src) : [];
 const primaryImage = galleryItems[0] ?? null;
 
@@ -20,6 +31,18 @@ const annotations = {
   "Adam's Peak": {
     'What to wear': { crossed: 'A T-shirt is enough', correction: 'Bring a warm layer for the summit.' },
     'Difficulty': { crossed: 'A quick sunrise walk', correction: 'A lot of stairs. Really.' }
+  },
+  'Bolaven Plateau': {
+    'Best time': { crossed: 'One quick stop', correction: 'Keep a full day for the loop.' },
+    'What to wear': { note: 'Rain layer + shoes that can get wet.' }
+  },
+  'Wat Phou': {
+    'Best time': { crossed: 'Middle of the afternoon', correction: 'Go early, before the stone heats up.' },
+    'Difficulty': { note: 'Steady climb, uneven old steps.' }
+  },
+  'Khone Phapheng Falls': {
+    'What to wear': { note: 'Light clothes + sun protection.' },
+    'Difficulty': { crossed: 'A swimming stop', correction: 'Viewpoint only — respect the river.' }
   }
 };
 
@@ -33,13 +56,53 @@ const storyAnnotations = {
     { label: 'Entry note', value: 'The climb is free; transport and small services are not.', icon: 'ticket' },
     { label: 'Best rhythm', value: 'Leave at night and do not race the staircase.', icon: 'moon' },
     { label: 'Margin note', value: 'The summit can feel much colder than the trail below.', icon: 'jacket' }
+  ],
+  'Bolaven Plateau': [
+    { label: 'Road note', value: 'The loop is the experience — not only one waterfall.', icon: 'route' },
+    { label: 'Best rhythm', value: 'Leave Pakse early and avoid rushing the final stops.', icon: 'sun' },
+    { label: 'Margin note', value: 'Weather can change quickly on the plateau.', icon: 'jacket' }
+  ],
+  'Wat Phou': [
+    { label: 'Entry note', value: 'Paid archaeological site — confirm the current ticket.', icon: 'ticket' },
+    { label: 'Best rhythm', value: 'Walk the lower complex before climbing to the sanctuary.', icon: 'sun' },
+    { label: 'Margin note', value: 'Carry water; the upper terraces are exposed.', icon: 'shade' }
+  ],
+  'Khone Phapheng Falls': [
+    { label: 'Entry note', value: 'Paid viewpoint area — check the current entrance fee.', icon: 'ticket' },
+    { label: 'Best rhythm', value: 'Give yourself time to walk between the viewpoints.', icon: 'sun' },
+    { label: 'Margin note', value: 'The Mekong is powerful here; stay behind barriers.', icon: 'route' }
   ]
+};
+
+const defaultCardNumbers = {
+  Sigiriya: '01',
+  "Adam's Peak": '02',
+  'Bolaven Plateau': '03',
+  'Wat Phou': '04',
+  'Khone Phapheng Falls': '05'
+};
+
+const footerNotes = {
+  Sigiriya: 'water before the climb',
+  "Adam's Peak": 'check weather before leaving',
+  'Bolaven Plateau': 'leave room for one more waterfall',
+  'Wat Phou': 'slow down on the old steps',
+  'Khone Phapheng Falls': 'watch the river from a distance'
+};
+
+const storyScribbles = {
+  Sigiriya: 'not just the summit',
+  "Adam's Peak": 'the road begins at night',
+  'Bolaven Plateau': 'follow the road, not the clock',
+  'Wat Phou': 'read the stones slowly',
+  'Khone Phapheng Falls': 'the river sets the scale'
 };
 
 const landmarkAnnotations = annotations[name] ?? {};
 const landmarkStoryAnnotations = storyAnnotations[name] ?? [];
-const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weather before leaving';
-const fieldCardNumber = name === 'Sigiriya' ? '01' : '02';
+const footerNote = footerNotes[name] ?? 'keep this field note nearby';
+const cardNumber = fieldCardNumber ?? defaultCardNumbers[name] ?? '01';
+const storyScribble = storyScribbles[name] ?? 'keep looking beyond the obvious';
 ---
 
 <dialog class="landmark-modal" id={id} aria-labelledby={`${id}-title`}>
@@ -50,12 +113,12 @@ const fieldCardNumber = name === 'Sigiriya' ? '01' : '02';
   <div class="landmark-modal__grid">
     <section class="landmark-modal__story">
       <span class="landmark-story__tape" aria-hidden="true"></span>
-      <p class="landmark-modal__eyebrow">SRI LANKA · LANDMARK</p>
+      <p class="landmark-modal__eyebrow">{country.toUpperCase()} · LANDMARK</p>
       <h2 id={`${id}-title`}>{name}</h2>
       <p class="landmark-modal__region">{region}</p>
       <svg class="landmark-story__underline" viewBox="0 0 210 18" aria-hidden="true">
-        <path d="M5 9 C44 14, 82 2, 124 9 S177 13, 205 6" />
-        <path d="M29 14 C76 17, 128 9, 190 13" />
+        <path d="M5 9C44 14 82 2 124 9s53 4 81-3" />
+        <path d="M29 14c47 3 99-5 161-1" />
       </svg>
       <p class="landmark-story__description">{description}</p>
 
@@ -63,11 +126,12 @@ const fieldCardNumber = name === 'Sigiriya' ? '01' : '02';
         {landmarkStoryAnnotations.map((note, index) => (
           <article class:list={['landmark-story-note', { 'landmark-story-note--tilted': index === 1 }]}>
             <span class="landmark-story-note__mark" aria-hidden="true">
-              {note.icon === 'ticket' && <svg viewBox="0 0 36 36"><path d="M5 10C8 10 9 7 9 5h21v7c-4 0-4 5 0 5v12H9c0-4-1-5-4-5z"/><path d="M14 9v3m0 3v3m0 3v3m6-10h6m-6 6h6"/></svg>}
+              {note.icon === 'ticket' && <svg viewBox="0 0 36 36"><path d="M5 10c3 0 4-3 4-5h21v7c-4 0-4 5 0 5v12H9c0-4-1-5-4-5z"/><path d="M14 9v3m0 3v3m0 3v3m6-10h6m-6 6h6"/></svg>}
               {note.icon === 'sun' && <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="7"/><path d="M18 3v6m0 18v6M3 18h6m18 0h6M7.5 7.5l4.2 4.2m12.6 12.6 4.2 4.2m0-21-4.2 4.2M11.7 24.3l-4.2 4.2"/></svg>}
               {note.icon === 'shade' && <svg viewBox="0 0 36 36"><path d="M5 18C8 8 15 5 18 5c5 0 12 4 14 13zM18 18v13c-1 3-5 2-5-1M9 18c1-3 3-5 5-6m8 0c2 1 4 3 5 6"/></svg>}
               {note.icon === 'moon' && <svg viewBox="0 0 36 36"><path d="M25 27C15 30 7 22 9 13c1-5 5-8 9-9-4 8 0 17 7 23zM27 7l1 3 3 1-3 1-1 3-1-3-3-1 3-1z"/></svg>}
               {note.icon === 'jacket' && <svg viewBox="0 0 36 36"><path d="M12 6 8 9 5 18l4 2 2-5v16h14V15l2 5 4-2-3-9-4-3M12 6c1 4 4 6 6 8 2-2 5-4 6-8M18 14v17"/></svg>}
+              {note.icon === 'route' && <svg viewBox="0 0 36 36"><circle cx="8" cy="27" r="3"/><circle cx="28" cy="8" r="3"/><path d="M11 26c6-2 2-9 8-9s4-5 6-7m-8 4 4 4-4 4"/></svg>}
             </span>
             <div><span>{note.label}</span><p>{note.value}</p></div>
           </article>
@@ -75,16 +139,13 @@ const fieldCardNumber = name === 'Sigiriya' ? '01' : '02';
       </div>
 
       <p class="landmark-story__scribble">
-        <span>not just the summit</span>
+        <span>{storyScribble}</span>
         <svg viewBox="0 0 88 28" aria-hidden="true"><path d="M3 20C20 5 43 6 70 17"/><path d="m65 11 7 6-8 4"/></svg>
       </p>
     </section>
 
     <section class="landmark-modal__visual">
-      <div class="landmark-visual__meta">
-        <span>FIELD CARD · {fieldCardNumber}</span>
-        <i aria-hidden="true"></i>
-      </div>
+      <div class="landmark-visual__meta"><span>FIELD CARD · {cardNumber}</span><i aria-hidden="true"></i></div>
 
       {primaryImage ? (
         <div class="landmark-gallery" data-landmark-gallery>
@@ -142,12 +203,8 @@ const fieldCardNumber = name === 'Sigiriya' ? '01' : '02';
       </div>
 
       <div class="landmark-modal__actions">
-        <a class="landmark-action landmark-action--maps" href={mapsUrl} target="_blank" rel="noreferrer">
-          <span aria-hidden="true">↗</span> Open in Google Maps
-        </a>
-        <button class="landmark-action landmark-action--save" type="button" data-add-landmark data-landmark-name={name}>
-          <span aria-hidden="true">＋</span> Add to My Trip
-        </button>
+        <a class="landmark-action landmark-action--maps" href={mapsUrl} target="_blank" rel="noreferrer"><span aria-hidden="true">↗</span> Open in Google Maps</a>
+        <button class="landmark-action landmark-action--save" type="button" data-add-landmark data-landmark-name={name}><span aria-hidden="true">＋</span> Add to My Trip</button>
       </div>
       <p class="landmark-visual__closing">Keep it for the road.</p>
     </section>
@@ -203,7 +260,6 @@ const fieldCardNumber = name === 'Sigiriya' ? '01' : '02';
     document.querySelectorAll('[data-landmark-gallery]').forEach((gallery) => {
       if (!(gallery instanceof HTMLElement) || gallery.dataset.galleryReady === 'true') return;
       gallery.dataset.galleryReady = 'true';
-
       const main = gallery.querySelector('[data-gallery-main]');
       const thumbs = [...gallery.querySelectorAll('[data-gallery-thumb]')];
       const counter = gallery.querySelector('[data-gallery-counter]');
@@ -211,7 +267,6 @@ const fieldCardNumber = name === 'Sigiriya' ? '01' : '02';
       const credit = gallery.querySelector('[data-gallery-credit]');
       const licenseText = gallery.querySelector('[data-gallery-license-text]');
       if (!(main instanceof HTMLImageElement) || !thumbs.length) return;
-
       let activeIndex = 0;
       let touchStartX = null;
 
@@ -219,15 +274,12 @@ const fieldCardNumber = name === 'Sigiriya' ? '01' : '02';
         const index = (requestedIndex + thumbs.length) % thumbs.length;
         const thumb = thumbs[index];
         if (!(thumb instanceof HTMLButtonElement)) return;
-
         if (thumb.dataset.gallerySrc) main.src = thumb.dataset.gallerySrc;
         main.alt = thumb.dataset.galleryAlt || main.alt;
-
         thumbs.forEach((item, itemIndex) => {
           item.classList.toggle('is-active', itemIndex === index);
           item.setAttribute('aria-pressed', itemIndex === index ? 'true' : 'false');
         });
-
         if (counter) counter.textContent = `PHOTO ${String(index + 1).padStart(2, '0')} / ${String(thumbs.length).padStart(2, '0')}`;
         if (source instanceof HTMLAnchorElement) {
           source.href = thumb.dataset.gallerySourcePage || '#';
@@ -241,10 +293,7 @@ const fieldCardNumber = name === 'Sigiriya' ? '01' : '02';
       thumbs.forEach((thumb, index) => thumb.addEventListener('click', () => activate(index)));
       gallery.querySelector('[data-gallery-previous]')?.addEventListener('click', () => activate(activeIndex - 1));
       gallery.querySelector('[data-gallery-next]')?.addEventListener('click', () => activate(activeIndex + 1));
-
-      main.addEventListener('touchstart', (event) => {
-        touchStartX = event.changedTouches[0]?.clientX ?? null;
-      }, { passive: true });
+      main.addEventListener('touchstart', (event) => { touchStartX = event.changedTouches[0]?.clientX ?? null; }, { passive: true });
       main.addEventListener('touchend', (event) => {
         if (touchStartX === null) return;
         const touchEndX = event.changedTouches[0]?.clientX ?? touchStartX;
@@ -278,70 +327,39 @@ const fieldCardNumber = name === 'Sigiriya' ? '01' : '02';
 </script>
 
 <style>
+  :global(.map-overlay a.city-marker--active){color:#d97745}
+  :global(.map-overlay a.city-marker--active .city-marker__label){font-size:30px}
+  :global(.map-overlay g[data-open-landmark]){color:#315545}
+  :global(.map-overlay g[data-open-landmark] .city-marker__label){font-size:27px}
+  :global(.map-overlay .city-marker--inactive .city-marker__label){font-size:30px}
+
   .landmark-modal{position:relative;width:min(1260px,calc(100vw - 28px));height:min(720px,calc(100vh - 28px));max-height:none;padding:0;border:0;background:#f4ecd9;color:#1f2924;box-shadow:0 28px 80px rgba(18,24,21,.34);overflow:hidden}
   .landmark-modal::backdrop{background:rgba(20,27,24,.66);backdrop-filter:blur(4px)}
   .landmark-modal__close{position:absolute;top:13px;right:13px;z-index:8;display:flex;align-items:center;gap:5px;padding:7px 10px 6px;border:1px solid rgba(31,57,45,.35);border-radius:2px;background:#f7f0df;color:#315545;font-family:'Caveat','Segoe Print',cursive;font-size:.92rem;line-height:1;cursor:pointer;box-shadow:2px 3px 0 rgba(49,85,69,.11);transform:rotate(1.5deg);transition:transform 160ms ease,background 160ms ease}
-  .landmark-modal__close b{font-size:1.15rem;font-weight:500}
-  .landmark-modal__close:hover{background:#fffaf0;transform:rotate(-1.5deg) translateY(-1px)}
-  .landmark-modal__grid{display:grid;grid-template-columns:minmax(280px,.88fr) minmax(360px,1.18fr) minmax(300px,.94fr);height:100%;min-height:0}
-  .landmark-modal__story,.landmark-modal__visual,.landmark-modal__facts{min-width:0;min-height:0}
-
+  .landmark-modal__close b{font-size:1.15rem;font-weight:500}.landmark-modal__close:hover{background:#fffaf0;transform:rotate(-1.5deg) translateY(-1px)}
+  .landmark-modal__grid{display:grid;grid-template-columns:minmax(280px,.88fr) minmax(360px,1.18fr) minmax(300px,.94fr);height:100%;min-height:0}.landmark-modal__story,.landmark-modal__visual,.landmark-modal__facts{min-width:0;min-height:0}
   .landmark-modal__story,.landmark-modal__facts{position:relative;isolation:isolate;overflow:hidden;color:#22382e;background-color:#f4ecd9;background-image:radial-gradient(circle at 17% 18%,rgba(217,119,69,.07) 0 1px,transparent 1.5px),radial-gradient(circle at 74% 62%,rgba(31,57,45,.06) 0 1px,transparent 1.5px),repeating-linear-gradient(to bottom,transparent 0 31px,rgba(49,85,69,.07) 32px,transparent 33px);background-size:23px 21px,29px 27px,100% 33px}
   .landmark-modal__story{padding:clamp(34px,3.2vw,48px) clamp(27px,2.8vw,42px);box-shadow:inset -12px 0 22px rgba(80,65,42,.045)}
-  .landmark-modal__story::before,.landmark-modal__facts::before{content:'';position:absolute;z-index:-1;top:0;bottom:0;width:1px;background:rgba(217,119,69,.34);box-shadow:3px 0 0 rgba(217,119,69,.07)}
-  .landmark-modal__story::before{left:23px}.landmark-modal__facts::before{left:24px}
+  .landmark-modal__story::before,.landmark-modal__facts::before{content:'';position:absolute;z-index:-1;top:0;bottom:0;width:1px;background:rgba(217,119,69,.34);box-shadow:3px 0 0 rgba(217,119,69,.07)}.landmark-modal__story::before{left:23px}.landmark-modal__facts::before{left:24px}
   .landmark-story__tape,.landmark-notes__tape{position:absolute;top:10px;left:50%;width:92px;height:24px;background:rgba(196,174,132,.42);transform:translateX(-50%) rotate(-2deg);box-shadow:0 1px 1px rgba(70,55,34,.08)}
-  .landmark-modal__eyebrow{margin:4px 0 17px;color:rgba(31,57,45,.58);font:700 .58rem/1.2 'DM Sans',sans-serif;letter-spacing:.14em}
-  .landmark-modal__story h2{margin:0;color:#1f392d;font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:clamp(3.7rem,5vw,5.9rem);font-weight:600;line-height:.8;letter-spacing:-.035em;transform:rotate(-1deg)}
-  .landmark-modal__region{margin:17px 0 0!important;color:#b8653e!important;font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:1.3rem!important;font-weight:600;line-height:1.05!important}
-  .landmark-story__underline{display:block;width:min(210px,86%);margin:8px 0 15px;fill:none;stroke:#d97745;stroke-width:1.5;stroke-linecap:round;opacity:.76}
-  .landmark-story__description{margin:0;color:#263b32;font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:1.18rem;font-weight:500;line-height:1.28}
-  .landmark-story__annotations{display:grid;gap:8px;margin-top:18px}.landmark-story-note{display:grid;grid-template-columns:33px minmax(0,1fr);gap:8px;align-items:start;padding:8px 9px 8px 5px;border-top:1px dashed rgba(31,57,45,.18)}.landmark-story-note--tilted{transform:rotate(-1deg)}
+  .landmark-modal__eyebrow{margin:4px 0 17px;color:rgba(31,57,45,.58);font:700 .58rem/1.2 'DM Sans',sans-serif;letter-spacing:.14em}.landmark-modal__story h2{margin:0;color:#1f392d;font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:clamp(3.7rem,5vw,5.9rem);font-weight:600;line-height:.8;letter-spacing:-.035em;transform:rotate(-1deg)}
+  .landmark-modal__region{margin:17px 0 0!important;color:#b8653e!important;font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:1.3rem!important;font-weight:600;line-height:1.05!important}.landmark-story__underline{display:block;width:min(210px,86%);margin:8px 0 15px;fill:none;stroke:#d97745;stroke-width:1.5;stroke-linecap:round;opacity:.76}
+  .landmark-story__description{margin:0;color:#263b32;font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:1.18rem;font-weight:500;line-height:1.28}.landmark-story__annotations{display:grid;gap:8px;margin-top:18px}.landmark-story-note{display:grid;grid-template-columns:33px minmax(0,1fr);gap:8px;align-items:start;padding:8px 9px 8px 5px;border-top:1px dashed rgba(31,57,45,.18)}.landmark-story-note--tilted{transform:rotate(-1deg)}
   .landmark-story-note__mark{display:grid;place-items:center;width:31px;height:31px;color:#315545;transform:rotate(-4deg)}.landmark-story-note:nth-child(even) .landmark-story-note__mark{color:#d97745;transform:rotate(4deg)}.landmark-story-note__mark svg{width:29px;height:29px;fill:none;stroke:currentColor;stroke-width:1.55;stroke-linecap:round;stroke-linejoin:round}
-  .landmark-story-note div>span{display:block;margin-bottom:2px;color:#a45d3a;font:700 .54rem/1.2 'DM Sans',sans-serif;letter-spacing:.11em;text-transform:uppercase}.landmark-story-note p{margin:0;color:#315545;font-family:'Caveat','Segoe Print',cursive;font-size:1rem;font-weight:600;line-height:1.08}
-  .landmark-story__scribble{display:flex;align-items:center;justify-content:flex-end;gap:3px;margin:10px 0 0;color:#b8653e;font-family:'Caveat','Segoe Print',cursive;font-size:1rem;font-weight:700;transform:rotate(-2deg)}.landmark-story__scribble svg{width:68px;height:23px;fill:none;stroke:#315545;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+  .landmark-story-note div>span{display:block;margin-bottom:2px;color:#a45d3a;font:700 .54rem/1.2 'DM Sans',sans-serif;letter-spacing:.11em;text-transform:uppercase}.landmark-story-note p{margin:0;color:#315545;font-family:'Caveat','Segoe Print',cursive;font-size:1rem;font-weight:600;line-height:1.08}.landmark-story__scribble{display:flex;align-items:center;justify-content:flex-end;gap:3px;margin:10px 0 0;color:#b8653e;font-family:'Caveat','Segoe Print',cursive;font-size:1rem;font-weight:700;transform:rotate(-2deg)}.landmark-story__scribble svg{width:68px;height:23px;fill:none;stroke:#315545;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
 
-  .landmark-modal__visual{display:flex;flex-direction:column;justify-content:center;padding:24px clamp(24px,2.7vw,36px) 20px;background:#eee7d7;box-shadow:inset 11px 0 20px rgba(80,65,42,.045),inset -11px 0 20px rgba(80,65,42,.045)}
-  .landmark-visual__meta{display:flex;align-items:center;gap:9px;margin:0 1px 8px;color:rgba(31,57,45,.64);font:700 .56rem/1 'DM Sans',sans-serif;letter-spacing:.13em}.landmark-visual__meta i{flex:1;height:1px;background:rgba(49,85,69,.2);transform:rotate(-.4deg)}
-  .landmark-modal__placeholder{display:grid;place-items:center;min-height:340px;background:linear-gradient(145deg,#d9d0bc,#c4b99f);font-family:'Caveat',cursive;font-size:2rem}
-  .landmark-gallery__stage{position:relative;min-height:340px;padding:7px;background:#f8f2e5;box-shadow:0 11px 24px rgba(31,41,36,.16),0 0 0 1px rgba(49,85,69,.13);touch-action:pan-y;transform:rotate(-.2deg)}
-  .landmark-gallery__stage>img{display:block;width:100%;height:326px;object-fit:cover;transition:opacity 180ms ease}
-  .landmark-gallery__arrow{position:absolute;z-index:2;top:50%;display:grid;place-items:center;width:35px;height:35px;padding:0;border:1px solid rgba(247,242,230,.82);border-radius:50%;background:rgba(31,57,45,.72);color:#fff;cursor:pointer;transform:translateY(-50%) rotate(-2deg);backdrop-filter:blur(4px);transition:transform 150ms ease,background 150ms ease}
-  .landmark-gallery__arrow svg{width:22px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.landmark-gallery__arrow span{position:absolute;bottom:-23px;width:max-content;padding:2px 5px;background:#f7f0df;color:#315545;font-family:'Caveat',cursive;font-size:.8rem;opacity:0;pointer-events:none;transition:opacity 150ms ease}
-  .landmark-gallery__arrow:hover{background:rgba(31,57,45,.88);transform:translateY(-50%) rotate(2deg) scale(1.03)}.landmark-gallery__arrow:hover span{opacity:1}
-  .landmark-gallery__arrow--previous{left:14px}.landmark-gallery__arrow--next{right:14px}
-  .landmark-gallery__counter{position:absolute;right:3px;bottom:-13px;padding:6px 9px 5px;background:#315545;color:#f7f2e6;font:700 .56rem/1 'DM Sans',sans-serif;letter-spacing:.1em;box-shadow:2px 3px 0 rgba(31,41,36,.13);transform:rotate(1.4deg)}
-  .landmark-gallery__thumbnails{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:16px;padding:0 2px}
-  .landmark-gallery__thumbnail{position:relative;min-width:0;padding:0 2px 3px;border:0;background:transparent;color:#315545;cursor:pointer;opacity:.73;transition:opacity 160ms ease,transform 160ms ease}
-  .landmark-gallery__thumbnail:nth-child(1){transform:rotate(-1deg)}.landmark-gallery__thumbnail:nth-child(2){transform:rotate(.5deg) translateY(2px)}.landmark-gallery__thumbnail:nth-child(3){transform:rotate(-.5deg) translateY(-1px)}.landmark-gallery__thumbnail:nth-child(4){transform:rotate(1deg) translateY(1px)}
-  .landmark-gallery__thumb-paper{position:relative;display:block;padding:3px;background:#f8f2e5;box-shadow:0 3px 8px rgba(31,41,36,.11)}.landmark-gallery__thumb-paper::after{content:'';position:absolute;inset:0;border:1px solid transparent;pointer-events:none}
-  .landmark-gallery__thumbnail img{display:block;width:100%;height:48px;object-fit:cover}.landmark-gallery__thumbnail small{display:block;margin-top:2px;font-family:'Caveat',cursive;font-size:.78rem;line-height:1}
-  .landmark-gallery__thumbnail:hover,.landmark-gallery__thumbnail.is-active{opacity:1}.landmark-gallery__thumbnail.is-active .landmark-gallery__thumb-paper::after{inset:-2px;border-color:#315545;transform:rotate(-.7deg);box-shadow:1px 0 0 #315545}
-  .landmark-gallery__credit{min-height:14px;margin:6px 0 0;color:rgba(31,41,36,.58);font-size:.57rem;line-height:1.25}.landmark-gallery__credit a{color:#315545}
-  .landmark-actions__annotation{display:flex;align-items:flex-end;justify-content:flex-end;height:29px;margin:2px 4px -3px;color:#b8653e;font-family:'Caveat','Segoe Print',cursive;font-size:.92rem;font-weight:600;transform:rotate(-1deg)}.landmark-actions__annotation svg{width:84px;height:24px;fill:none;stroke:#315545;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
-  .landmark-modal__actions{display:grid;grid-template-columns:.92fr 1.08fr;gap:9px}.landmark-action{display:flex;align-items:center;justify-content:center;gap:5px;min-height:47px;padding:8px 10px;text-align:center;text-decoration:none;cursor:pointer;transition:transform 150ms ease,background 150ms ease,box-shadow 150ms ease}
-  .landmark-action--maps{border:1px solid #315545;background:transparent;color:#315545;font-family:'Caveat','Segoe Print',cursive;font-size:1.02rem;font-weight:650;box-shadow:1px 1px 0 rgba(49,85,69,.12);transform:rotate(-.3deg)}.landmark-action--maps:hover{background:rgba(49,85,69,.07);transform:rotate(.35deg) translateY(-1px)}
-  .landmark-action--save{border:1px solid #1f392d;background:#315545;color:#f7f2e6;font-family:'Caveat','Segoe Print',cursive;font-size:1.08rem;font-weight:700;box-shadow:3px 4px 0 rgba(31,57,45,.18);transform:rotate(.25deg)}.landmark-action--save:hover{background:#284b3c;transform:rotate(-.25deg) translateY(-1px);box-shadow:4px 5px 0 rgba(31,57,45,.16)}.landmark-action--save:disabled{background:#e7ddc7;color:#315545;border-color:#315545;box-shadow:1px 2px 0 rgba(49,85,69,.13);cursor:default;opacity:1}
-  .landmark-visual__closing{margin:7px 0 -3px;text-align:center;color:rgba(49,85,69,.62);font-family:'Caveat','Segoe Print',cursive;font-size:.91rem;transform:rotate(-.6deg)}
+  .landmark-modal__visual{display:flex;flex-direction:column;justify-content:center;padding:24px clamp(24px,2.7vw,36px) 20px;background:#eee7d7;box-shadow:inset 11px 0 20px rgba(80,65,42,.045),inset -11px 0 20px rgba(80,65,42,.045)}.landmark-visual__meta{display:flex;align-items:center;gap:9px;margin:0 1px 8px;color:rgba(31,57,45,.64);font:700 .56rem/1 'DM Sans',sans-serif;letter-spacing:.13em}.landmark-visual__meta i{flex:1;height:1px;background:rgba(49,85,69,.2);transform:rotate(-.4deg)}
+  .landmark-modal__placeholder{display:grid;place-items:center;min-height:340px;background:linear-gradient(145deg,#d9d0bc,#c4b99f);font-family:'Caveat',cursive;font-size:2rem}.landmark-gallery__stage{position:relative;min-height:340px;padding:7px;background:#f8f2e5;box-shadow:0 11px 24px rgba(31,41,36,.16),0 0 0 1px rgba(49,85,69,.13);touch-action:pan-y;transform:rotate(-.2deg)}.landmark-gallery__stage>img{display:block;width:100%;height:326px;object-fit:cover;transition:opacity 180ms ease}
+  .landmark-gallery__arrow{position:absolute;z-index:2;top:50%;display:grid;place-items:center;width:35px;height:35px;padding:0;border:1px solid rgba(247,242,230,.82);border-radius:50%;background:rgba(31,57,45,.72);color:#fff;cursor:pointer;transform:translateY(-50%) rotate(-2deg);backdrop-filter:blur(4px);transition:transform 150ms ease,background 150ms ease}.landmark-gallery__arrow svg{width:22px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.landmark-gallery__arrow span{position:absolute;bottom:-23px;width:max-content;padding:2px 5px;background:#f7f0df;color:#315545;font-family:'Caveat',cursive;font-size:.8rem;opacity:0;pointer-events:none}.landmark-gallery__arrow:hover{background:rgba(31,57,45,.88);transform:translateY(-50%) rotate(2deg) scale(1.03)}.landmark-gallery__arrow:hover span{opacity:1}.landmark-gallery__arrow--previous{left:14px}.landmark-gallery__arrow--next{right:14px}
+  .landmark-gallery__counter{position:absolute;right:3px;bottom:-13px;padding:6px 9px 5px;background:#315545;color:#f7f2e6;font:700 .56rem/1 'DM Sans',sans-serif;letter-spacing:.1em;box-shadow:2px 3px 0 rgba(31,41,36,.13);transform:rotate(1.4deg)}.landmark-gallery__thumbnails{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:16px;padding:0 2px}.landmark-gallery__thumbnail{position:relative;min-width:0;padding:0 2px 3px;border:0;background:transparent;color:#315545;cursor:pointer;opacity:.73;transition:opacity 160ms ease,transform 160ms ease}
+  .landmark-gallery__thumbnail:nth-child(1){transform:rotate(-1deg)}.landmark-gallery__thumbnail:nth-child(2){transform:rotate(.5deg) translateY(2px)}.landmark-gallery__thumbnail:nth-child(3){transform:rotate(-.5deg) translateY(-1px)}.landmark-gallery__thumbnail:nth-child(4){transform:rotate(1deg) translateY(1px)}.landmark-gallery__thumb-paper{position:relative;display:block;padding:3px;background:#f8f2e5;box-shadow:0 3px 8px rgba(31,41,36,.11)}.landmark-gallery__thumb-paper::after{content:'';position:absolute;inset:0;border:1px solid transparent;pointer-events:none}.landmark-gallery__thumbnail img{display:block;width:100%;height:48px;object-fit:cover}.landmark-gallery__thumbnail small{display:block;margin-top:2px;font-family:'Caveat',cursive;font-size:.78rem;line-height:1}.landmark-gallery__thumbnail:hover,.landmark-gallery__thumbnail.is-active{opacity:1}.landmark-gallery__thumbnail.is-active .landmark-gallery__thumb-paper::after{inset:-2px;border-color:#315545;transform:rotate(-.7deg);box-shadow:1px 0 0 #315545}
+  .landmark-gallery__credit{min-height:14px;margin:6px 0 0;color:rgba(31,41,36,.58);font-size:.57rem;line-height:1.25}.landmark-gallery__credit a{color:#315545}.landmark-actions__annotation{display:flex;align-items:flex-end;justify-content:flex-end;height:29px;margin:2px 4px -3px;color:#b8653e;font-family:'Caveat','Segoe Print',cursive;font-size:.92rem;font-weight:600;transform:rotate(-1deg)}.landmark-actions__annotation svg{width:84px;height:24px;fill:none;stroke:#315545;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+  .landmark-modal__actions{display:grid;grid-template-columns:.92fr 1.08fr;gap:9px}.landmark-action{display:flex;align-items:center;justify-content:center;gap:5px;min-height:47px;padding:8px 10px;text-align:center;text-decoration:none;cursor:pointer;transition:transform 150ms ease,background 150ms ease,box-shadow 150ms ease}.landmark-action--maps{border:1px solid #315545;background:transparent;color:#315545;font-family:'Caveat','Segoe Print',cursive;font-size:1.02rem;font-weight:650;box-shadow:1px 1px 0 rgba(49,85,69,.12);transform:rotate(-.3deg)}.landmark-action--maps:hover{background:rgba(49,85,69,.07);transform:rotate(.35deg) translateY(-1px)}.landmark-action--save{border:1px solid #1f392d;background:#315545;color:#f7f2e6;font-family:'Caveat','Segoe Print',cursive;font-size:1.08rem;font-weight:700;box-shadow:3px 4px 0 rgba(31,57,45,.18);transform:rotate(.25deg)}.landmark-action--save:hover{background:#284b3c;transform:rotate(-.25deg) translateY(-1px);box-shadow:4px 5px 0 rgba(31,57,45,.16)}.landmark-action--save:disabled{background:#e7ddc7;color:#315545;border-color:#315545;box-shadow:1px 2px 0 rgba(49,85,69,.13);cursor:default;opacity:1}.landmark-visual__closing{margin:7px 0 -3px;text-align:center;color:rgba(49,85,69,.62);font-family:'Caveat','Segoe Print',cursive;font-size:.91rem;transform:rotate(-.6deg)}
 
-  .landmark-modal__facts{padding:clamp(33px,3.2vw,48px) clamp(24px,2.5vw,38px);box-shadow:inset 12px 0 22px rgba(80,65,42,.045)}
-  .landmark-notes__heading{position:relative;margin:5px 0 15px;padding-left:10px}.landmark-notes__heading>span{color:rgba(31,57,45,.58);font:700 .54rem/1.2 'DM Sans',sans-serif;letter-spacing:.12em}.landmark-notes__heading h3{margin:4px 0 0;color:#1f392d;font-family:'Caveat','Segoe Print',cursive;font-size:clamp(1.9rem,2.5vw,2.35rem);font-weight:600;line-height:.9;transform:rotate(-1deg)}.landmark-notes__heading svg{display:block;width:min(180px,85%);margin-top:6px;fill:none;stroke:#d97745;stroke-width:1.5;stroke-linecap:round;opacity:.78}
-  .landmark-modal__facts dl{display:grid;gap:0;margin:0}.landmark-note{display:grid;grid-template-columns:37px minmax(0,1fr);gap:9px;align-items:start;padding:9px 0 10px 8px;border-bottom:1px dashed rgba(31,57,45,.18)}.landmark-note:last-child{border-bottom:0}
-  .landmark-note__icon{display:grid;place-items:center;width:34px;height:34px;color:#315545;transform:rotate(-4deg)}.landmark-note:nth-child(even) .landmark-note__icon{color:#d97745;transform:rotate(4deg)}.landmark-note__icon svg{width:31px;height:31px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-  .landmark-note dt{margin:0 0 2px;color:#a45d3a;font:700 .54rem/1.2 'DM Sans',sans-serif;letter-spacing:.11em;text-transform:uppercase}.landmark-note dd{margin:0;color:#263b32;font-family:'Caveat','Segoe Print',cursive;font-size:1rem;font-weight:500;line-height:1.12}
-  .landmark-note__annotation{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 7px;margin:4px 0 0;font-family:'Caveat','Segoe Print',cursive;font-size:.93rem;line-height:1.02;transform:rotate(-1deg)}.landmark-note__crossed{position:relative;color:rgba(38,59,50,.5);white-space:nowrap}.landmark-note__crossed::before,.landmark-note__crossed::after{content:'';position:absolute;left:-2px;right:-3px;top:52%;height:1.5px;background:#a45d3a;transform:rotate(-5deg)}.landmark-note__crossed::after{top:60%;transform:rotate(3deg);opacity:.72}.landmark-note__correction{color:#b8653e;font-weight:700}.landmark-note__correction::before{content:'→ '}.landmark-note__aside{color:#315545;font-weight:600}.landmark-note__aside::before{content:'↳ ';color:#d97745}
-  .landmark-notes__footer{display:flex;align-items:center;justify-content:flex-end;gap:3px;margin:10px 1px -4px;color:#315545;font-family:'Caveat','Segoe Print',cursive;font-size:.96rem;font-weight:600;transform:rotate(-2deg)}.landmark-notes__footer svg{width:43px;height:21px;fill:none;stroke:#d97745;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+  .landmark-modal__facts{padding:clamp(33px,3.2vw,48px) clamp(24px,2.5vw,38px);box-shadow:inset 12px 0 22px rgba(80,65,42,.045)}.landmark-notes__heading{position:relative;margin:5px 0 15px;padding-left:10px}.landmark-notes__heading>span{color:rgba(31,57,45,.58);font:700 .54rem/1.2 'DM Sans',sans-serif;letter-spacing:.12em}.landmark-notes__heading h3{margin:4px 0 0;color:#1f392d;font-family:'Caveat','Segoe Print',cursive;font-size:clamp(1.9rem,2.5vw,2.35rem);font-weight:600;line-height:.9;transform:rotate(-1deg)}.landmark-notes__heading svg{display:block;width:min(180px,85%);margin-top:6px;fill:none;stroke:#d97745;stroke-width:1.5;stroke-linecap:round;opacity:.78}.landmark-modal__facts dl{display:grid;gap:0;margin:0}.landmark-note{display:grid;grid-template-columns:37px minmax(0,1fr);gap:9px;align-items:start;padding:9px 0 10px 8px;border-bottom:1px dashed rgba(31,57,45,.18)}.landmark-note:last-child{border-bottom:0}.landmark-note__icon{display:grid;place-items:center;width:34px;height:34px;color:#315545;transform:rotate(-4deg)}.landmark-note:nth-child(even) .landmark-note__icon{color:#d97745;transform:rotate(4deg)}.landmark-note__icon svg{width:31px;height:31px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.landmark-note dt{margin:0 0 2px;color:#a45d3a;font:700 .54rem/1.2 'DM Sans',sans-serif;letter-spacing:.11em;text-transform:uppercase}.landmark-note dd{margin:0;color:#263b32;font-family:'Caveat','Segoe Print',cursive;font-size:1rem;font-weight:500;line-height:1.12}.landmark-note__annotation{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 7px;margin:4px 0 0;font-family:'Caveat','Segoe Print',cursive;font-size:.93rem;line-height:1.02;transform:rotate(-1deg)}.landmark-note__crossed{position:relative;color:rgba(38,59,50,.5);white-space:nowrap}.landmark-note__crossed::before,.landmark-note__crossed::after{content:'';position:absolute;left:-2px;right:-3px;top:52%;height:1.5px;background:#a45d3a;transform:rotate(-5deg)}.landmark-note__crossed::after{top:60%;transform:rotate(3deg);opacity:.72}.landmark-note__correction{color:#b8653e;font-weight:700}.landmark-note__correction::before{content:'→ '}.landmark-note__aside{color:#315545;font-weight:600}.landmark-note__aside::before{content:'↳ ';color:#d97745}.landmark-notes__footer{display:flex;align-items:center;justify-content:flex-end;gap:3px;margin:10px 1px -4px;color:#315545;font-family:'Caveat','Segoe Print',cursive;font-size:.96rem;font-weight:600;transform:rotate(-2deg)}.landmark-notes__footer svg{width:43px;height:21px;fill:none;stroke:#d97745;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 
-  @media(max-height:700px) and (min-width:901px){
-    .landmark-modal{height:calc(100vh - 24px)}.landmark-modal__story{padding-top:28px;padding-bottom:24px}.landmark-modal__story h2{font-size:4.4rem}.landmark-story__description{font-size:1.05rem;line-height:1.18}.landmark-story__annotations{gap:4px;margin-top:11px}.landmark-story-note{padding-top:5px;padding-bottom:5px}.landmark-story-note p{font-size:.91rem}
-    .landmark-modal__visual{padding-top:17px;padding-bottom:14px}.landmark-gallery__stage{min-height:284px}.landmark-gallery__stage>img{height:270px}.landmark-gallery__thumbnail img{height:40px}.landmark-actions__annotation{height:23px;font-size:.82rem}.landmark-action{min-height:42px}.landmark-visual__closing{margin-top:4px}
-    .landmark-modal__facts{padding-top:28px;padding-bottom:23px}.landmark-notes__heading{margin-bottom:8px}.landmark-note{padding-top:6px;padding-bottom:6px}.landmark-note dd{font-size:.9rem}.landmark-note__annotation{font-size:.85rem}
-  }
-  @media(max-width:900px){
-    .landmark-modal{width:min(860px,calc(100vw - 20px));height:auto;max-height:calc(100vh - 20px);overflow:auto}.landmark-modal__grid{grid-template-columns:1fr 1fr;height:auto}.landmark-modal__story{order:1}.landmark-modal__visual{order:2}.landmark-modal__facts{order:3;grid-column:1/-1}.landmark-modal__facts dl{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px}.landmark-note:nth-last-child(-n+2){border-bottom:0}
-  }
-  @media(max-width:650px){
-    .landmark-modal{width:calc(100vw - 14px);max-height:calc(100vh - 14px)}.landmark-modal__close span{display:none}.landmark-modal__grid{grid-template-columns:1fr}.landmark-modal__story,.landmark-modal__visual,.landmark-modal__facts{grid-column:auto}.landmark-modal__story{padding:34px 26px 30px}.landmark-modal__story h2{font-size:4rem}.landmark-modal__visual{padding:24px}.landmark-gallery__stage{min-height:270px}.landmark-gallery__stage>img{height:256px}.landmark-gallery__thumbnail img{height:46px}.landmark-modal__actions{grid-template-columns:1fr}.landmark-actions__annotation{justify-content:center}.landmark-modal__facts{padding:34px 22px 30px 25px}.landmark-modal__facts dl{grid-template-columns:1fr}.landmark-note:nth-last-child(-n+2){border-bottom:1px dashed rgba(31,57,45,.18)}.landmark-note:last-child{border-bottom:0}
-  }
+  @media(max-height:700px) and (min-width:901px){.landmark-modal{height:calc(100vh - 24px)}.landmark-modal__story{padding-top:28px;padding-bottom:24px}.landmark-modal__story h2{font-size:4.4rem}.landmark-story__description{font-size:1.05rem;line-height:1.18}.landmark-story__annotations{gap:4px;margin-top:11px}.landmark-story-note{padding-top:5px;padding-bottom:5px}.landmark-story-note p{font-size:.91rem}.landmark-modal__visual{padding-top:17px;padding-bottom:14px}.landmark-gallery__stage{min-height:284px}.landmark-gallery__stage>img{height:270px}.landmark-gallery__thumbnail img{height:40px}.landmark-actions__annotation{height:23px;font-size:.82rem}.landmark-action{min-height:42px}.landmark-visual__closing{margin-top:4px}.landmark-modal__facts{padding-top:28px;padding-bottom:23px}.landmark-notes__heading{margin-bottom:8px}.landmark-note{padding-top:6px;padding-bottom:6px}.landmark-note dd{font-size:.9rem}.landmark-note__annotation{font-size:.85rem}}
+  @media(max-width:900px){.landmark-modal{width:min(860px,calc(100vw - 20px));height:auto;max-height:calc(100vh - 20px);overflow:auto}.landmark-modal__grid{grid-template-columns:1fr 1fr;height:auto}.landmark-modal__story{order:1}.landmark-modal__visual{order:2}.landmark-modal__facts{order:3;grid-column:1/-1}.landmark-modal__facts dl{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px}.landmark-note:nth-last-child(-n+2){border-bottom:0}}
+  @media(max-width:650px){.landmark-modal{width:calc(100vw - 14px);max-height:calc(100vh - 14px)}.landmark-modal__close span{display:none}.landmark-modal__grid{grid-template-columns:1fr}.landmark-modal__story,.landmark-modal__visual,.landmark-modal__facts{grid-column:auto}.landmark-modal__story{padding:34px 26px 30px}.landmark-modal__story h2{font-size:4rem}.landmark-modal__visual{padding:24px}.landmark-gallery__stage{min-height:270px}.landmark-gallery__stage>img{height:256px}.landmark-gallery__thumbnail img{height:46px}.landmark-modal__actions{grid-template-columns:1fr}.landmark-actions__annotation{justify-content:center}.landmark-modal__facts{padding:34px 22px 30px 25px}.landmark-modal__facts dl{grid-template-columns:1fr}.landmark-note:nth-last-child(-n+2){border-bottom:1px dashed rgba(31,57,45,.18)}.landmark-note:last-child{border-bottom:0}}
   @media(prefers-reduced-motion:reduce){.landmark-modal__close,.landmark-gallery__arrow,.landmark-gallery__thumbnail,.landmark-action{transition:none}}
 </style>
