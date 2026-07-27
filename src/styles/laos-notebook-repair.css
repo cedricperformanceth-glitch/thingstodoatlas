@@ -46,15 +46,19 @@
   stroke: #f4ecd9 !important;
 }
 
-/* Keep the chapter cities readable without letting labels dominate the map. */
+/* Shared country-map label hierarchy: active city 25, landmark 20, inactive city 15. */
 .laos-map-page .city-marker--active .city-marker__label {
   font-size: 25px !important;
 }
 
-/* Landmark points stay secondary to city chapters. */
 .laos-map-page .city-marker--landmark .city-marker__label {
   font-size: 20px !important;
   stroke-width: 5px !important;
+}
+
+.laos-map-page .city-marker--inactive .city-marker__label {
+  font-size: 15px !important;
+  stroke-width: 4px !important;
 }
 
 .laos-map-page .city-marker--landmark .city-marker__ring,
