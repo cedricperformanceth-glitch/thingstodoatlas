@@ -32,7 +32,7 @@ jobs:
           out = []
           for page in pages:
               r = requests.get(page, headers=headers, allow_redirects=True, timeout=40)
-              decoded = html.unescape(r.text).replace('\\/', '/').replace('\\u0026', '&')
+              decoded = html.unescape(r.text).replace('\\/', '/').replace('\\u0026', '&').replace('\\x3d', '=').replace('\\x26', '&')
               out.extend([f'PAGE={page}', f'STATUS={r.status_code}', f'FINAL={r.url}', f'LENGTH={len(decoded)}'])
 
               candidates = []
@@ -43,6 +43,10 @@ jobs:
                   r'https?://[^\s"\'<>\\]+',
               ]:
                   candidates.extend(re.findall(pattern, decoded, re.I))
+
+              # Google Maps often stores only the photo token in page data.
+              for token in re.findall(r'AF1Qip[0-9A-Za-z_-]{20,}', decoded):
+                  candidates.append(f'https://lh5.googleusercontent.com/p/{token}=w1600-h1200-k-no')
 
               seen = set()
               for raw in candidates:
@@ -68,5 +72,5 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add pha-patu-image-candidates.txt
-          git commit -m "Extract Pha Patu Google Maps photos"
+          git commit -m "Decode Google Maps Pha Patu photo ids"
           git push
