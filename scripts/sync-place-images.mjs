@@ -13,6 +13,14 @@ const readJsonArray = async (file) => {
   return parsed;
 };
 
+const imageQuality = (item) => {
+  if (!item || item.status !== 'approved' || !item.selectedImage) return 0;
+  if (item.sourceType === 'user-supplied') return 100;
+  if (item.imageIsGeneric === false) return 50;
+  if (item.imageIsGeneric === true) return 10;
+  return 25;
+};
+
 let existing = [];
 try {
   await access(OUTPUT_FILE, constants.F_OK);
@@ -28,14 +36,17 @@ const candidateFiles = (await readdir(DATA_DIR, { withFileTypes: true }))
 
 const bySlug = new Map(existing.filter((item) => item?.slug).map((item) => [item.slug, item]));
 let applied = 0;
+let preserved = 0;
 
 for (const file of candidateFiles) {
   const candidates = await readJsonArray(file);
   for (const candidate of candidates) {
     if (!candidate?.slug) throw new Error(`${file} contains a candidate without a slug.`);
     const current = bySlug.get(candidate.slug);
-    const preserveUserSupplied = current?.status === 'approved' && current?.sourceType === 'user-supplied';
-    if (preserveUserSupplied) continue;
+    if (imageQuality(current) > imageQuality(candidate)) {
+      preserved += 1;
+      continue;
+    }
     bySlug.set(candidate.slug, candidate);
     applied += 1;
   }
@@ -43,7 +54,7 @@ for (const file of candidateFiles) {
 
 const merged = [...bySlug.values()].sort((left, right) => String(left.slug).localeCompare(String(right.slug)));
 await writeFile(OUTPUT_FILE, `${JSON.stringify(merged, null, 2)}\n`);
-console.log(`Merged ${applied} candidate records from ${candidateFiles.length} candidate files.`);
+console.log(`Merged ${applied} candidate records from ${candidateFiles.length} candidate files; preserved ${preserved} stronger existing matches.`);
 
 const child = spawn(process.execPath, [FINDER_FILE, ...process.argv.slice(2)], {
   stdio: 'inherit',
