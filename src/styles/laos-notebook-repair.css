@@ -61,6 +61,32 @@
   stroke-width: 4px !important;
 }
 
+/* Laos city circles only: active -12%, inactive -20%. */
+.laos-map-page[aria-labelledby="laos-map-title"] .city-marker--active .city-marker__ring,
+.laos-map-page[aria-labelledby="laos-map-title"] .city-marker--active .city-marker__dot,
+.laos-map-page[aria-labelledby="laos-map-title"] .city-marker--inactive .city-marker__ring,
+.laos-map-page[aria-labelledby="laos-map-title"] .city-marker--inactive .city-marker__dot {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.laos-map-page[aria-labelledby="laos-map-title"] .city-marker--active .city-marker__ring,
+.laos-map-page[aria-labelledby="laos-map-title"] .city-marker--active .city-marker__dot {
+  transform: scale(.88) !important;
+}
+
+.laos-map-page[aria-labelledby="laos-map-title"] .city-marker--active:hover .city-marker__ring,
+.laos-map-page[aria-labelledby="laos-map-title"] .city-marker--active:focus .city-marker__ring {
+  transform: scale(1.04) !important;
+}
+
+.laos-map-page[aria-labelledby="laos-map-title"] .city-marker--inactive .city-marker__ring,
+.laos-map-page[aria-labelledby="laos-map-title"] .city-marker--inactive .city-marker__dot,
+.laos-map-page[aria-labelledby="laos-map-title"] .city-marker--inactive:hover .city-marker__ring,
+.laos-map-page[aria-labelledby="laos-map-title"] .city-marker--inactive:focus .city-marker__ring {
+  transform: scale(.8) !important;
+}
+
 .laos-map-page .city-marker--landmark .city-marker__ring,
 .laos-map-page .city-marker--landmark .city-marker__dot {
   transform-box: fill-box;
