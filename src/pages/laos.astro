@@ -17,6 +17,10 @@ const watPhou = { x: 586, y: 1060 };
 const khonePhapheng = { x: 696, y: 1188 };
 const xeBangFai = { x: 708, y: 832 };
 
+// Provisional positions — final placement will be adjusted directly on the map later.
+const phaPaTou = { x: 430, y: 500 };
+const kongLor = { x: 650, y: 760 };
+
 const bolavenGallery = [
   {
     src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Bolaven_Plateau.jpg?width=1600',
@@ -75,6 +79,38 @@ const xeBangFaiGallery = [
     license: 'CC BY-SA 3.0'
   }
 ];
+
+const phaPaTouGallery = [
+  {
+    src: 'https://f.ptcdn.info/949/067/000/q4zfcth9fGTOzjddHui-o.jpg',
+    alt: 'Sunrise over the mountain landscape from Pha Pa Tou in Luang Prabang Province',
+    sourcePage: 'https://pantip.com/topic/39606086',
+    author: 'Pantip travel report'
+  }
+];
+
+const kongLorGallery = [
+  {
+    src: 'https://res.cloudinary.com/dsj9enacv/image/upload/f_jpg,c_fill,w_1200,h_630,q_auto/kong-lor-cave/brqoekkq6mep0f6hn2x0.jpg',
+    alt: 'The river entrance and limestone chamber at Kong Lor Cave',
+    sourcePage: 'https://www.khammouanetourism.org/en/places/Kong-lor-cave',
+    author: 'Khammouane Tourism'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Konglor_cave_laos.JPG?width=1600',
+    alt: 'Entrance of Kong Lor Cave in Khammouane Province',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Konglor_cave_laos.JPG',
+    author: 'Busy',
+    license: 'CC BY-SA 3.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Kong_Lor_Caves_of_Laos_%285422115490%29.jpg?width=1600',
+    alt: 'Boat journey through the dark interior of Kong Lor Cave',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Kong_Lor_Caves_of_Laos_(5422115490).jpg',
+    author: 'Aleksey Gnilenkov',
+    license: 'CC BY 2.0'
+  }
+];
 ---
 
 <BaseLayout
@@ -127,7 +163,7 @@ const xeBangFaiGallery = [
 
         <svg class="map-overlay" viewBox="0 0 1024 1536" role="img" aria-labelledby="map-title map-description">
           <title id="map-title">Destinations and landmarks on the Laos map</title>
-          <desc id="map-description">Pakse and Tad Lo open city guides. Bolaven Plateau, Wat Phou, Khone Phapheng Falls and Xe Bang Fai Cave open landmark field cards. Vientiane, Don Det and Luang Prabang are being documented.</desc>
+          <desc id="map-description">Pakse and Tad Lo open city guides. Bolaven Plateau, Wat Phou, Khone Phapheng Falls, Xe Bang Fai Cave, Pha Pa Tou and Kong Lor Cave open landmark field cards. Vientiane, Don Det and Luang Prabang are being documented.</desc>
 
           <a class="city-marker city-marker--city city-marker--active" href="/laos/pakse" aria-label="Explore Pakse">
             <circle class="city-marker__ring" cx={pakse.x} cy={pakse.y} r="22" />
@@ -174,6 +210,20 @@ const xeBangFaiGallery = [
             <circle class="city-marker__dot" cx={xeBangFai.x} cy={xeBangFai.y} r="8" />
             <path class="city-marker__leader" d={`M${xeBangFai.x + 12} ${xeBangFai.y} L${xeBangFai.x + 74} ${xeBangFai.y}`} />
             <text class="city-marker__label city-marker__label--landmark" x={xeBangFai.x + 82} y={xeBangFai.y + 8}>Xe Bang Fai</text>
+          </g>
+
+          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Pha Pa Tou landmark details" data-open-landmark="pha-pa-tou-modal">
+            <circle class="city-marker__ring" cx={phaPaTou.x} cy={phaPaTou.y} r="20" />
+            <circle class="city-marker__dot" cx={phaPaTou.x} cy={phaPaTou.y} r="8" />
+            <path class="city-marker__leader" d={`M${phaPaTou.x + 12} ${phaPaTou.y} L${phaPaTou.x + 74} ${phaPaTou.y}`} />
+            <text class="city-marker__label city-marker__label--landmark" x={phaPaTou.x + 82} y={phaPaTou.y + 8}>Pha Pa Tou</text>
+          </g>
+
+          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Kong Lor Cave landmark details" data-open-landmark="kong-lor-modal">
+            <circle class="city-marker__ring" cx={kongLor.x} cy={kongLor.y} r="20" />
+            <circle class="city-marker__dot" cx={kongLor.x} cy={kongLor.y} r="8" />
+            <path class="city-marker__leader" d={`M${kongLor.x + 12} ${kongLor.y} L${kongLor.x + 74} ${kongLor.y}`} />
+            <text class="city-marker__label city-marker__label--landmark" x={kongLor.x + 82} y={kongLor.y + 8}>Kong Lor</text>
           </g>
 
           <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Vientiane guide coming soon">
@@ -332,6 +382,44 @@ const xeBangFaiGallery = [
       { label: 'Difficulty', value: 'Adventure-level access: rough roads, darkness, boat travel and uneven walking inside the cave. Do not attempt the forest or cave route without a guide.' }
     ]}
   />
+
+  <LandmarkModal
+    id="pha-pa-tou-modal"
+    name="Pha Pa Tou"
+    country="Laos"
+    fieldCardNumber="07"
+    region="Pak Ou District · Luang Prabang Province"
+    description="A remote mountain viewpoint and simple homestay reached by crossing the river and climbing through forest. The reward is an open panorama over northern Laos, especially around sunrise and sunset."
+    mapsUrl="https://maps.app.goo.gl/khjXjfTfGsjUcGM4A"
+    gallery={phaPaTouGallery}
+    facts={[
+      { label: 'Getting there', value: 'The usual route begins outside Luang Prabang, followed by a small boat crossing and a two- to three-hour mountain trek. Arrange a local guide or homestay before leaving.' },
+      { label: 'Best time', value: 'Choose a clear dry-season day and start early. Heavy rain can make the river crossing and steep forest trail difficult.' },
+      { label: 'What to wear', value: 'Hiking shoes with grip, light layers, sun and rain protection, and a small pack for water and food.' },
+      { label: 'Price', value: 'Guide, boat, meals and overnight costs are arranged locally. Confirm what is included before the trip.' },
+      { label: 'Duration', value: 'Treat it as a full-day hike or, preferably, an overnight trip so you can see sunrise from the mountain.' },
+      { label: 'Difficulty', value: 'Moderate to demanding: a river crossing, a long uphill trail and very basic facilities at the top.' }
+    ]}
+  />
+
+  <LandmarkModal
+    id="kong-lor-modal"
+    name="Kong Lor Cave"
+    country="Laos"
+    fieldCardNumber="08"
+    region="Khounkham District · Khammouane"
+    description="A vast limestone tunnel carrying the Hin Boun River through the mountain for more than seven kilometres. Small motorboats travel through complete darkness before emerging into the hidden valley beyond."
+    mapsUrl="https://maps.app.goo.gl/Uhm4ThHyYcNGJHLg6"
+    gallery={kongLorGallery}
+    facts={[
+      { label: 'Getting there', value: 'Kong Lor is inside Phou Hin Bun National Park, roughly 145–150 km from Thakhek. It is commonly visited as part of the Thakhek Loop or from Ban Khounkham.' },
+      { label: 'Best time', value: 'November to April normally brings safer, clearer river conditions. During the rainy season, high water can restrict or stop boat access.' },
+      { label: 'What to wear', value: 'Quick-dry clothing, water-friendly shoes, a strong headlamp and a dry bag. Keep the supplied life jacket on during the boat trip.' },
+      { label: 'Price', value: 'Paid entrance and boat trip. Confirm the current ticket and boat arrangement locally before travelling.' },
+      { label: 'Duration', value: 'Allow about two to three hours for the return boat journey, the illuminated formation stop and boarding time.' },
+      { label: 'Difficulty', value: 'Moderate: limited walking, but narrow boats, darkness, wet surfaces and possible shallow river sections require care.' }
+    ]}
+  />
 </BaseLayout>
 
 <script>
@@ -358,49 +446,6 @@ const xeBangFaiGallery = [
       if (event.target === dialog) dialog.close();
     });
   });
-
-  const setupXeBangFaiNotes = () => {
-    const dialog = document.getElementById('xe-bang-fai-modal');
-    if (!(dialog instanceof HTMLDialogElement) || dialog.dataset.notesReady === 'true') return;
-    dialog.dataset.notesReady = 'true';
-
-    const annotations = dialog.querySelector('.landmark-story__annotations');
-    if (annotations && !annotations.children.length) {
-      annotations.innerHTML = `
-        <article class="landmark-story-note">
-          <span class="landmark-story-note__mark" aria-hidden="true"><svg viewBox="0 0 36 36"><circle cx="8" cy="27" r="3"></circle><circle cx="28" cy="8" r="3"></circle><path d="M11 26c6-2 2-9 8-9s4-5 6-7m-8 4 4 4-4 4"></path></svg></span>
-          <div><span>Expedition note</span><p>Guide and boat should be arranged before the final remote road.</p></div>
-        </article>
-        <article class="landmark-story-note landmark-story-note--tilted">
-          <span class="landmark-story-note__mark" aria-hidden="true"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="7"></circle><path d="M18 3v6m0 18v6M3 18h6m18 0h6M7.5 7.5l4.2 4.2m12.6 12.6 4.2 4.2m0-21-4.2 4.2M11.7 24.3l-4.2 4.2"></path></svg></span>
-          <div><span>Best rhythm</span><p>Confirm river levels locally, then keep the entire day free.</p></div>
-        </article>
-        <article class="landmark-story-note">
-          <span class="landmark-story-note__mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M12 6 8 9 5 18l4 2 2-5v16h14V15l2 5 4-2-3-9-4-3M12 6c1 4 4 6 6 8 2-2 5-4 6-8M18 14v17"></path></svg></span>
-          <div><span>Margin note</span><p>Quick-dry clothes, grip shoes and a strong headlamp.</p></div>
-        </article>`;
-    }
-
-    const scribble = dialog.querySelector('.landmark-story__scribble span');
-    if (scribble) scribble.textContent = 'the road is part of the expedition';
-
-    const footer = dialog.querySelector('.landmark-notes__footer span');
-    if (footer) footer.textContent = 'confirm the river before leaving';
-
-    const notes = [...dialog.querySelectorAll('.landmark-note')];
-    const bestTime = notes.find((note) => note.querySelector('dt')?.textContent?.trim() === 'Best time');
-    const difficulty = notes.find((note) => note.querySelector('dt')?.textContent?.trim() === 'Difficulty');
-
-    if (bestTime && !bestTime.querySelector('.landmark-note__annotation')) {
-      bestTime.querySelector('.landmark-note__copy')?.insertAdjacentHTML('beforeend', '<p class="landmark-note__annotation"><span class="landmark-note__crossed" aria-hidden="true">Any season works</span><span class="landmark-note__correction">No — check the river first.</span></p>');
-    }
-    if (difficulty && !difficulty.querySelector('.landmark-note__annotation')) {
-      difficulty.querySelector('.landmark-note__copy')?.insertAdjacentHTML('beforeend', '<p class="landmark-note__annotation"><span class="landmark-note__aside">Guide, boat, darkness and rough roads.</span></p>');
-    }
-  };
-
-  setupXeBangFaiNotes();
-  document.addEventListener('astro:page-load', setupXeBangFaiNotes);
 </script>
 
 <style>
