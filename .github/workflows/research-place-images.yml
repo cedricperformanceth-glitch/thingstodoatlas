@@ -1,0 +1,74 @@
+name: Sync place images
+
+on:
+  workflow_dispatch:
+    inputs:
+      refresh_generic:
+        description: Retry exact research for records currently using a generic fallback
+        required: false
+        default: false
+        type: boolean
+  push:
+    branches:
+      - master
+    paths:
+      - 'src/data/**/*.ts'
+      - 'src/data/**/*-image-candidates.json'
+      - 'scripts/find-place-images.mjs'
+      - 'scripts/sync-place-images.mjs'
+      - 'scripts/audit-place-image-system.mjs'
+      - 'package.json'
+      - '.github/workflows/research-place-images.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: all-place-image-research
+  cancel-in-progress: false
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Synchronise images for every city and category
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.refresh_generic }}" == "true" ]]; then
+            npm run images:sync -- --refresh-generic
+          else
+            npm run images:sync
+          fi
+
+      - name: Audit city and category coverage
+        run: npm run images:audit
+
+      - name: Validate production build
+        run: npm run build
+
+      - name: Commit image research results
+        shell: bash
+        run: |
+          if git diff --quiet -- src/data/place-images.generated.json; then
+            echo "No place image results changed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/place-images.generated.json
+          git commit -m "Sync place images for all cities"
+          git push
