@@ -32,13 +32,13 @@
   pointer-events: none !important;
 }
 
-/* Laos field map: muted flag colours that sit naturally on the ivory paper. */
+/* Laos field map: slightly brighter flag-inspired colours on the ivory paper. */
 .laos-map-page .city-marker--active {
-  color: #4b6170 !important;
+  color: #3f6380 !important;
 }
 
 .laos-map-page .city-marker--landmark {
-  color: #a6534b !important;
+  color: #b44f47 !important;
 }
 
 .laos-map-page .city-marker--active .city-marker__dot,
