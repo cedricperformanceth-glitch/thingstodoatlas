@@ -18,7 +18,7 @@ jobs:
         shell: bash
         run: |
           python - <<'PY'
-          import requests, re, html
+          import requests, re, html, json
           from pathlib import Path
 
           headers = {
@@ -26,36 +26,50 @@ jobs:
           }
           pages = [
               'https://laosuki.com/pha-patu-viewpoint-luang-prabang-sea-of-mist/',
-              'https://www.laosfreedomtravel.com/service-page/2-days-treeking-to-pha-pa-tou',
+              'https://laosuki.com/wp-json/wp/v2/posts?slug=pha-patu-viewpoint-luang-prabang-sea-of-mist&_embed=1',
               'https://pantip.com/topic/39606086',
+              'https://2g.pantip.com/cafe/blueplanet/topic/E39606086/E39606086.html',
+              'https://www.facebook.com/Adventure44.co/',
           ]
           out = []
           for page in pages:
               r = requests.get(page, headers=headers, allow_redirects=True, timeout=40)
-              out.extend([f'PAGE={page}', f'STATUS={r.status_code}', f'FINAL={r.url}'])
+              text = r.text
+              out.extend([f'PAGE={page}', f'STATUS={r.status_code}', f'FINAL={r.url}', f'LENGTH={len(text)}'])
+
+              # Decode escaped JSON URLs before scanning.
+              decoded = html.unescape(text).replace('\\/', '/').replace('\\u0026', '&')
               candidates = []
-              for pattern in [
-                  r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)',
-                  r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']',
+              patterns = [
+                  r'<meta[^>]+property=["\']og:image(?::secure_url)?["\'][^>]+content=["\']([^"\']+)',
+                  r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image(?::secure_url)?["\']',
                   r'<meta[^>]+name=["\']twitter:image[^"\']*["\'][^>]+content=["\']([^"\']+)',
-                  r'<img[^>]+(?:src|data-src|data-lazy-src)=["\']([^"\']+)',
-              ]:
-                  candidates.extend(re.findall(pattern, r.text, re.I))
+                  r'<img[^>]+(?:src|data-src|data-lazy-src|data-original)=["\']([^"\']+)',
+                  r'(?:srcset|data-srcset)=["\']([^"\']+)',
+                  r'url\(["\']?([^"\')]+)',
+                  r'https?://[^\s"\'<>\\]+',
+              ]
+              for pattern in patterns:
+                  candidates.extend(re.findall(pattern, decoded, re.I))
+
               seen = set()
-              for candidate in candidates:
-                  candidate = html.unescape(candidate).replace('\\u0026', '&')
-                  if candidate.startswith('//'):
-                      candidate = 'https:' + candidate
-                  if not candidate.startswith('http'):
-                      continue
-                  low = candidate.lower()
-                  if not any(ext in low for ext in ('.jpg', '.jpeg', '.png', '.webp')):
-                      continue
-                  if candidate in seen:
-                      continue
-                  seen.add(candidate)
-                  out.append('IMAGE=' + candidate)
+              for raw in candidates:
+                  # srcset entries may contain several URLs and widths.
+                  for candidate in str(raw).split(','):
+                      candidate = candidate.strip().split(' ')[0]
+                      if candidate.startswith('//'):
+                          candidate = 'https:' + candidate
+                      if not candidate.startswith('http'):
+                          continue
+                      low = candidate.lower().split('?')[0]
+                      if not any(low.endswith(ext) for ext in ('.jpg', '.jpeg', '.png', '.webp', '.avif')):
+                          continue
+                      if candidate in seen:
+                          continue
+                      seen.add(candidate)
+                      out.append('IMAGE=' + candidate)
               out.append('---')
+
           Path('pha-patu-image-candidates.txt').write_text('\n'.join(out), encoding='utf-8')
           PY
       - name: Commit result
@@ -63,5 +77,5 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add pha-patu-image-candidates.txt
-          git commit -m "Resolve Pha Patu image candidates"
+          git commit -m "Inspect Pha Patu article media"
           git push
