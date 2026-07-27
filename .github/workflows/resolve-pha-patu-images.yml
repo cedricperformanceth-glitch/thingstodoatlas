@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   finalise:
-    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -59,21 +58,22 @@ jobs:
           new_marker = """            <path class=\"city-marker__leader\" d={`M${phaPaTou.x + 10} ${phaPaTou.y} L${phaPaTou.x + 66} ${phaPaTou.y - 41}`} />
             <text class=\"city-marker__label city-marker__label--landmark\" x={phaPaTou.x + 74} y={phaPaTou.y - 45}>Pha Pa Tou</text>"""
 
-          if text.count(old_gallery) != 1:
-              raise RuntimeError(f'Expected one Pha Pa Tou gallery, found {text.count(old_gallery)}')
-          if text.count(old_marker) != 1:
-              raise RuntimeError(f'Expected one Pha Pa Tou marker, found {text.count(old_marker)}')
+          if old_gallery in text:
+              text = text.replace(old_gallery, new_gallery, 1)
+          elif new_gallery not in text:
+              raise RuntimeError('Pha Pa Tou gallery block not found')
 
-          text = text.replace(old_gallery, new_gallery, 1)
-          text = text.replace(old_marker, new_marker, 1)
+          if old_marker in text:
+              text = text.replace(old_marker, new_marker, 1)
+          elif new_marker not in text:
+              raise RuntimeError('Pha Pa Tou marker block not found')
+
           path.write_text(text, encoding='utf-8')
           PY
-      - name: Remove temporary files and commit
+      - name: Commit source update
         run: |
-          rm -f pha-patu-image-candidates.txt
-          rm -f .github/workflows/resolve-pha-patu-images.yml
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add -A
-          git commit -m "Fix Pha Patu leader and add gallery photos"
+          git add src/pages/laos.astro
+          git diff --cached --quiet || git commit -m "Fix Pha Patu leader and add gallery photos"
           git push
