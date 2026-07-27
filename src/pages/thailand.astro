@@ -75,9 +75,10 @@ const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
   .map-drawing,.map-grid{position:absolute;left:50%;top:50%;display:block;width:46vw;height:69vw;transform:translate(-50%,-43%)}.map-drawing{overflow:visible}.map-grid{z-index:1;overflow:visible;pointer-events:none}
   .map-grid__lines line{stroke:rgba(42,75,61,.22);stroke-width:1.5;stroke-dasharray:8 10;vector-effect:non-scaling-stroke}.map-grid__labels text{fill:rgba(42,75,61,.58);font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:27px;font-weight:600;paint-order:stroke;stroke:rgba(255,255,255,.9);stroke-width:5px;stroke-linejoin:round}.map-grid__labels--rows text{text-anchor:start}
 
-  /* Common marker system shared by all country maps. */
-  .city-marker--city .city-marker__label{font-size:30px}
-  .city-marker--landmark .city-marker__label{font-size:27px}
+  /* Shared marker hierarchy used by every country map. */
+  .city-marker--active .city-marker__label{font-size:25px}
+  .city-marker--landmark .city-marker__label{font-size:20px;stroke-width:5px}
+  .city-marker--inactive .city-marker__label{font-size:15px;stroke-width:4px}
   .city-marker--active{color:#487fae}
   .city-marker--landmark{color:#b84a45}
   .city-marker--inactive{color:#7f6d33}
