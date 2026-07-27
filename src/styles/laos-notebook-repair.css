@@ -32,6 +32,50 @@
   pointer-events: none !important;
 }
 
+/* Laos field map: muted flag colours that sit naturally on the ivory paper. */
+.laos-map-page .city-marker--active {
+  color: #4b6170 !important;
+}
+
+.laos-map-page .city-marker--landmark {
+  color: #91504a !important;
+}
+
+.laos-map-page .city-marker--active .city-marker__dot,
+.laos-map-page .city-marker--landmark .city-marker__dot {
+  stroke: #f4ecd9 !important;
+}
+
+/* Landmark points stay secondary to city chapters. */
+.laos-map-page .city-marker--landmark .city-marker__label {
+  font-size: 24px !important;
+  stroke-width: 5px !important;
+}
+
+.laos-map-page .city-marker--landmark .city-marker__ring,
+.laos-map-page .city-marker--landmark .city-marker__dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(.5) !important;
+}
+
+.laos-map-page .city-marker--landmark .city-marker__ring {
+  stroke-width: 2.5px !important;
+}
+
+.laos-map-page .city-marker--landmark .city-marker__dot {
+  stroke-width: 2.5px !important;
+}
+
+.laos-map-page .city-marker--landmark .city-marker__leader {
+  stroke-width: 1.5px !important;
+}
+
+.laos-map-page .city-marker--landmark:hover .city-marker__ring,
+.laos-map-page .city-marker--landmark:focus .city-marker__ring {
+  transform: scale(.6) !important;
+}
+
 @media (max-width: 700px) {
   .country-section #country-laos-2 .country-feature__laos-tuktuk {
     top: 146px !important;
