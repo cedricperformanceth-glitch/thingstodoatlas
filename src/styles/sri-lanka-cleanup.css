@@ -21,9 +21,13 @@
   color: #df7500 !important;
 }
 
-.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__label,
-.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive .city-marker__label {
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__label {
   font-size: 25px !important;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker--inactive .city-marker__label {
+  font-size: 15px !important;
+  stroke-width: 4px !important;
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g[data-open-landmark] {
