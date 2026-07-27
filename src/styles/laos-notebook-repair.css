@@ -85,6 +85,19 @@
   transform: translate(-58px, 76px);
 }
 
+/* Bolaven: a clean 90-degree leader that carries the label beyond the map edge. */
+.laos-map-page [data-open-landmark="bolaven-plateau-modal"] .city-marker__leader {
+  transform-box: fill-box;
+  transform-origin: 0% 100%;
+  transform: rotate(42deg) scale(1.55) !important;
+  stroke-width: 1px !important;
+}
+
+.laos-map-page [data-open-landmark="bolaven-plateau-modal"] .city-marker__label {
+  text-anchor: start;
+  transform: translate(48px, 62px);
+}
+
 @media (max-width: 700px) {
   .country-section #country-laos-2 .country-feature__laos-tuktuk {
     top: 146px !important;
