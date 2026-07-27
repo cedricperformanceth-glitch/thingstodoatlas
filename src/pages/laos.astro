@@ -1,17 +1,60 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
+import LandmarkModal from '../components/LandmarkModal.astro';
+
+const gridColumns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
 
 const pakse = { x: 679, y: 1024 };
 const vientiane = { x: 384, y: 657 };
 const tadLo = { x: 736, y: 970 };
 const donDet = { x: 696, y: 1152 };
 const luangPrabang = { x: 356, y: 576 };
+
+const bolavenPlateau = { x: 800, y: 930 };
+const watPhou = { x: 586, y: 1060 };
+const khonePhapheng = { x: 760, y: 1210 };
+
+const bolavenGallery = [
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Bolaven_Plateau.jpg?width=1600',
+    alt: 'Waterfall and forest landscape on the Bolaven Plateau in southern Laos',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Bolaven_Plateau.jpg',
+    author: 'Dario Severi',
+    license: 'CC BY-SA 3.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Bolaven_Plateau_Waterfall.jpg?width=1600',
+    alt: 'Waterfall near Paksong on the Bolaven Plateau',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Bolaven_Plateau_Waterfall.jpg',
+    author: 'Clinton Phosavanh',
+    license: 'CC BY-SA 4.0'
+  }
+];
+
+const watPhouGallery = [
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Wat_Phu_Champasak_-_Laos_-_01.JPG?width=1600',
+    alt: 'Historic stone terraces and sanctuary at Wat Phou in Champasak',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Wat_Phu_Champasak_-_Laos_-_01.JPG',
+    author: 'Wikimedia Commons'
+  }
+];
+
+const khoneGallery = [
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Khone_Phapheng_Falls%2C_Si_Phan_Don%2C_Laos%2C_widest_waterfall_in_the_world.jpg?width=1600',
+    alt: 'Wide view of Khone Phapheng Falls on the Mekong in southern Laos',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Khone_Phapheng_Falls,_Si_Phan_Don,_Laos,_widest_waterfall_in_the_world.jpg',
+    author: 'Wikimedia Commons'
+  }
+];
 ---
 
 <BaseLayout
   title="Explore Laos"
-  description="Choose your next stop on an illustrated map of Laos. Begin with Pakse or Tad Lo, with more destinations added as the atlas grows."
+  description="Choose your next stop on an illustrated map of Laos. Begin with Pakse or Tad Lo, then open field cards for landmarks across southern Laos."
   canonical="https://thingstodoatlas.com/laos"
 >
   <section class="laos-map-page" aria-labelledby="laos-map-title">
@@ -27,6 +70,7 @@ const luangPrabang = { x: 356, y: 576 };
             <h2 id="laos-map-title" class="visually-hidden">Choose a place on the map</h2>
           </div>
         </header>
+
         <img
           class="map-drawing"
           src="/images/hand-drawn/laos-map.webp"
@@ -35,11 +79,32 @@ const luangPrabang = { x: 356, y: 576 };
           height="1536"
         />
 
-        <svg class="map-overlay" viewBox="0 0 1024 1536" role="img" aria-labelledby="map-title map-description">
-          <title id="map-title">Destinations on the Laos map</title>
-          <desc id="map-description">Pakse and Tad Lo are available. Vientiane, Don Det and Luang Prabang are being documented.</desc>
+        <svg class="map-grid" viewBox="0 0 1024 1536" aria-hidden="true">
+          <g class="map-grid__lines">
+            {Array.from({ length: 9 }, (_, index) => (
+              <line x1={index * 128} y1="0" x2={index * 128} y2="1536" />
+            ))}
+            {Array.from({ length: 13 }, (_, index) => (
+              <line x1="0" y1={index * 128} x2="1024" y2={index * 128} />
+            ))}
+          </g>
+          <g class="map-grid__labels map-grid__labels--columns">
+            {gridColumns.map((label, index) => (
+              <text x={(index * 128) + 64} y="34" text-anchor="middle">{label}</text>
+            ))}
+          </g>
+          <g class="map-grid__labels map-grid__labels--rows">
+            {gridRows.map((label, index) => (
+              <text x="18" y={(index * 128) + 74}>{label}</text>
+            ))}
+          </g>
+        </svg>
 
-          <a class="city-marker city-marker--active" href="/laos/pakse" aria-label="Explore Pakse">
+        <svg class="map-overlay" viewBox="0 0 1024 1536" role="img" aria-labelledby="map-title map-description">
+          <title id="map-title">Destinations and landmarks on the Laos map</title>
+          <desc id="map-description">Pakse and Tad Lo open city guides. Bolaven Plateau, Wat Phou and Khone Phapheng Falls open landmark field cards. Vientiane, Don Det and Luang Prabang are being documented.</desc>
+
+          <a class="city-marker city-marker--city city-marker--active" href="/laos/pakse" aria-label="Explore Pakse">
             <circle class="city-marker__ring" cx={pakse.x} cy={pakse.y} r="22" />
             <circle class="city-marker__dot" cx={pakse.x} cy={pakse.y} r="9" />
             <path class="city-marker__leader" d={`M${pakse.x - 15} ${pakse.y - 5} L${pakse.x - 76} ${pakse.y - 28}`} />
@@ -58,7 +123,28 @@ const luangPrabang = { x: 356, y: 576 };
             </foreignObject>
           </a>
 
-          <g class="city-marker city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Vientiane guide coming soon">
+          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Bolaven Plateau landmark details" data-open-landmark="bolaven-plateau-modal">
+            <circle class="city-marker__ring" cx={bolavenPlateau.x} cy={bolavenPlateau.y} r="20" />
+            <circle class="city-marker__dot" cx={bolavenPlateau.x} cy={bolavenPlateau.y} r="8" />
+            <path class="city-marker__leader" d={`M${bolavenPlateau.x + 12} ${bolavenPlateau.y - 10} L${bolavenPlateau.x + 54} ${bolavenPlateau.y - 48}`} />
+            <text class="city-marker__label city-marker__label--landmark" x={bolavenPlateau.x + 62} y={bolavenPlateau.y - 54}>Bolaven Plateau</text>
+          </g>
+
+          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Wat Phou landmark details" data-open-landmark="wat-phou-modal">
+            <circle class="city-marker__ring" cx={watPhou.x} cy={watPhou.y} r="20" />
+            <circle class="city-marker__dot" cx={watPhou.x} cy={watPhou.y} r="8" />
+            <path class="city-marker__leader" d={`M${watPhou.x - 12} ${watPhou.y + 10} L${watPhou.x - 54} ${watPhou.y + 46}`} />
+            <text class="city-marker__label city-marker__label--left city-marker__label--landmark" x={watPhou.x - 62} y={watPhou.y + 58}>Wat Phou</text>
+          </g>
+
+          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Khone Phapheng Falls landmark details" data-open-landmark="khone-phapheng-modal">
+            <circle class="city-marker__ring" cx={khonePhapheng.x} cy={khonePhapheng.y} r="20" />
+            <circle class="city-marker__dot" cx={khonePhapheng.x} cy={khonePhapheng.y} r="8" />
+            <path class="city-marker__leader" d={`M${khonePhapheng.x + 12} ${khonePhapheng.y + 10} L${khonePhapheng.x + 50} ${khonePhapheng.y + 40}`} />
+            <text class="city-marker__label city-marker__label--landmark" x={khonePhapheng.x + 58} y={khonePhapheng.y + 52}>Khone Phapheng</text>
+          </g>
+
+          <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Vientiane guide coming soon">
             <circle class="city-marker__ring" cx={vientiane.x} cy={vientiane.y} r="22" />
             <circle class="city-marker__dot" cx={vientiane.x} cy={vientiane.y} r="9" />
             <path class="city-marker__leader" d={`M${vientiane.x - 15} ${vientiane.y + 4} L${vientiane.x - 76} ${vientiane.y + 65}`} />
@@ -77,7 +163,7 @@ const luangPrabang = { x: 356, y: 576 };
             </foreignObject>
           </g>
 
-          <a class="city-marker city-marker--active" href="/laos/tad-lo" aria-label="Explore Tad Lo">
+          <a class="city-marker city-marker--city city-marker--active" href="/laos/tad-lo" aria-label="Explore Tad Lo">
             <circle class="city-marker__ring" cx={tadLo.x} cy={tadLo.y} r="22" />
             <circle class="city-marker__dot" cx={tadLo.x} cy={tadLo.y} r="9" />
             <path class="city-marker__leader" d={`M${tadLo.x + 15} ${tadLo.y - 5} L${tadLo.x + 76} ${tadLo.y - 28}`} />
@@ -96,7 +182,7 @@ const luangPrabang = { x: 356, y: 576 };
             </foreignObject>
           </a>
 
-          <g class="city-marker city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Don Det guide coming soon">
+          <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Don Det guide coming soon">
             <circle class="city-marker__ring" cx={donDet.x} cy={donDet.y} r="22" />
             <circle class="city-marker__dot" cx={donDet.x} cy={donDet.y} r="9" />
             <path class="city-marker__leader" d={`M${donDet.x + 15} ${donDet.y + 2} L${donDet.x + 76} ${donDet.y + 18}`} />
@@ -115,7 +201,7 @@ const luangPrabang = { x: 356, y: 576 };
             </foreignObject>
           </g>
 
-          <g class="city-marker city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Luang Prabang guide coming soon">
+          <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Luang Prabang guide coming soon">
             <circle class="city-marker__ring" cx={luangPrabang.x} cy={luangPrabang.y} r="22" />
             <circle class="city-marker__dot" cx={luangPrabang.x} cy={luangPrabang.y} r="9" />
             <path class="city-marker__leader" d={`M${luangPrabang.x + 15} ${luangPrabang.y - 5} L${luangPrabang.x + 76} ${luangPrabang.y - 28}`} />
@@ -138,239 +224,111 @@ const luangPrabang = { x: 356, y: 576 };
     </div>
     <PlanMyTripIntro />
   </section>
+
+  <LandmarkModal
+    id="bolaven-plateau-modal"
+    name="Bolaven Plateau"
+    country="Laos"
+    fieldCardNumber="03"
+    region="Champasak & Salavan · Southern Laos"
+    description="A highland road of coffee farms, forest, villages and waterfalls. The plateau works best as a journey between stops rather than a single attraction."
+    mapsUrl="https://www.google.com/maps/search/?api=1&query=Bolaven%20Plateau%2C%20Laos"
+    gallery={bolavenGallery}
+    facts={[
+      { label: 'Getting there', value: 'Most travellers begin the loop from Pakse by motorbike, scooter or private driver.' },
+      { label: 'Best time', value: 'Start early. Rain and mist can arrive quickly, especially in the wet season.' },
+      { label: 'What to wear', value: 'Light layers, a rain jacket and shoes suitable for wet waterfall paths.' },
+      { label: 'Price', value: 'The plateau is open to explore; individual waterfalls and sites may charge small entrance fees.' },
+      { label: 'Duration', value: 'Allow one full day for a short loop or two to three days for a slower route.' },
+      { label: 'Difficulty', value: 'Easy to moderate, depending on road conditions and the waterfall trails you choose.' }
+    ]}
+  />
+
+  <LandmarkModal
+    id="wat-phou-modal"
+    name="Wat Phou"
+    country="Laos"
+    fieldCardNumber="04"
+    region="Champasak · Southern Laos"
+    description="An ancient Khmer temple complex climbing from the plain toward the mountain, with stone terraces, ceremonial axes and wide views across Champasak."
+    mapsUrl="https://www.google.com/maps/search/?api=1&query=Wat%20Phou%2C%20Champasak%2C%20Laos"
+    gallery={watPhouGallery}
+    facts={[
+      { label: 'Getting there', value: 'Reached from Pakse or Champasak town by motorbike, tuk-tuk or private transport.' },
+      { label: 'Best time', value: 'Early morning is cooler and quieter for the climb through the complex.' },
+      { label: 'What to wear', value: 'Respectful light clothing, sun protection and stable shoes for old stone steps.' },
+      { label: 'Price', value: 'Paid entrance. Confirm the current official ticket price before visiting.' },
+      { label: 'Duration', value: 'Allow roughly two to three hours for the museum, lower ruins and upper sanctuary.' },
+      { label: 'Difficulty', value: 'Moderate, with uneven steps and a steady exposed climb.' }
+    ]}
+  />
+
+  <LandmarkModal
+    id="khone-phapheng-modal"
+    name="Khone Phapheng Falls"
+    country="Laos"
+    fieldCardNumber="05"
+    region="Si Phan Don · Champasak"
+    description="A vast, powerful section of the Mekong where the river breaks across rocks and channels near the Cambodian border. This is a place for scale, sound and viewpoints."
+    mapsUrl="https://www.google.com/maps/search/?api=1&query=Khone%20Phapheng%20Falls%2C%20Laos"
+    gallery={khoneGallery}
+    facts={[
+      { label: 'Getting there', value: 'Usually reached from Pakse, Nakasang or the Si Phan Don area by road transport.' },
+      { label: 'Best time', value: 'Morning and late afternoon are more comfortable; the river changes dramatically by season.' },
+      { label: 'What to wear', value: 'Light clothing, sun protection and comfortable shoes for the viewpoint paths.' },
+      { label: 'Price', value: 'Paid entrance. Check the current local ticket price before setting out.' },
+      { label: 'Duration', value: 'Allow around one to two hours to walk the main viewpoints without rushing.' },
+      { label: 'Difficulty', value: 'Easy walking, but the river itself is dangerous and not a swimming area.' }
+    ]}
+  />
 </BaseLayout>
+
+<script>
+  const openLandmark = (trigger) => {
+    const id = trigger.dataset.openLandmark;
+    const dialog = id ? document.getElementById(id) : null;
+    if (dialog instanceof HTMLDialogElement && !dialog.open) dialog.showModal();
+  };
+
+  document.querySelectorAll('[data-open-landmark]').forEach((trigger) => {
+    trigger.addEventListener('click', () => openLandmark(trigger));
+    trigger.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openLandmark(trigger);
+      }
+    });
+  });
+
+  document.querySelectorAll('.landmark-modal').forEach((dialog) => {
+    if (!(dialog instanceof HTMLDialogElement)) return;
+    dialog.querySelector('[data-close-landmark]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  });
+</script>
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
 
-  .laos-map-page {
-    min-height: 100vh;
-    padding: clamp(4rem, 8vw, 7rem) max(1.25rem, calc((100vw - 1180px) / 2));
-    background: #f2eee3;
-    color: #1f2924;
-  }
+  .laos-map-page{min-height:100vh;padding:clamp(4rem,8vw,7rem) max(1.25rem,calc((100vw - 1180px)/2));background:#f2eee3;color:#1f2924}
+  .map-sheet{position:relative;width:fit-content;margin:0 auto;padding:26px 26px 10px;border:1px solid rgba(31,41,36,.14);background:#f7f2e6;overflow:visible}
+  .map-sheet::before,.map-sheet::after{content:'';position:absolute;z-index:3;width:78px;height:22px;background:rgba(199,181,143,.48)}.map-sheet::before{top:-9px;left:8%;transform:rotate(-4deg)}.map-sheet::after{right:8%;bottom:-8px;transform:rotate(3deg)}
+  .map-layers{position:relative;width:80vw;height:80vw;margin:0 auto;background:#fff;box-shadow:0 0 0 1px rgba(31,41,36,.2),0 8px 22px rgba(31,41,36,.06);overflow:hidden}
+  .map-sheet__header{position:absolute;z-index:4;top:clamp(1.4rem,3vw,2.5rem);left:clamp(1.25rem,4vw,3.25rem);right:clamp(1.25rem,4vw,3.25rem);display:flex;align-items:flex-start;justify-content:space-between;gap:1.25rem;color:#1f392d;pointer-events:none}
+  .map-sheet__title-block{width:min(42rem,70%);margin-left:auto;text-align:right}.map-sheet__title-art{display:block;width:100%;height:auto;overflow:visible}.map-sheet__chapter,.map-sheet__title{fill:#1f392d;font-family:'Caveat','Segoe Print','Bradley Hand',cursive}.map-sheet__chapter{font-size:15px;font-weight:500;letter-spacing:.12em;opacity:.62}.map-sheet__title{font-size:51px;font-weight:550;letter-spacing:.01em;opacity:.93}.map-sheet__note{flex:0 0 auto;margin-top:.15rem;color:#1f392d;font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:16px;font-weight:500;letter-spacing:.08em;opacity:.58;white-space:nowrap}
+  .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-  .map-sheet {
-    position: relative;
-    width: fit-content;
-    margin: 0 auto;
-    padding: 26px 26px 10px;
-    border: 1px solid rgba(31, 41, 36, 0.14);
-    background: #f7f2e6;
-    overflow: visible;
-  }
+  .map-drawing,.map-grid,.map-overlay{position:absolute;left:50%;top:50%;width:61.2vw;height:91.8vw;transform:translate(-50%,-50%)}.map-drawing{display:block;object-fit:contain}.map-grid{z-index:1;display:block;overflow:hidden;pointer-events:none}.map-overlay{z-index:2;display:block;overflow:hidden;pointer-events:auto}
+  .map-grid__lines line{stroke:rgba(42,75,61,.22);stroke-width:1.5;stroke-dasharray:8 10;vector-effect:non-scaling-stroke}.map-grid__labels text{fill:rgba(42,75,61,.58);font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:27px;font-weight:600;paint-order:stroke;stroke:rgba(255,255,255,.9);stroke-width:5px;stroke-linejoin:round}.map-grid__labels--rows text{text-anchor:start}
 
-  .map-sheet::before,
-  .map-sheet::after {
-    content: '';
-    position: absolute;
-    z-index: 3;
-    width: 78px;
-    height: 22px;
-    background: rgba(199, 181, 143, 0.48);
-  }
+  .city-marker{cursor:pointer;outline:none}.laos-map-page .city-marker--active{color:#002868}.laos-map-page .city-marker--landmark{color:#ce1126}.laos-map-page .city-marker--inactive{color:#7f6d33;cursor:default}
+  .city-marker__ring{fill:color-mix(in srgb,currentColor 14%,transparent);stroke:currentColor;stroke-width:3;transition:opacity 180ms ease,transform 180ms ease;transform-box:fill-box;transform-origin:center}.city-marker__dot{fill:currentColor;stroke:#fff;stroke-width:3}.city-marker__leader{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}.city-marker__label{fill:currentColor;font-family:Georgia,serif;font-size:30px;font-weight:700;paint-order:stroke;stroke:#fff;stroke-width:7px;stroke-linejoin:round}.city-marker--landmark .city-marker__label{font-size:27px;stroke-width:6px}.city-marker__label--left{text-anchor:end}.city-marker--inactive .city-marker__ring,.city-marker--inactive .city-marker__dot,.city-marker--inactive .city-marker__leader,.city-marker--inactive .city-marker__label{opacity:.88}.city-marker:hover .city-marker__ring,.city-marker:focus .city-marker__ring{transform:scale(1.18)}
 
-  .map-sheet::before { top: -9px; left: 8%; transform: rotate(-4deg); }
-  .map-sheet::after { right: 8%; bottom: -8px; transform: rotate(3deg); }
+  .city-preview{opacity:0;visibility:hidden;pointer-events:none;overflow:hidden;transition:opacity 180ms ease,visibility 180ms ease}.city-marker:hover .city-preview,.city-marker:focus .city-preview,.city-marker:focus-visible .city-preview{opacity:1;visibility:visible}
+  .city-note{position:relative;width:420px;min-height:350px;padding:24px 24px 22px;background:#f6dc57;color:#29342f;box-shadow:0 18px 36px rgba(32,42,36,.2);font-family:'Caveat','Segoe Print','Bradley Hand',cursive;transform:rotate(-1.4deg)}.city-note--tadlo,.city-note--dondet{transform:rotate(1.2deg)}.city-note--active{background:#88acd1}.city-note__tape{position:absolute;z-index:2;top:-13px;left:50%;width:112px;height:28px;background:rgba(232,224,198,.76);transform:translateX(-50%) rotate(-2deg)}.city-note img{display:block;width:100%;height:145px;object-fit:cover;object-position:center 62%;filter:saturate(.68) contrast(.92);border:7px solid rgba(255,255,255,.72);box-sizing:border-box}.city-note__body{padding:15px 5px 0}.city-note__badge{display:inline-block;margin-bottom:5px;font-size:18px;font-weight:600;line-height:1;letter-spacing:.025em;color:#5f532d}.city-note--active .city-note__badge{color:#254864}.city-note strong{display:block;margin-bottom:4px;font-size:40px;font-weight:700;line-height:.98}.city-note p{margin:0 0 8px;font-size:20px;font-weight:500;line-height:1.18;color:rgba(41,52,47,.86)}.city-note small{display:block;font-size:17px;font-weight:500;line-height:1.1;color:rgba(49,85,69,.82)}.city-note--active small{color:rgba(31,63,86,.86)}
 
-  .map-layers {
-    position: relative;
-    width: 80vw;
-    height: 80vw;
-    margin: 0 auto;
-    background: #fff;
-    box-shadow: 0 0 0 1px rgba(31, 41, 36, 0.2), 0 8px 22px rgba(31, 41, 36, 0.06);
-    overflow: hidden;
-  }
-  .map-sheet__header {
-    position: absolute;
-    z-index: 2;
-    top: clamp(1.4rem, 3vw, 2.5rem);
-    left: clamp(1.25rem, 4vw, 3.25rem);
-    right: clamp(1.25rem, 4vw, 3.25rem);
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1.25rem;
-    color: #1f392d;
-    pointer-events: none;
-  }
-
-  .map-sheet__title-block { width: min(42rem, 70%); margin-left: auto; text-align: right; }
-  .map-sheet__title-art { display: block; width: 100%; height: auto; overflow: visible; }
-  .map-sheet__chapter,
-  .map-sheet__title {
-    fill: #1f392d;
-    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
-    font-style: normal;
-  }
-  .map-sheet__chapter { font-size: 15px; font-weight: 500; letter-spacing: 0.12em; opacity: 0.62; }
-  .map-sheet__title { font-size: 51px; font-weight: 550; letter-spacing: 0.01em; opacity: 0.93; }
-  .map-sheet__note {
-    position: static;
-    flex: 0 0 auto;
-    margin-top: 0.15rem;
-    color: #1f392d;
-    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    opacity: 0.58;
-    white-space: nowrap;
-  }
-
-  .visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-  .map-drawing,
-  .map-overlay {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 61.2vw;
-    height: 91.8vw;
-    transform: translate(-50%, -50%);
-  }
-  .map-drawing { display: block; object-fit: contain; }
-  .map-overlay { display: block; overflow: hidden; pointer-events: auto; }
-
-  .city-marker { color: #315545; cursor: pointer; outline: none; }
-  .city-marker--inactive { color: #7f6d33; cursor: default; }
-  .city-marker__ring { fill: color-mix(in srgb, currentColor 14%, transparent); stroke: currentColor; stroke-width: 3; transition: opacity 180ms ease, transform 180ms ease; transform-box: fill-box; transform-origin: center; }
-  .city-marker__dot { fill: currentColor; stroke: #fff; stroke-width: 3; }
-  .city-marker__leader { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
-  .city-marker__label { fill: currentColor; font-family: Georgia, serif; font-size: 34px; font-weight: 700; paint-order: stroke; stroke: #fff; stroke-width: 7px; stroke-linejoin: round; }
-  .city-marker__label--left { text-anchor: end; }
-  .city-marker--inactive .city-marker__ring,
-  .city-marker--inactive .city-marker__dot,
-  .city-marker--inactive .city-marker__leader,
-  .city-marker--inactive .city-marker__label { opacity: 0.88; }
-  .city-marker:hover .city-marker__ring,
-  .city-marker:focus .city-marker__ring { transform: scale(1.18); }
-
-  .city-preview {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    overflow: hidden;
-    transition: opacity 180ms ease, visibility 180ms ease;
-  }
-
-  .city-marker:hover .city-preview,
-  .city-marker:focus .city-preview,
-  .city-marker:focus-visible .city-preview {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .city-note {
-    position: relative;
-    width: 420px;
-    min-height: 350px;
-    padding: 24px 24px 22px;
-    background: #f6dc57;
-    color: #29342f;
-    box-shadow: 0 18px 36px rgba(32, 42, 36, 0.2);
-    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
-    transform: rotate(-1.4deg);
-  }
-
-  .city-note--tadlo,
-  .city-note--dondet { transform: rotate(1.2deg); }
-  .city-note--vientiane,
-  .city-note--dondet,
-  .city-note--luang { background: #f6dc57; }
-  .city-note--active { background: #88acd1; }
-
-  .city-note__tape {
-    position: absolute;
-    z-index: 2;
-    top: -13px;
-    left: 50%;
-    width: 112px;
-    height: 28px;
-    background: rgba(232, 224, 198, 0.76);
-    transform: translateX(-50%) rotate(-2deg);
-  }
-
-  .city-note img {
-    display: block;
-    width: 100%;
-    height: 145px;
-    object-fit: cover;
-    object-position: center 62%;
-    filter: saturate(0.68) contrast(0.92);
-    border: 7px solid rgba(255, 255, 255, 0.72);
-    box-sizing: border-box;
-  }
-
-  .city-note__body { padding: 15px 5px 0; }
-  .city-note__badge {
-    display: inline-block;
-    margin-bottom: 5px;
-    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 1;
-    letter-spacing: 0.025em;
-    text-transform: none;
-    color: #5f532d;
-  }
-  .city-note--active .city-note__badge { color: #254864; }
-  .city-note strong {
-    display: block;
-    margin-bottom: 4px;
-    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
-    font-size: 40px;
-    font-weight: 700;
-    line-height: 0.98;
-    letter-spacing: 0.01em;
-  }
-  .city-note p {
-    margin: 0 0 8px;
-    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 1.18;
-    color: rgba(41, 52, 47, 0.86);
-  }
-  .city-note small {
-    display: block;
-    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
-    font-size: 17px;
-    font-weight: 500;
-    line-height: 1.1;
-    color: rgba(49, 85, 69, 0.82);
-  }
-  .city-note--active small { color: rgba(31, 63, 86, 0.86); }
-
-  @media (max-width: 1100px) {
-    .city-preview { display: none; }
-  }
-
-  @media (max-width: 700px) {
-    .laos-map-page { padding-top: 3.5rem; }
-    .map-sheet { width: auto; padding: 0.75rem 0.75rem 10px; }
-    .map-sheet__header { gap: 0.15rem; flex-wrap: wrap; }
-    .map-sheet__title-block { width: 100%; order: 2; }
-    .map-sheet__note { order: 1; margin-right: auto; margin-left: 0; }
-    .map-sheet__chapter { font-size: 12px; }
-    .map-sheet__title { font-size: 42px; }
-    .map-sheet__note { font-size: 13px; }
-    .map-layers { width: calc(100vw - 4rem); height: calc(100vw - 4rem); }
-    .map-drawing,
-    .map-overlay {
-      width: calc((100vw - 4rem) * 0.765);
-      height: calc((100vw - 4rem) * 1.1475);
-    }
-  }
+  @media(max-width:1100px){.city-preview{display:none}}
+  @media(max-width:700px){.laos-map-page{padding-top:3.5rem}.map-sheet{width:auto;padding:.75rem .75rem 10px}.map-sheet__header{gap:.15rem;flex-wrap:wrap}.map-sheet__title-block{width:100%;order:2}.map-sheet__note{order:1;margin-right:auto;margin-left:0}.map-sheet__chapter{font-size:12px}.map-sheet__title{font-size:42px}.map-sheet__note{font-size:13px}.map-layers{width:calc(100vw - 4rem);height:calc(100vw - 4rem)}.map-drawing,.map-grid,.map-overlay{width:calc((100vw - 4rem)*.765);height:calc((100vw - 4rem)*1.1475)}.map-grid__labels text{font-size:34px}}
 </style>
