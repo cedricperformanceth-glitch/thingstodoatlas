@@ -2,6 +2,29 @@
 const { id, name, region, description, mapsUrl = '#', facts = [], gallery = [] } = Astro.props;
 const galleryItems = Array.isArray(gallery) ? gallery.filter((item) => item?.src) : [];
 const primaryImage = galleryItems[0] ?? null;
+
+const factIcons = {
+  'Getting there': 'route',
+  'Best time': 'weather',
+  'What to wear': 'jacket',
+  'Price': 'ticket',
+  'Duration': 'clock',
+  'Difficulty': 'stairs'
+};
+
+const annotations = {
+  Sigiriya: {
+    'Best time': { crossed: 'After breakfast', correction: 'No — go before the heat.' },
+    'What to wear': { note: 'Sun cover + shoes with grip.' }
+  },
+  "Adam's Peak": {
+    'What to wear': { crossed: 'A T-shirt is enough', correction: 'Bring a warm layer for the summit.' },
+    'Difficulty': { crossed: 'A quick sunrise walk', correction: 'A lot of stairs. Really.' }
+  }
+};
+
+const landmarkAnnotations = annotations[name] ?? {};
+const footerNote = name === 'Sigiriya' ? 'water before the climb' : 'check weather before leaving';
 ---
 <dialog class="landmark-modal" id={id} aria-labelledby={`${id}-title`}>
   <button class="landmark-modal__close" type="button" aria-label={`Close ${name}`} data-close-landmark>×</button>
@@ -75,12 +98,86 @@ const primaryImage = galleryItems[0] ?? null;
     </section>
 
     <aside class="landmark-modal__facts" aria-label={`${name} practical information`}>
-      <h3>Practical notes</h3>
+      <span class="landmark-notes__tape" aria-hidden="true"></span>
+      <header class="landmark-notes__heading">
+        <span>FIELD NOTES · CHECKED ON THE ROAD</span>
+        <h3>Things worth knowing</h3>
+        <svg viewBox="0 0 190 16" aria-hidden="true">
+          <path d="M4 8 C42 13, 74 2, 112 8 S162 12, 186 6" />
+          <path d="M20 12 C65 15, 118 8, 171 12" />
+        </svg>
+      </header>
+
       <dl>
-        {facts.map((fact) => (
-          <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>
-        ))}
+        {facts.map((fact) => {
+          const icon = factIcons[fact.label] ?? 'route';
+          const annotation = landmarkAnnotations[fact.label];
+          return (
+            <div class:list={['landmark-note', `landmark-note--${icon}`]}>
+              <span class="landmark-note__icon" aria-hidden="true">
+                {icon === 'route' && (
+                  <svg viewBox="0 0 32 32">
+                    <circle cx="7" cy="23" r="2.6" />
+                    <circle cx="25" cy="8" r="2.6" />
+                    <path d="M9.5 22 C14 20, 11 14, 16 14 S20 10, 22.5 9" />
+                    <path d="M17 11 l3 3 -3 3" />
+                  </svg>
+                )}
+                {icon === 'weather' && (
+                  <svg viewBox="0 0 32 32">
+                    <circle cx="12" cy="11" r="5" />
+                    <path d="M12 2.5v3 M12 16.5v3 M3.5 11h3 M17.5 11h3 M5.8 4.8l2.1 2.1 M16.1 15.1l2.1 2.1" />
+                    <path d="M13 24 C14 20, 18 19, 20.5 21 C24 19.8, 28 22, 27 25.5 H12.5" />
+                    <path d="M17 28l-1 2 M23 28l-1 2" />
+                  </svg>
+                )}
+                {icon === 'jacket' && (
+                  <svg viewBox="0 0 32 32">
+                    <path d="M11 5 L7 8 4 17 8 19 10 14 10 28 H22 V14 L24 19 28 17 25 8 21 5" />
+                    <path d="M11 5 C12 9, 14 10, 16 12 C18 10, 20 9, 21 5 M16 12v16 M13 17h-2 M21 17h-2" />
+                  </svg>
+                )}
+                {icon === 'ticket' && (
+                  <svg viewBox="0 0 32 32">
+                    <path d="M5 9 C7 9, 8 7, 8 5 H26 V11 C23 11, 23 15, 26 15 V25 H8 C8 22, 7 21, 5 21 Z" />
+                    <path d="M12 8v2 M12 13v2 M12 18v2 M12 23v1 M17 12h5 M17 17h5" />
+                  </svg>
+                )}
+                {icon === 'clock' && (
+                  <svg viewBox="0 0 32 32">
+                    <circle cx="16" cy="17" r="11" />
+                    <path d="M16 10v7l5 3 M12 3h8 M16 3v3" />
+                  </svg>
+                )}
+                {icon === 'stairs' && (
+                  <svg viewBox="0 0 32 32">
+                    <path d="M4 27h6v-5h6v-5h6v-5h6" />
+                    <path d="M7 10 C12 5, 19 4, 24 7" />
+                    <path d="M21 4l3 3-4 2" />
+                  </svg>
+                )}
+              </span>
+
+              <div class="landmark-note__copy">
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+                {annotation && (
+                  <p class="landmark-note__annotation">
+                    {annotation.crossed && <span class="landmark-note__crossed" aria-hidden="true">{annotation.crossed}</span>}
+                    {annotation.correction && <span class="landmark-note__correction">{annotation.correction}</span>}
+                    {annotation.note && <span class="landmark-note__aside">{annotation.note}</span>}
+                  </p>
+                )}
+              </div>
+            </div>
+          );
+        })}
       </dl>
+
+      <p class="landmark-notes__footer">
+        <svg viewBox="0 0 54 24" aria-hidden="true"><path d="M3 17 C17 5, 32 6, 47 14" /><path d="M42 9l6 5-7 3" /></svg>
+        <span>{footerNote}</span>
+      </p>
     </aside>
   </div>
 </dialog>
@@ -148,10 +245,10 @@ const primaryImage = galleryItems[0] ?? null;
 </script>
 
 <style>
-  .landmark-modal { width:min(1180px,calc(100vw - 28px)); max-height:min(860px,calc(100vh - 28px)); padding:0; border:0; background:#f7f2e6; color:#1f2924; box-shadow:0 28px 80px rgba(18,24,21,.34); overflow:auto; }
+  .landmark-modal { width:min(1200px,calc(100vw - 28px)); max-height:min(880px,calc(100vh - 28px)); padding:0; border:0; background:#f7f2e6; color:#1f2924; box-shadow:0 28px 80px rgba(18,24,21,.34); overflow:auto; }
   .landmark-modal::backdrop { background:rgba(20,27,24,.66); backdrop-filter:blur(4px); }
   .landmark-modal__close { position:sticky; top:14px; float:right; z-index:5; width:44px; height:44px; margin:14px 14px -58px 0; border:1px solid rgba(31,57,45,.16); border-radius:50%; background:#fff; color:#1f392d; font-size:1.8rem; cursor:pointer; }
-  .landmark-modal__grid { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) minmax(260px,.72fr); gap:0; min-height:620px; }
+  .landmark-modal__grid { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) minmax(290px,.82fr); gap:0; min-height:620px; }
   .landmark-modal__visual,.landmark-modal__story,.landmark-modal__facts { padding:clamp(28px,4vw,54px); }
   .landmark-modal__visual { background:#eee7d7; }
   .landmark-modal__placeholder { display:grid; place-items:center; min-height:390px; background:linear-gradient(145deg,#d9d0bc,#c4b99f); color:rgba(31,57,45,.65); font-family:'Caveat',cursive; font-size:2rem; box-shadow:inset 0 0 0 12px rgba(255,255,255,.5); }
@@ -175,12 +272,50 @@ const primaryImage = galleryItems[0] ?? null;
   .landmark-modal__story h2 { margin:0; color:#1f392d; font-size:clamp(3.4rem,6vw,6.8rem); line-height:.88; letter-spacing:-.05em; }
   .landmark-modal__region { margin:20px 0 30px!important; color:#315545!important; font-family:'Caveat',cursive; font-size:1.4rem!important; }
   .landmark-modal__story p:last-child { margin:0; color:rgba(31,41,36,.75); font-size:1rem; line-height:1.75; }
-  .landmark-modal__facts { background:#1f392d; color:#f7f2e6; }
-  .landmark-modal__facts h3 { margin:0 0 28px; color:#fff; font-size:1.55rem; }
+
+  .landmark-modal__facts { position:relative; isolation:isolate; overflow:hidden; padding:clamp(34px,4vw,52px) clamp(26px,3vw,42px); color:#22382e; background-color:#f4ecd9; background-image:radial-gradient(circle at 17% 18%,rgba(217,119,69,.08) 0 1px,transparent 1.5px),radial-gradient(circle at 74% 62%,rgba(31,57,45,.07) 0 1px,transparent 1.5px),repeating-linear-gradient(to bottom,transparent 0 31px,rgba(49,85,69,.075) 32px,transparent 33px); background-size:23px 21px,29px 27px,100% 33px; box-shadow:inset 12px 0 22px rgba(80,65,42,.055); }
+  .landmark-modal__facts::before { content:''; position:absolute; z-index:-1; top:0; bottom:0; left:24px; width:1px; background:rgba(217,119,69,.35); box-shadow:3px 0 0 rgba(217,119,69,.08); }
+  .landmark-modal__facts::after { content:''; position:absolute; z-index:-1; right:-18px; bottom:-18px; width:58px; height:58px; background:linear-gradient(135deg,rgba(216,203,174,.1) 0 49%,#ddd0b6 50% 100%); box-shadow:-5px -5px 12px rgba(72,59,39,.08); transform:rotate(2deg); }
+  .landmark-notes__tape { position:absolute; top:10px; left:50%; width:92px; height:24px; background:rgba(196,174,132,.42); transform:translateX(-50%) rotate(-2deg); box-shadow:0 1px 1px rgba(70,55,34,.08); }
+  .landmark-notes__heading { position:relative; margin:8px 0 21px; padding-left:12px; }
+  .landmark-notes__heading > span { color:rgba(31,57,45,.58); font:700 .56rem/1.2 'DM Sans',sans-serif; letter-spacing:.13em; }
+  .landmark-notes__heading h3 { margin:5px 0 0; color:#1f392d; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:clamp(2rem,3vw,2.55rem); font-weight:600; line-height:.9; transform:rotate(-1deg); }
+  .landmark-notes__heading svg { display:block; width:min(190px,88%); margin-top:7px; overflow:visible; fill:none; stroke:#d97745; stroke-width:1.6; stroke-linecap:round; opacity:.78; }
   .landmark-modal__facts dl { display:grid; gap:0; margin:0; }
-  .landmark-modal__facts div { padding:17px 0; border-top:1px solid rgba(255,255,255,.14); }
-  .landmark-modal__facts dt { margin-bottom:6px; color:#d9a47f; font:700 .61rem/1.2 'DM Sans',sans-serif; letter-spacing:.12em; text-transform:uppercase; }
-  .landmark-modal__facts dd { margin:0; color:rgba(255,255,255,.84); font-size:.88rem; line-height:1.55; }
-  @media(max-width:900px){ .landmark-modal__grid{grid-template-columns:1fr 1fr}.landmark-modal__facts{grid-column:1/-1}.landmark-modal__facts dl{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px} }
-  @media(max-width:650px){ .landmark-modal__grid{grid-template-columns:1fr}.landmark-modal__facts{grid-column:auto}.landmark-modal__facts dl{grid-template-columns:1fr}.landmark-gallery__stage{min-height:270px}.landmark-gallery__stage>img{height:270px}.landmark-gallery__thumbnail img{height:56px}.landmark-modal__story h2{font-size:3.8rem} }
+  .landmark-note { display:grid; grid-template-columns:42px minmax(0,1fr); gap:11px; align-items:start; padding:13px 0 14px 10px; border-bottom:1px dashed rgba(31,57,45,.18); }
+  .landmark-note:last-child { border-bottom:0; }
+  .landmark-note__icon { display:grid; place-items:center; width:38px; height:38px; margin-top:1px; color:#315545; transform:rotate(-4deg); }
+  .landmark-note:nth-child(even) .landmark-note__icon { color:#d97745; transform:rotate(4deg); }
+  .landmark-note__icon svg { width:34px; height:34px; overflow:visible; fill:none; stroke:currentColor; stroke-width:1.65; stroke-linecap:round; stroke-linejoin:round; }
+  .landmark-note__copy { min-width:0; }
+  .landmark-note dt { margin:0 0 3px; color:#a45d3a; font:700 .57rem/1.2 'DM Sans',sans-serif; letter-spacing:.12em; text-transform:uppercase; }
+  .landmark-note dd { margin:0; color:#263b32; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:1.08rem; font-weight:500; line-height:1.18; }
+  .landmark-note__annotation { display:flex; flex-wrap:wrap; align-items:baseline; gap:5px 8px; margin:6px 0 0; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:1rem; line-height:1.05; transform:rotate(-1deg); }
+  .landmark-note__crossed { position:relative; color:rgba(38,59,50,.5); white-space:nowrap; }
+  .landmark-note__crossed::before,.landmark-note__crossed::after { content:''; position:absolute; left:-2px; right:-3px; top:52%; height:1.5px; background:#a45d3a; transform:rotate(-5deg); }
+  .landmark-note__crossed::after { top:60%; transform:rotate(3deg); opacity:.72; }
+  .landmark-note__correction { color:#b8653e; font-weight:700; }
+  .landmark-note__correction::before { content:'→ '; }
+  .landmark-note__aside { color:#315545; font-weight:600; }
+  .landmark-note__aside::before { content:'↳ '; color:#d97745; }
+  .landmark-notes__footer { display:flex; align-items:center; justify-content:flex-end; gap:3px; margin:15px 1px -4px 0; color:#315545; font-family:'Caveat','Segoe Print','Bradley Hand',cursive; font-size:1.02rem; font-weight:600; transform:rotate(-2deg); }
+  .landmark-notes__footer svg { width:46px; height:22px; fill:none; stroke:#d97745; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+
+  @media(max-width:900px){
+    .landmark-modal__grid{grid-template-columns:1fr 1fr}
+    .landmark-modal__facts{grid-column:1/-1}
+    .landmark-modal__facts dl{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px}
+    .landmark-note:nth-last-child(-n+2){border-bottom:0}
+  }
+  @media(max-width:650px){
+    .landmark-modal__grid{grid-template-columns:1fr}
+    .landmark-modal__facts{grid-column:auto;padding-left:25px;padding-right:22px}
+    .landmark-modal__facts dl{grid-template-columns:1fr}
+    .landmark-note:nth-last-child(-n+2){border-bottom:1px dashed rgba(31,57,45,.18)}
+    .landmark-note:last-child{border-bottom:0}
+    .landmark-gallery__stage{min-height:270px}
+    .landmark-gallery__stage>img{height:270px}
+    .landmark-gallery__thumbnail img{height:56px}
+    .landmark-modal__story h2{font-size:3.8rem}
+  }
 </style>
