@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "predev": "node scripts/apply-accommodation-candidate-images.mjs && node scripts/apply-gym-candidate-images.mjs && node scripts/apply-markets-shopping-candidate-images.mjs",
+    "predev": "node scripts/apply-accommodation-candidate-images.mjs && node scripts/apply-gym-candidate-images.mjs && node scripts/apply-markets-shopping-candidate-images.mjs && node scripts/apply-essential-information-candidate-images.mjs",
     "dev": "astro dev",
-    "prebuild": "node scripts/apply-accommodation-candidate-images.mjs && node scripts/apply-gym-candidate-images.mjs && node scripts/apply-markets-shopping-candidate-images.mjs",
+    "prebuild": "node scripts/apply-accommodation-candidate-images.mjs && node scripts/apply-gym-candidate-images.mjs && node scripts/apply-markets-shopping-candidate-images.mjs && node scripts/apply-essential-information-candidate-images.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
@@ -14,6 +14,7 @@
     "images:accommodation": "node scripts/apply-accommodation-candidate-images.mjs",
     "images:gyms": "node scripts/apply-gym-candidate-images.mjs",
     "images:markets": "node scripts/apply-markets-shopping-candidate-images.mjs",
+    "images:essential": "node scripts/apply-essential-information-candidate-images.mjs",
     "images:places": "node scripts/find-place-images.mjs"
   },
   "dependencies": {
