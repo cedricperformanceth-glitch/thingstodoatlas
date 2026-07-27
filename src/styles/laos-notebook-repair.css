@@ -128,47 +128,6 @@
   transform: translate(-12px, -49px);
 }
 
-/* Pha Pa Tou popup: show the main view plus two additional exact views as notebook photos. */
-#pha-pa-tou-modal .landmark-gallery__stage {
-  isolation: isolate;
-  overflow: hidden;
-}
-
-#pha-pa-tou-modal .landmark-gallery__stage > img {
-  filter: saturate(.9) contrast(.96);
-}
-
-#pha-pa-tou-modal .landmark-gallery__stage::before,
-#pha-pa-tou-modal .landmark-gallery__stage::after {
-  content: '';
-  position: absolute;
-  z-index: 3;
-  bottom: 13px;
-  width: 34%;
-  height: 39%;
-  border: 5px solid #f8f2e5;
-  background-position: center;
-  background-size: cover;
-  box-shadow: 0 7px 17px rgba(31,41,36,.25);
-  pointer-events: none;
-}
-
-#pha-pa-tou-modal .landmark-gallery__stage::before {
-  left: 13px;
-  background-image: url('/images/laos/landmarks/pha-pa-tou-02.jpg');
-  transform: rotate(-3deg);
-}
-
-#pha-pa-tou-modal .landmark-gallery__stage::after {
-  right: 13px;
-  background-image: url('/images/laos/landmarks/pha-pa-tou-03.jpg');
-  transform: rotate(2.5deg);
-}
-
-#pha-pa-tou-modal .landmark-gallery__credit::after {
-  content: ' · Additional views: OKIHIRO / Laosuki · makame__ / TikTok';
-}
-
 /* Align the southern landmark points with their nearby city chapters. */
 .laos-map-page [data-open-landmark="wat-phou-modal"] {
   transform: translate(93px, 0);
@@ -196,12 +155,5 @@
     top: 146px !important;
     left: calc(50% - 13px) !important;
     width: 204px !important;
-  }
-
-  #pha-pa-tou-modal .landmark-gallery__stage::before,
-  #pha-pa-tou-modal .landmark-gallery__stage::after {
-    bottom: 10px;
-    width: 36%;
-    height: 35%;
   }
 }
