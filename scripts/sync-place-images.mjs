@@ -1,7 +1,9 @@
-import { access, readFile, readdir, writeFile } from 'node:fs/promises';
+import { access, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import { spawn } from 'node:child_process';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
+import { discoverPlaces, finderSourceForPlaces } from './place-data-discovery.mjs';
 
 const DATA_DIR = process.env.PLACE_DATA_DIR || 'src/data';
 const OUTPUT_FILE = process.env.PLACE_IMAGES_FILE || path.join(DATA_DIR, 'place-images.generated.json');
@@ -56,21 +58,35 @@ const merged = [...bySlug.values()].sort((left, right) => String(left.slug).loca
 await writeFile(OUTPUT_FILE, `${JSON.stringify(merged, null, 2)}\n`);
 console.log(`Merged ${applied} candidate records from ${candidateFiles.length} candidate files; preserved ${preserved} stronger existing matches.`);
 
-const child = spawn(process.execPath, [FINDER_FILE, ...process.argv.slice(2)], {
-  stdio: 'inherit',
-  env: process.env
+const discovery = await discoverPlaces();
+if (!discovery.places.length) throw new Error('No standard place records were discovered in src/data or src/pages.');
+
+const cities = [...new Set(discovery.places.map((place) => `${place.city}, ${place.country}`))].sort();
+console.log(`Discovered ${discovery.places.length} standard places across ${cities.length} cities from ${discovery.files.length} source files.`);
+console.log(`Cities: ${cities.join(' · ')}`);
+if (discovery.excluded.length) {
+  console.log(`Excluded ${discovery.excluded.length} records managed by the Sigiriya or Adam's Peak systems.`);
+}
+
+const temporaryDirectory = await mkdtemp(path.join(tmpdir(), 'things-to-do-atlas-images-'));
+const temporaryAtlas = path.join(temporaryDirectory, 'all-standard-places.ts');
+await writeFile(temporaryAtlas, finderSourceForPlaces(discovery.places));
+
+const exitCode = await new Promise((resolve, reject) => {
+  const child = spawn(process.execPath, [FINDER_FILE, ...process.argv.slice(2)], {
+    stdio: 'inherit',
+    env: {
+      ...process.env,
+      ATLAS_FILE: temporaryAtlas,
+      PLACE_IMAGES_FILE: OUTPUT_FILE
+    }
+  });
+  child.once('error', reject);
+  child.once('exit', (code, signal) => {
+    if (signal) reject(new Error(`Image finder stopped by signal ${signal}.`));
+    else resolve(code ?? 1);
+  });
 });
 
-child.on('error', (error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
-
-child.on('exit', (code, signal) => {
-  if (signal) {
-    console.error(`Image finder stopped by signal ${signal}.`);
-    process.exitCode = 1;
-    return;
-  }
-  process.exitCode = code ?? 1;
-});
+await rm(temporaryDirectory, { recursive: true, force: true });
+if (exitCode !== 0) process.exitCode = exitCode;
