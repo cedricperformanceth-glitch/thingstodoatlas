@@ -1,36 +1,50 @@
 ---
+import PlaceCard from './PlaceCard.astro';
+import { places } from '../data/atlas';
+
 const { country, countrySlug, city, citySlug, categorySlug } = Astro.props;
 const categoryMap = {
   restaurants: { name: 'Restaurants', noun: 'restaurants', intro: 'Local kitchens, reliable tables and places worth saving for later.' },
   cafes: { name: 'Cafés', noun: 'cafés', intro: 'Good coffee, quiet corners and easy places to pause.' },
   accommodation: { name: 'Guesthouses', noun: 'stays', intro: 'Guesthouses, hotels and practical bases around the city.' },
   'scooter-rental': { name: 'Scooter Rental', noun: 'rental addresses', intro: 'Useful transport options and practical checks before taking the road.' },
+  'bolaven-loop': { name: 'Bolaven Loop', noun: 'route notes', intro: 'Road notes, practical stops and places worth saving along the loop.' },
+  waterfalls: { name: 'Waterfalls', noun: 'waterfalls', intro: 'Falls, forest paths and natural stops worth adding to the route.' },
   'things-to-do': { name: 'Things to do', noun: 'things to do', intro: 'Experiences, walks and local places to add to your route.' },
   'gyms-fitness': { name: 'Gyms & Fitness', noun: 'places to train', intro: 'Gyms and training spaces worth keeping in your notebook.' },
   'markets-shopping': { name: 'Markets & Shopping', noun: 'markets and shops', intro: 'Markets, useful stores and local shopping stops.' },
   'essential-information': { name: 'Essential Information', noun: 'useful addresses', intro: 'Healthcare, money, connectivity and practical city essentials.' },
 };
 const category = categoryMap[categorySlug] ?? categoryMap['things-to-do'];
+const cityPlaces = places.filter((place) =>
+  place.country === country && place.city === city && place.category === categorySlug
+);
 ---
 
 <section class="listing container" aria-labelledby="listing-title">
   <header class="chapter-sheet">
     <div class="chapter-sheet__meta">
       <div><span>{country}</span><strong>{category.name}</strong></div>
-      <div><span>{city}</span><strong>Guide in preparation</strong></div>
+      <div><span>{city}</span><strong>{cityPlaces.length ? `${cityPlaces.length} saved` : 'Guide in preparation'}</strong></div>
     </div>
     <div class="chapter-sheet__title">
-      <h1 id="listing-title"><span>0 {category.noun} in {city}</span><em>field guide.</em></h1>
+      <h1 id="listing-title"><span>{cityPlaces.length} {category.noun} in {city}</span><em>field guide.</em></h1>
       <p>{category.intro}</p>
     </div>
   </header>
 
-  <div class="listing__empty">
-    <p class="eyebrow">Coming together</p>
-    <h2>The useful stops are being documented.</h2>
-    <p>The page and card system are ready. Addresses will appear here once the shortlist and field notes have been checked.</p>
-    <a href={`/${countrySlug}/${citySlug}`}>Back to the {city} notebook →</a>
-  </div>
+  {cityPlaces.length ? (
+    <div class="listing__grid">
+      {cityPlaces.map((place, index) => <PlaceCard place={place} index={index} />)}
+    </div>
+  ) : (
+    <div class="listing__empty">
+      <p class="eyebrow">Coming together</p>
+      <h2>The useful stops are being documented.</h2>
+      <p>The page and card system are ready. Addresses will appear here once the shortlist and field notes have been checked.</p>
+      <a href={`/${countrySlug}/${citySlug}`}>Back to the {city} notebook →</a>
+    </div>
+  )}
 </section>
 
 <style>
@@ -47,10 +61,12 @@ const category = categoryMap[categorySlug] ?? categoryMap['things-to-do'];
   .chapter-sheet__title h1 span,.chapter-sheet__title h1 em { display:block; }
   .chapter-sheet__title h1 em { color:var(--green); }
   .chapter-sheet__title p { margin:0; color:var(--muted); font-size:clamp(.78rem,1vw,.9rem); line-height:1.65; }
+  .listing__grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(18px,2.2vw,30px); }
   .listing__empty { max-width:760px; margin:35px auto 0; padding:clamp(38px,6vw,70px); background:#f7f2e6; text-align:center; box-shadow:0 16px 38px rgba(31,41,36,.08); }
   .listing__empty .eyebrow { color:var(--terracotta); font-size:.66rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; }
   .listing__empty h2 { margin:14px 0 18px; color:var(--green); font-size:clamp(2rem,4vw,3.4rem); line-height:1; }
   .listing__empty p { color:var(--muted); line-height:1.7; }
   .listing__empty a { display:inline-block; margin-top:22px; color:var(--green); font-weight:700; text-decoration:none; }
-  @media(max-width:760px){ .chapter-sheet__title{grid-template-columns:1fr}.chapter-sheet__meta{grid-template-columns:1fr}.chapter-sheet__meta div:last-child{text-align:left} }
+  @media(max-width:980px){ .listing__grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  @media(max-width:760px){ .chapter-sheet__title{grid-template-columns:1fr}.chapter-sheet__meta{grid-template-columns:1fr}.chapter-sheet__meta div:last-child{text-align:left}.listing__grid{grid-template-columns:1fr;} }
 </style>
