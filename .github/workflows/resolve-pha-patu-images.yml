@@ -1,0 +1,67 @@
+name: Resolve Pha Patu images
+
+on:
+  push:
+    branches:
+      - tmp-pha-patu-images
+
+permissions:
+  contents: write
+
+jobs:
+  resolve:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract exact image URLs
+        shell: bash
+        run: |
+          python - <<'PY'
+          import requests, re, html
+          from pathlib import Path
+
+          headers = {
+              'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/126 Safari/537.36'
+          }
+          pages = [
+              'https://laosuki.com/pha-patu-viewpoint-luang-prabang-sea-of-mist/',
+              'https://www.laosfreedomtravel.com/service-page/2-days-treeking-to-pha-pa-tou',
+              'https://pantip.com/topic/39606086',
+          ]
+          out = []
+          for page in pages:
+              r = requests.get(page, headers=headers, allow_redirects=True, timeout=40)
+              out.extend([f'PAGE={page}', f'STATUS={r.status_code}', f'FINAL={r.url}'])
+              candidates = []
+              for pattern in [
+                  r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)',
+                  r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']',
+                  r'<meta[^>]+name=["\']twitter:image[^"\']*["\'][^>]+content=["\']([^"\']+)',
+                  r'<img[^>]+(?:src|data-src|data-lazy-src)=["\']([^"\']+)',
+              ]:
+                  candidates.extend(re.findall(pattern, r.text, re.I))
+              seen = set()
+              for candidate in candidates:
+                  candidate = html.unescape(candidate).replace('\\u0026', '&')
+                  if candidate.startswith('//'):
+                      candidate = 'https:' + candidate
+                  if not candidate.startswith('http'):
+                      continue
+                  low = candidate.lower()
+                  if not any(ext in low for ext in ('.jpg', '.jpeg', '.png', '.webp')):
+                      continue
+                  if candidate in seen:
+                      continue
+                  seen.add(candidate)
+                  out.append('IMAGE=' + candidate)
+              out.append('---')
+          Path('pha-patu-image-candidates.txt').write_text('\n'.join(out), encoding='utf-8')
+          PY
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add pha-patu-image-candidates.txt
+          git commit -m "Resolve Pha Patu image candidates"
+          git push
