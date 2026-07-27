@@ -98,10 +98,77 @@
   transform: translate(48px, 62px);
 }
 
+/* Xe Bang Fai: replace the empty placeholder with a field-photo composition. */
+#xe-bang-fai-modal .landmark-modal__placeholder {
+  position: relative !important;
+  min-height: 390px !important;
+  overflow: visible !important;
+  border: 10px solid #f7f0df !important;
+  background-color: #ddd3bd !important;
+  background-image: url('https://whc.unesco.org/uploads/thumbs/site_0951_0031-1000-667-20250617115722.jpg') !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  box-shadow: 0 12px 24px rgba(39, 50, 43, .18) !important;
+  transform: rotate(-.6deg);
+}
+
+#xe-bang-fai-modal .landmark-modal__placeholder > span {
+  display: none !important;
+}
+
+#xe-bang-fai-modal .landmark-modal__placeholder::before,
+#xe-bang-fai-modal .landmark-modal__placeholder::after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  bottom: -72px;
+  width: 31%;
+  height: 112px;
+  border: 7px solid #f7f0df;
+  background-color: #d9cfb8;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 0 9px 18px rgba(39, 50, 43, .2);
+  pointer-events: none;
+}
+
+#xe-bang-fai-modal .landmark-modal__placeholder::before {
+  left: 7%;
+  background-image: url('https://whc.unesco.org/document/219859');
+  transform: rotate(-2.2deg);
+}
+
+#xe-bang-fai-modal .landmark-modal__placeholder::after {
+  right: 7%;
+  background-image: url('https://commons.wikimedia.org/wiki/Special:Redirect/file/XeBanFai.jpg?width=1200');
+  transform: rotate(2deg);
+}
+
+#xe-bang-fai-modal .landmark-modal__actions {
+  margin-top: 84px;
+}
+
 @media (max-width: 700px) {
   .country-section #country-laos-2 .country-feature__laos-tuktuk {
     top: 146px !important;
     left: calc(50% - 13px) !important;
     width: 204px !important;
+  }
+
+  #xe-bang-fai-modal .landmark-modal__placeholder {
+    min-height: 300px !important;
+  }
+
+  #xe-bang-fai-modal .landmark-modal__placeholder::before,
+  #xe-bang-fai-modal .landmark-modal__placeholder::after {
+    bottom: -56px;
+    width: 36%;
+    height: 88px;
+  }
+
+  #xe-bang-fai-modal .landmark-modal__actions {
+    margin-top: 68px;
   }
 }
