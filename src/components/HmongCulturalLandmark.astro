@@ -86,6 +86,15 @@ const hmongGallery = [
     label.setAttribute('y', String(point.y - 48));
     label.textContent = 'Hmong';
 
+    // Astro scopes the Laos map styles with a generated data attribute. Because this
+    // marker is created in JavaScript, copy that scope onto every generated SVG node.
+    const scopeAttribute = [...overlay.attributes].find((attribute) => attribute.name.startsWith('data-astro-cid-'));
+    if (scopeAttribute) {
+      [marker, ring, dot, leader, label].forEach((element) => {
+        element.setAttribute(scopeAttribute.name, scopeAttribute.value);
+      });
+    }
+
     marker.append(ring, dot, leader, label);
     overlay.append(marker);
 
@@ -117,10 +126,51 @@ const hmongGallery = [
 <style is:global>
   .laos-map-page[aria-labelledby="laos-map-title"] [data-open-landmark="hmong-cultural-modal"] {
     color: #2f7652 !important;
+    cursor: pointer;
+    outline: none;
+  }
+
+  /* Fallback styling for the JavaScript-created SVG marker. */
+  .laos-map-page[aria-labelledby="laos-map-title"] [data-open-landmark="hmong-cultural-modal"] .city-marker__ring {
+    fill: color-mix(in srgb, currentColor 14%, transparent);
+    stroke: currentColor;
+    stroke-width: 2.5px;
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(.5) !important;
+    transition: transform 180ms ease, opacity 180ms ease;
   }
 
   .laos-map-page[aria-labelledby="laos-map-title"] [data-open-landmark="hmong-cultural-modal"] .city-marker__dot {
+    fill: currentColor;
     stroke: #f4ecd9 !important;
+    stroke-width: 2.5px;
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(.5) !important;
+  }
+
+  .laos-map-page[aria-labelledby="laos-map-title"] [data-open-landmark="hmong-cultural-modal"] .city-marker__leader {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5px;
+    stroke-linecap: round;
+  }
+
+  .laos-map-page[aria-labelledby="laos-map-title"] [data-open-landmark="hmong-cultural-modal"] .city-marker__label {
+    fill: currentColor;
+    font-family: Georgia, serif;
+    font-size: 20px;
+    font-weight: 700;
+    paint-order: stroke;
+    stroke: #fff;
+    stroke-width: 5px;
+    stroke-linejoin: round;
+  }
+
+  .laos-map-page[aria-labelledby="laos-map-title"] [data-open-landmark="hmong-cultural-modal"]:hover .city-marker__ring,
+  .laos-map-page[aria-labelledby="laos-map-title"] [data-open-landmark="hmong-cultural-modal"]:focus .city-marker__ring {
+    transform: scale(.6) !important;
   }
 
   #hmong-cultural-modal .landmark-action--maps {
