@@ -3,6 +3,18 @@ import HmongCulturalLandmark from './HmongCulturalLandmark.astro';
 
 const currentPath = Astro.url.pathname;
 const isLaosMapPage = currentPath === '/laos' || currentPath === '/laos/';
+const countrySlug = currentPath.startsWith('/sri-lanka') ? 'sri-lanka' : 'laos';
+const cities = countrySlug === 'sri-lanka'
+  ? [
+      { slug: 'negombo', name: 'Negombo' },
+      { slug: 'colombo', name: 'Colombo' },
+      { slug: 'ahangama', name: 'Ahangama' },
+      { slug: 'mirissa', name: 'Mirissa' }
+    ]
+  : [
+      { slug: 'pakse', name: 'Pakse' },
+      { slug: 'tad-lo', name: 'Tad Lo' }
+    ];
 ---
 
 <section class="plan-trip-intro" aria-label="Plan my trip">
@@ -22,12 +34,11 @@ const isLaosMapPage = currentPath === '/laos' || currentPath === '/laos/';
   <div class="plan-trip-intro__choice">
     <p class="plan-trip-intro__question">Where do you want to begin?</p>
     <label class="plan-trip-intro__label" for="trip-start-city">Choose a city</label>
-    <select id="trip-start-city" data-trip-city-select>
+    <select id="trip-start-city" data-trip-city-select data-trip-country={countrySlug}>
       <option value="">Select a starting point</option>
-      <option value="pakse">Pakse</option>
-      <option value="tad-lo">Tad Lo</option>
+      {cities.map((city) => <option value={city.slug}>{city.name}</option>)}
     </select>
-    <button class="plan-trip-intro__cta" type="button" data-trip-start disabled>
+    <button class="plan-trip-intro__cta" type="button" data-trip-start data-trip-country={countrySlug} disabled>
       <span data-trip-start-label>Choose a city first</span><span aria-hidden="true">→</span>
     </button>
     <p class="plan-trip-intro__note">You’ll build your trip as you explore.</p>
