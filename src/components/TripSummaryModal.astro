@@ -1,0 +1,596 @@
+<dialog class="trip-summary-modal" data-trip-summary-dialog aria-labelledby="trip-summary-title">
+  <div class="trip-summary-modal__paper">
+    <header class="trip-summary-modal__header">
+      <div>
+        <p>FIELD NOTES <span aria-hidden="true">·</span> TRIP SUMMARY</p>
+        <h2 id="trip-summary-title" data-trip-summary-title>Trip summary</h2>
+        <span data-trip-summary-meta></span>
+      </div>
+      <button type="button" data-trip-summary-close aria-label="Close trip summary">×</button>
+    </header>
+
+    <div class="trip-summary-modal__content" data-trip-summary-content></div>
+
+    <footer class="trip-summary-modal__footer">
+      <p>Your saved route, ready to keep offline.</p>
+      <div>
+        <button class="trip-summary-modal__secondary" type="button" data-trip-summary-close>BACK TO TRIP</button>
+        <button class="trip-summary-modal__download" type="button" data-trip-summary-pdf>DOWNLOAD PDF</button>
+      </div>
+    </footer>
+  </div>
+</dialog>
+
+<style is:global>
+  .plan-trip-drawer__foot [data-trip-summary-open] {
+    color: #315545;
+    border-bottom-color: rgba(49, 85, 69, .42);
+  }
+
+  .plan-trip-drawer__foot [data-trip-summary-open]:hover {
+    color: #b76645;
+    border-bottom-color: #b76645;
+  }
+
+  .trip-summary-modal {
+    width: min(900px, calc(100vw - 28px));
+    max-width: none;
+    max-height: min(820px, calc(100vh - 28px));
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    background: transparent;
+    color: #252923;
+  }
+
+  .trip-summary-modal::backdrop {
+    background: rgba(20, 29, 24, .72);
+    backdrop-filter: blur(4px);
+  }
+
+  .trip-summary-modal__paper {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    max-height: min(820px, calc(100vh - 28px));
+    border: 1px solid rgba(49, 85, 69, .3);
+    background:
+      radial-gradient(circle at 14% 10%, rgba(183, 102, 69, .06), transparent 30%),
+      repeating-linear-gradient(0deg, transparent 0 29px, rgba(49, 85, 69, .035) 29px 30px),
+      #f4eedf;
+    box-shadow: 8px 11px 0 rgba(49, 85, 69, .09), 0 30px 80px rgba(17, 29, 23, .34);
+  }
+
+  .trip-summary-modal__header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 1.7rem 4.4rem 1.35rem 1.7rem;
+    border-bottom: 1px dashed rgba(49, 85, 69, .28);
+  }
+
+  .trip-summary-modal__header::after {
+    content: '';
+    position: absolute;
+    left: 1.7rem;
+    bottom: 1rem;
+    width: 120px;
+    border-top: 1px solid rgba(183, 102, 69, .58);
+    transform: rotate(-1deg);
+  }
+
+  .trip-summary-modal__header p {
+    margin: 0 0 .55rem;
+    color: #b76645;
+    font: 700 .55rem/1 'DM Sans', sans-serif;
+    letter-spacing: .17em;
+  }
+
+  .trip-summary-modal__header p span { color: #315545; }
+
+  .trip-summary-modal__header h2 {
+    margin: 0 0 .55rem;
+    color: #315545;
+    font: 500 clamp(2rem, 5vw, 3.1rem)/1 Fraunces, serif;
+    letter-spacing: -.045em;
+  }
+
+  .trip-summary-modal__header > div > span {
+    display: block;
+    padding-bottom: .65rem;
+    color: #6f746d;
+    font: 500 1.08rem/1.05 Caveat, cursive;
+    transform: rotate(-.5deg);
+  }
+
+  .trip-summary-modal__header > button {
+    position: absolute;
+    top: 1.1rem;
+    right: 1.1rem;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    padding: 0 0 3px;
+    border: 1px solid rgba(49, 85, 69, .25);
+    border-radius: 50%;
+    background: rgba(247, 242, 230, .78);
+    color: #315545;
+    font: 400 1.55rem/1 'DM Sans', sans-serif;
+    cursor: pointer;
+  }
+
+  .trip-summary-modal__content {
+    min-height: 220px;
+    overflow: auto;
+    padding: 1.4rem 1.6rem 1.8rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(49, 85, 69, .38) transparent;
+  }
+
+  .trip-summary-empty {
+    margin: 0;
+    padding: 1.2rem;
+    border: 1px dashed rgba(49, 85, 69, .28);
+    background: rgba(247, 242, 230, .65);
+    color: #667068;
+    font-size: .82rem;
+    line-height: 1.6;
+  }
+
+  .trip-summary-group + .trip-summary-group { margin-top: 1.55rem; }
+
+  .trip-summary-group__title {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    margin: 0 0 .75rem;
+    color: #315545;
+    font: 600 1.55rem/1 Fraunces, serif;
+    letter-spacing: -.035em;
+  }
+
+  .trip-summary-group__title::after {
+    content: '';
+    flex: 1;
+    border-top: 1px dashed rgba(49, 85, 69, .25);
+  }
+
+  .trip-summary-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .trip-summary-card {
+    position: relative;
+    min-width: 0;
+    padding: 1rem 1rem .95rem 3.3rem;
+    border: 1px solid rgba(70, 75, 65, .2);
+    background:
+      linear-gradient(90deg, transparent 43px, rgba(183, 102, 69, .12) 43px 44px, transparent 44px),
+      repeating-linear-gradient(0deg, transparent 0 24px, rgba(49, 85, 69, .05) 24px 25px),
+      rgba(248, 243, 232, .92);
+    box-shadow: 3px 4px 0 rgba(49, 85, 69, .065);
+  }
+
+  .trip-summary-card__number {
+    position: absolute;
+    top: 1rem;
+    left: .75rem;
+    color: #315545;
+    font: 500 1.05rem/1 Fraunces, serif;
+  }
+
+  .trip-summary-card__type {
+    display: inline-block;
+    margin-bottom: .4rem;
+    color: #b76645;
+    font: 700 .48rem/1 'DM Sans', sans-serif;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+  }
+
+  .trip-summary-card h4 {
+    margin: 0 0 .45rem;
+    color: #315545;
+    font: 500 1.16rem/1.08 Fraunces, serif;
+    letter-spacing: -.025em;
+  }
+
+  .trip-summary-card p {
+    margin: 0;
+    color: #70766d;
+    font: 400 .67rem/1.45 'DM Sans', sans-serif;
+  }
+
+  .trip-summary-card a {
+    display: inline-block;
+    margin-top: .65rem;
+    padding-bottom: .2rem;
+    border-bottom: 1px solid rgba(183, 102, 69, .45);
+    color: #315545;
+    font: 700 .58rem/1 'DM Sans', sans-serif;
+    letter-spacing: .04em;
+  }
+
+  .trip-summary-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.6rem 1.15rem;
+    border-top: 1px dashed rgba(49, 85, 69, .28);
+    background: rgba(247, 242, 230, .66);
+  }
+
+  .trip-summary-modal__footer p {
+    margin: 0;
+    color: #70766d;
+    font: 500 1rem/1 Caveat, cursive;
+    transform: rotate(-1deg);
+  }
+
+  .trip-summary-modal__footer > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: .65rem;
+  }
+
+  .trip-summary-modal__footer button {
+    min-height: 40px;
+    padding: 0 .95rem;
+    font: 700 .58rem/1 'DM Sans', sans-serif;
+    letter-spacing: .08em;
+    cursor: pointer;
+  }
+
+  .trip-summary-modal__secondary {
+    border: 1px solid rgba(49, 85, 69, .32);
+    background: transparent;
+    color: #315545;
+  }
+
+  .trip-summary-modal__download {
+    border: 1px solid #315545;
+    background: #315545;
+    color: #f7f2e6;
+    box-shadow: 3px 4px 0 rgba(49, 85, 69, .16);
+  }
+
+  .trip-summary-modal__download:hover { background: #284b3c; }
+
+  @media (max-width: 700px) {
+    .trip-summary-modal { width: calc(100vw - 14px); max-height: calc(100vh - 14px); }
+    .trip-summary-modal__paper { max-height: calc(100vh - 14px); }
+    .trip-summary-modal__header { padding: 1.35rem 3.7rem 1.15rem 1.1rem; }
+    .trip-summary-modal__header::after { left: 1.1rem; bottom: .8rem; }
+    .trip-summary-modal__content { padding: 1.1rem .85rem 1.3rem; }
+    .trip-summary-list { grid-template-columns: 1fr; }
+    .trip-summary-modal__footer { align-items: stretch; flex-direction: column; padding: .9rem 1rem 1rem; }
+    .trip-summary-modal__footer > div { display: grid; grid-template-columns: 1fr 1fr; }
+    .trip-summary-modal__footer button { width: 100%; padding: 0 .55rem; }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const STORAGE_KEY = 'thingsToDoAtlas.trips.v2';
+
+    const readStore = () => {
+      try {
+        const store = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+        return store?.version === 2 && Array.isArray(store.trips) ? store : null;
+      } catch {
+        return null;
+      }
+    };
+
+    const getActiveTrip = () => {
+      const store = readStore();
+      if (!store) return null;
+      return store.trips.find((trip) => trip.id === store.activeTripId) || null;
+    };
+
+    const getItemType = (item) => {
+      const group = String(item.group || '').toLowerCase();
+      const category = String(item.category || '').toLowerCase();
+      if (item.kind === 'landmark' || group === 'landmarks') return 'LANDMARK';
+      if (group === 'accommodation' || /hostel|hotel|guesthouse|stay/.test(category)) return 'STAY';
+      if (/bar|beer|wine/.test(category)) return 'BAR';
+      if (group === 'restaurants' || group === 'cafes' || /restaurant|café|cafe|coffee|bakery|food|noodle|grill|bistro|trattoria/.test(category)) return 'EAT';
+      return 'EXPLORE';
+    };
+
+    const groupTripItems = (trip) => {
+      const groups = new Map();
+      trip.items.forEach((item) => {
+        const groupName = item.kind === 'landmark' || !item.city
+          ? `${trip.countryName} landmarks`
+          : item.city;
+        if (!groups.has(groupName)) groups.set(groupName, []);
+        groups.get(groupName).push(item);
+      });
+      return [...groups.entries()];
+    };
+
+    const installSummaryButton = () => {
+      const footer = document.querySelector('[data-trip-footer]');
+      if (!footer || footer.querySelector('[data-trip-summary-open]')) return;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.tripSummaryOpen = '';
+      button.textContent = 'TRIP SUMMARY';
+      const clear = footer.querySelector('[data-trip-clear]');
+      footer.insertBefore(button, clear || null);
+    };
+
+    const renderSummary = () => {
+      const trip = getActiveTrip();
+      const title = document.querySelector('[data-trip-summary-title]');
+      const meta = document.querySelector('[data-trip-summary-meta]');
+      const content = document.querySelector('[data-trip-summary-content]');
+      const pdfButton = document.querySelector('[data-trip-summary-pdf]');
+      if (!trip || !title || !meta || !content || !(pdfButton instanceof HTMLButtonElement)) return null;
+
+      title.textContent = trip.name;
+      const cityCount = new Set(trip.items.filter((item) => item.kind !== 'landmark').map((item) => item.city).filter(Boolean)).size;
+      meta.textContent = `${trip.countryName} · ${trip.items.length} saved ${trip.items.length === 1 ? 'card' : 'cards'}${cityCount ? ` · ${cityCount} ${cityCount === 1 ? 'city' : 'cities'}` : ''}`;
+      pdfButton.disabled = trip.items.length === 0;
+      content.replaceChildren();
+
+      if (!trip.items.length) {
+        const empty = document.createElement('p');
+        empty.className = 'trip-summary-empty';
+        empty.textContent = 'This trip is still empty. Save a restaurant, stay, activity or landmark and it will appear here.';
+        content.append(empty);
+        return trip;
+      }
+
+      let itemNumber = 0;
+      groupTripItems(trip).forEach(([groupName, items]) => {
+        const section = document.createElement('section');
+        section.className = 'trip-summary-group';
+        const heading = document.createElement('h3');
+        heading.className = 'trip-summary-group__title';
+        heading.textContent = groupName;
+        const list = document.createElement('ol');
+        list.className = 'trip-summary-list';
+
+        items.forEach((item) => {
+          itemNumber += 1;
+          const row = document.createElement('li');
+          row.className = 'trip-summary-card';
+          const number = document.createElement('span');
+          number.className = 'trip-summary-card__number';
+          number.textContent = String(itemNumber).padStart(2, '0');
+          const type = document.createElement('span');
+          type.className = 'trip-summary-card__type';
+          type.textContent = getItemType(item);
+          const name = document.createElement('h4');
+          name.textContent = item.name;
+          const details = document.createElement('p');
+          const location = item.city || item.countryName || trip.countryName;
+          details.textContent = `${location}${item.category ? ` · ${item.category}` : ''}${item.address ? ` · ${item.address}` : ''}`;
+          row.append(number, type, name, details);
+
+          if (item.url) {
+            const link = document.createElement('a');
+            link.href = item.url;
+            link.textContent = 'Open the saved card →';
+            row.append(link);
+          }
+          list.append(row);
+        });
+
+        section.append(heading, list);
+        content.append(section);
+      });
+      return trip;
+    };
+
+    const ascii = (value) => String(value || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[‘’]/g, "'")
+      .replace(/[“”]/g, '"')
+      .replace(/[–—]/g, '-')
+      .replace(/[^\x20-\x7E]/g, '?');
+
+    const pdfEscape = (value) => ascii(value).replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)');
+
+    const wrapText = (value, maxCharacters) => {
+      const words = ascii(value).trim().split(/\s+/).filter(Boolean);
+      const lines = [];
+      let line = '';
+      words.forEach((word) => {
+        const candidate = line ? `${line} ${word}` : word;
+        if (candidate.length > maxCharacters && line) {
+          lines.push(line);
+          line = word;
+        } else {
+          line = candidate;
+        }
+      });
+      if (line) lines.push(line);
+      return lines.length ? lines : [''];
+    };
+
+    const buildTripPdf = (trip) => {
+      const pageWidth = 595;
+      const pageHeight = 842;
+      const left = 48;
+      const right = 547;
+      const top = 790;
+      const bottom = 54;
+      const pages = [];
+      let commands = [];
+      let y = top;
+
+      const newPage = () => {
+        if (commands.length) pages.push(commands.join('\n'));
+        commands = [];
+        y = top;
+      };
+
+      const text = (value, x, textY, size = 10, bold = false) => {
+        commands.push(`BT /${bold ? 'F2' : 'F1'} ${size} Tf 1 0 0 1 ${x} ${textY} Tm (${pdfEscape(value)}) Tj ET`);
+      };
+
+      const rule = (ruleY) => commands.push(`0.55 w 0.19 0.33 0.27 RG ${left} ${ruleY} m ${right} ${ruleY} l S`);
+
+      const ensureSpace = (height) => {
+        if (y - height < bottom) {
+          newPage();
+          text(trip.name, left, y, 12, true);
+          y -= 24;
+        }
+      };
+
+      text('THINGS TO DO ATLAS', left, y, 9, true);
+      y -= 28;
+      text(trip.name, left, y, 22, true);
+      y -= 20;
+      text(`${trip.countryName} - ${trip.items.length} saved ${trip.items.length === 1 ? 'card' : 'cards'}`, left, y, 10, false);
+      text(new Date().toLocaleDateString('en-GB'), right - 72, y, 9, false);
+      y -= 18;
+      rule(y);
+      y -= 28;
+
+      let itemNumber = 0;
+      groupTripItems(trip).forEach(([groupName, items]) => {
+        ensureSpace(42);
+        text(groupName, left, y, 14, true);
+        y -= 19;
+
+        items.forEach((item) => {
+          itemNumber += 1;
+          const location = item.city || item.countryName || trip.countryName;
+          const detailLines = wrapText(`${location}${item.category ? ` - ${item.category}` : ''}${item.address ? ` - ${item.address}` : ''}`, 82);
+          const required = 40 + (detailLines.length * 12);
+          ensureSpace(required);
+          text(`${String(itemNumber).padStart(2, '0')}  ${getItemType(item)}`, left, y, 8, true);
+          y -= 15;
+          wrapText(item.name, 62).forEach((line) => {
+            text(line, left + 22, y, 12, true);
+            y -= 15;
+          });
+          detailLines.forEach((line) => {
+            text(line, left + 22, y, 9, false);
+            y -= 12;
+          });
+          y -= 12;
+        });
+        y -= 8;
+      });
+
+      if (commands.length) pages.push(commands.join('\n'));
+
+      const objectCount = 4 + (pages.length * 2);
+      const objects = new Array(objectCount + 1);
+      objects[1] = '<< /Type /Catalog /Pages 2 0 R >>';
+      const kids = pages.map((_, index) => `${5 + (index * 2)} 0 R`).join(' ');
+      objects[2] = `<< /Type /Pages /Count ${pages.length} /Kids [${kids}] >>`;
+      objects[3] = '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>';
+      objects[4] = '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>';
+
+      pages.forEach((pageCommands, index) => {
+        const pageNumber = 5 + (index * 2);
+        const contentNumber = pageNumber + 1;
+        const footer = `BT /F1 8 Tf 1 0 0 1 48 30 Tm (${pdfEscape(trip.name)} - page ${index + 1} of ${pages.length}) Tj ET`;
+        const stream = `${pageCommands}\n${footer}`;
+        objects[pageNumber] = `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${contentNumber} 0 R >>`;
+        objects[contentNumber] = `<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`;
+      });
+
+      let pdf = '%PDF-1.4\n%TTDA\n';
+      const offsets = [0];
+      for (let index = 1; index <= objectCount; index += 1) {
+        offsets[index] = pdf.length;
+        pdf += `${index} 0 obj\n${objects[index]}\nendobj\n`;
+      }
+      const xrefOffset = pdf.length;
+      pdf += `xref\n0 ${objectCount + 1}\n`;
+      pdf += '0000000000 65535 f \n';
+      for (let index = 1; index <= objectCount; index += 1) {
+        pdf += `${String(offsets[index]).padStart(10, '0')} 00000 n \n`;
+      }
+      pdf += `trailer\n<< /Size ${objectCount + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+      return new Blob([pdf], { type: 'application/pdf' });
+    };
+
+    const downloadPdf = () => {
+      const trip = getActiveTrip();
+      if (!trip?.items.length) return;
+      const blob = buildTripPdf(trip);
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${ascii(trip.name).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'trip'}-summary.pdf`;
+      document.body.append(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    };
+
+    const openSummary = () => {
+      const dialog = document.querySelector('[data-trip-summary-dialog]');
+      const trip = renderSummary();
+      if (trip && dialog instanceof HTMLDialogElement && !dialog.open) dialog.showModal();
+    };
+
+    const closeSummary = () => {
+      const dialog = document.querySelector('[data-trip-summary-dialog]');
+      if (dialog instanceof HTMLDialogElement && dialog.open) dialog.close();
+    };
+
+    const handleClick = (event) => {
+      const target = event.target instanceof Element ? event.target : null;
+      if (!target) return;
+      if (target.closest('[data-trip-summary-open]')) {
+        event.preventDefault();
+        openSummary();
+        return;
+      }
+      if (target.closest('[data-trip-summary-close]')) {
+        event.preventDefault();
+        closeSummary();
+        return;
+      }
+      if (target.closest('[data-trip-summary-pdf]')) {
+        event.preventDefault();
+        downloadPdf();
+      }
+    };
+
+    const init = () => {
+      installSummaryButton();
+      const dialog = document.querySelector('[data-trip-summary-dialog]');
+      if (dialog instanceof HTMLDialogElement && !dialog.dataset.summaryReady) {
+        dialog.dataset.summaryReady = 'true';
+        dialog.addEventListener('click', (event) => {
+          if (event.target === dialog) dialog.close();
+        });
+      }
+    };
+
+    if (!window.__atlasTripSummary) {
+      window.__atlasTripSummary = { init, renderSummary };
+      document.addEventListener('click', handleClick, true);
+      document.addEventListener('astro:page-load', init);
+      window.addEventListener('atlas:trips-changed', () => {
+        installSummaryButton();
+        const dialog = document.querySelector('[data-trip-summary-dialog]');
+        if (dialog instanceof HTMLDialogElement && dialog.open) renderSummary();
+      });
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
+      else init();
+    } else {
+      window.__atlasTripSummary.init();
+    }
+  })();
+</script>
