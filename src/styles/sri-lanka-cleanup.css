@@ -79,34 +79,38 @@
   transform: translate(18px, -98px);
 }
 
-/* Sri Dalada Maligawa: leader runs to the right with a 10-degree downward slope. */
+/*
+ * Sri Dalada Maligawa: anchor the leader at the point, then run it 10 degrees
+ * down to the right. The label starts immediately after the endpoint and is
+ * shifted four units left from the previous intended position.
+ */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="sri-dalada-maligawa-modal"] .city-marker__leader {
   transform-box: fill-box;
-  transform-origin: 0% 0%;
+  transform-origin: 100% 100%;
   transform: rotate(145deg) !important;
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="sri-dalada-maligawa-modal"] .city-marker__label {
   text-anchor: start;
-  transform: translate(146px, 108px);
+  transform: translate(122px, 77px);
 }
 
-/* Yala: leader runs 35 degrees down and to the right. */
+/* Yala: anchor the leader at the point and run it 35 degrees down-right. */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="yala-national-park-modal"] .city-marker__leader {
   transform-box: fill-box;
-  transform-origin: 0% 0%;
+  transform-origin: 0% 100%;
   transform: rotate(80deg) !important;
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="yala-national-park-modal"] .city-marker__label {
   text-anchor: start;
-  transform: translateY(128px);
+  transform: translate(7px, 103px);
 }
 
-/* Devil's Dance is a symbolic cultural note, moved farther north and kept red. */
+/* Devil's Dance is symbolic: place the complete marker at grid D9 and keep it red. */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g.city-marker--ritual {
   color: #b5262e !important;
-  transform: translateY(-170px);
+  transform: translate(-312px, 224px);
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g.city-marker--ritual .city-marker__dot {
