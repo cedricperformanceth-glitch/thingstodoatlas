@@ -109,7 +109,7 @@
   transform: translate(2px, 122px);
 }
 
-/* Devil's Dance stays at D4; its label now turns inward, down-left at 33 degrees. */
+/* Devil's Dance stays at D4; only the title moves so its D starts at the top-left of C5. */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g.city-marker--ritual {
   color: #b5262e !important;
   transform: translate(-312px, -416px);
@@ -121,8 +121,8 @@
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g.city-marker--ritual .city-marker__label {
-  text-anchor: end;
-  transform: translate(-142px, 124px);
+  text-anchor: start;
+  transform: translate(-258px, 134px);
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g.city-marker--ritual .city-marker__dot {
