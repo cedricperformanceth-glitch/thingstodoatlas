@@ -3,6 +3,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
 import LandmarkModal from '../components/LandmarkModal.astro';
 
+const gridColumns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
+
 const mirissa = { x: 448, y: 1472 };
 const ahangama = { x: 384, y: 1472 };
 const sigiriya = { x: 408, y: 768 };
@@ -100,6 +103,28 @@ const adamsPeakGallery = [
             width="676"
             height="1166"
           />
+
+          <svg class="map-grid" viewBox="0 0 1024 1536" aria-hidden="true">
+            <g class="map-grid__lines">
+              {Array.from({ length: 9 }, (_, index) => (
+                <line x1={index * 128} y1="0" x2={index * 128} y2="1536" />
+              ))}
+              {Array.from({ length: 13 }, (_, index) => (
+                <line x1="0" y1={index * 128} x2="1024" y2={index * 128} />
+              ))}
+            </g>
+            <g class="map-grid__labels map-grid__labels--columns">
+              {gridColumns.map((label, index) => (
+                <text x={(index * 128) + 64} y="34" text-anchor="middle">{label}</text>
+              ))}
+            </g>
+            <g class="map-grid__labels map-grid__labels--rows">
+              {gridRows.map((label, index) => (
+                <text x="18" y={(index * 128) + 74}>{label}</text>
+              ))}
+            </g>
+          </svg>
+
           <svg class="map-overlay" viewBox="0 0 1024 1536" role="img" aria-labelledby="sri-lanka-map-svg-title sri-lanka-map-description">
             <title id="sri-lanka-map-svg-title">Destinations on the Sri Lanka map</title>
             <desc id="sri-lanka-map-description">Mirissa and Ahangama are available along the southern coast, Sigiriya is available in the centre of the island, Adam's Peak is available in the central highlands, Negombo and Colombo are available on the west coast, and Arugam Bay is marked as an upcoming destination on the east coast.</desc>
@@ -279,6 +304,7 @@ const adamsPeakGallery = [
   }
 
   .map-drawing,
+  .map-grid,
   .map-overlay {
     position: absolute;
     inset: 0;
@@ -288,7 +314,28 @@ const adamsPeakGallery = [
   }
 
   .map-drawing { object-fit: contain; }
-  .map-overlay { z-index: 1; overflow: visible; pointer-events: auto; }
+  .map-grid { z-index: 1; overflow: hidden; pointer-events: none; }
+  .map-overlay { z-index: 2; overflow: visible; pointer-events: auto; }
+
+  .map-grid__lines line {
+    stroke: rgba(42, 75, 61, 0.22);
+    stroke-width: 1.5;
+    stroke-dasharray: 8 10;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .map-grid__labels text {
+    fill: rgba(42, 75, 61, 0.58);
+    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: 27px;
+    font-weight: 600;
+    paint-order: stroke;
+    stroke: rgba(255, 255, 255, 0.9);
+    stroke-width: 5px;
+    stroke-linejoin: round;
+  }
+
+  .map-grid__labels--rows text { text-anchor: start; }
 
   .city-marker { color: #d97745; cursor: pointer; outline: none; }
   .city-marker--active { color: #d97745; }
