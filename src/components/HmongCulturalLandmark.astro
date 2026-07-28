@@ -1,0 +1,133 @@
+---
+import LandmarkModal from './LandmarkModal.astro';
+
+const hmongGallery = [
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Hmong_traditional_clothes_in_UNESCO_World_Heritage_parade_Luang_Prabang_Laos_25Nov2005.jpg?width=1600',
+    alt: 'Hmong participants wearing traditional clothing during a heritage parade in Luang Prabang, Laos',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Hmong_traditional_clothes_in_UNESCO_World_Heritage_parade_Luang_Prabang_Laos_25Nov2005.jpg',
+    author: 'Everhard van Eimeren',
+    license: 'CC BY-SA 4.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Hmong_White_Women%27s_Clothing_%28Hmoob_Dawb%29.jpg?width=1600',
+    alt: 'A White Hmong woman wearing colourful traditional clothing in Laos',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Hmong_White_Women%27s_Clothing_(Hmoob_Dawb).jpg',
+    author: 'NruasPaoYPP',
+    license: 'CC BY-SA 4.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/LaosDSCN4342a.jpg?width=1600',
+    alt: 'A young Hmong participant during a community festival in Luang Prabang, Laos',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:LaosDSCN4342a.jpg',
+    author: 'Yves Picq',
+    license: 'CC BY-SA 3.0'
+  }
+];
+---
+
+<LandmarkModal
+  id="hmong-cultural-modal"
+  name="Hmong"
+  country="Laos"
+  fieldCardNumber="09"
+  region="Cultural note · Northern Laos · No single location"
+  description="The Hmong are one of Laos’s major ethnic communities, with many villages in the northern highlands. In many traditional Hmong worldviews, people, ancestors, homes, landscapes and unseen spirits are connected. A txiv neeb — often translated as shaman — may act as a mediator during healing rites, while hu plig ceremonies call or restore a person’s wandering soul. Practices differ between families and communities and today may coexist with Christianity and other beliefs."
+  mapsUrl="#"
+  gallery={hmongGallery}
+  facts={[
+    { label: 'Getting there', value: 'This green point is intentionally symbolic. Hmong communities live across several northern and highland provinces, so it does not represent one village or one tourist attraction.' },
+    { label: 'Best time', value: 'Hmong New Year is commonly celebrated after the harvest, often around November or December, but dates and local programmes vary from one community to another.' },
+    { label: 'What to wear', value: 'Dress respectfully in villages and ask before photographing people, homes, altars or ceremonies. A healing rite is not a staged performance.' },
+    { label: 'Price', value: 'There is no universal ticket. Community visits, textile workshops, festivals and privately arranged cultural experiences are separate situations.' },
+    { label: 'Duration', value: 'A village visit may last a few hours, while a family ceremony or New Year gathering can continue much longer.' },
+    { label: 'Difficulty', value: 'The challenge is understanding context: animism, ancestor relations, soul-calling and shamanic healing cannot be reduced to folklore or costume.' }
+  ]}
+/>
+
+<script is:inline>
+  const setupHmongCulturalLandmark = () => {
+    const page = document.querySelector('.laos-map-page[aria-labelledby="laos-map-title"]');
+    const overlay = page?.querySelector('.map-overlay');
+    const dialog = document.getElementById('hmong-cultural-modal');
+    if (!(overlay instanceof SVGSVGElement) || !(dialog instanceof HTMLDialogElement)) return;
+
+    const existing = overlay.querySelector('[data-open-landmark="hmong-cultural-modal"]');
+    if (existing) return;
+
+    const namespace = 'http://www.w3.org/2000/svg';
+    const point = { x: 258, y: 404 };
+    const marker = document.createElementNS(namespace, 'g');
+    marker.setAttribute('class', 'city-marker city-marker--landmark city-marker--culture');
+    marker.setAttribute('role', 'button');
+    marker.setAttribute('tabindex', '0');
+    marker.setAttribute('aria-label', 'Open Hmong cultural note');
+    marker.setAttribute('data-open-landmark', 'hmong-cultural-modal');
+
+    const ring = document.createElementNS(namespace, 'circle');
+    ring.setAttribute('class', 'city-marker__ring');
+    ring.setAttribute('cx', String(point.x));
+    ring.setAttribute('cy', String(point.y));
+    ring.setAttribute('r', '20');
+
+    const dot = document.createElementNS(namespace, 'circle');
+    dot.setAttribute('class', 'city-marker__dot');
+    dot.setAttribute('cx', String(point.x));
+    dot.setAttribute('cy', String(point.y));
+    dot.setAttribute('r', '8');
+
+    const leader = document.createElementNS(namespace, 'path');
+    leader.setAttribute('class', 'city-marker__leader');
+    leader.setAttribute('d', `M${point.x + 12} ${point.y - 8} L${point.x + 70} ${point.y - 42}`);
+
+    const label = document.createElementNS(namespace, 'text');
+    label.setAttribute('class', 'city-marker__label city-marker__label--landmark');
+    label.setAttribute('x', String(point.x + 78));
+    label.setAttribute('y', String(point.y - 48));
+    label.textContent = 'Hmong';
+
+    marker.append(ring, dot, leader, label);
+    overlay.append(marker);
+
+    const openDialog = () => {
+      if (!dialog.open) dialog.showModal();
+    };
+
+    marker.addEventListener('click', openDialog);
+    marker.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openDialog();
+      }
+    });
+
+    if (dialog.dataset.hmongCloseReady !== 'true') {
+      dialog.dataset.hmongCloseReady = 'true';
+      dialog.querySelector('[data-close-landmark]')?.addEventListener('click', () => dialog.close());
+      dialog.addEventListener('click', (event) => {
+        if (event.target === dialog) dialog.close();
+      });
+    }
+  };
+
+  setupHmongCulturalLandmark();
+  document.addEventListener('astro:page-load', setupHmongCulturalLandmark);
+</script>
+
+<style is:global>
+  .laos-map-page[aria-labelledby="laos-map-title"] [data-open-landmark="hmong-cultural-modal"] {
+    color: #2f7652 !important;
+  }
+
+  .laos-map-page[aria-labelledby="laos-map-title"] [data-open-landmark="hmong-cultural-modal"] .city-marker__dot {
+    stroke: #f4ecd9 !important;
+  }
+
+  #hmong-cultural-modal .landmark-action--maps {
+    display: none !important;
+  }
+
+  #hmong-cultural-modal .landmark-modal__actions {
+    grid-template-columns: 1fr !important;
+  }
+</style>
