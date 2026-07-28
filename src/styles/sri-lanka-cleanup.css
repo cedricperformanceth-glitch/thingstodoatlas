@@ -16,6 +16,11 @@
   background: none !important;
 }
 
+/* The temporary coordinate grid is no longer displayed on the Sri Lanka map. */
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-grid {
+  display: none !important;
+}
+
 /* Sri Lanka field map only: use the saffron and teal from the national flag. */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active {
   color: #df7500 !important;
