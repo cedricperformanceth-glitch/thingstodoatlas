@@ -79,9 +79,34 @@
   transform: translate(18px, -98px);
 }
 
-/* Devil's Dance is a symbolic cultural note, not an exact map destination. */
+/* Sri Dalada Maligawa: leader runs to the right with a 10-degree downward slope. */
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="sri-dalada-maligawa-modal"] .city-marker__leader {
+  transform-box: fill-box;
+  transform-origin: 0% 0%;
+  transform: rotate(145deg) !important;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="sri-dalada-maligawa-modal"] .city-marker__label {
+  text-anchor: start;
+  transform: translate(146px, 108px);
+}
+
+/* Yala: leader runs 35 degrees down and to the right. */
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="yala-national-park-modal"] .city-marker__leader {
+  transform-box: fill-box;
+  transform-origin: 0% 0%;
+  transform: rotate(80deg) !important;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="yala-national-park-modal"] .city-marker__label {
+  text-anchor: start;
+  transform: translateY(128px);
+}
+
+/* Devil's Dance is a symbolic cultural note, moved farther north and kept red. */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g.city-marker--ritual {
   color: #b5262e !important;
+  transform: translateY(-170px);
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g.city-marker--ritual .city-marker__dot {
