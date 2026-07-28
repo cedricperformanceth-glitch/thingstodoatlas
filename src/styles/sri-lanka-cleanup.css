@@ -21,6 +21,16 @@
   display: none !important;
 }
 
+/* Keep map layout calculations isolated and defer the below-fold trip block. */
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-country-layer {
+  contain: layout style;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .plan-trip-intro {
+  content-visibility: auto;
+  contain-intrinsic-size: 620px;
+}
+
 /* Sri Lanka field map only: use the saffron and teal from the national flag. */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active {
   color: #df7500 !important;
