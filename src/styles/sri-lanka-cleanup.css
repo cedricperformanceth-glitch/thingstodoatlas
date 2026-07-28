@@ -49,23 +49,23 @@
   stroke: #f4ecd9 !important;
 }
 
-/* Sigiriya: turn the original down-right diagonal into a 45-degree upper-right leader. */
+/* Sigiriya: keep the 45-degree upper-right direction, shorten it slightly and pull the label back to the endpoint. */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="sigiriya-modal"] .city-marker__leader {
   transform-box: fill-box;
   transform-origin: 0% 0%;
-  transform: rotate(-90deg) !important;
+  transform: rotate(-90deg) scale(.92) !important;
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="sigiriya-modal"] .city-marker__label {
-  transform: translateY(-158px);
+  transform: translate(-4px, -136px);
 }
 
 /*
- * Ella Train: after bringing it 4 units closer to Adam's Peak, preserve that
- * 140.5-unit spacing and place it 37 degrees to the upper-right.
+ * Ella Train remains 37 degrees upper-right of Adam's Peak, but the whole
+ * marker is raised another 12 units for cleaner spacing.
  */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="ella-train-modal"] {
-  transform: translate(-31.8px, -72.6px);
+  transform: translate(-31.8px, -84.6px);
 }
 
 /* Ella's leader runs rightwards with a gentle 10-degree rise; its label follows the endpoint. */
@@ -79,20 +79,16 @@
   transform: translate(18px, -98px);
 }
 
-/*
- * Sri Dalada Maligawa: anchor the leader at the point, then run it 10 degrees
- * down to the right. The label starts immediately after the endpoint and is
- * shifted four units left from the previous intended position.
- */
+/* Sri Dalada Maligawa: keep the 10-degree downward direction but use a shorter, tighter leader. */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="sri-dalada-maligawa-modal"] .city-marker__leader {
   transform-box: fill-box;
   transform-origin: 100% 100%;
-  transform: rotate(145deg) !important;
+  transform: rotate(145deg) scale(.84) !important;
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="sri-dalada-maligawa-modal"] .city-marker__label {
   text-anchor: start;
-  transform: translate(122px, 77px);
+  transform: translate(112px, 75px);
 }
 
 /* Yala: anchor the leader at the point and run it 35 degrees down-right. */
@@ -107,10 +103,10 @@
   transform: translate(7px, 103px);
 }
 
-/* Devil's Dance is symbolic: place the complete marker at grid D9 and keep it red. */
+/* Devil's Dance is symbolic: place the complete marker at grid D4 and keep it red. */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g.city-marker--ritual {
   color: #b5262e !important;
-  transform: translate(-312px, 224px);
+  transform: translate(-312px, -416px);
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g.city-marker--ritual .city-marker__dot {
