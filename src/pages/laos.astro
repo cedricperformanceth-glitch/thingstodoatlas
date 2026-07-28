@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PlanMyTripIntro from '../components/PlanMyTripIntro.astro';
-import LandmarkModal from '../components/LandmarkModal.astro';
+import LandmarkModalSet from '../components/LandmarkModalSet.astro';
+import { laosLandmarks } from '../data/laosLandmarks';
 
 const gridColumns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
@@ -11,166 +12,32 @@ const vientiane = { x: 384, y: 657 };
 const tadLo = { x: 736, y: 970 };
 const donDet = { x: 696, y: 1152 };
 const luangPrabang = { x: 356, y: 576 };
-
 const bolavenPlateau = { x: 800, y: 930 };
 const watPhou = { x: 586, y: 1060 };
 const khonePhapheng = { x: 696, y: 1188 };
 const xeBangFai = { x: 708, y: 832 };
-
-// Provisional positions — final placement will be adjusted directly on the map later.
 const phaPaTou = { x: 430, y: 500 };
 const kongLor = { x: 650, y: 760 };
-
-const bolavenGallery = [
-  {
-    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Bolaven_Plateau.jpg?width=1600',
-    alt: 'Waterfall and forest landscape on the Bolaven Plateau in southern Laos',
-    sourcePage: 'https://commons.wikimedia.org/wiki/File:Bolaven_Plateau.jpg',
-    author: 'Dario Severi',
-    license: 'CC BY-SA 3.0'
-  },
-  {
-    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Bolaven_Plateau_Waterfall.jpg?width=1600',
-    alt: 'Waterfall near Paksong on the Bolaven Plateau',
-    sourcePage: 'https://commons.wikimedia.org/wiki/File:Bolaven_Plateau_Waterfall.jpg',
-    author: 'Clinton Phosavanh',
-    license: 'CC BY-SA 4.0'
-  }
-];
-
-const watPhouGallery = [
-  {
-    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Wat_Phu_Champasak_-_Laos_-_01.JPG?width=1600',
-    alt: 'Historic stone terraces and sanctuary at Wat Phou in Champasak',
-    sourcePage: 'https://commons.wikimedia.org/wiki/File:Wat_Phu_Champasak_-_Laos_-_01.JPG',
-    author: 'Wikimedia Commons'
-  }
-];
-
-const khoneGallery = [
-  {
-    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Khone_Phapheng_Falls%2C_Si_Phan_Don%2C_Laos%2C_widest_waterfall_in_the_world.jpg?width=1600',
-    alt: 'Wide view of Khone Phapheng Falls on the Mekong in southern Laos',
-    sourcePage: 'https://commons.wikimedia.org/wiki/File:Khone_Phapheng_Falls,_Si_Phan_Don,_Laos,_widest_waterfall_in_the_world.jpg',
-    author: 'Wikimedia Commons'
-  }
-];
-
-const xeBangFaiGallery = [
-  {
-    src: 'https://whc.unesco.org/uploads/thumbs/site_0951_0031-1000-667-20250617115722.jpg',
-    alt: 'Lower entrance of Xe Bang Fai Cave in Hin Nam No National Park',
-    sourcePage: 'https://whc.unesco.org/en/documents/219851',
-    author: 'GIZ ProFEB / Lucas Wahl',
-    license: 'Attribution · NoDerivatives'
-  },
-  {
-    src: 'https://whc.unesco.org/document/219859',
-    alt: 'Underground Xe Bang Fai river passage inside the cave',
-    sourcePage: 'https://whc.unesco.org/en/documents/219859',
-    author: 'GIZ ProFEB',
-    license: 'Attribution · NoDerivatives'
-  },
-  {
-    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/XeBanFai.jpg?width=1600',
-    alt: 'Xe Bang Fai River downstream from Ban Chalou in Khammouane',
-    sourcePage: 'https://commons.wikimedia.org/wiki/File:XeBanFai.jpg',
-    author: 'Italian walrus-63',
-    license: 'CC BY-SA 3.0'
-  }
-];
-
-const phaPaTouGallery = [
-  {
-    src: '/images/laos/landmarks/pha-pa-tou-01.jpg',
-    alt: 'Sunrise over the mountain landscape from Pha Pa Tou in Luang Prabang Province',
-    sourcePage: 'https://pantip.com/topic/39606086',
-    author: 'Sittichai · Pantip travel report'
-  },
-  {
-    src: '/images/laos/landmarks/pha-pa-tou-02.jpg',
-    alt: 'Sea of mist surrounding Pha Patu in Luang Prabang Province',
-    sourcePage: 'https://laosuki.com/pha-patu-viewpoint-luang-prabang-sea-of-mist/',
-    author: 'OKIHIRO · Laosuki'
-  },
-  {
-    src: '/images/laos/landmarks/pha-pa-tou-03.jpg',
-    alt: 'Mountain viewpoint scenery at Pha Patu above Pak Ou',
-    sourcePage: 'https://www.tiktok.com/@makame__/video/7581713947250855176',
-    author: 'makame__ · TikTok'
-  }
-];
-
-const kongLorGallery = [
-  {
-    src: 'https://res.cloudinary.com/dsj9enacv/image/upload/f_jpg,c_fill,w_1200,h_630,q_auto/kong-lor-cave/brqoekkq6mep0f6hn2x0.jpg',
-    alt: 'The river entrance and limestone chamber at Kong Lor Cave',
-    sourcePage: 'https://www.khammouanetourism.org/en/places/Kong-lor-cave',
-    author: 'Khammouane Tourism'
-  },
-  {
-    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Konglor_cave_laos.JPG?width=1600',
-    alt: 'Entrance of Kong Lor Cave in Khammouane Province',
-    sourcePage: 'https://commons.wikimedia.org/wiki/File:Konglor_cave_laos.JPG',
-    author: 'Busy',
-    license: 'CC BY-SA 3.0'
-  },
-  {
-    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Kong_Lor_Caves_of_Laos_%285422115490%29.jpg?width=1600',
-    alt: 'Boat journey through the dark interior of Kong Lor Cave',
-    sourcePage: 'https://commons.wikimedia.org/wiki/File:Kong_Lor_Caves_of_Laos_(5422115490).jpg',
-    author: 'Aleksey Gnilenkov',
-    license: 'CC BY 2.0'
-  }
-];
 ---
 
-<BaseLayout
-  title="Explore Laos"
-  description="Choose your next stop on an illustrated map of Laos. Begin with Pakse or Tad Lo, then open field cards for landmarks across the country."
-  canonical="https://thingstodoatlas.com/laos"
->
+<BaseLayout title="Explore Laos" description="Choose your next stop on an illustrated map of Laos. Compare city bases, open landmark field cards and begin planning the roads between them." canonical="https://thingstodoatlas.com/laos">
   <section class="laos-map-page" aria-labelledby="laos-map-title">
     <div class="map-sheet">
       <div class="map-layers">
         <header class="map-sheet__header">
           <span class="map-sheet__note">FIELD MAP · LAOS</span>
           <div class="map-sheet__title-block">
-            <svg class="map-sheet__title-art" viewBox="0 0 680 112" role="presentation" aria-hidden="true">
-              <text class="map-sheet__chapter" x="677" y="20" text-anchor="end">LAOS · CHAPTER 02</text>
-              <text class="map-sheet__title" x="680" y="88" text-anchor="end">Choose a place on the map</text>
-            </svg>
+            <svg class="map-sheet__title-art" viewBox="0 0 680 112" role="presentation" aria-hidden="true"><text class="map-sheet__chapter" x="677" y="20" text-anchor="end">LAOS · CHAPTER 02</text><text class="map-sheet__title" x="680" y="88" text-anchor="end">Choose a place on the map</text></svg>
             <h2 id="laos-map-title" class="visually-hidden">Choose a place on the map</h2>
           </div>
         </header>
 
-        <img
-          class="map-drawing"
-          src="/images/hand-drawn/laos-map.webp"
-          alt="Hand-drawn map of Laos"
-          width="1024"
-          height="1536"
-        />
+        <img class="map-drawing" src="/images/hand-drawn/laos-map.webp" alt="Hand-drawn map of Laos" width="1024" height="1536" />
 
         <svg class="map-grid" viewBox="0 0 1024 1536" aria-hidden="true">
-          <g class="map-grid__lines">
-            {Array.from({ length: 9 }, (_, index) => (
-              <line x1={index * 128} y1="0" x2={index * 128} y2="1536" />
-            ))}
-            {Array.from({ length: 13 }, (_, index) => (
-              <line x1="0" y1={index * 128} x2="1024" y2={index * 128} />
-            ))}
-          </g>
-          <g class="map-grid__labels map-grid__labels--columns">
-            {gridColumns.map((label, index) => (
-              <text x={(index * 128) + 64} y="34" text-anchor="middle">{label}</text>
-            ))}
-          </g>
-          <g class="map-grid__labels map-grid__labels--rows">
-            {gridRows.map((label, index) => (
-              <text x="18" y={(index * 128) + 74}>{label}</text>
-            ))}
-          </g>
+          <g class="map-grid__lines">{Array.from({ length: 9 }, (_, index) => <line x1={index * 128} y1="0" x2={index * 128} y2="1536" />)}{Array.from({ length: 13 }, (_, index) => <line x1="0" y1={index * 128} x2="1024" y2={index * 128} />)}</g>
+          <g class="map-grid__labels map-grid__labels--columns">{gridColumns.map((label, index) => <text x={(index * 128) + 64} y="34" text-anchor="middle">{label}</text>)}</g>
+          <g class="map-grid__labels map-grid__labels--rows">{gridRows.map((label, index) => <text x="18" y={(index * 128) + 74}>{label}</text>)}</g>
         </svg>
 
         <svg class="map-overlay" viewBox="0 0 1024 1536" role="img" aria-labelledby="map-title map-description">
@@ -178,308 +45,33 @@ const kongLorGallery = [
           <desc id="map-description">Pakse and Tad Lo open city guides. Bolaven Plateau, Wat Phou, Khone Phapheng Falls, Xe Bang Fai Cave, Pha Pa Tou and Kong Lor Cave open landmark field cards. Vientiane, Don Det and Luang Prabang are being documented.</desc>
 
           <a class="city-marker city-marker--city city-marker--active" href="/laos/pakse" aria-label="Explore Pakse">
-            <circle class="city-marker__ring" cx={pakse.x} cy={pakse.y} r="22" />
-            <circle class="city-marker__dot" cx={pakse.x} cy={pakse.y} r="9" />
-            <path class="city-marker__leader" d={`M${pakse.x - 15} ${pakse.y - 5} L${pakse.x - 76} ${pakse.y - 28}`} />
-            <text class="city-marker__label city-marker__label--left" x={pakse.x - 84} y={pakse.y - 32}>Pakse</text>
-            <foreignObject class="city-preview" x="34" y="830" width="470" height="430">
-              <div class="city-note city-note--active city-note--pakse" xmlns="http://www.w3.org/1999/xhtml">
-                <span class="city-note__tape" aria-hidden="true"></span>
-                <img src="/images/laos/pakse.webp" alt="Pakse, Laos" />
-                <div class="city-note__body">
-                  <span class="city-note__badge">Open chapter</span>
-                  <strong>Pakse</strong>
-                  <p>Southern streets, local places and the road toward the Bolaven Plateau.</p>
-                  <small>Click the city to open its chapter.</small>
-                </div>
-              </div>
-            </foreignObject>
+            <circle class="city-marker__ring" cx={pakse.x} cy={pakse.y} r="22"/><circle class="city-marker__dot" cx={pakse.x} cy={pakse.y} r="9"/><path class="city-marker__leader" d={`M${pakse.x - 15} ${pakse.y - 5} L${pakse.x - 76} ${pakse.y - 28}`}/><text class="city-marker__label city-marker__label--left" x={pakse.x - 84} y={pakse.y - 32}>Pakse</text>
+            <foreignObject class="city-preview" x="34" y="830" width="470" height="430"><div class="city-note city-note--active city-note--pakse" xmlns="http://www.w3.org/1999/xhtml"><span class="city-note__tape" aria-hidden="true"></span><img src="/images/laos/pakse.webp" alt="Pakse, Laos"/><div class="city-note__body"><span class="city-note__badge">Southern Laos base</span><strong>Pakse</strong><p>A relaxed transit city for the Bolaven Plateau, Wat Phou and the roads toward Si Phan Don.</p><span class="city-note__tags">Bolaven · Wat Phou · Mekong south</span><small>Open the city chapter and plan from here.</small></div></div></foreignObject>
           </a>
 
-          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Bolaven Plateau landmark details" data-open-landmark="bolaven-plateau-modal">
-            <circle class="city-marker__ring" cx={bolavenPlateau.x} cy={bolavenPlateau.y} r="20" />
-            <circle class="city-marker__dot" cx={bolavenPlateau.x} cy={bolavenPlateau.y} r="8" />
-            <path class="city-marker__leader" d={`M${bolavenPlateau.x + 12} ${bolavenPlateau.y - 10} L${bolavenPlateau.x + 54} ${bolavenPlateau.y - 48}`} />
-            <text class="city-marker__label city-marker__label--landmark" x={bolavenPlateau.x + 62} y={bolavenPlateau.y - 54}>Bolaven Plateau</text>
-          </g>
+          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Bolaven Plateau landmark details" data-open-landmark="bolaven-plateau-modal"><circle class="city-marker__ring" cx={bolavenPlateau.x} cy={bolavenPlateau.y} r="20"/><circle class="city-marker__dot" cx={bolavenPlateau.x} cy={bolavenPlateau.y} r="8"/><path class="city-marker__leader" d={`M${bolavenPlateau.x + 12} ${bolavenPlateau.y - 10} L${bolavenPlateau.x + 54} ${bolavenPlateau.y - 48}`}/><text class="city-marker__label city-marker__label--landmark" x={bolavenPlateau.x + 62} y={bolavenPlateau.y - 54}>Bolaven Plateau</text></g>
+          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Wat Phou landmark details" data-open-landmark="wat-phou-modal"><circle class="city-marker__ring" cx={watPhou.x} cy={watPhou.y} r="20"/><circle class="city-marker__dot" cx={watPhou.x} cy={watPhou.y} r="8"/><path class="city-marker__leader" d={`M${watPhou.x - 12} ${watPhou.y + 10} L${watPhou.x - 54} ${watPhou.y + 46}`}/><text class="city-marker__label city-marker__label--left city-marker__label--landmark" x={watPhou.x - 62} y={watPhou.y + 58}>Wat Phou</text></g>
+          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Khone Phapheng Falls landmark details" data-open-landmark="khone-phapheng-modal"><circle class="city-marker__ring" cx={khonePhapheng.x} cy={khonePhapheng.y} r="20"/><circle class="city-marker__dot" cx={khonePhapheng.x} cy={khonePhapheng.y} r="8"/><path class="city-marker__leader" d={`M${khonePhapheng.x - 12} ${khonePhapheng.y + 8} L${khonePhapheng.x - 58} ${khonePhapheng.y + 42}`}/><text class="city-marker__label city-marker__label--left city-marker__label--landmark" x={khonePhapheng.x - 66} y={khonePhapheng.y + 54}>Khone Phapheng</text></g>
+          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Xe Bang Fai Cave landmark details" data-open-landmark="xe-bang-fai-modal"><circle class="city-marker__ring" cx={xeBangFai.x} cy={xeBangFai.y} r="20"/><circle class="city-marker__dot" cx={xeBangFai.x} cy={xeBangFai.y} r="8"/><path class="city-marker__leader" d={`M${xeBangFai.x + 12} ${xeBangFai.y} L${xeBangFai.x + 74} ${xeBangFai.y}`}/><text class="city-marker__label city-marker__label--landmark" x={xeBangFai.x + 82} y={xeBangFai.y + 8}>Xe Bang Fai</text></g>
+          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Pha Pa Tou landmark details" data-open-landmark="pha-pa-tou-modal"><circle class="city-marker__ring" cx={phaPaTou.x} cy={phaPaTou.y} r="20"/><circle class="city-marker__dot" cx={phaPaTou.x} cy={phaPaTou.y} r="8"/><path class="city-marker__leader" d={`M${phaPaTou.x + 12} ${phaPaTou.y} L${phaPaTou.x + 74} ${phaPaTou.y}`}/><text class="city-marker__label city-marker__label--landmark" x={phaPaTou.x + 82} y={phaPaTou.y + 8}>Pha Pa Tou</text></g>
+          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Kong Lor Cave landmark details" data-open-landmark="kong-lor-modal"><circle class="city-marker__ring" cx={kongLor.x} cy={kongLor.y} r="20"/><circle class="city-marker__dot" cx={kongLor.x} cy={kongLor.y} r="8"/><path class="city-marker__leader" d={`M${kongLor.x + 12} ${kongLor.y} L${kongLor.x + 74} ${kongLor.y}`}/><text class="city-marker__label city-marker__label--landmark" x={kongLor.x + 82} y={kongLor.y + 8}>Kong Lor</text></g>
 
-          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Wat Phou landmark details" data-open-landmark="wat-phou-modal">
-            <circle class="city-marker__ring" cx={watPhou.x} cy={watPhou.y} r="20" />
-            <circle class="city-marker__dot" cx={watPhou.x} cy={watPhou.y} r="8" />
-            <path class="city-marker__leader" d={`M${watPhou.x - 12} ${watPhou.y + 10} L${watPhou.x - 54} ${watPhou.y + 46}`} />
-            <text class="city-marker__label city-marker__label--left city-marker__label--landmark" x={watPhou.x - 62} y={watPhou.y + 58}>Wat Phou</text>
-          </g>
+          <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Vientiane guide coming soon"><circle class="city-marker__ring" cx={vientiane.x} cy={vientiane.y} r="22"/><circle class="city-marker__dot" cx={vientiane.x} cy={vientiane.y} r="9"/><path class="city-marker__leader" d={`M${vientiane.x - 15} ${vientiane.y + 4} L${vientiane.x - 76} ${vientiane.y + 65}`}/><text class="city-marker__label city-marker__label--left" x={vientiane.x - 84} y={vientiane.y + 73}>Vientiane</text><foreignObject class="city-preview" x="34" y="830" width="470" height="430"><div class="city-note city-note--vientiane" xmlns="http://www.w3.org/1999/xhtml"><span class="city-note__tape" aria-hidden="true"></span><img src="/images/laos/vientiane.webp" alt="Vientiane, Laos"/><div class="city-note__body"><span class="city-note__badge">Field notes underway</span><strong>Vientiane</strong><p>This chapter is currently being documented. Local addresses and practical notes are on the way.</p><small>Available soon.</small></div></div></foreignObject></g>
 
-          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Khone Phapheng Falls landmark details" data-open-landmark="khone-phapheng-modal">
-            <circle class="city-marker__ring" cx={khonePhapheng.x} cy={khonePhapheng.y} r="20" />
-            <circle class="city-marker__dot" cx={khonePhapheng.x} cy={khonePhapheng.y} r="8" />
-            <path class="city-marker__leader" d={`M${khonePhapheng.x - 12} ${khonePhapheng.y + 8} L${khonePhapheng.x - 58} ${khonePhapheng.y + 42}`} />
-            <text class="city-marker__label city-marker__label--left city-marker__label--landmark" x={khonePhapheng.x - 66} y={khonePhapheng.y + 54}>Khone Phapheng</text>
-          </g>
+          <a class="city-marker city-marker--city city-marker--active" href="/laos/tad-lo" aria-label="Explore Tad Lo"><circle class="city-marker__ring" cx={tadLo.x} cy={tadLo.y} r="22"/><circle class="city-marker__dot" cx={tadLo.x} cy={tadLo.y} r="9"/><path class="city-marker__leader" d={`M${tadLo.x + 15} ${tadLo.y - 5} L${tadLo.x + 76} ${tadLo.y - 28}`}/><text class="city-marker__label" x={tadLo.x + 84} y={tadLo.y - 32}>Tad Lo</text><foreignObject class="city-preview" x="34" y="830" width="470" height="430"><div class="city-note city-note--active city-note--tadlo" xmlns="http://www.w3.org/1999/xhtml"><span class="city-note__tape" aria-hidden="true"></span><img src="/images/laos/tad-lo.webp" alt="Tad Lo, Laos"/><div class="city-note__body"><span class="city-note__badge">Ready to explore</span><strong>Tad Lo</strong><p>Waterfalls, village roads and a slower chapter in the Bolaven countryside.</p><small>Click the city to open its chapter.</small></div></div></foreignObject></a>
 
-          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Xe Bang Fai Cave landmark details" data-open-landmark="xe-bang-fai-modal">
-            <circle class="city-marker__ring" cx={xeBangFai.x} cy={xeBangFai.y} r="20" />
-            <circle class="city-marker__dot" cx={xeBangFai.x} cy={xeBangFai.y} r="8" />
-            <path class="city-marker__leader" d={`M${xeBangFai.x + 12} ${xeBangFai.y} L${xeBangFai.x + 74} ${xeBangFai.y}`} />
-            <text class="city-marker__label city-marker__label--landmark" x={xeBangFai.x + 82} y={xeBangFai.y + 8}>Xe Bang Fai</text>
-          </g>
+          <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Don Det guide coming soon"><circle class="city-marker__ring" cx={donDet.x} cy={donDet.y} r="22"/><circle class="city-marker__dot" cx={donDet.x} cy={donDet.y} r="9"/><path class="city-marker__leader" d={`M${donDet.x + 15} ${donDet.y + 2} L${donDet.x + 76} ${donDet.y + 18}`}/><text class="city-marker__label" x={donDet.x + 84} y={donDet.y + 27}>Don Det</text><foreignObject class="city-preview" x="34" y="830" width="470" height="430"><div class="city-note city-note--dondet" xmlns="http://www.w3.org/1999/xhtml"><span class="city-note__tape" aria-hidden="true"></span><img src="/images/laos/don-det.webp" alt="Don Det, Laos"/><div class="city-note__body"><span class="city-note__badge">Next chapter</span><strong>Don Det</strong><p>The island guide is still taking shape, with places, routes and riverside notes to come.</p><small>Work in progress.</small></div></div></foreignObject></g>
 
-          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Pha Pa Tou landmark details" data-open-landmark="pha-pa-tou-modal">
-            <circle class="city-marker__ring" cx={phaPaTou.x} cy={phaPaTou.y} r="20" />
-            <circle class="city-marker__dot" cx={phaPaTou.x} cy={phaPaTou.y} r="8" />
-            <path class="city-marker__leader" d={`M${phaPaTou.x + 12} ${phaPaTou.y} L${phaPaTou.x + 74} ${phaPaTou.y}`} />
-            <text class="city-marker__label city-marker__label--landmark" x={phaPaTou.x + 82} y={phaPaTou.y + 8}>Pha Pa Tou</text>
-          </g>
-
-          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Kong Lor Cave landmark details" data-open-landmark="kong-lor-modal">
-            <circle class="city-marker__ring" cx={kongLor.x} cy={kongLor.y} r="20" />
-            <circle class="city-marker__dot" cx={kongLor.x} cy={kongLor.y} r="8" />
-            <path class="city-marker__leader" d={`M${kongLor.x + 12} ${kongLor.y} L${kongLor.x + 74} ${kongLor.y}`} />
-            <text class="city-marker__label city-marker__label--landmark" x={kongLor.x + 82} y={kongLor.y + 8}>Kong Lor</text>
-          </g>
-
-          <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Vientiane guide coming soon">
-            <circle class="city-marker__ring" cx={vientiane.x} cy={vientiane.y} r="22" />
-            <circle class="city-marker__dot" cx={vientiane.x} cy={vientiane.y} r="9" />
-            <path class="city-marker__leader" d={`M${vientiane.x - 15} ${vientiane.y + 4} L${vientiane.x - 76} ${vientiane.y + 65}`} />
-            <text class="city-marker__label city-marker__label--left" x={vientiane.x - 84} y={vientiane.y + 73}>Vientiane</text>
-            <foreignObject class="city-preview" x="34" y="830" width="470" height="430">
-              <div class="city-note city-note--vientiane" xmlns="http://www.w3.org/1999/xhtml">
-                <span class="city-note__tape" aria-hidden="true"></span>
-                <img src="/images/laos/vientiane.webp" alt="Vientiane, Laos" />
-                <div class="city-note__body">
-                  <span class="city-note__badge">Field notes underway</span>
-                  <strong>Vientiane</strong>
-                  <p>This chapter is currently being documented. Local addresses and practical notes are on the way.</p>
-                  <small>Available soon.</small>
-                </div>
-              </div>
-            </foreignObject>
-          </g>
-
-          <a class="city-marker city-marker--city city-marker--active" href="/laos/tad-lo" aria-label="Explore Tad Lo">
-            <circle class="city-marker__ring" cx={tadLo.x} cy={tadLo.y} r="22" />
-            <circle class="city-marker__dot" cx={tadLo.x} cy={tadLo.y} r="9" />
-            <path class="city-marker__leader" d={`M${tadLo.x + 15} ${tadLo.y - 5} L${tadLo.x + 76} ${tadLo.y - 28}`} />
-            <text class="city-marker__label" x={tadLo.x + 84} y={tadLo.y - 32}>Tad Lo</text>
-            <foreignObject class="city-preview" x="34" y="830" width="470" height="430">
-              <div class="city-note city-note--active city-note--tadlo" xmlns="http://www.w3.org/1999/xhtml">
-                <span class="city-note__tape" aria-hidden="true"></span>
-                <img src="/images/laos/tad-lo.webp" alt="Tad Lo, Laos" />
-                <div class="city-note__body">
-                  <span class="city-note__badge">Ready to explore</span>
-                  <strong>Tad Lo</strong>
-                  <p>Waterfalls, village roads and a slower chapter in the Bolaven countryside.</p>
-                  <small>Click the city to open its chapter.</small>
-                </div>
-              </div>
-            </foreignObject>
-          </a>
-
-          <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Don Det guide coming soon">
-            <circle class="city-marker__ring" cx={donDet.x} cy={donDet.y} r="22" />
-            <circle class="city-marker__dot" cx={donDet.x} cy={donDet.y} r="9" />
-            <path class="city-marker__leader" d={`M${donDet.x + 15} ${donDet.y + 2} L${donDet.x + 76} ${donDet.y + 18}`} />
-            <text class="city-marker__label" x={donDet.x + 84} y={donDet.y + 27}>Don Det</text>
-            <foreignObject class="city-preview" x="34" y="830" width="470" height="430">
-              <div class="city-note city-note--dondet" xmlns="http://www.w3.org/1999/xhtml">
-                <span class="city-note__tape" aria-hidden="true"></span>
-                <img src="/images/laos/don-det.webp" alt="Don Det, Laos" />
-                <div class="city-note__body">
-                  <span class="city-note__badge">Next chapter</span>
-                  <strong>Don Det</strong>
-                  <p>The island guide is still taking shape, with places, routes and riverside notes to come.</p>
-                  <small>Work in progress.</small>
-                </div>
-              </div>
-            </foreignObject>
-          </g>
-
-          <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Luang Prabang guide coming soon">
-            <circle class="city-marker__ring" cx={luangPrabang.x} cy={luangPrabang.y} r="22" />
-            <circle class="city-marker__dot" cx={luangPrabang.x} cy={luangPrabang.y} r="9" />
-            <path class="city-marker__leader" d={`M${luangPrabang.x + 15} ${luangPrabang.y - 5} L${luangPrabang.x + 76} ${luangPrabang.y - 28}`} />
-            <text class="city-marker__label" x={luangPrabang.x + 84} y={luangPrabang.y - 32}>Luang Prabang</text>
-            <foreignObject class="city-preview" x="34" y="830" width="470" height="430">
-              <div class="city-note city-note--luang" xmlns="http://www.w3.org/1999/xhtml">
-                <span class="city-note__tape" aria-hidden="true"></span>
-                <img src="/images/laos/luang-prabang.webp" alt="Luang Prabang, Laos" />
-                <div class="city-note__body">
-                  <span class="city-note__badge">On the road</span>
-                  <strong>Luang Prabang</strong>
-                  <p>Research is underway. A carefully selected city guide will be added here soon.</p>
-                  <small>Coming later.</small>
-                </div>
-              </div>
-            </foreignObject>
-          </g>
+          <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Luang Prabang guide coming soon"><circle class="city-marker__ring" cx={luangPrabang.x} cy={luangPrabang.y} r="22"/><circle class="city-marker__dot" cx={luangPrabang.x} cy={luangPrabang.y} r="9"/><path class="city-marker__leader" d={`M${luangPrabang.x + 15} ${luangPrabang.y - 5} L${luangPrabang.x + 76} ${luangPrabang.y - 28}`}/><text class="city-marker__label" x={luangPrabang.x + 84} y={luangPrabang.y - 32}>Luang Prabang</text><foreignObject class="city-preview" x="34" y="830" width="470" height="430"><div class="city-note city-note--luang" xmlns="http://www.w3.org/1999/xhtml"><span class="city-note__tape" aria-hidden="true"></span><img src="/images/laos/luang-prabang.webp" alt="Luang Prabang, Laos"/><div class="city-note__body"><span class="city-note__badge">On the road</span><strong>Luang Prabang</strong><p>Research is underway. A carefully selected city guide will be added here soon.</p><small>Coming later.</small></div></div></foreignObject></g>
         </svg>
       </div>
     </div>
     <PlanMyTripIntro />
   </section>
-
-  <LandmarkModal
-    id="bolaven-plateau-modal"
-    name="Bolaven Plateau"
-    country="Laos"
-    fieldCardNumber="03"
-    region="Champasak & Salavan · Southern Laos"
-    description="A highland road of coffee farms, forest, villages and waterfalls. The plateau works best as a journey between stops rather than a single attraction."
-    mapsUrl="https://www.google.com/maps/search/?api=1&query=Bolaven%20Plateau%2C%20Laos"
-    gallery={bolavenGallery}
-    facts={[
-      { label: 'Getting there', value: 'Most travellers begin the loop from Pakse by motorbike, scooter or private driver.' },
-      { label: 'Best time', value: 'Start early. Rain and mist can arrive quickly, especially in the wet season.' },
-      { label: 'What to wear', value: 'Light layers, a rain jacket and shoes suitable for wet waterfall paths.' },
-      { label: 'Price', value: 'The plateau is open to explore; individual waterfalls and sites may charge small entrance fees.' },
-      { label: 'Duration', value: 'Allow one full day for a short loop or two to three days for a slower route.' },
-      { label: 'Difficulty', value: 'Easy to moderate, depending on road conditions and the waterfall trails you choose.' }
-    ]}
-  />
-
-  <LandmarkModal
-    id="wat-phou-modal"
-    name="Wat Phou"
-    country="Laos"
-    fieldCardNumber="04"
-    region="Champasak · Southern Laos"
-    description="An ancient Khmer temple complex climbing from the plain toward the mountain, with stone terraces, ceremonial axes and wide views across Champasak."
-    mapsUrl="https://www.google.com/maps/search/?api=1&query=Wat%20Phou%2C%20Champasak%2C%20Laos"
-    gallery={watPhouGallery}
-    facts={[
-      { label: 'Getting there', value: 'Reached from Pakse or Champasak town by motorbike, tuk-tuk or private transport.' },
-      { label: 'Best time', value: 'Early morning is cooler and quieter for the climb through the complex.' },
-      { label: 'What to wear', value: 'Respectful light clothing, sun protection and stable shoes for old stone steps.' },
-      { label: 'Price', value: 'Paid entrance. Confirm the current official ticket price before visiting.' },
-      { label: 'Duration', value: 'Allow roughly two to three hours for the museum, lower ruins and upper sanctuary.' },
-      { label: 'Difficulty', value: 'Moderate, with uneven steps and a steady exposed climb.' }
-    ]}
-  />
-
-  <LandmarkModal
-    id="khone-phapheng-modal"
-    name="Khone Phapheng Falls"
-    country="Laos"
-    fieldCardNumber="05"
-    region="Si Phan Don · Champasak"
-    description="A vast, powerful section of the Mekong where the river breaks across rocks and channels near the Cambodian border. This is a place for scale, sound and viewpoints."
-    mapsUrl="https://www.google.com/maps/search/?api=1&query=Khone%20Phapheng%20Falls%2C%20Laos"
-    gallery={khoneGallery}
-    facts={[
-      { label: 'Getting there', value: 'Usually reached from Pakse, Nakasang or the Si Phan Don area by road transport.' },
-      { label: 'Best time', value: 'Morning and late afternoon are more comfortable; the river changes dramatically by season.' },
-      { label: 'What to wear', value: 'Light clothing, sun protection and comfortable shoes for the viewpoint paths.' },
-      { label: 'Price', value: 'Paid entrance. Check the current local ticket price before setting out.' },
-      { label: 'Duration', value: 'Allow around one to two hours to walk the main viewpoints without rushing.' },
-      { label: 'Difficulty', value: 'Easy walking, but the river itself is dangerous and not a swimming area.' }
-    ]}
-  />
-
-  <LandmarkModal
-    id="xe-bang-fai-modal"
-    name="Xe Bang Fai Cave"
-    country="Laos"
-    fieldCardNumber="06"
-    region="Boualapha District · Khammouane"
-    description="A colossal active river cave hidden near the Lao–Vietnamese border. The underground river runs through enormous chambers, giant formations and black-water passages that are explored with a local guide."
-    mapsUrl="https://maps.app.goo.gl/wbVnr9MAxdNBvwwZA"
-    gallery={xeBangFaiGallery}
-    facts={[
-      { label: 'Getting there', value: 'The cave is near Ban Nyabaet–Nong Ping, roughly 154 km east of Thakhek via Route 12. The final roads are remote and can be rough; arrange a local guide rather than entering alone.' },
-      { label: 'Best time', value: 'Dry-season conditions are usually better for the boat trip. Boat access can stop during the wet season or when river levels are unsafe, so confirm locally before travelling.' },
-      { label: 'What to wear', value: 'Quick-dry clothing and shoes with grip. Local operators commonly provide a life jacket and a strong headlamp for the boat and cave sections.' },
-      { label: 'Price', value: 'Entrance, guide and boat prices are arranged locally and may vary. Confirm the full price and route before setting out.' },
-      { label: 'Duration', value: 'Expect about a 15-minute riverside walk before boarding. The cave visit itself commonly takes one to two hours, but the remote journey makes this a full-day or multi-day expedition.' },
-      { label: 'Difficulty', value: 'Adventure-level access: rough roads, darkness, boat travel and uneven walking inside the cave. Do not attempt the forest or cave route without a guide.' }
-    ]}
-  />
-
-  <LandmarkModal
-    id="pha-pa-tou-modal"
-    name="Pha Pa Tou"
-    country="Laos"
-    fieldCardNumber="07"
-    region="Pak Ou District · Luang Prabang Province"
-    description="A remote mountain viewpoint and simple homestay reached by crossing the river and climbing through forest. The reward is an open panorama over northern Laos, especially around sunrise and sunset."
-    mapsUrl="https://maps.app.goo.gl/khjXjfTfGsjUcGM4A"
-    gallery={phaPaTouGallery}
-    facts={[
-      { label: 'Getting there', value: 'The usual route begins outside Luang Prabang, followed by a small boat crossing and a two- to three-hour mountain trek. Arrange a local guide or homestay before leaving.' },
-      { label: 'Best time', value: 'Choose a clear dry-season day and start early. Heavy rain can make the river crossing and steep forest trail difficult.' },
-      { label: 'What to wear', value: 'Hiking shoes with grip, light layers, sun and rain protection, and a small pack for water and food.' },
-      { label: 'Price', value: 'Guide, boat, meals and overnight costs are arranged locally. Confirm what is included before the trip.' },
-      { label: 'Duration', value: 'Treat it as a full-day hike or, preferably, an overnight trip so you can see sunrise from the mountain.' },
-      { label: 'Difficulty', value: 'Moderate to demanding: a river crossing, a long uphill trail and very basic facilities at the top.' }
-    ]}
-  />
-
-  <LandmarkModal
-    id="kong-lor-modal"
-    name="Kong Lor Cave"
-    country="Laos"
-    fieldCardNumber="08"
-    region="Khounkham District · Khammouane"
-    description="A vast limestone tunnel carrying the Hin Boun River through the mountain for more than seven kilometres. Small motorboats travel through complete darkness before emerging into the hidden valley beyond."
-    mapsUrl="https://maps.app.goo.gl/Uhm4ThHyYcNGJHLg6"
-    gallery={kongLorGallery}
-    facts={[
-      { label: 'Getting there', value: 'Kong Lor is inside Phou Hin Bun National Park, roughly 145–150 km from Thakhek. It is commonly visited as part of the Thakhek Loop or from Ban Khounkham.' },
-      { label: 'Best time', value: 'November to April normally brings safer, clearer river conditions. During the rainy season, high water can restrict or stop boat access.' },
-      { label: 'What to wear', value: 'Quick-dry clothing, water-friendly shoes, a strong headlamp and a dry bag. Keep the supplied life jacket on during the boat trip.' },
-      { label: 'Price', value: 'Paid entrance and boat trip. Confirm the current ticket and boat arrangement locally before travelling.' },
-      { label: 'Duration', value: 'Allow about two to three hours for the return boat journey, the illuminated formation stop and boarding time.' },
-      { label: 'Difficulty', value: 'Moderate: limited walking, but narrow boats, darkness, wet surfaces and possible shallow river sections require care.' }
-    ]}
-  />
+  <LandmarkModalSet landmarks={laosLandmarks} />
 </BaseLayout>
-
-<script>
-  const openLandmark = (trigger) => {
-    const id = trigger.dataset.openLandmark;
-    const dialog = id ? document.getElementById(id) : null;
-    if (dialog instanceof HTMLDialogElement && !dialog.open) dialog.showModal();
-  };
-
-  document.querySelectorAll('[data-open-landmark]').forEach((trigger) => {
-    trigger.addEventListener('click', () => openLandmark(trigger));
-    trigger.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        openLandmark(trigger);
-      }
-    });
-  });
-
-  document.querySelectorAll('.landmark-modal').forEach((dialog) => {
-    if (!(dialog instanceof HTMLDialogElement)) return;
-    dialog.querySelector('[data-close-landmark]')?.addEventListener('click', () => dialog.close());
-    dialog.addEventListener('click', (event) => {
-      if (event.target === dialog) dialog.close();
-    });
-  });
-</script>
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
-
-  .laos-map-page{min-height:100vh;padding:clamp(4rem,8vw,7rem) max(1.25rem,calc((100vw - 1180px)/2));background:#f2eee3;color:#1f2924}
-  .map-sheet{position:relative;width:fit-content;margin:0 auto;padding:26px 26px 10px;border:1px solid rgba(31,41,36,.14);background:#f7f2e6;overflow:visible}
-  .map-sheet::before,.map-sheet::after{content:'';position:absolute;z-index:3;width:78px;height:22px;background:rgba(199,181,143,.48)}.map-sheet::before{top:-9px;left:8%;transform:rotate(-4deg)}.map-sheet::after{right:8%;bottom:-8px;transform:rotate(3deg)}
-  .map-layers{position:relative;width:80vw;height:80vw;margin:0 auto;background:#fff;box-shadow:0 0 0 1px rgba(31,41,36,.2),0 8px 22px rgba(31,41,36,.06);overflow:hidden}
-  .map-sheet__header{position:absolute;z-index:4;top:clamp(1.4rem,3vw,2.5rem);left:clamp(1.25rem,4vw,3.25rem);right:clamp(1.25rem,4vw,3.25rem);display:flex;align-items:flex-start;justify-content:space-between;gap:1.25rem;color:#1f392d;pointer-events:none}
-  .map-sheet__title-block{width:min(42rem,70%);margin-left:auto;text-align:right}.map-sheet__title-art{display:block;width:100%;height:auto;overflow:visible}.map-sheet__chapter,.map-sheet__title{fill:#1f392d;font-family:'Caveat','Segoe Print','Bradley Hand',cursive}.map-sheet__chapter{font-size:15px;font-weight:500;letter-spacing:.12em;opacity:.62}.map-sheet__title{font-size:51px;font-weight:550;letter-spacing:.01em;opacity:.93}.map-sheet__note{flex:0 0 auto;margin-top:.15rem;color:#1f392d;font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:16px;font-weight:500;letter-spacing:.08em;opacity:.58;white-space:nowrap}
-  .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-
-  .map-drawing,.map-grid,.map-overlay{position:absolute;left:50%;top:50%;width:61.2vw;height:91.8vw;transform:translate(-50%,-50%)}.map-drawing{display:block;object-fit:contain}.map-grid{z-index:1;display:block;overflow:hidden;pointer-events:none}.map-overlay{z-index:2;display:block;overflow:hidden;pointer-events:auto}
-  .map-grid__lines line{stroke:rgba(42,75,61,.22);stroke-width:1.5;stroke-dasharray:8 10;vector-effect:non-scaling-stroke}.map-grid__labels text{fill:rgba(42,75,61,.58);font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:27px;font-weight:600;paint-order:stroke;stroke:rgba(255,255,255,.9);stroke-width:5px;stroke-linejoin:round}.map-grid__labels--rows text{text-anchor:start}
-
-  .city-marker{cursor:pointer;outline:none}.laos-map-page .city-marker--active{color:#002868}.laos-map-page .city-marker--landmark{color:#ce1126}.laos-map-page .city-marker--inactive{color:#7f6d33;cursor:default}
-  .city-marker__ring{fill:color-mix(in srgb,currentColor 14%,transparent);stroke:currentColor;stroke-width:3;transition:opacity 180ms ease,transform 180ms ease;transform-box:fill-box;transform-origin:center}.city-marker__dot{fill:currentColor;stroke:#fff;stroke-width:3}.city-marker__leader{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}.city-marker__label{fill:currentColor;font-family:Georgia,serif;font-size:30px;font-weight:700;paint-order:stroke;stroke:#fff;stroke-width:7px;stroke-linejoin:round}.city-marker--landmark .city-marker__label{font-size:27px;stroke-width:6px}.city-marker__label--left{text-anchor:end}.city-marker--inactive .city-marker__ring,.city-marker--inactive .city-marker__dot,.city-marker--inactive .city-marker__leader,.city-marker--inactive .city-marker__label{opacity:.88}.city-marker:hover .city-marker__ring,.city-marker:focus .city-marker__ring{transform:scale(1.18)}
-
-  .city-preview{opacity:0;visibility:hidden;pointer-events:none;overflow:hidden;transition:opacity 180ms ease,visibility 180ms ease}.city-marker:hover .city-preview,.city-marker:focus .city-preview,.city-marker:focus-visible .city-preview{opacity:1;visibility:visible}
-  .city-note{position:relative;width:420px;min-height:350px;padding:24px 24px 22px;background:#f6dc57;color:#29342f;box-shadow:0 18px 36px rgba(32,42,36,.2);font-family:'Caveat','Segoe Print','Bradley Hand',cursive;transform:rotate(-1.4deg)}.city-note--tadlo,.city-note--dondet{transform:rotate(1.2deg)}.city-note--active{background:#88acd1}.city-note__tape{position:absolute;z-index:2;top:-13px;left:50%;width:112px;height:28px;background:rgba(232,224,198,.76);transform:translateX(-50%) rotate(-2deg)}.city-note img{display:block;width:100%;height:145px;object-fit:cover;object-position:center 62%;filter:saturate(.68) contrast(.92);border:7px solid rgba(255,255,255,.72);box-sizing:border-box}.city-note__body{padding:15px 5px 0}.city-note__badge{display:inline-block;margin-bottom:5px;font-size:18px;font-weight:600;line-height:1;letter-spacing:.025em;color:#5f532d}.city-note--active .city-note__badge{color:#254864}.city-note strong{display:block;margin-bottom:4px;font-size:40px;font-weight:700;line-height:.98}.city-note p{margin:0 0 8px;font-size:20px;font-weight:500;line-height:1.18;color:rgba(41,52,47,.86)}.city-note small{display:block;font-size:17px;font-weight:500;line-height:1.1;color:rgba(49,85,69,.82)}.city-note--active small{color:rgba(31,63,86,.86)}
-
-  @media(max-width:1100px){.city-preview{display:none}}
-  @media(max-width:700px){.laos-map-page{padding-top:3.5rem}.map-sheet{width:auto;padding:.75rem .75rem 10px}.map-sheet__header{gap:.15rem;flex-wrap:wrap}.map-sheet__title-block{width:100%;order:2}.map-sheet__note{order:1;margin-right:auto;margin-left:0}.map-sheet__chapter{font-size:12px}.map-sheet__title{font-size:42px}.map-sheet__note{font-size:13px}.map-layers{width:calc(100vw - 4rem);height:calc(100vw - 4rem)}.map-drawing,.map-grid,.map-overlay{width:calc((100vw - 4rem)*.765);height:calc((100vw - 4rem)*1.1475)}.map-grid__labels text{font-size:34px}}
+  .laos-map-page{min-height:100vh;padding:clamp(4rem,8vw,7rem) max(1.25rem,calc((100vw - 1180px)/2));background:#f2eee3;color:#1f2924}.map-sheet{position:relative;width:fit-content;margin:0 auto;padding:26px 26px 10px;border:1px solid rgba(31,41,36,.14);background:#f7f2e6;overflow:visible}.map-sheet::before,.map-sheet::after{content:'';position:absolute;z-index:3;width:78px;height:22px;background:rgba(199,181,143,.48)}.map-sheet::before{top:-9px;left:8%;transform:rotate(-4deg)}.map-sheet::after{right:8%;bottom:-8px;transform:rotate(3deg)}.map-layers{position:relative;width:80vw;height:80vw;margin:0 auto;background:#fff;box-shadow:0 0 0 1px rgba(31,41,36,.2),0 8px 22px rgba(31,41,36,.06);overflow:hidden}.map-sheet__header{position:absolute;z-index:4;top:clamp(1.4rem,3vw,2.5rem);left:clamp(1.25rem,4vw,3.25rem);right:clamp(1.25rem,4vw,3.25rem);display:flex;align-items:flex-start;justify-content:space-between;gap:1.25rem;color:#1f392d;pointer-events:none}.map-sheet__title-block{width:min(42rem,70%);margin-left:auto;text-align:right}.map-sheet__title-art{display:block;width:100%;height:auto;overflow:visible}.map-sheet__chapter,.map-sheet__title{fill:#1f392d;font-family:'Caveat','Segoe Print','Bradley Hand',cursive}.map-sheet__chapter{font-size:15px;font-weight:500;letter-spacing:.12em;opacity:.62}.map-sheet__title{font-size:51px;font-weight:550;letter-spacing:.01em;opacity:.93}.map-sheet__note{flex:0 0 auto;margin-top:.15rem;color:#1f392d;font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:16px;font-weight:500;letter-spacing:.08em;opacity:.58;white-space:nowrap}.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.map-drawing,.map-grid,.map-overlay{position:absolute;left:50%;top:50%;width:61.2vw;height:91.8vw;transform:translate(-50%,-50%)}.map-drawing{display:block;object-fit:contain}.map-grid{z-index:1;display:block;overflow:hidden;pointer-events:none}.map-overlay{z-index:2;display:block;overflow:hidden;pointer-events:auto}.map-grid__lines line{stroke:rgba(42,75,61,.22);stroke-width:1.5;stroke-dasharray:8 10;vector-effect:non-scaling-stroke}.map-grid__labels text{fill:rgba(42,75,61,.58);font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:27px;font-weight:600;paint-order:stroke;stroke:rgba(255,255,255,.9);stroke-width:5px;stroke-linejoin:round}.map-grid__labels--rows text{text-anchor:start}.city-marker{cursor:pointer;outline:none}.laos-map-page .city-marker--active{color:#002868}.laos-map-page .city-marker--landmark{color:#ce1126}.laos-map-page .city-marker--inactive{color:#7f6d33;cursor:default}.city-marker__ring{fill:color-mix(in srgb,currentColor 14%,transparent);stroke:currentColor;stroke-width:3;transition:opacity 180ms ease,transform 180ms ease;transform-box:fill-box;transform-origin:center}.city-marker__dot{fill:currentColor;stroke:#fff;stroke-width:3}.city-marker__leader{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}.city-marker__label{fill:currentColor;font-family:Georgia,serif;font-size:30px;font-weight:700;paint-order:stroke;stroke:#fff;stroke-width:7px;stroke-linejoin:round}.city-marker--landmark .city-marker__label{font-size:27px;stroke-width:6px}.city-marker__label--left{text-anchor:end}.city-marker--inactive .city-marker__ring,.city-marker--inactive .city-marker__dot,.city-marker--inactive .city-marker__leader,.city-marker--inactive .city-marker__label{opacity:.88}.city-marker:hover .city-marker__ring,.city-marker:focus .city-marker__ring{transform:scale(1.18)}.city-preview{opacity:0;visibility:hidden;pointer-events:none;overflow:hidden;transition:opacity 180ms ease,visibility 180ms ease}.city-marker:hover .city-preview,.city-marker:focus .city-preview,.city-marker:focus-visible .city-preview{opacity:1;visibility:visible}.city-note{position:relative;width:420px;min-height:350px;padding:24px 24px 22px;background:#f6dc57;color:#29342f;box-shadow:0 18px 36px rgba(32,42,36,.2);font-family:'Caveat','Segoe Print','Bradley Hand',cursive;transform:rotate(-1.4deg)}.city-note--tadlo,.city-note--dondet{transform:rotate(1.2deg)}.city-note--active{background:#88acd1}.city-note__tape{position:absolute;z-index:2;top:-13px;left:50%;width:112px;height:28px;background:rgba(232,224,198,.76);transform:translateX(-50%) rotate(-2deg)}.city-note img{display:block;width:100%;height:145px;object-fit:cover;object-position:center 62%;filter:saturate(.68) contrast(.92);border:7px solid rgba(255,255,255,.72);box-sizing:border-box}.city-note__body{padding:15px 5px 0}.city-note__badge{display:inline-block;margin-bottom:5px;font-size:18px;font-weight:600;line-height:1;letter-spacing:.025em;color:#5f532d}.city-note--active .city-note__badge{color:#254864}.city-note strong{display:block;margin-bottom:4px;font-size:40px;font-weight:700;line-height:.98}.city-note p{margin:0 0 7px;font-size:20px;font-weight:500;line-height:1.15;color:rgba(41,52,47,.86)}.city-note__tags{display:block;margin:0 0 8px;color:rgba(31,63,86,.88);font-size:17px;font-weight:700;line-height:1.05}.city-note small{display:block;font-size:17px;font-weight:500;line-height:1.1;color:rgba(49,85,69,.82)}.city-note--active small{color:rgba(31,63,86,.86)}@media(max-width:1100px){.city-preview{display:none}}@media(max-width:700px){.laos-map-page{padding-top:3.5rem}.map-sheet{width:auto;padding:.75rem .75rem 10px}.map-sheet__header{gap:.15rem;flex-wrap:wrap}.map-sheet__title-block{width:100%;order:2}.map-sheet__note{order:1;margin-right:auto;margin-left:0}.map-sheet__chapter{font-size:12px}.map-sheet__title{font-size:42px}.map-sheet__note{font-size:13px}.map-layers{width:calc(100vw - 4rem);height:calc(100vw - 4rem)}.map-drawing,.map-grid,.map-overlay{width:calc((100vw - 4rem)*.765);height:calc((100vw - 4rem)*1.1475)}.map-grid__labels text{font-size:34px}}
 </style>
