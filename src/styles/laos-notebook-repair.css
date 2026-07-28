@@ -32,6 +32,11 @@
   pointer-events: none !important;
 }
 
+/* The temporary coordinate grid has moved to the Sri Lanka field map. */
+.laos-map-page[aria-labelledby="laos-map-title"] .map-grid {
+  display: none !important;
+}
+
 /* Laos field map: slightly brighter flag-inspired colours on the ivory paper. */
 .laos-map-page .city-marker--active {
   color: #3f6380 !important;
