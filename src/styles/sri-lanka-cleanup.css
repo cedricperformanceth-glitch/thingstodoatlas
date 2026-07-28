@@ -49,64 +49,80 @@
   stroke: #f4ecd9 !important;
 }
 
-/* Sigiriya: keep the 45-degree upper-right direction, shorten it slightly and pull the label back to the endpoint. */
+/* Keep every connector crisp and visually consistent at every responsive scale. */
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay .city-marker__leader {
+  stroke-width: 2px !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  vector-effect: non-scaling-stroke;
+  shape-rendering: geometricPrecision;
+}
+
+/* Sigiriya: exact 45-degree upper-right connector with a clean gap before the label. */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="sigiriya-modal"] .city-marker__leader {
-  transform-box: fill-box;
-  transform-origin: 0% 0%;
-  transform: rotate(-90deg) scale(.92) !important;
+  d: path("M420 756 L462 714");
+  transform: none !important;
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="sigiriya-modal"] .city-marker__label {
-  transform: translate(-4px, -136px);
+  text-anchor: start;
+  transform: translate(0, -156px);
 }
 
 /*
- * Ella Train remains 37 degrees upper-right of Adam's Peak, but the whole
- * marker is raised another 12 units for cleaner spacing.
+ * Ella Train remains raised relative to Adam's Peak. Its connector now leaves
+ * the left side at 45 degrees and the label sits on that same side.
  */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="ella-train-modal"] {
   transform: translate(-31.8px, -84.6px);
 }
 
-/* Ella's leader runs rightwards with a gentle 10-degree rise; its label follows the endpoint. */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="ella-train-modal"] .city-marker__leader {
-  transform-box: fill-box;
-  transform-origin: 0% 0%;
-  transform: rotate(-55deg) !important;
+  d: path("M580 1148 L536 1104");
+  transform: none !important;
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="ella-train-modal"] .city-marker__label {
-  transform: translate(18px, -98px);
+  text-anchor: end;
+  transform: translate(-130px, -158px);
 }
 
-/* Sri Dalada Maligawa: keep the 10-degree downward direction but use a shorter, tighter leader. */
+/* Sri Dalada Maligawa: short 10-degree downward connector, directly beside its title. */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="sri-dalada-maligawa-modal"] .city-marker__leader {
-  transform-box: fill-box;
-  transform-origin: 100% 100%;
-  transform: rotate(145deg) scale(.84) !important;
+  d: path("M460 930 L500 937");
+  transform: none !important;
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="sri-dalada-maligawa-modal"] .city-marker__label {
   text-anchor: start;
-  transform: translate(112px, 75px);
+  transform: translate(124px, 87px);
 }
 
-/* Yala: anchor the leader at the point and run it 35 degrees down-right. */
+/* Yala: exact 35-degree down-right connector, ending immediately before its title. */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="yala-national-park-modal"] .city-marker__leader {
-  transform-box: fill-box;
-  transform-origin: 0% 100%;
-  transform: rotate(80deg) !important;
+  d: path("M756 1360 L804 1394");
+  transform: none !important;
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="yala-national-park-modal"] .city-marker__label {
   text-anchor: start;
-  transform: translate(7px, 103px);
+  transform: translate(2px, 122px);
 }
 
-/* Devil's Dance is symbolic: place the complete marker at grid D4 and keep it red. */
+/* Devil's Dance stays at D4; its label now turns inward, down-left at 33 degrees. */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g.city-marker--ritual {
   color: #b5262e !important;
   transform: translate(-312px, -416px);
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g.city-marker--ritual .city-marker__leader {
+  d: path("M748 872 L692 908");
+  transform: none !important;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g.city-marker--ritual .city-marker__label {
+  text-anchor: end;
+  transform: translate(-142px, 124px);
 }
 
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g.city-marker--ritual .city-marker__dot {
