@@ -49,6 +49,24 @@
   stroke: #f4ecd9 !important;
 }
 
+/* Devil's Dance is a symbolic cultural note, not an exact map destination. */
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g.city-marker--ritual {
+  color: #b5262e !important;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay g.city-marker--ritual .city-marker__dot {
+  stroke: #f4ecd9 !important;
+}
+
+/* Keep the shared popup but remove the irrelevant Google Maps action for this cultural note. */
+#devils-dance-modal .landmark-action--maps {
+  display: none !important;
+}
+
+#devils-dance-modal .landmark-modal__actions {
+  grid-template-columns: 1fr !important;
+}
+
 @media (max-width: 700px) {
   .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay a.city-marker--active .city-marker__label {
     font-size: 38px !important;
