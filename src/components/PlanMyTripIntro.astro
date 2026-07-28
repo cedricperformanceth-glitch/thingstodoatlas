@@ -1,3 +1,10 @@
+---
+import HmongCulturalLandmark from './HmongCulturalLandmark.astro';
+
+const currentPath = Astro.url.pathname;
+const isLaosMapPage = currentPath === '/laos' || currentPath === '/laos/';
+---
+
 <section class="plan-trip-intro" aria-label="Plan my trip">
   <div class="plan-trip-intro__identity">
     <div class="plan-trip-intro__laptop">
@@ -26,6 +33,8 @@
     <p class="plan-trip-intro__note">You’ll build your trip as you explore.</p>
   </div>
 </section>
+
+{isLaosMapPage && <HmongCulturalLandmark />}
 
 <style>
   .plan-trip-intro {
