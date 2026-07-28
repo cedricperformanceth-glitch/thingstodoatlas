@@ -49,12 +49,34 @@
   stroke: #f4ecd9 !important;
 }
 
+/* Sigiriya: turn the original down-right diagonal into a 45-degree upper-right leader. */
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="sigiriya-modal"] .city-marker__leader {
+  transform-box: fill-box;
+  transform-origin: 0% 0%;
+  transform: rotate(-90deg) !important;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="sigiriya-modal"] .city-marker__label {
+  transform: translateY(-158px);
+}
+
 /*
  * Ella Train: after bringing it 4 units closer to Adam's Peak, preserve that
  * 140.5-unit spacing and place it 37 degrees to the upper-right.
  */
 .laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="ella-train-modal"] {
   transform: translate(-31.8px, -72.6px);
+}
+
+/* Ella's leader runs rightwards with a gentle 10-degree rise; its label follows the endpoint. */
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="ella-train-modal"] .city-marker__leader {
+  transform-box: fill-box;
+  transform-origin: 0% 0%;
+  transform: rotate(-55deg) !important;
+}
+
+.laos-map-page[aria-labelledby="sri-lanka-map-title"] .map-overlay [data-open-landmark="ella-train-modal"] .city-marker__label {
+  transform: translate(18px, -98px);
 }
 
 /* Devil's Dance is a symbolic cultural note, not an exact map destination. */
