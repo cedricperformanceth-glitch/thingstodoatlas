@@ -1,3 +1,9 @@
+/laos
+  Link: </images/hand-drawn/laos-map.webp>; rel=preload; as=image
+
+/laos/
+  Link: </images/hand-drawn/laos-map.webp>; rel=preload; as=image
+
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
 
