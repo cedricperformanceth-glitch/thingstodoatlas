@@ -1,0 +1,114 @@
+---
+import type { LandmarkGalleryItem } from '../data/laosLandmarks';
+import type { LandmarkVisitGuide } from '../data/laosLandmarkGuides';
+
+interface Props {
+  id: string;
+  parentModalId: string;
+  name: string;
+  region: string;
+  guide: LandmarkVisitGuide;
+  image?: LandmarkGalleryItem;
+}
+
+const { id, parentModalId, name, region, guide, image } = Astro.props;
+---
+
+<dialog
+  class="landmark-guide-modal"
+  id={id}
+  aria-labelledby={`${id}-title`}
+  data-landmark-guide-dialog
+  data-parent-landmark-modal={parentModalId}
+>
+  <article class="landmark-guide-notebook">
+    <span class="landmark-guide-notebook__binding" aria-hidden="true"></span>
+    <span class="landmark-guide-notebook__margin" aria-hidden="true"></span>
+
+    <button class="landmark-guide-modal__close" type="button" aria-label={`Close the ${name} visit guide`} data-close-landmark-guide>
+      <span>close notes</span><b aria-hidden="true">×</b>
+    </button>
+
+    <header class="landmark-guide__header">
+      <div class="landmark-guide__heading">
+        <p class="landmark-guide__eyebrow">{guide.eyebrow}</p>
+        <h2 id={`${id}-title`}>Plan the visit</h2>
+        <p class="landmark-guide__place">{name} <span>·</span> {region}</p>
+        <svg class="landmark-guide__underline" viewBox="0 0 260 18" aria-hidden="true"><path d="M4 9C52 15 100 2 151 9s66 5 104-3"/><path d="M31 14c62 3 128-5 208-1"/></svg>
+        <p class="landmark-guide__intro">{guide.intro}</p>
+      </div>
+
+      {image && (
+        <figure class="landmark-guide__polaroid">
+          <span class="landmark-guide__tape" aria-hidden="true"></span>
+          <img src={image.src} alt={image.alt || `${name} landscape`} width="480" height="360" loading="lazy" decoding="async" />
+          <figcaption>{name} · field reference</figcaption>
+        </figure>
+      )}
+    </header>
+
+    <div class="landmark-guide__quick-notes" aria-label={`${name} visit overview`}>
+      <div><span>Budget</span><strong>{guide.budget}</strong></div>
+      <div><span>Time to keep</span><strong>{guide.duration}</strong></div>
+      <div><span>Best for</span><strong>{guide.bestFor}</strong></div>
+    </div>
+
+    <div class="landmark-guide__sections">
+      {guide.sections.map((section, index) => (
+        <section class:list={['landmark-guide-section', { 'landmark-guide-section--tilted': index % 2 === 1 }]}>
+          <p>{section.label}</p>
+          <h3>{section.title}</h3>
+          <div>{section.text}</div>
+          {section.note && <aside>{section.note}</aside>}
+        </section>
+      ))}
+    </div>
+
+    <footer class="landmark-guide__footer">
+      <button class="landmark-guide__back" type="button" data-back-to-landmark><span aria-hidden="true">←</span> Back to field card</button>
+      <p><span>FIELD NOTE</span>{guide.fieldNote}</p>
+    </footer>
+  </article>
+</dialog>
+
+<style>
+  .landmark-guide-modal{position:relative;width:min(940px,calc(100vw - 28px));max-height:calc(100vh - 28px);padding:0;border:0;background:transparent;color:#24372f;overflow:auto;box-shadow:0 30px 90px rgba(16,22,19,.4)}
+  .landmark-guide-modal::backdrop{background:rgba(20,27,24,.72);backdrop-filter:blur(5px)}
+  .landmark-guide-notebook{position:relative;min-height:100%;padding:clamp(56px,7vw,78px) clamp(34px,6vw,72px) clamp(34px,5vw,54px) clamp(58px,8vw,96px);overflow:hidden;background-color:#f7f0dc;background-image:radial-gradient(circle at 18% 17%,rgba(139,91,58,.055) 0 1px,transparent 1.4px),radial-gradient(circle at 74% 63%,rgba(49,85,69,.05) 0 1px,transparent 1.4px),repeating-linear-gradient(to bottom,transparent 0 31px,rgba(73,111,143,.16) 32px,transparent 33px);background-size:27px 23px,31px 29px,100% 33px;box-shadow:inset 0 0 0 1px rgba(49,85,69,.15),inset 18px 0 28px rgba(103,77,43,.045)}
+  .landmark-guide-notebook::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.28),transparent 22%,transparent 78%,rgba(116,82,44,.05))}
+  .landmark-guide-notebook__margin{position:absolute;z-index:1;top:0;bottom:0;left:clamp(35px,5vw,57px);width:1px;background:rgba(193,84,62,.42);box-shadow:4px 0 0 rgba(193,84,62,.08)}
+  .landmark-guide-notebook__binding{position:absolute;z-index:3;top:17px;left:44px;right:44px;height:20px;background:repeating-radial-gradient(circle at 10px 10px,#d8ccb3 0 5px,#7b7465 5.5px 7px,transparent 7.5px 25px);opacity:.72}
+  .landmark-guide-modal__close{position:absolute;z-index:7;top:18px;right:20px;display:flex;align-items:center;gap:6px;padding:7px 10px 6px;border:1px solid rgba(49,85,69,.32);background:#f9f3e4;color:#315545;font-family:'Caveat','Segoe Print',cursive;font-size:1rem;line-height:1;cursor:pointer;box-shadow:2px 3px 0 rgba(49,85,69,.11);transform:rotate(1.5deg)}
+  .landmark-guide-modal__close b{font-size:1.18rem;font-weight:500}.landmark-guide-modal__close:hover{transform:rotate(-1deg) translateY(-1px)}
+  .landmark-guide__header{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) minmax(170px,230px);gap:clamp(28px,5vw,54px);align-items:start}
+  .landmark-guide__eyebrow{margin:0 0 7px;color:#a45d3a;font:700 .62rem/1.25 'DM Sans',sans-serif;letter-spacing:.15em}
+  .landmark-guide__heading h2{margin:0;color:#1f392d;font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:clamp(3.6rem,7vw,6.1rem);font-weight:600;line-height:.78;letter-spacing:-.035em;transform:rotate(-1deg)}
+  .landmark-guide__place{margin:17px 0 0;color:#b8653e;font-family:'Caveat','Segoe Print',cursive;font-size:1.35rem;font-weight:700;line-height:1.05}.landmark-guide__place span{color:#315545}
+  .landmark-guide__underline{display:block;width:min(260px,90%);margin:7px 0 15px;fill:none;stroke:#d97745;stroke-width:1.5;stroke-linecap:round;opacity:.78}
+  .landmark-guide__intro{max-width:36rem;margin:0;color:#263b32;font-family:Georgia,'Times New Roman',serif;font-size:1rem;line-height:1.6}
+  .landmark-guide__polaroid{position:relative;margin:12px 0 0;padding:7px 7px 28px;background:#fbf7ec;box-shadow:0 12px 25px rgba(31,41,36,.17);transform:rotate(2.1deg)}
+  .landmark-guide__polaroid img{display:block;width:100%;height:150px;object-fit:cover;filter:saturate(.82) contrast(.96)}
+  .landmark-guide__polaroid figcaption{position:absolute;left:10px;right:10px;bottom:7px;color:rgba(31,57,45,.63);font-family:'Caveat','Segoe Print',cursive;font-size:.83rem;text-align:center;white-space:nowrap}
+  .landmark-guide__tape{position:absolute;z-index:2;top:-11px;left:50%;width:76px;height:22px;background:rgba(196,174,132,.5);transform:translateX(-50%) rotate(-4deg)}
+  .landmark-guide__quick-notes{position:relative;z-index:2;display:grid;grid-template-columns:.8fr 1.15fr 1.25fr;gap:0;margin:30px 0 25px;border-top:1px solid rgba(49,85,69,.24);border-bottom:1px solid rgba(49,85,69,.2);background:rgba(249,244,229,.52);transform:rotate(-.25deg)}
+  .landmark-guide__quick-notes div{padding:12px 16px;border-right:1px dashed rgba(49,85,69,.22)}.landmark-guide__quick-notes div:last-child{border-right:0}
+  .landmark-guide__quick-notes span{display:block;margin-bottom:4px;color:#a45d3a;font:700 .55rem/1.2 'DM Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase}
+  .landmark-guide__quick-notes strong{display:block;color:#315545;font-family:'Caveat','Segoe Print',cursive;font-size:1.08rem;line-height:1.05}
+  .landmark-guide__sections{position:relative;z-index:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 34px}
+  .landmark-guide-section{padding:3px 8px 16px 0;border-bottom:1px dashed rgba(49,85,69,.25)}.landmark-guide-section--tilted{transform:rotate(.35deg)}
+  .landmark-guide-section>p{margin:0 0 4px;color:#a45d3a;font:700 .56rem/1.2 'DM Sans',sans-serif;letter-spacing:.13em}
+  .landmark-guide-section h3{margin:0 0 8px;color:#1f392d;font-family:'Caveat','Segoe Print',cursive;font-size:1.72rem;font-weight:650;line-height:.95;transform:rotate(-.5deg)}
+  .landmark-guide-section>div{color:#30433a;font-family:Georgia,'Times New Roman',serif;font-size:.91rem;line-height:1.58}
+  .landmark-guide-section aside{position:relative;margin:10px 0 0 12px;padding-left:13px;color:#b8653e;font-family:'Caveat','Segoe Print',cursive;font-size:1.04rem;font-weight:650;line-height:1.1;transform:rotate(-1deg)}.landmark-guide-section aside::before{content:'↳';position:absolute;left:-4px;color:#315545}
+  .landmark-guide__footer{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-top:29px}
+  .landmark-guide__back{display:flex;align-items:center;gap:7px;min-height:43px;padding:8px 13px;border:1px solid #315545;background:rgba(247,240,220,.72);color:#315545;font-family:'Caveat','Segoe Print',cursive;font-size:1.03rem;font-weight:700;cursor:pointer;box-shadow:2px 3px 0 rgba(49,85,69,.12);transform:rotate(-.5deg)}.landmark-guide__back:hover{background:#fff8e8;transform:rotate(.4deg) translateY(-1px)}
+  .landmark-guide__footer p{max-width:30rem;margin:0;color:#315545;font-family:'Caveat','Segoe Print',cursive;font-size:1.05rem;font-weight:650;line-height:1.1;text-align:right;transform:rotate(-1deg)}.landmark-guide__footer p span{display:block;margin-bottom:3px;color:#a45d3a;font:700 .52rem/1.2 'DM Sans',sans-serif;letter-spacing:.13em}
+
+  :global(.landmark-modal__actions.has-guide-action){grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  :global(.landmark-action--guide){display:flex;align-items:center;justify-content:center;gap:5px;min-height:47px;padding:8px 9px;border:1px solid #b8653e;background:#f4e7d2;color:#9a5134;font-family:'Caveat','Segoe Print',cursive;font-size:1.04rem;font-weight:700;line-height:1;text-align:center;cursor:pointer;box-shadow:2px 3px 0 rgba(184,101,62,.14);transform:rotate(-.2deg);transition:transform 150ms ease,background 150ms ease,box-shadow 150ms ease}
+  :global(.landmark-action--guide:hover){background:#f8ddc4;transform:rotate(.3deg) translateY(-1px);box-shadow:3px 4px 0 rgba(184,101,62,.14)}
+
+  @media(max-width:720px){.landmark-guide-notebook{padding:58px 24px 34px 48px}.landmark-guide-notebook__margin{left:30px}.landmark-guide-notebook__binding{left:28px;right:28px}.landmark-guide__header{grid-template-columns:1fr}.landmark-guide__polaroid{width:min(210px,72%);margin:4px auto 0}.landmark-guide__quick-notes{grid-template-columns:1fr}.landmark-guide__quick-notes div{border-right:0;border-bottom:1px dashed rgba(49,85,69,.22)}.landmark-guide__quick-notes div:last-child{border-bottom:0}.landmark-guide__sections{grid-template-columns:1fr}.landmark-guide__footer{align-items:stretch;flex-direction:column-reverse}.landmark-guide__footer p{text-align:left}.landmark-guide__back{justify-content:center}:global(.landmark-modal__actions.has-guide-action){grid-template-columns:1fr!important}}
+  @media(max-width:650px){:global(.landmark-action--guide){min-height:47px}}
+  @media(prefers-reduced-motion:reduce){.landmark-guide-modal__close,.landmark-guide__back,:global(.landmark-action--guide){transition:none}}
+</style>
