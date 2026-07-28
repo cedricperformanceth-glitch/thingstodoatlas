@@ -11,7 +11,28 @@ const {
   fieldCardNumber
 } = Astro.props;
 
-const galleryItems = Array.isArray(gallery) ? gallery.filter((item) => item?.src) : [];
+const resizeRemoteImage = (src, width) => {
+  if (typeof src !== 'string' || !src) return src;
+  return src.replace(/([?&])width=\d+/i, `$1width=${width}`);
+};
+
+const buildRemoteSrcSet = (src) => {
+  if (typeof src !== 'string' || !/[?&]width=\d+/i.test(src)) return undefined;
+  return [640, 960, 1200, 1600]
+    .map((width) => `${resizeRemoteImage(src, width)} ${width}w`)
+    .join(', ');
+};
+
+const galleryItems = Array.isArray(gallery)
+  ? gallery
+      .filter((item) => item?.src)
+      .map((item) => ({
+        ...item,
+        displaySrc: resizeRemoteImage(item.src, 1200),
+        thumbnailSrc: resizeRemoteImage(item.src, 320),
+        srcset: buildRemoteSrcSet(item.src)
+      }))
+  : [];
 const primaryImage = galleryItems[0] ?? null;
 
 const factIcons = {
@@ -191,7 +212,17 @@ const storyScribble = storyScribbles[name] ?? 'keep looking beyond the obvious';
       {primaryImage ? (
         <div class="landmark-gallery" data-landmark-gallery>
           <div class="landmark-gallery__stage">
-            <img src={primaryImage.src} alt={primaryImage.alt || `${name} landscape`} width="900" height="720" loading="eager" data-gallery-main />
+            <img
+              src={primaryImage.displaySrc}
+              srcset={primaryImage.srcset}
+              sizes="(max-width: 650px) calc(100vw - 62px), (max-width: 900px) calc(50vw - 50px), 520px"
+              alt={primaryImage.alt || `${name} landscape`}
+              width="900"
+              height="720"
+              loading="lazy"
+              decoding="async"
+              data-gallery-main
+            />
             {galleryItems.length > 1 && (
               <>
                 <button class="landmark-gallery__arrow landmark-gallery__arrow--previous" type="button" aria-label={`Previous ${name} photo`} data-gallery-previous>
@@ -216,13 +247,14 @@ const storyScribble = storyScribbles[name] ?? 'keep looking beyond the obvious';
                   aria-pressed={index === 0 ? 'true' : 'false'}
                   data-gallery-thumb
                   data-gallery-index={index}
-                  data-gallery-src={image.src}
+                  data-gallery-src={image.displaySrc}
+                  data-gallery-srcset={image.srcset || ''}
                   data-gallery-alt={image.alt || `${name} photo ${index + 1}`}
                   data-gallery-source-page={image.sourcePage || ''}
                   data-gallery-author={image.author || ''}
                   data-gallery-license={image.license || ''}
                 >
-                  <span class="landmark-gallery__thumb-paper"><img src={image.src} alt="" width="180" height="120" loading="lazy" /></span>
+                  <span class="landmark-gallery__thumb-paper"><img src={image.thumbnailSrc} alt="" width="180" height="120" loading="lazy" decoding="async" fetchpriority="low" /></span>
                   <small>{String(index + 1).padStart(2, '0')}</small>
                 </button>
               ))}
@@ -315,6 +347,7 @@ const storyScribble = storyScribbles[name] ?? 'keep looking beyond the obvious';
         const index = (requestedIndex + thumbs.length) % thumbs.length;
         const thumb = thumbs[index];
         if (!(thumb instanceof HTMLButtonElement)) return;
+        main.srcset = thumb.dataset.gallerySrcset || '';
         if (thumb.dataset.gallerySrc) main.src = thumb.dataset.gallerySrc;
         main.alt = thumb.dataset.galleryAlt || main.alt;
         thumbs.forEach((item, itemIndex) => {
