@@ -37,6 +37,33 @@
   display: none !important;
 }
 
+/* Keep the large map isolated from the rest of the page layout calculations. */
+.laos-map-page[aria-labelledby="laos-map-title"] .map-layers {
+  contain: layout style;
+}
+
+/* The trip introduction is below the map, so reserve its space and render it near the viewport. */
+.laos-map-page[aria-labelledby="laos-map-title"] .plan-trip-intro {
+  content-visibility: auto;
+  contain-intrinsic-size: 620px;
+}
+
+/* City preview cards are invisible until hover/focus; skip their internal rendering beforehand. */
+.laos-map-page[aria-labelledby="laos-map-title"] .city-preview {
+  content-visibility: hidden;
+  contain-intrinsic-size: 470px 430px;
+}
+
+.laos-map-page[aria-labelledby="laos-map-title"] .city-marker:hover .city-preview,
+.laos-map-page[aria-labelledby="laos-map-title"] .city-marker:focus .city-preview,
+.laos-map-page[aria-labelledby="laos-map-title"] .city-marker:focus-visible .city-preview {
+  content-visibility: visible;
+}
+
+.laos-map-page[aria-labelledby="laos-map-title"] .city-note {
+  contain: layout paint;
+}
+
 /* Laos field map: slightly brighter flag-inspired colours on the ivory paper. */
 .laos-map-page .city-marker--active {
   color: #3f6380 !important;
