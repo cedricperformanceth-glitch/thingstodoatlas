@@ -14,6 +14,12 @@ const negombo = { x: 224, y: 969 };
 const colombo = { x: 224, y: 1152 };
 const arugamBay = { x: 896, y: 1172 };
 
+// Provisional landmark positions — the temporary grid is active for final placement.
+const yalaNationalPark = { x: 744, y: 1352 };
+const ellaTrain = { x: 592, y: 1160 };
+const sriDaladaMaligawa = { x: 448, y: 928 };
+const devilsDance = { x: 760, y: 864 };
+
 const sigiriyaGallery = [
   {
     src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Sigiriya_Rock_Fortress.jpg?width=1600',
@@ -75,6 +81,109 @@ const adamsPeakGallery = [
     license: 'CC BY-SA 4.0'
   }
 ];
+
+const yalaGallery = [
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Leopard_at_Yala_National_Park.jpg?width=1600',
+    alt: 'A Sri Lankan leopard resting beneath the trees in Yala National Park',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Leopard_at_Yala_National_Park.jpg',
+    author: 'Manelka Jayasundara',
+    license: 'CC BY-SA 4.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Elephants_in_the_Yala_National_Park.jpg?width=1600',
+    alt: 'Elephants together in the dry landscape of Yala National Park',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Elephants_in_the_Yala_National_Park.jpg',
+    author: 'Manelka Jayasundara',
+    license: 'CC BY-SA 4.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Wetland_-_Yala_NP.jpg?width=1600',
+    alt: 'Wetland and lake habitat inside Yala National Park',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Wetland_-_Yala_NP.jpg',
+    author: 'Dan Arndt',
+    license: 'CC BY-SA 4.0'
+  }
+];
+
+const ellaTrainGallery = [
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Nine_arches_bridge_train.jpg?width=1600',
+    alt: 'A train crossing the Nine Arches Bridge near Ella',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Nine_arches_bridge_train.jpg',
+    author: 'Ikrimah Deen',
+    license: 'CC BY-SA 4.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Nine_Arch_Bridge_in_Ella.jpg?width=1600',
+    alt: 'The hill-country train travelling across the Nine Arch Bridge in Ella',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Nine_Arch_Bridge_in_Ella.jpg',
+    author: 'Wikimedia Commons',
+    license: 'CC BY-SA 4.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Train_ride_over_the_Nine_Arches_Bridge.jpg?width=1600',
+    alt: 'Train journey across the stone arches between Ella and Demodara',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Train_ride_over_the_Nine_Arches_Bridge.jpg',
+    author: 'Laks0623',
+    license: 'CC BY-SA 4.0'
+  }
+];
+
+const sriDaladaGallery = [
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Sri_Dalada_maligawa.jpg?width=1600',
+    alt: 'Panoramic view of Sri Dalada Maligawa beside Kandy Lake',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Sri_Dalada_maligawa.jpg',
+    author: 'KapilaKTK',
+    license: 'CC BY-SA 3.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Shrine_-_The_Temple_of_the_Sacred_Tooth_Relic_%28Kandy%29_%285478626167%29.jpg?width=1600',
+    alt: 'Interior shrine at the Temple of the Sacred Tooth Relic in Kandy',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Shrine_-_The_Temple_of_the_Sacred_Tooth_Relic_(Kandy)_(5478626167).jpg',
+    author: 'Wikimedia Commons',
+    license: 'CC BY 2.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Sri_lanka_kandy_Esalla_Perahera.jpg?width=1600',
+    alt: 'Ceremonial procession during the Kandy Esala Perahera',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Sri_lanka_kandy_Esalla_Perahera.jpg',
+    author: 'Wikimedia Commons',
+    license: 'CC BY-SA 4.0'
+  }
+];
+
+const devilsDanceGallery = [
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Devil_Dance_Kandy_Sri_Lanka.jpg?width=1600',
+    alt: 'A Sri Lankan Devil Dance performance with ritual costume and movement',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Devil_Dance_Kandy_Sri_Lanka.jpg',
+    author: 'Philip Nalangan',
+    license: 'CC BY-SA 3.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Gara_Yaka_Thovil_ceremony.jpg?width=1600',
+    alt: 'A performer during a Gara Yaka thovil healing ceremony',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Gara_Yaka_Thovil_ceremony.jpg',
+    author: 'Wikimedia Commons',
+    license: 'CC BY-SA 4.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/The_Devil-Dance._Wellcome_L0005693.jpg?width=1600',
+    alt: 'Historical illustration titled The Devil-Dance',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:The_Devil-Dance._Wellcome_L0005693.jpg',
+    author: 'Wellcome Collection',
+    license: 'CC BY 4.0'
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Devil_mask2%28js%29.jpg?width=1600',
+    alt: 'Traditional Sri Lankan Naga Raksha demon mask',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Devil_mask2(js).jpg',
+    author: 'Wikimedia Commons',
+    license: 'CC BY-SA 3.0'
+  }
+];
 ---
 
 <BaseLayout
@@ -126,21 +235,49 @@ const adamsPeakGallery = [
           </svg>
 
           <svg class="map-overlay" viewBox="0 0 1024 1536" role="img" aria-labelledby="sri-lanka-map-svg-title sri-lanka-map-description">
-            <title id="sri-lanka-map-svg-title">Destinations on the Sri Lanka map</title>
-            <desc id="sri-lanka-map-description">Mirissa and Ahangama are available along the southern coast, Sigiriya is available in the centre of the island, Adam's Peak is available in the central highlands, Negombo and Colombo are available on the west coast, and Arugam Bay is marked as an upcoming destination on the east coast.</desc>
+            <title id="sri-lanka-map-svg-title">Destinations and cultural landmarks on the Sri Lanka map</title>
+            <desc id="sri-lanka-map-description">The map includes city guides, geographical landmarks and a red cultural note for Devil's Dance that is not intended as an exact location.</desc>
 
-            <g class="city-marker city-marker--active" role="button" tabindex="0" aria-label="Open Sigiriya landmark details" data-open-landmark="sigiriya-modal">
+            <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Sigiriya landmark details" data-open-landmark="sigiriya-modal">
               <circle class="city-marker__ring" cx={sigiriya.x} cy={sigiriya.y} r="22" />
               <circle class="city-marker__dot" cx={sigiriya.x} cy={sigiriya.y} r="9" />
               <path class="city-marker__leader" d={`M${sigiriya.x + 12} ${sigiriya.y + 12} L${sigiriya.x + 54} ${sigiriya.y + 54}`} />
               <text class="city-marker__label city-marker__label--down-right" x={sigiriya.x + 62} y={sigiriya.y + 92}>Sigiriya</text>
             </g>
 
-            <g class="city-marker city-marker--active" role="button" tabindex="0" aria-label="Open Adam's Peak landmark details" data-open-landmark="adams-peak-modal">
+            <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Adam's Peak landmark details" data-open-landmark="adams-peak-modal">
               <circle class="city-marker__ring" cx={adamsPeak.x} cy={adamsPeak.y} r="22" />
               <circle class="city-marker__dot" cx={adamsPeak.x} cy={adamsPeak.y} r="9" />
               <path class="city-marker__leader" d={`M${adamsPeak.x + 12} ${adamsPeak.y + 12} L${adamsPeak.x + 54} ${adamsPeak.y + 54}`} />
               <text class="city-marker__label city-marker__label--down-right" x={adamsPeak.x + 62} y={adamsPeak.y + 92}>Adam's Peak</text>
+            </g>
+
+            <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Yala National Park landmark details" data-open-landmark="yala-national-park-modal">
+              <circle class="city-marker__ring" cx={yalaNationalPark.x} cy={yalaNationalPark.y} r="22" />
+              <circle class="city-marker__dot" cx={yalaNationalPark.x} cy={yalaNationalPark.y} r="9" />
+              <path class="city-marker__leader" d={`M${yalaNationalPark.x + 12} ${yalaNationalPark.y - 12} L${yalaNationalPark.x + 58} ${yalaNationalPark.y - 58}`} />
+              <text class="city-marker__label city-marker__label--up-right" x={yalaNationalPark.x + 66} y={yalaNationalPark.y - 70}>Yala National Park</text>
+            </g>
+
+            <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Ella Train landmark details" data-open-landmark="ella-train-modal">
+              <circle class="city-marker__ring" cx={ellaTrain.x} cy={ellaTrain.y} r="22" />
+              <circle class="city-marker__dot" cx={ellaTrain.x} cy={ellaTrain.y} r="9" />
+              <path class="city-marker__leader" d={`M${ellaTrain.x + 12} ${ellaTrain.y + 12} L${ellaTrain.x + 58} ${ellaTrain.y + 58}`} />
+              <text class="city-marker__label city-marker__label--down-right" x={ellaTrain.x + 66} y={ellaTrain.y + 92}>Ella Train</text>
+            </g>
+
+            <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Sri Dalada Maligawa landmark details" data-open-landmark="sri-dalada-maligawa-modal">
+              <circle class="city-marker__ring" cx={sriDaladaMaligawa.x} cy={sriDaladaMaligawa.y} r="22" />
+              <circle class="city-marker__dot" cx={sriDaladaMaligawa.x} cy={sriDaladaMaligawa.y} r="9" />
+              <path class="city-marker__leader" d={`M${sriDaladaMaligawa.x - 12} ${sriDaladaMaligawa.y - 12} L${sriDaladaMaligawa.x - 58} ${sriDaladaMaligawa.y - 58}`} />
+              <text class="city-marker__label city-marker__label--up-left" x={sriDaladaMaligawa.x - 66} y={sriDaladaMaligawa.y - 70}>Sri Dalada Maligawa</text>
+            </g>
+
+            <g class="city-marker city-marker--ritual" role="button" tabindex="0" aria-label="Open Devil's Dance cultural note" data-open-landmark="devils-dance-modal">
+              <circle class="city-marker__ring" cx={devilsDance.x} cy={devilsDance.y} r="22" />
+              <circle class="city-marker__dot" cx={devilsDance.x} cy={devilsDance.y} r="9" />
+              <path class="city-marker__leader" d={`M${devilsDance.x + 12} ${devilsDance.y - 12} L${devilsDance.x + 58} ${devilsDance.y - 58}`} />
+              <text class="city-marker__label city-marker__label--up-right" x={devilsDance.x + 66} y={devilsDance.y - 70}>Devil's Dance</text>
             </g>
 
             <g class="city-marker city-marker--inactive" aria-label="Arugam Bay coming soon">
@@ -215,6 +352,82 @@ const adamsPeakGallery = [
       { label: 'Price', value: 'The climb itself is generally free, but transport and local services cost extra.' },
       { label: 'Duration', value: 'Plan several hours for the ascent and descent.' },
       { label: 'Difficulty', value: 'Demanding, with a long staircase and substantial elevation gain.' }
+    ]}
+  />
+
+  <LandmarkModal
+    id="yala-national-park-modal"
+    name="Yala National Park"
+    country="Sri Lanka"
+    fieldCardNumber="03"
+    region="Southern & Uva Provinces · South-east Sri Lanka"
+    description="A protected landscape of dry forest, scrub, lagoons and rocky coastline, best known for wildlife safaris and the chance to encounter Sri Lankan leopards, elephants, crocodiles and birdlife."
+    mapsUrl="https://www.google.com/maps/search/?api=1&query=Yala%20National%20Park%2C%20Sri%20Lanka"
+    gallery={yalaGallery}
+    facts={[
+      { label: 'Getting there', value: 'Tissamaharama and Kataragama are common bases. The park is entered with an authorised safari vehicle and driver through the operating entrance for your chosen block.' },
+      { label: 'Best time', value: 'Dawn and late afternoon usually offer cooler conditions and better wildlife activity. Opening arrangements can change seasonally, so check locally.' },
+      { label: 'What to wear', value: 'Light neutral clothing, sun protection and a layer for the early drive. Bring water and protect cameras from dust.' },
+      { label: 'Price', value: 'Park admission, vehicle and guide costs are separate and can change. Confirm the full safari price before booking.' },
+      { label: 'Duration', value: 'A standard safari is usually a half-day; a full-day visit provides more time but also more heat and driving.' },
+      { label: 'Difficulty', value: 'Physically easy but bumpy, dusty and sometimes crowded. Wildlife sightings are never guaranteed.' }
+    ]}
+  />
+
+  <LandmarkModal
+    id="ella-train-modal"
+    name="Ella Train"
+    country="Sri Lanka"
+    fieldCardNumber="04"
+    region="Central Highlands · Ella & Demodara"
+    description="The hill-country railway journey around Ella is part transport, part landscape experience: tea estates, misty ridges, small stations and the celebrated Nine Arches Bridge. It is a route rather than one single attraction."
+    mapsUrl="https://www.google.com/maps/search/?api=1&query=Nine%20Arches%20Bridge%2C%20Ella%2C%20Sri%20Lanka"
+    gallery={ellaTrainGallery}
+    facts={[
+      { label: 'Getting there', value: 'Ella railway station connects with the main hill-country line. The Nine Arches Bridge lies between Ella and Demodara and can also be reached on foot from nearby roads and trails.' },
+      { label: 'Best time', value: 'Travel in daylight for the views. Weather, delays and crowd levels vary, especially during weekends and holidays.' },
+      { label: 'What to wear', value: 'Bring a light layer for cooler highland air and rain protection. Keep luggage compact and secure around doors and platforms.' },
+      { label: 'Price', value: 'Ticket prices depend on route and class. Reserved seats can sell out, so use official railway channels or check at a station.' },
+      { label: 'Duration', value: 'The full Kandy–Ella journey takes much of the day; shorter sections such as Nanu Oya–Ella still deliver the main highland scenery.' },
+      { label: 'Difficulty', value: 'The train itself is easy, but crowded carriages, stairs, uneven platforms and walking approaches to the bridge require care.' }
+    ]}
+  />
+
+  <LandmarkModal
+    id="sri-dalada-maligawa-modal"
+    name="Sri Dalada Maligawa"
+    country="Sri Lanka"
+    fieldCardNumber="05"
+    region="Kandy · Central Province"
+    description="The Temple of the Sacred Tooth Relic is one of Sri Lanka’s most important Buddhist sites, built within Kandy’s former royal palace complex. The annual Kandy Esala Perahera is a major night procession associated with the temple, bringing together drummers, dancers, torchbearers and ceremonial elephants around a replica relic casket."
+    mapsUrl="https://www.google.com/maps/search/?api=1&query=Sri%20Dalada%20Maligawa%2C%20Kandy%2C%20Sri%20Lanka"
+    gallery={sriDaladaGallery}
+    facts={[
+      { label: 'Getting there', value: 'The temple stands beside Kandy Lake in the city centre and is accessible on foot or by local transport from most central accommodation.' },
+      { label: 'Best time', value: 'Visit outside peak ceremony periods for a calmer experience, or attend a puja respectfully. The Esala Perahera usually takes place during July or August, with dates changing each year.' },
+      { label: 'What to wear', value: 'Cover shoulders and knees, remove shoes and hats where required, and follow temple photography rules.' },
+      { label: 'Price', value: 'Visitor arrangements and ticketing can change. Confirm current entry requirements at the official temple entrance.' },
+      { label: 'Duration', value: 'Allow one to two hours for the temple complex; the Perahera is a separate evening event requiring much more planning.' },
+      { label: 'Difficulty', value: 'Generally easy walking, though security checks, crowds and long periods of standing are possible during ceremonies and festival nights.' }
+    ]}
+  />
+
+  <LandmarkModal
+    id="devils-dance-modal"
+    name="Devil's Dance"
+    country="Sri Lanka"
+    fieldCardNumber="06"
+    region="Cultural note · No single map location"
+    description="‘Devil’s Dance’ is a broad English label often used for Sri Lankan masked ritual traditions such as thovil and related low-country performances. Historically, these ceremonies combined drumming, dance, dialogue, offerings and masks within healing or protective rites; modern stage versions may present selected elements as cultural performance."
+    mapsUrl="#"
+    gallery={devilsDanceGallery}
+    facts={[
+      { label: 'Getting there', value: 'This red point is intentionally symbolic. The tradition is not tied to one attraction or one exact location, and forms vary between communities and regions.' },
+      { label: 'Best time', value: 'Authentic ritual contexts are community events, not fixed daily shows. Public cultural performances and mask demonstrations are easier to plan around.' },
+      { label: 'What to wear', value: 'Dress respectfully and ask before photographing a ceremony. A healing ritual should not be treated as a costume show.' },
+      { label: 'Price', value: 'There is no universal ticket or standard price. Museum visits, staged performances and privately arranged ceremonies are different experiences.' },
+      { label: 'Duration', value: 'A staged excerpt may last minutes, while a traditional ritual can continue for many hours and sometimes through the night.' },
+      { label: 'Difficulty', value: 'The main challenge is cultural context: masks, demons and dramatic movement carry ritual meanings that cannot be reduced to simple entertainment.' }
     ]}
   />
 </BaseLayout>
