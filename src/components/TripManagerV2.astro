@@ -167,7 +167,13 @@
       };
     };
 
-    const emptyStore = () => ({ version: 2, activeTripId: null, trips: [] });
+    const emptyStore = () => ({ version: 2, activeTripId: null, activeTripByCountry: {}, trips: [] });
+
+    const setActiveTrip = (store, trip) => {
+      store.activeTripId = trip?.id || null;
+      store.activeTripByCountry = store.activeTripByCountry || {};
+      if (trip?.countrySlug) store.activeTripByCountry[trip.countrySlug] = trip.id;
+    };
 
     const migrateLegacyStore = () => {
       try {
@@ -191,7 +197,12 @@
             cityName: city?.name || citySlug
           }))
         };
-        const migrated = { version: 2, activeTripId: trip.id, trips: [trip] };
+        const migrated = {
+          version: 2,
+          activeTripId: trip.id,
+          activeTripByCountry: { laos: trip.id },
+          trips: [trip]
+        };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
         localStorage.removeItem(LEGACY_STORAGE_KEY);
         return migrated;
@@ -218,7 +229,15 @@
           const activeTripId = trips.some((trip) => trip.id === parsed.activeTripId)
             ? parsed.activeTripId
             : (trips[0]?.id || null);
-          return { version: 2, activeTripId, trips };
+          const activeTripByCountry = { ...(parsed.activeTripByCountry || {}) };
+          Object.keys(activeTripByCountry).forEach((countrySlug) => {
+            if (!trips.some((trip) => trip.id === activeTripByCountry[countrySlug] && trip.countrySlug === countrySlug)) {
+              delete activeTripByCountry[countrySlug];
+            }
+          });
+          const activeTrip = trips.find((trip) => trip.id === activeTripId);
+          if (activeTrip && !activeTripByCountry[activeTrip.countrySlug]) activeTripByCountry[activeTrip.countrySlug] = activeTrip.id;
+          return { version: 2, activeTripId, activeTripByCountry, trips };
         }
       } catch {
         // Start again with an empty notebook if storage was corrupted.
@@ -252,7 +271,7 @@
         items: []
       };
       store.trips.push(trip);
-      store.activeTripId = trip.id;
+      setActiveTrip(store, trip);
       return trip;
     };
 
@@ -262,9 +281,15 @@
 
     const getActiveTrip = (store) => store.trips.find((trip) => trip.id === store.activeTripId) || null;
 
+    const getCountryActiveTrip = (store, countrySlug) => {
+      const rememberedId = store.activeTripByCountry?.[countrySlug];
+      return store.trips.find((trip) => trip.id === rememberedId && trip.countrySlug === countrySlug)
+        || latestTripForCountry(store, countrySlug);
+    };
+
     const ensureTripForItem = (store, item) => {
       let trip = getActiveTrip(store);
-      if (!trip || trip.countrySlug !== item.countrySlug) trip = latestTripForCountry(store, item.countrySlug);
+      if (!trip || trip.countrySlug !== item.countrySlug) trip = getCountryActiveTrip(store, item.countrySlug);
       if (!trip) {
         trip = createTrip(store, item.countrySlug, {
           countryName: item.countryName,
@@ -276,7 +301,7 @@
         trip.startingCity = item.citySlug;
         trip.startingCityName = item.city;
       }
-      store.activeTripId = trip.id;
+      setActiveTrip(store, trip);
       return trip;
     };
 
@@ -306,12 +331,17 @@
         name,
         countrySlug: page.countrySlug,
         countryName: page.countryName,
-        city: page.countryName,
+        city: '',
         citySlug: '',
         group: 'landmarks',
         category: 'Landmark',
         address: region,
         url: `${window.location.pathname}#${dialog.id}`
+      }, {
+        countrySlug: page.countrySlug,
+        countryName: page.countryName,
+        citySlug: '',
+        cityName: ''
       });
     };
 
@@ -512,7 +542,7 @@
         if (!item) return;
         const targetTrip = activeTrip?.countrySlug === item.countrySlug
           ? activeTrip
-          : latestTripForCountry(store, item.countrySlug);
+          : getCountryActiveTrip(store, item.countrySlug);
         const saved = Boolean(targetTrip?.items.some((savedItem) => savedItem.id === item.id));
         button.textContent = saved ? 'Saved to My Trip' : 'Add to My Trip';
         button.disabled = saved;
@@ -547,7 +577,7 @@
 
       widget.hidden = false;
       const itemCount = activeTrip.items.length;
-      const cityCount = new Set(activeTrip.items.map((item) => item.city).filter(Boolean)).size;
+      const cityCount = new Set(activeTrip.items.filter((item) => item.kind !== 'landmark').map((item) => item.city).filter(Boolean)).size;
       count.textContent = String(itemCount).padStart(2, '0');
       fabTitle.textContent = activeTrip.name.toUpperCase();
       title.textContent = activeTrip.name;
@@ -622,6 +652,7 @@
         const trip = ensureTripForItem(store, item);
         if (!trip.items.some((savedItem) => savedItem.id === item.id)) trip.items.push(item);
         trip.updatedAt = new Date().toISOString();
+        setActiveTrip(store, trip);
         writeStore(store);
         render();
         return;
@@ -637,6 +668,18 @@
         trip.updatedAt = new Date().toISOString();
         writeStore(store);
         render();
+        return;
+      }
+
+      const more = target.closest('[data-trip-more]');
+      if (more instanceof HTMLButtonElement) {
+        stopManagedEvent(event);
+        const expanded = more.getAttribute('aria-expanded') === 'true';
+        const notes = [...more.parentElement.querySelectorAll('.plan-trip-note')];
+        notes.forEach((note, index) => { if (index >= 4) note.hidden = expanded; });
+        more.setAttribute('aria-expanded', String(!expanded));
+        const remaining = Math.max(0, notes.length - 4);
+        more.textContent = expanded ? `+ ${remaining} MORE SAVED ${remaining === 1 ? 'CARD' : 'CARDS'}` : 'SHOW FEWER CARDS';
         return;
       }
 
@@ -660,8 +703,9 @@
         const trip = getActiveTrip(store);
         if (!trip || !window.confirm(`Delete ${trip.name}?`)) return;
         store.trips = store.trips.filter((entry) => entry.id !== trip.id);
-        const replacement = latestTripForCountry(store, getPageContext().countrySlug) || store.trips[0] || null;
-        store.activeTripId = replacement?.id || null;
+        if (store.activeTripByCountry?.[trip.countrySlug] === trip.id) delete store.activeTripByCountry[trip.countrySlug];
+        const replacement = getCountryActiveTrip(store, getPageContext().countrySlug) || store.trips[0] || null;
+        setActiveTrip(store, replacement);
         writeStore(store);
         render();
         return;
@@ -706,8 +750,10 @@
       if (target instanceof HTMLSelectElement && target.matches('[data-trip-select]')) {
         stopManagedEvent(event);
         const store = readStore();
-        if (!store.trips.some((trip) => trip.id === target.value)) return;
-        store.activeTripId = target.value;
+        const trip = store.trips.find((entry) => entry.id === target.value);
+        if (!trip) return;
+        trip.updatedAt = new Date().toISOString();
+        setActiveTrip(store, trip);
         writeStore(store);
         render();
       }
@@ -720,9 +766,9 @@
       const page = getPageContext();
       if (lastInitialisedPath !== window.location.pathname) {
         const store = readStore();
-        const pageTrip = page.countrySlug ? latestTripForCountry(store, page.countrySlug) : null;
+        const pageTrip = page.countrySlug ? getCountryActiveTrip(store, page.countrySlug) : null;
         if (pageTrip) {
-          store.activeTripId = pageTrip.id;
+          setActiveTrip(store, pageTrip);
           writeStore(store);
         }
         lastInitialisedPath = window.location.pathname;
@@ -735,7 +781,7 @@
       window.__atlasTripManagerV2 = { init, render };
       document.addEventListener('click', handleClick, true);
       document.addEventListener('change', handleChange, true);
-      window.addEventListener('storage', render);
+      window.addEventListener('storage', () => window.setTimeout(render, 0));
       window.addEventListener('atlas:trips-changed', render);
       window.addEventListener('hashchange', openCardFromHash);
       document.addEventListener('astro:page-load', init);
