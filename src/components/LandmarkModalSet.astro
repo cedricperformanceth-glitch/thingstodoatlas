@@ -1,6 +1,8 @@
 ---
 import LandmarkModal from './LandmarkModal.astro';
+import LandmarkGuideModal from './LandmarkGuideModal.astro';
 import type { LaosLandmark } from '../data/laosLandmarks';
+import { laosLandmarkGuides } from '../data/laosLandmarkGuides';
 
 interface Props {
   landmarks?: LaosLandmark[];
@@ -9,19 +11,45 @@ interface Props {
 const { landmarks = [] } = Astro.props;
 ---
 
-{landmarks.map((landmark) => (
-  <LandmarkModal
-    id={landmark.modalId}
-    name={landmark.name}
-    country={landmark.country}
-    fieldCardNumber={landmark.fieldCardNumber}
-    region={landmark.region}
-    description={landmark.description}
-    mapsUrl={landmark.mapsUrl}
-    gallery={landmark.gallery}
-    facts={landmark.facts}
-  />
-))}
+{landmarks.map((landmark) => {
+  const guide = laosLandmarkGuides[landmark.slug];
+  const guideModalId = `${landmark.slug}-visit-guide`;
+
+  return (
+    <>
+      <LandmarkModal
+        id={landmark.modalId}
+        name={landmark.name}
+        country={landmark.country}
+        fieldCardNumber={landmark.fieldCardNumber}
+        region={landmark.region}
+        description={landmark.description}
+        mapsUrl={landmark.mapsUrl}
+        gallery={landmark.gallery}
+        facts={landmark.facts}
+      />
+
+      {guide && (
+        <>
+          <span
+            hidden
+            data-landmark-guide-config
+            data-parent-landmark-modal={landmark.modalId}
+            data-landmark-guide-modal={guideModalId}
+          ></span>
+          <LandmarkGuideModal
+            id={guideModalId}
+            parentModalId={landmark.modalId}
+            name={landmark.name}
+            region={landmark.region}
+            guide={guide}
+            image={landmark.gallery[0]}
+          />
+        </>
+      )}
+    </>
+  );
+})}
 
 <script>
   const bindLandmarkModals = () => {
@@ -55,6 +83,62 @@ const { landmarks = [] } = Astro.props;
     });
   };
 
-  bindLandmarkModals();
-  document.addEventListener('astro:page-load', bindLandmarkModals);
+  const bindLandmarkGuideButtons = () => {
+    document.querySelectorAll<HTMLElement>('[data-landmark-guide-config]').forEach((config) => {
+      if (config.dataset.guideConfigBound === 'true') return;
+      config.dataset.guideConfigBound = 'true';
+
+      const parentId = config.dataset.parentLandmarkModal;
+      const guideId = config.dataset.landmarkGuideModal;
+      const parentDialog = parentId ? document.getElementById(parentId) : null;
+      const guideDialog = guideId ? document.getElementById(guideId) : null;
+      if (!(parentDialog instanceof HTMLDialogElement) || !(guideDialog instanceof HTMLDialogElement)) return;
+
+      const actions = parentDialog.querySelector<HTMLElement>('.landmark-modal__actions');
+      if (!actions || actions.querySelector('[data-open-landmark-guide]')) return;
+
+      const button = document.createElement('button');
+      button.className = 'landmark-action landmark-action--guide';
+      button.type = 'button';
+      button.dataset.openLandmarkGuide = guideId;
+      button.setAttribute('aria-controls', guideId);
+      button.innerHTML = '<span aria-hidden="true">✎</span> Plan the visit';
+
+      const saveButton = actions.querySelector('[data-add-landmark]');
+      actions.insertBefore(button, saveButton);
+      actions.classList.add('has-guide-action');
+
+      button.addEventListener('click', () => {
+        if (parentDialog.open) parentDialog.close();
+        if (!guideDialog.open) guideDialog.showModal();
+      });
+    });
+  };
+
+  const bindLandmarkGuideDialogs = () => {
+    document.querySelectorAll<HTMLDialogElement>('[data-landmark-guide-dialog]').forEach((dialog) => {
+      if (dialog.dataset.landmarkGuideBound === 'true') return;
+      dialog.dataset.landmarkGuideBound = 'true';
+
+      dialog.querySelector<HTMLElement>('[data-close-landmark-guide]')?.addEventListener('click', () => dialog.close());
+      dialog.querySelector<HTMLElement>('[data-back-to-landmark]')?.addEventListener('click', () => {
+        const parentId = dialog.dataset.parentLandmarkModal;
+        const parentDialog = parentId ? document.getElementById(parentId) : null;
+        dialog.close();
+        if (parentDialog instanceof HTMLDialogElement && !parentDialog.open) parentDialog.showModal();
+      });
+      dialog.addEventListener('click', (event) => {
+        if (event.target === dialog) dialog.close();
+      });
+    });
+  };
+
+  const setupLandmarkExperience = () => {
+    bindLandmarkModals();
+    bindLandmarkGuideButtons();
+    bindLandmarkGuideDialogs();
+  };
+
+  setupLandmarkExperience();
+  document.addEventListener('astro:page-load', setupLandmarkExperience);
 </script>
