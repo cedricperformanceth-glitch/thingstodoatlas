@@ -1,4 +1,4 @@
-export type EditorialStatus = 'draft' | 'needs-review' | 'verified';
+export type EditorialStatus = 'demo' | 'needs-review' | 'verified';
 
 export interface CategoryDefinition {
   slug: string;
