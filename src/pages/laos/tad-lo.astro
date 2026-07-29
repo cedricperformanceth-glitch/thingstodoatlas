@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PartnerPlaceCard from '../../components/PartnerPlaceCard.astro';
+import SelectionPlaceCard from '../../components/SelectionPlaceCard.astro';
 import { tadLoExperiences, tadLoLocalAddresses } from '../../data/tadLoPlaces';
+import { fandeeIslandSelection } from '../../data/tadLoSelections';
 
 const stayRhythms = [
   { days: '1 day', title: 'Waterfalls & village', text: 'Walk to Tad Hang and Tad Lo, eat locally and keep the day deliberately simple.' },
@@ -9,6 +11,9 @@ const stayRhythms = [
   { days: '3 days', title: 'Recommended stay', text: 'Combine the village, a major excursion and a local activity with room to slow down.' },
   { days: '4+ days', title: 'Explore Salavan', text: 'Reach further into the province while keeping time for weather, rest and discoveries.' }
 ];
+
+const tadLoGuesthouses = tadLoLocalAddresses.filter((place) => place.category === 'accommodation' && place.slug !== 'fandee-island');
+const tadLoOtherAddresses = tadLoLocalAddresses.filter((place) => place.category !== 'accommodation');
 ---
 
 <BaseLayout
@@ -76,13 +81,24 @@ const stayRhythms = [
       </div>
     </section>
 
-    <section class="tad-lo-section container" aria-labelledby="tad-lo-addresses-title">
+    <section class="tad-lo-section tad-lo-section--stays container" aria-labelledby="tad-lo-guesthouses-title">
       <header class="tad-lo-section__header">
-        <div><p class="eyebrow">STAY · EAT · LOCAL LIFE</p><h2 id="tad-lo-addresses-title">Keep the useful village addresses together.</h2></div>
-        <div class="tad-lo-section__aside"><p>Compare atmosphere and location here, then use the partner card for the current contact, price and local map.</p><a href="https://visit-tadlo.com/en/stay-eat" target="_blank" rel="noreferrer">See every stay and restaurant ↗</a></div>
+        <div><p class="eyebrow">GUESTHOUSES · STAYS</p><h2 id="tad-lo-guesthouses-title">Choose where the Tad Lo chapter begins and ends each day.</h2></div>
+        <div class="tad-lo-section__aside"><p>The golden outline marks a personal Things To Do Atlas selection. The other cards remain local addresses documented with Visit Tad Lo.</p><a href="https://visit-tadlo.com/en/stay-eat" target="_blank" rel="noreferrer">See every stay in the local guide ↗</a></div>
       </header>
       <div class="tad-lo-grid">
-        {tadLoLocalAddresses.map((place, index) => <PartnerPlaceCard place={place} index={index} />)}
+        <SelectionPlaceCard place={fandeeIslandSelection} index={0} />
+        {tadLoGuesthouses.map((place, index) => <PartnerPlaceCard place={place} index={index + 1} />)}
+      </div>
+    </section>
+
+    <section class="tad-lo-section tad-lo-section--addresses container" aria-labelledby="tad-lo-addresses-title">
+      <header class="tad-lo-section__header">
+        <div><p class="eyebrow">EAT · INFORMATION · LOCAL LIFE</p><h2 id="tad-lo-addresses-title">Keep the useful village addresses together.</h2></div>
+        <div class="tad-lo-section__aside"><p>Restaurants, massage and practical local information stay separate from the guesthouses, but remain easy to save in the same trip.</p><a href="https://visit-tadlo.com/en/stay-eat" target="_blank" rel="noreferrer">Browse all local addresses ↗</a></div>
+      </header>
+      <div class="tad-lo-grid">
+        {tadLoOtherAddresses.map((place, index) => <PartnerPlaceCard place={place} index={index} />)}
       </div>
     </section>
 
@@ -112,7 +128,7 @@ const stayRhythms = [
   .tad-lo-partner{display:grid;grid-template-columns:1fr auto;gap:5px 24px;width:min(100%,430px);margin-top:2rem;padding:15px 17px;border:1px solid rgba(255,250,240,.5);background:rgba(27,48,39,.68);backdrop-filter:blur(8px);color:#fffaf0}.tad-lo-partner span{grid-column:1;color:#e6a780;font-size:.5rem;font-weight:700;letter-spacing:.16em}.tad-lo-partner strong{grid-column:1;font-size:.78rem;letter-spacing:.025em}.tad-lo-partner b{grid-column:2;grid-row:1/3;align-self:center;color:#e6a780;font-size:1.3rem}
   .tad-lo-intro{padding:clamp(5rem,9vw,8rem) 0}.tad-lo-intro__heading{max-width:800px}.tad-lo-intro__heading h2{margin-bottom:0}.tad-lo-intro__copy{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(2rem,5vw,5rem);max-width:930px;margin:2.3rem 0 3.5rem;color:#5f675f}.tad-lo-intro__copy p{margin:0;line-height:1.75}.tad-lo-intro__copy a{color:var(--green);font-weight:700;border-bottom:1px solid rgba(49,85,69,.35)}
   .tad-lo-rhythms{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:rgba(49,85,69,.18);border:1px solid rgba(49,85,69,.18)}.tad-lo-rhythm{min-height:220px;padding:25px 23px;background:#f7f2e6}.tad-lo-rhythm span{display:inline-block;margin-bottom:28px;color:var(--terracotta);font:700 .58rem/1 'DM Sans',sans-serif;letter-spacing:.14em;text-transform:uppercase}.tad-lo-rhythm h3{margin:0 0 13px;color:var(--green);font-size:1.45rem;letter-spacing:-.035em}.tad-lo-rhythm p{margin:0;color:var(--muted);font-size:.76rem;line-height:1.6}
-  .tad-lo-section{padding:clamp(4.5rem,8vw,7.5rem) 0}.tad-lo-section__header{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.6fr);gap:clamp(2rem,6vw,6rem);align-items:end;margin-bottom:clamp(2.5rem,5vw,4rem)}.tad-lo-section__header h2{max-width:780px;margin:0}.tad-lo-section__aside p{margin:0 0 16px;color:var(--muted);font-size:.82rem;line-height:1.65}.tad-lo-section__aside a{color:var(--green);font-size:.67rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border-bottom:1px solid rgba(49,85,69,.35)}.tad-lo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1rem,2vw,1.45rem)}
+  .tad-lo-section{padding:clamp(4.5rem,8vw,7.5rem) 0}.tad-lo-section--stays{padding-bottom:clamp(3.5rem,6vw,5rem)}.tad-lo-section--addresses{padding-top:clamp(3rem,5vw,4.5rem);border-top:1px dashed rgba(49,85,69,.2)}.tad-lo-section__header{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.6fr);gap:clamp(2rem,6vw,6rem);align-items:end;margin-bottom:clamp(2.5rem,5vw,4rem)}.tad-lo-section__header h2{max-width:780px;margin:0}.tad-lo-section__aside p{margin:0 0 16px;color:var(--muted);font-size:.82rem;line-height:1.65}.tad-lo-section__aside a{color:var(--green);font-size:.67rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border-bottom:1px solid rgba(49,85,69,.35)}.tad-lo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1rem,2vw,1.45rem)}
   .tad-lo-partner-band{padding:clamp(4rem,7vw,6.5rem) 0;background:var(--green);color:#fffdf8}.tad-lo-partner-band__inner{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:clamp(3rem,8vw,8rem);align-items:end}.tad-lo-partner-band h2{margin:0;color:#fffdf8;font-size:clamp(2.7rem,5vw,4.8rem)}.tad-lo-partner-band p{color:#cbd5cc;line-height:1.72}.tad-lo-partner-band a{display:inline-flex;gap:18px;margin-top:15px;padding-bottom:6px;border-bottom:1px solid #e6a780;color:#fffdf8;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.tad-lo-partner-band .eyebrow{color:#e6a780}
   .tad-lo-planning{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:clamp(3rem,8vw,8rem);padding:clamp(5rem,9vw,8rem) 0}.tad-lo-planning__copy{position:sticky;top:110px;align-self:start}.tad-lo-planning__copy p:last-child{max-width:500px;color:var(--muted);line-height:1.7}.tad-lo-planning__links{display:grid;border-top:1px solid var(--line)}.tad-lo-planning__links a{display:grid;grid-template-columns:42px 1fr auto;gap:7px 16px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line)}.tad-lo-planning__links a>span{grid-row:1/3;color:var(--terracotta);font:500 1.1rem/1 Fraunces,serif}.tad-lo-planning__links strong{color:var(--green);font:500 1.25rem/1.1 Fraunces,serif}.tad-lo-planning__links small{grid-column:2;color:var(--muted)}.tad-lo-planning__links b{grid-column:3;grid-row:1/3;color:var(--terracotta);font-size:1.2rem}
   @media(max-width:980px){.tad-lo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tad-lo-rhythms{grid-template-columns:repeat(2,minmax(0,1fr))}.tad-lo-section__header,.tad-lo-partner-band__inner,.tad-lo-planning{grid-template-columns:1fr}.tad-lo-planning__copy{position:static}}
