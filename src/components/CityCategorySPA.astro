@@ -39,19 +39,12 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     {categories.map((category, index) => {
       const selected = category.slug === defaultSlug;
       return (
-        <button
-          class:list={['city-category-tab', { 'is-active': selected }]}
-          type="button"
-          role="tab"
-          aria-selected={selected ? 'true' : 'false'}
-          aria-controls={`city-panel-${cityId}-${category.slug}`}
-          data-city-category-button={category.slug}
-        >
+        <button class:list={['city-category-tab', { 'is-active': selected }]} type="button" role="tab" aria-selected={selected ? 'true' : 'false'} aria-controls={`city-panel-${cityId}-${category.slug}`} data-city-category-button={category.slug}>
           <span class="city-category-tab__drawing" aria-hidden="true"><CityCategoryIcon icon={category.icon} /></span>
           <span class="city-category-tab__copy">
             <small>{String(index + 1).padStart(2, '0')} · {category.kicker}</small>
             <strong>{category.title}</strong>
-            {typeof category.count === 'number' && <em>{category.count} saved addresses</em>}
+            {typeof category.count === 'number' && <em>{category.count} {category.count === 1 ? 'address' : 'addresses'}</em>}
           </span>
         </button>
       );
@@ -102,10 +95,14 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       const activateFromHash = () => {
         const hash = decodeURIComponent(location.hash.replace(/^#/, ''));
         if (available.has(hash)) return activate(hash, false);
+
         const target = hash ? document.getElementById(hash) : null;
         const containingPanel = target?.closest('[data-city-category-panel]') as HTMLElement | null;
-        if (containingPanel && spa.contains(containingPanel)) activate(containingPanel.dataset.cityCategoryPanel || defaultSlug, false);
-        else activate(defaultSlug, false);
+        if (!containingPanel || !spa.contains(containingPanel)) return activate(defaultSlug, false);
+
+        activate(containingPanel.dataset.cityCategoryPanel || defaultSlug, false);
+        const specialTrigger = target?.querySelector<HTMLButtonElement>('[data-partner-card-open], [data-selection-card-open]');
+        if (specialTrigger) requestAnimationFrame(() => specialTrigger.click());
       };
 
       buttons.forEach((button, index) => {
