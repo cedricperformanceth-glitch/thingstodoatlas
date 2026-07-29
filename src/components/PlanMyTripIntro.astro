@@ -1,20 +1,11 @@
 ---
 import HmongCulturalLandmark from './HmongCulturalLandmark.astro';
+import { getCountryFromPath } from '../data/atlasConfig';
 
 const currentPath = Astro.url.pathname;
 const isLaosMapPage = currentPath === '/laos' || currentPath === '/laos/';
-const countrySlug = currentPath.startsWith('/sri-lanka') ? 'sri-lanka' : 'laos';
-const cities = countrySlug === 'sri-lanka'
-  ? [
-      { slug: 'negombo', name: 'Negombo' },
-      { slug: 'colombo', name: 'Colombo' },
-      { slug: 'ahangama', name: 'Ahangama' },
-      { slug: 'mirissa', name: 'Mirissa' }
-    ]
-  : [
-      { slug: 'pakse', name: 'Pakse' },
-      { slug: 'tad-lo', name: 'Tad Lo' }
-    ];
+const country = getCountryFromPath(currentPath);
+const cities = country?.cities.filter((city) => city.tripEnabled && city.status === 'open') ?? [];
 ---
 
 <section class="plan-trip-intro" aria-label="Plan my trip">
@@ -33,15 +24,24 @@ const cities = countrySlug === 'sri-lanka'
 
   <div class="plan-trip-intro__choice">
     <p class="plan-trip-intro__question">Where do you want to begin?</p>
-    <label class="plan-trip-intro__label" for="trip-start-city">Choose a city</label>
-    <select id="trip-start-city" data-trip-city-select data-trip-country={countrySlug}>
-      <option value="">Select a starting point</option>
-      {cities.map((city) => <option value={city.slug}>{city.name}</option>)}
-    </select>
-    <button class="plan-trip-intro__cta" type="button" data-trip-start data-trip-country={countrySlug} disabled>
-      <span data-trip-start-label>Choose a city first</span><span aria-hidden="true">→</span>
-    </button>
-    <p class="plan-trip-intro__note">You’ll build your trip as you explore.</p>
+    {country && cities.length > 0 ? (
+      <>
+        <label class="plan-trip-intro__label" for={`trip-start-city-${country.slug}`}>Choose a city</label>
+        <select id={`trip-start-city-${country.slug}`} data-trip-city-select data-trip-country={country.slug}>
+          <option value="">Select a starting point</option>
+          {cities.map((city) => <option value={city.slug}>{city.name}</option>)}
+        </select>
+        <button class="plan-trip-intro__cta" type="button" data-trip-start data-trip-country={country.slug} disabled>
+          <span data-trip-start-label>Choose a city first</span><span aria-hidden="true">→</span>
+        </button>
+        <p class="plan-trip-intro__note">Or explore freely. Your first saved card can create the trip for you.</p>
+      </>
+    ) : (
+      <div class="plan-trip-intro__coming">
+        <strong>The first city notebook is being prepared.</strong>
+        <p>You can still explore the country map while the practical city guides take shape.</p>
+      </div>
+    )}
   </div>
 </section>
 
@@ -60,55 +60,15 @@ const cities = countrySlug === 'sri-lanka'
     border-bottom: 1px solid rgba(49, 85, 69, .15);
     background: rgba(247, 242, 230, .62);
   }
-
   .plan-trip-intro__identity { display: flex; align-items: center; justify-content: center; min-height: 330px; }
   .plan-trip-intro__laptop { position: relative; width: min(100%, 460px); isolation: isolate; }
   .plan-trip-intro__logo { display: block; width: 100%; height: auto; mix-blend-mode: multiply; }
-  .plan-trip-intro__screen-copy {
-    position: absolute;
-    z-index: 1;
-    top: 12%;
-    left: 11.5%;
-    width: 48%;
-    min-height: 43%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: #315545;
-    transform: rotate(-3.8deg);
-    transform-origin: center;
-  }
+  .plan-trip-intro__screen-copy { position: absolute; z-index: 1; top: 12%; left: 11.5%; width: 48%; min-height: 43%; display: flex; flex-direction: column; justify-content: center; color: #315545; transform: rotate(-3.8deg); transform-origin: center; }
   .plan-trip-intro__screen-copy p { margin: 0; }
-  .plan-trip-intro__screen-copy p:first-child {
-    max-width: 12.5rem;
-    font: 500 clamp(.96rem, 1.45vw, 1.22rem)/1.15 Fraunces, serif;
-  }
-  .plan-trip-intro__screen-copy p + p {
-    max-width: 13.5rem;
-    margin-top: .65rem;
-    color: #626a62;
-    font: 500 clamp(.53rem, .79vw, .67rem)/1.45 'DM Sans', sans-serif;
-  }
-  .plan-trip-intro__notebook {
-    position: absolute;
-    z-index: 2;
-    right: -5.25rem;
-    bottom: 1.25rem;
-    width: 9.4rem;
-    height: 7.8rem;
-    overflow: hidden;
-    pointer-events: none;
-    transform: rotate(3deg);
-  }
-  .plan-trip-intro__notebook img {
-    position: absolute;
-    top: -5.15rem;
-    left: -1.35rem;
-    width: 12.7rem;
-    max-width: none;
-    height: auto;
-    mix-blend-mode: multiply;
-  }
+  .plan-trip-intro__screen-copy p:first-child { max-width: 12.5rem; font: 500 clamp(.96rem, 1.45vw, 1.22rem)/1.15 Fraunces, serif; }
+  .plan-trip-intro__screen-copy p + p { max-width: 13.5rem; margin-top: .65rem; color: #626a62; font: 500 clamp(.53rem, .79vw, .67rem)/1.45 'DM Sans', sans-serif; }
+  .plan-trip-intro__notebook { position: absolute; z-index: 2; right: -5.25rem; bottom: 1.25rem; width: 9.4rem; height: 7.8rem; overflow: hidden; pointer-events: none; transform: rotate(3deg); }
+  .plan-trip-intro__notebook img { position: absolute; top: -5.15rem; left: -1.35rem; width: 12.7rem; max-width: none; height: auto; mix-blend-mode: multiply; }
   .plan-trip-intro__choice { padding-left: clamp(1.2rem, 3vw, 2.5rem); border-left: 1px solid rgba(49, 85, 69, .22); }
   .plan-trip-intro__question { margin: 0 0 1.3rem; color: #315545; font: 500 clamp(1.5rem, 2.5vw, 2.1rem)/1.1 Fraunces, serif; }
   .plan-trip-intro__label { display: block; margin-bottom: .45rem; color: #70766d; font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
@@ -116,7 +76,10 @@ const cities = countrySlug === 'sri-lanka'
   .plan-trip-intro__cta { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1rem; padding: .85rem 0; border: 0; border-bottom: 1px solid #b76645; background: transparent; color: #315545; font: 600 1rem 'DM Sans', sans-serif; text-align: left; cursor: pointer; }
   .plan-trip-intro__cta:disabled { color: #9ca39c; border-bottom-color: rgba(183, 102, 69, .28); cursor: not-allowed; }
   .plan-trip-intro__cta:not(:disabled):hover { color: #b76645; }
-  .plan-trip-intro__note { margin: 1rem 0 0; color: #70766d; font: 400 1rem/1 Caveat, cursive; transform: rotate(-2deg); }
+  .plan-trip-intro__note { margin: 1rem 0 0; color: #70766d; font: 400 1rem/1.1 Caveat, cursive; transform: rotate(-1deg); }
+  .plan-trip-intro__coming { padding: 1rem 0; border-top: 1px dashed rgba(49, 85, 69, .25); }
+  .plan-trip-intro__coming strong { display: block; margin-bottom: .55rem; color: #315545; font: 500 1.2rem/1.2 Fraunces, serif; }
+  .plan-trip-intro__coming p { margin: 0; color: #70766d; font-size: .82rem; line-height: 1.6; }
   @media (max-width: 700px) {
     .plan-trip-intro { width: calc(100% - 2rem); grid-template-columns: 1fr; gap: 2rem; margin-top: 1.8rem; padding: 2rem 1rem 2.4rem; }
     .plan-trip-intro__identity { min-height: 220px; }
