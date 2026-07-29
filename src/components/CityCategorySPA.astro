@@ -1,4 +1,6 @@
 ---
+import CityCategoryIcon from './CityCategoryIcon.astro';
+
 export type CityCategoryTab = {
   slug: string;
   title: string;
@@ -36,24 +38,26 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   <div class="city-category-spa__tabs" role="tablist" aria-label={`${cityName} guide categories`}>
     {categories.map((category, index) => {
       const selected = category.slug === defaultSlug;
-      const panelId = `city-panel-${cityId}-${category.slug}`;
       return (
-        <button class:list={['city-category-tab', { 'is-active': selected }]} type="button" role="tab" aria-selected={selected ? 'true' : 'false'} aria-controls={panelId} data-city-category-button={category.slug}>
-          <span class="city-category-tab__drawing" aria-hidden="true">
-            {category.icon === 'restaurants' && <svg viewBox="0 0 100 76"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M16 35c3 20 14 30 34 30s31-10 34-30" stroke-width="2.4"/><path d="M13 33c6-7 17-10 37-10s31 3 37 10c-6 7-17 10-37 10S19 40 13 33Z" stroke-width="2.4"/><path d="M61 24 84 4M67 27 91 10" stroke-width="3"/><path d="M39 18c-4-6-2-11 1-15M50 18c-4-6-1-11 2-16" stroke-width="1.6"/></g></svg>}
-            {category.icon === 'cafes' && <svg viewBox="0 0 100 76"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 26h45v24c0 10-7 17-17 17H37c-10 0-17-7-17-17Z" stroke-width="2.4"/><path d="M65 32h9c8 0 13 5 13 11s-5 11-13 11h-9" stroke-width="2.4"/><path d="M35 19c-5-6 3-10 0-16M49 19c-5-7 3-10 0-17" stroke-width="1.8"/></g></svg>}
-            {category.icon === 'guesthouses' && <svg viewBox="0 0 100 76"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 36 50 9l36 27" stroke-width="2.5"/><path d="M20 32v38h60V32" stroke-width="2.3"/><path d="M41 70V47h18v23M28 42h10v12H28zM63 42h10v12H63z" stroke-width="1.8"/></g></svg>}
-            {category.icon === 'scooter' && <svg viewBox="0 0 100 76"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="28" cy="58" r="11" stroke-width="2.3"/><circle cx="75" cy="58" r="11" stroke-width="2.3"/><path d="M28 58h20l13-27h12M48 58 38 32h15l9 26M61 31h13l7 9M68 20h14" stroke-width="2.3"/></g></svg>}
-            {category.icon === 'explore' && <svg viewBox="0 0 100 76"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m13 18 23-7 30 8 22-7v47l-22 7-30-8-23 7Z" stroke-width="2.3"/><path d="M36 11v47M66 19v47" stroke-width="1.7"/><path d="M45 42c8-13 16-16 26-18" stroke-width="1.8" stroke-dasharray="3 4"/><circle cx="44" cy="43" r="3"/><circle cx="72" cy="23" r="3"/></g></svg>}
-            {category.icon === 'gyms' && <svg viewBox="0 0 100 76"><g fill="none" stroke="currentColor" stroke-linecap="round"><path d="M14 28v20M22 22v32M31 19v38M69 19v38M78 22v32M86 28v20" stroke-width="3"/><path d="M31 38h38" stroke-width="4"/></g></svg>}
-            {category.icon === 'markets' && <svg viewBox="0 0 100 76"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 31h60l-8 38H28Z" stroke-width="2.3"/><path d="M34 32c2-16 8-23 16-23s14 7 16 23" stroke-width="2.3"/><path d="M30 43h44M28 54h46M38 31v38M50 31v38M62 31v38" stroke-width="1.4"/></g></svg>}
-            {category.icon === 'essential' && <svg viewBox="0 0 100 76"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="18" width="68" height="50" rx="8" stroke-width="2.3"/><path d="M34 18c2-9 7-13 16-13s14 4 16 13" stroke-width="2.2"/><path d="M39 39h8v-8h7v8h8v7h-8v9h-7v-9h-8Z" stroke-width="2.2"/></g></svg>}
+        <button
+          class:list={['city-category-tab', { 'is-active': selected }]}
+          type="button"
+          role="tab"
+          aria-selected={selected ? 'true' : 'false'}
+          aria-controls={`city-panel-${cityId}-${category.slug}`}
+          data-city-category-button={category.slug}
+        >
+          <span class="city-category-tab__drawing" aria-hidden="true"><CityCategoryIcon icon={category.icon} /></span>
+          <span class="city-category-tab__copy">
+            <small>{String(index + 1).padStart(2, '0')} · {category.kicker}</small>
+            <strong>{category.title}</strong>
+            {typeof category.count === 'number' && <em>{category.count} saved addresses</em>}
           </span>
-          <span class="city-category-tab__copy"><small>{String(index + 1).padStart(2, '0')} · {category.kicker}</small><strong>{category.title}</strong>{typeof category.count === 'number' && <em>{category.count} saved addresses</em>}</span>
         </button>
       );
     })}
   </div>
+
   <div class="city-category-spa__panels"><slot /></div>
 </section>
 
@@ -61,8 +65,10 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   .city-category-spa{width:min(1180px,calc(100% - 2.5rem));margin:0 auto;padding:clamp(3rem,6vw,5.5rem) 0 clamp(5rem,8vw,8rem);border-top:1px solid rgba(31,57,45,.16)}
   .city-category-spa__heading{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.58fr);gap:1rem 3rem;align-items:end;margin-bottom:1.8rem}.city-category-spa__heading p{margin:0 0 .4rem;color:rgba(31,57,45,.56);font-size:.7rem;font-weight:700;letter-spacing:.2em}.city-category-spa__heading h2{margin:0;color:#1f392d;font:400 clamp(2rem,4vw,3.6rem)/1 Georgia,'Times New Roman',serif;letter-spacing:-.04em}.city-category-spa__heading>span{color:rgba(31,41,36,.68);font:400 .92rem/1.55 Georgia,'Times New Roman',serif}
   .city-category-spa__tabs{display:flex;gap:.7rem;align-items:stretch;margin:0 0 clamp(2.4rem,4vw,4rem);padding:.4rem .15rem 1rem;overflow-x:auto;scrollbar-width:thin;scroll-snap-type:x proximity}.city-category-tab{position:relative;display:grid;grid-template-columns:4.3rem minmax(7.5rem,1fr);gap:.72rem;align-items:center;flex:0 0 clamp(12rem,19vw,15rem);min-height:6.8rem;padding:.75rem .85rem;border:1px solid rgba(31,41,36,.18);border-radius:0;background:#f8f5ec;color:#1f2924;text-align:left;box-shadow:0 4px 10px rgba(31,41,36,.035);cursor:pointer;scroll-snap-align:start;transition:transform 180ms ease,background 180ms ease,border-color 180ms ease,box-shadow 180ms ease}.city-category-tab:nth-child(odd){transform:rotate(-.22deg)}.city-category-tab:nth-child(even){transform:rotate(.18deg)}.city-category-tab:hover,.city-category-tab:focus-visible{transform:translateY(-2px) rotate(0);outline:none;border-color:rgba(49,85,69,.48);box-shadow:0 8px 16px rgba(31,41,36,.075)}.city-category-tab.is-active{transform:translateY(-3px) rotate(0);border-color:#315545;background:#eef0e6;box-shadow:0 0 0 2px rgba(49,85,69,.1),0 8px 18px rgba(31,41,36,.08)}.city-category-tab.is-active::after{content:'';position:absolute;right:.85rem;bottom:-.42rem;left:.85rem;height:2px;background:#b76645;transform:rotate(-1deg)}
-  .city-category-tab__drawing{display:grid;place-items:center;width:4.3rem;height:4.5rem;color:#202722}.city-category-tab__drawing svg{display:block;width:100%;height:100%}.city-category-tab__copy{display:flex;min-width:0;flex-direction:column}.city-category-tab small{margin-bottom:.35rem;color:#8a4d36;font-size:.46rem;font-weight:800;letter-spacing:.11em;white-space:nowrap}.city-category-tab strong{color:#1f392d;font:700 1.16rem/1.02 'Segoe Print','Bradley Hand',cursive;letter-spacing:-.035em}.city-category-tab em{margin-top:.45rem;color:rgba(31,41,36,.58);font:500 .57rem/1.2 'DM Sans',sans-serif;font-style:normal}.city-category-spa__panels{min-height:18rem}
-  @media(max-width:820px){.city-category-spa__heading{grid-template-columns:1fr}.city-category-spa__heading>span{max-width:34rem}.city-category-tab{flex-basis:13rem}}@media(max-width:560px){.city-category-spa{width:min(100% - 2rem,1180px);padding-top:2.5rem}.city-category-spa__tabs{margin-right:-1rem;padding-right:1rem}.city-category-tab{grid-template-columns:3.7rem minmax(7rem,1fr);flex-basis:12rem;min-height:6.2rem;padding:.68rem}.city-category-tab__drawing{width:3.7rem;height:4rem}.city-category-tab strong{font-size:1.02rem}}@media(prefers-reduced-motion:reduce){.city-category-tab{transition:none}}
+  .city-category-tab__drawing{display:grid;place-items:center;width:4.3rem;height:4.5rem;color:#202722}.city-category-tab__drawing :global(svg){display:block;width:100%;height:100%}.city-category-tab__copy{display:flex;min-width:0;flex-direction:column}.city-category-tab small{margin-bottom:.35rem;color:#8a4d36;font-size:.46rem;font-weight:800;letter-spacing:.11em;white-space:nowrap}.city-category-tab strong{color:#1f392d;font:700 1.16rem/1.02 'Segoe Print','Bradley Hand',cursive;letter-spacing:-.035em}.city-category-tab em{margin-top:.45rem;color:rgba(31,41,36,.58);font:500 .57rem/1.2 'DM Sans',sans-serif;font-style:normal}.city-category-spa__panels{min-height:18rem}
+  @media(max-width:820px){.city-category-spa__heading{grid-template-columns:1fr}.city-category-spa__heading>span{max-width:34rem}.city-category-tab{flex-basis:13rem}}
+  @media(max-width:560px){.city-category-spa{width:min(100% - 2rem,1180px);padding-top:2.5rem}.city-category-spa__tabs{margin-right:-1rem;padding-right:1rem}.city-category-tab{grid-template-columns:3.7rem minmax(7rem,1fr);flex-basis:12rem;min-height:6.2rem;padding:.68rem}.city-category-tab__drawing{width:3.7rem;height:4rem}.city-category-tab strong{font-size:1.02rem}}
+  @media(prefers-reduced-motion:reduce){.city-category-tab{transition:none}}
 </style>
 
 <script>
@@ -70,6 +76,7 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     document.querySelectorAll<HTMLElement>('[data-city-spa]').forEach((spa) => {
       if (spa.dataset.citySpaReady === 'true') return;
       spa.dataset.citySpaReady = 'true';
+
       const buttons = [...spa.querySelectorAll<HTMLButtonElement>('[data-city-category-button]')];
       const panels = [...spa.querySelectorAll<HTMLElement>('[data-city-category-panel]')];
       const available = new Set(buttons.map((button) => button.dataset.cityCategoryButton || ''));
@@ -96,7 +103,7 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
         const hash = decodeURIComponent(location.hash.replace(/^#/, ''));
         if (available.has(hash)) return activate(hash, false);
         const target = hash ? document.getElementById(hash) : null;
-        const containingPanel = target?.closest<HTMLElement>('[data-city-category-panel]');
+        const containingPanel = target?.closest('[data-city-category-panel]') as HTMLElement | null;
         if (containingPanel && spa.contains(containingPanel)) activate(containingPanel.dataset.cityCategoryPanel || defaultSlug, false);
         else activate(defaultSlug, false);
       };
@@ -120,6 +127,7 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       window.addEventListener('hashchange', activateFromHash);
     });
   };
+
   setupCityCategorySpas();
   document.addEventListener('astro:page-load', setupCityCategorySpas);
 </script>
