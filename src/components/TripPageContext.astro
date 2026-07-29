@@ -1,3 +1,7 @@
+---
+import { placeImageOverrides } from '../data/placeImageResolver';
+---
+
 <script is:inline>
   (() => {
     const STORAGE_KEY = 'thingsToDoAtlas.trips.v2';
@@ -12,6 +16,44 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
     } catch {
       // The main trip manager will recover corrupted or incomplete storage.
+    }
+  })();
+</script>
+
+<script is:inline define:vars={{ placeImageOverrides }}>
+  (() => {
+    const applyPlaceImages = () => {
+      for (const entry of placeImageOverrides) {
+        if (!entry?.slug || !entry?.selectedImage) continue;
+        const card = document.getElementById(entry.slug);
+        if (!card) continue;
+
+        const images = card.querySelectorAll('.place-card__image img, .place-dialog__visual img');
+        images.forEach((image) => {
+          const fallback = image.dataset.atlasImageFallback || image.getAttribute('src') || '';
+          if (!image.dataset.atlasImageFallback) image.dataset.atlasImageFallback = fallback;
+
+          if (image.dataset.atlasImageBound !== 'true') {
+            image.dataset.atlasImageBound = 'true';
+            image.addEventListener('error', () => {
+              const safeImage = image.dataset.atlasImageFallback;
+              if (!safeImage || image.getAttribute('src') === safeImage) return;
+              image.dataset.atlasImageFailed = 'true';
+              image.setAttribute('src', safeImage);
+            });
+          }
+
+          if (image.dataset.atlasImageFailed !== 'true' && image.getAttribute('src') !== entry.selectedImage) {
+            image.setAttribute('src', entry.selectedImage);
+          }
+        });
+      }
+    };
+
+    applyPlaceImages();
+    if (!window.__atlasPlaceImageListenerReady) {
+      window.__atlasPlaceImageListenerReady = true;
+      document.addEventListener('astro:page-load', applyPlaceImages);
     }
   })();
 </script>
