@@ -26,16 +26,26 @@ type ImageablePlace = {
   imageIsGeneric?: boolean;
 };
 
-const quality = (result?: ImageResult) => {
-  if (!result || result.status !== 'approved' || !result.selectedImage) return 0;
-  const source = result.imageSourceType || result.sourceType;
-  if (source === 'user-supplied') return 100;
-  if (result.imageIsGeneric === false) return 80;
-  if (source === 'official-site') return 70;
-  return 50;
+const isLocalImage = (image: string) => image.startsWith('/images/places/');
+const isApproved = (result?: ImageResult): result is ImageResult & { slug: string; selectedImage: string } =>
+  Boolean(result?.slug && result.selectedImage && result.status === 'approved');
+
+const priority = (result: ImageResult) => {
+  const image = result.selectedImage!;
+  const source = result.imageSourceType ?? result.sourceType ?? '';
+
+  // The order intentionally mirrors the editorial policy. A valid original
+  // atlas image remains the final fallback and is never replaced by a generic
+  // candidate when a stronger selection exists.
+  if (source === 'user-supplied' && isLocalImage(image)) return 600;
+  if (isLocalImage(image)) return 500;
+  if (result.imageIsGeneric === false) return 400;
+  if (source === 'official-site') return 300;
+  if (source === 'public-directory' || source === 'directory') return 200;
+  return 100;
 };
 
-const sources: ImageResult[][] = [
+const candidateSources: readonly ImageResult[][] = [
   placeImageResults as ImageResult[],
   accommodationImageCandidates as ImageResult[],
   gymImageCandidates as ImageResult[],
@@ -44,30 +54,32 @@ const sources: ImageResult[][] = [
 ];
 
 const imageBySlug = new Map<string, ImageResult>();
-for (const source of sources) {
-  for (const result of source) {
-    if (!result?.slug || quality(result) === 0) continue;
-    const current = imageBySlug.get(result.slug);
-    if (!current || quality(result) >= quality(current)) imageBySlug.set(result.slug, result);
+for (const source of candidateSources) {
+  for (const candidate of source) {
+    if (!isApproved(candidate)) continue;
+    const current = imageBySlug.get(candidate.slug);
+    if (!current || priority(candidate) > priority(current)) imageBySlug.set(candidate.slug, candidate);
   }
 }
 
-export const placeImageOverrides = [...imageBySlug.values()].filter(
-  (result): result is ImageResult & { slug: string; selectedImage: string } => Boolean(result.slug && result.selectedImage)
-);
-
 export const resolvePlaceImage = <T extends ImageablePlace>(place: T): T => {
-  const result = imageBySlug.get(place.slug);
-  if (!result || result.status !== 'approved' || !result.selectedImage) return place;
+  const candidate = imageBySlug.get(place.slug);
+  if (!candidate?.selectedImage) return place;
+
+  // A generic candidate cannot displace a local or exact image already
+  // declared in atlas.ts. This preserves the authored fallback as required.
+  if (candidate.imageIsGeneric && (isLocalImage(place.image) || place.imageIsGeneric === false)) return place;
+
   return {
     ...place,
-    image: result.selectedImage,
-    imageSourceUrl: result.imageSourceUrl ?? result.selectedImage,
-    imageSourceType: result.imageSourceType ?? result.sourceType,
-    imageAuthor: result.imageAuthor ?? null,
-    imageLicense: result.imageLicense ?? null,
-    imageIsGeneric: Boolean(result.imageIsGeneric)
+    image: candidate.selectedImage,
+    imageSourceUrl: candidate.imageSourceUrl ?? candidate.selectedImage,
+    imageSourceType: candidate.imageSourceType ?? candidate.sourceType,
+    imageAuthor: candidate.imageAuthor ?? null,
+    imageLicense: candidate.imageLicense ?? null,
+    imageIsGeneric: Boolean(candidate.imageIsGeneric)
   };
 };
 
-export const resolvePlaceImages = <T extends ImageablePlace>(places: T[]): T[] => places.map(resolvePlaceImage);
+export const resolvePlaceImages = <T extends ImageablePlace>(places: readonly T[]): T[] =>
+  places.map(resolvePlaceImage);
