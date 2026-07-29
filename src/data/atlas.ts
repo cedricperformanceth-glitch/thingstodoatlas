@@ -1,4 +1,4 @@
-import placeImageResults from './place-images.generated.json';
+import { resolvePlaceImages } from './placeImageResolver';
 
 export type EditorialStatus = 'demo' | 'verified' | 'needs-review';
 
@@ -52,7 +52,7 @@ export const categories: Category[] = [
   { slug: 'essential-information', name: 'Essential Information', description: 'Visa services, healthcare and practical addresses to keep close while staying in Pakse.', icon: '09' }
 ];
 
-export const places: Place[] = [
+const rawPlaces: Place[] = [
   {
     slug: 'dao-hueng-market',
     name: 'Dao Hueng Market',
@@ -1447,17 +1447,7 @@ export const laos = { slug: 'laos', name: 'Laos', eyebrow: 'The first atlas chap
 export const pakse = { slug: 'pakse', name: 'Pakse', country: 'Laos', intro: 'A compact riverside base for exploring southern Laos — and a good place to take the day at your own pace.', essential: ['Mekong and Xe Don rivers', 'Gateway to the Bolaven Plateau', 'Best explored with flexible day plans'] };
 
 
-const restaurantImageBySlug = new Map(placeImageResults.map((result) => [result.slug, result]));
-for (const place of places) {
-  const result = restaurantImageBySlug.get(place.slug);
-  if (!result) continue;
-  place.imageSourceUrl = result.imageSourceUrl;
-  place.imageSourceType = result.imageSourceType;
-  place.imageAuthor = result.imageAuthor;
-  place.imageLicense = result.imageLicense;
-  place.imageIsGeneric = result.imageIsGeneric;
-  if (result.status === 'approved' && result.selectedImage) place.image = result.selectedImage;
-}
+export const places: Place[] = resolvePlaceImages(rawPlaces);
 
 export const getCategory = (slug: string) => categories.find((category) => category.slug === slug);
 export const getPlacesForCategory = (slug: string) => places.filter((place) => place.category === slug);
