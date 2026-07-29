@@ -56,7 +56,9 @@ for (const source of candidateSources) {
   for (const candidate of source) {
     if (!isApproved(candidate)) continue;
     const current = imageBySlug.get(candidate.slug);
-    if (!current || priority(candidate) > priority(current)) imageBySlug.set(candidate.slug, candidate);
+    // Curated category files are loaded after the generated registry. At equal
+    // quality, the later editorial selection must replace an older generated URL.
+    if (!current || priority(candidate) >= priority(current)) imageBySlug.set(candidate.slug, candidate);
   }
 }
 
