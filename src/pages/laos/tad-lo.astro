@@ -1,10 +1,19 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PartnerPlaceCard from '../../components/PartnerPlaceCard.astro';
+import { tadLoExperiences, tadLoLocalAddresses } from '../../data/tadLoPlaces';
+
+const stayRhythms = [
+  { days: '1 day', title: 'Waterfalls & village', text: 'Walk to Tad Hang and Tad Lo, eat locally and keep the day deliberately simple.' },
+  { days: '2 days', title: 'Beyond the waterfalls', text: 'Add coffee, a workshop, culture or one organised outing without rushing.' },
+  { days: '3 days', title: 'Recommended stay', text: 'Combine the village, a major excursion and a local activity with room to slow down.' },
+  { days: '4+ days', title: 'Explore Salavan', text: 'Reach further into the province while keeping time for weather, rest and discoveries.' }
+];
 ---
 
 <BaseLayout
   title="Tad Lo travel guide"
-  description="Explore Tad Lo in southern Laos, with waterfalls, forest paths and a slower village rhythm."
+  description="Explore Tad Lo with locally checked waterfalls, activities, accommodation and practical information, in partnership with Visit Tad Lo."
   canonical="https://thingstodoatlas.com/laos/tad-lo"
 >
   <main class="tad-lo-page">
@@ -15,25 +24,97 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <a class="tad-lo-hero__back" href="/laos">← Back to the Laos map</a>
         <p class="tad-lo-hero__eyebrow">LAOS · SOUTHERN CHAPTER</p>
         <h1 id="tad-lo-title">Tad Lo</h1>
-        <p class="tad-lo-hero__lede">Waterfalls, forest paths and an easygoing village rhythm on the plateau.</p>
-        <span class="tad-lo-hero__note">Field notes coming next.</span>
+        <p class="tad-lo-hero__lede">Waterfalls, coffee, village life and forest roads with enough time to notice where you are.</p>
+        <a class="tad-lo-partner" href="https://visit-tadlo.com/en" target="_blank" rel="noreferrer">
+          <span>LOCAL PARTNER</span>
+          <strong>In partnership with Visit Tad Lo</strong>
+          <b aria-hidden="true">↗</b>
+        </a>
       </div>
+    </section>
+
+    <section class="tad-lo-intro container" aria-labelledby="tad-lo-intro-title">
+      <div class="tad-lo-intro__heading">
+        <p class="eyebrow">STAY LONGER · EXPLORE DEEPER</p>
+        <h2 id="tad-lo-intro-title">Come for the waterfalls.<br /><em>Stay for the rhythm around them.</em></h2>
+      </div>
+      <div class="tad-lo-intro__copy">
+        <p>One night shows you the waterfalls. Two or three nights make room for coffee, workshops, village life and the wider Salavan landscape.</p>
+        <p>The local information on this page is developed with <a href="https://visit-tadlo.com/en" target="_blank" rel="noreferrer">Visit Tad Lo</a>, an independent guide created in Tad Lo. Detailed conditions, contacts and changing practical information remain available on the partner site.</p>
+      </div>
+      <div class="tad-lo-rhythms">
+        {stayRhythms.map((rhythm, index) => (
+          <article class:list={['tad-lo-rhythm', `tad-lo-rhythm--${index + 1}`]}>
+            <span>{rhythm.days}</span>
+            <h3>{rhythm.title}</h3>
+            <p>{rhythm.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="tad-lo-section container" aria-labelledby="tad-lo-experiences-title">
+      <header class="tad-lo-section__header">
+        <div><p class="eyebrow">THINGS TO DO</p><h2 id="tad-lo-experiences-title">Choose a doorway into Tad Lo.</h2></div>
+        <div class="tad-lo-section__aside"><p>Start with what fits your time and transport. Several experiences are walkable; the more distant ones deserve a properly planned outing.</p><a href="https://visit-tadlo.com/en/things-to-do" target="_blank" rel="noreferrer">Browse the complete local guide ↗</a></div>
+      </header>
+      <div class="tad-lo-grid">
+        {tadLoExperiences.map((place, index) => <PartnerPlaceCard place={place} index={index} />)}
+      </div>
+    </section>
+
+    <section class="tad-lo-partner-band" aria-labelledby="tad-lo-partner-title">
+      <div class="container tad-lo-partner-band__inner">
+        <div>
+          <p class="eyebrow">OUR FIRST LOCAL PARTNER</p>
+          <h2 id="tad-lo-partner-title">Local knowledge stays connected to the people documenting it.</h2>
+        </div>
+        <div>
+          <p>Things To Do Atlas keeps the discovery experience together. Visit Tad Lo provides the deeper local layer: checked positions, practical updates, itineraries and direct information for Tad Lo, Salavan and the Bolaven Plateau.</p>
+          <a href="https://visit-tadlo.com/en" target="_blank" rel="noreferrer">Open visit-tadlo.com <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="tad-lo-section container" aria-labelledby="tad-lo-addresses-title">
+      <header class="tad-lo-section__header">
+        <div><p class="eyebrow">STAY · EAT · LOCAL LIFE</p><h2 id="tad-lo-addresses-title">Keep the useful village addresses together.</h2></div>
+        <div class="tad-lo-section__aside"><p>Compare atmosphere and location here, then use the partner card for the current contact, price and local map.</p><a href="https://visit-tadlo.com/en/stay-eat" target="_blank" rel="noreferrer">See every stay and restaurant ↗</a></div>
+      </header>
+      <div class="tad-lo-grid">
+        {tadLoLocalAddresses.map((place, index) => <PartnerPlaceCard place={place} index={index} />)}
+      </div>
+    </section>
+
+    <section class="tad-lo-planning container" aria-labelledby="tad-lo-planning-title">
+      <div class="tad-lo-planning__copy">
+        <p class="eyebrow">PRACTICAL FIELD NOTES</p>
+        <h2 id="tad-lo-planning-title">Build a stay that leaves room to breathe.</h2>
+        <p>Tad Hang, Tad Lo, food and several activities can be reached on foot. Tad Soung, coffee visits and wider Salavan excursions are easier with a motorbike, driver or locally arranged transport.</p>
+      </div>
+      <nav class="tad-lo-planning__links" aria-label="Visit Tad Lo planning tools">
+        <a href="https://visit-tadlo.com/en/itineraries" target="_blank" rel="noreferrer"><span>01</span><strong>Build an itinerary</strong><small>One to four days</small><b>↗</b></a>
+        <a href="https://visit-tadlo.com/en/tad-lo-without-motorbike" target="_blank" rel="noreferrer"><span>02</span><strong>Visit without a motorbike</strong><small>Walkable base and organised outings</small><b>↗</b></a>
+        <a href="https://visit-tadlo.com/en/map" target="_blank" rel="noreferrer"><span>03</span><strong>Open the local map</strong><small>Checked and approximate positions</small><b>↗</b></a>
+        <a href="https://visit-tadlo.com/en/continue-bolaven" target="_blank" rel="noreferrer"><span>04</span><strong>Continue the Bolaven route</strong><small>Tad Fan, Tad Yuang and Pakse</small><b>↗</b></a>
+      </nav>
     </section>
   </main>
 </BaseLayout>
 
 <style>
-  .tad-lo-page { min-height: 100vh; background: #f2eee3; }
-  .tad-lo-hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; color: #fffaf0; isolation: isolate; }
-  .tad-lo-hero__media, .tad-lo-hero__overlay { position: absolute; inset: 0; }
-  .tad-lo-hero__media { z-index: -2; }
-  .tad-lo-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-  .tad-lo-hero__overlay { z-index: -1; background: linear-gradient(180deg, rgba(17, 29, 23, .18), rgba(17, 29, 23, .9)); }
-  .tad-lo-hero__content { width: min(1180px, calc(100% - 2.5rem)); margin: 0 auto; padding: clamp(7rem, 14vw, 11rem) 0 clamp(3rem, 7vw, 5.5rem); }
-  .tad-lo-hero__back { display: inline-flex; margin-bottom: clamp(3rem, 8vw, 6rem); color: rgba(255, 250, 240, .76); font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
-  .tad-lo-hero__eyebrow { margin: 0 0 .9rem; color: rgba(255, 250, 240, .68); font-size: .78rem; font-weight: 600; letter-spacing: .18em; }
-  .tad-lo-hero h1 { max-width: 9ch; margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(5rem, 15vw, 11rem); font-weight: 400; letter-spacing: -.065em; line-height: .78; }
-  .tad-lo-hero__lede { max-width: 42rem; margin: clamp(1.8rem, 3vw, 2.6rem) 0 0; color: rgba(255, 250, 240, .88); font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1.15rem, 2.15vw, 1.75rem); line-height: 1.45; }
-  .tad-lo-hero__note { display: inline-block; margin-top: 1.75rem; color: rgba(255, 250, 240, .58); font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
-  @media (max-width: 640px) { .tad-lo-hero { min-height: 88svh; } .tad-lo-hero__content { width: calc(100% - 2rem); padding-bottom: 2.5rem; } .tad-lo-hero h1 { font-size: clamp(4.5rem, 26vw, 7rem); } }
+  .tad-lo-page{min-height:100vh;background:#f2eee3;color:#1f2924}
+  .tad-lo-hero{position:relative;min-height:92svh;display:flex;align-items:flex-end;overflow:hidden;color:#fffaf0;isolation:isolate}
+  .tad-lo-hero__media,.tad-lo-hero__overlay{position:absolute;inset:0}.tad-lo-hero__media{z-index:-2}.tad-lo-hero__media img{width:100%;height:100%;object-fit:cover;object-position:center}.tad-lo-hero__overlay{z-index:-1;background:linear-gradient(180deg,rgba(17,29,23,.12),rgba(17,29,23,.9))}
+  .tad-lo-hero__content{width:min(1180px,calc(100% - 2.5rem));margin:0 auto;padding:clamp(7rem,14vw,11rem) 0 clamp(3rem,7vw,5rem)}
+  .tad-lo-hero__back{display:inline-flex;margin-bottom:clamp(2.8rem,7vw,5.5rem);color:rgba(255,250,240,.78);font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+  .tad-lo-hero__eyebrow{margin:0 0 .9rem;color:rgba(255,250,240,.7);font-size:.72rem;font-weight:700;letter-spacing:.18em}.tad-lo-hero h1{max-width:9ch;margin:0;font-family:Georgia,'Times New Roman',serif;font-size:clamp(5rem,15vw,10rem);font-weight:400;letter-spacing:-.065em;line-height:.78}.tad-lo-hero__lede{max-width:43rem;margin:clamp(1.7rem,3vw,2.5rem) 0 0;color:rgba(255,250,240,.9);font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.12rem,2.1vw,1.72rem);line-height:1.46}
+  .tad-lo-partner{display:grid;grid-template-columns:1fr auto;gap:5px 24px;width:min(100%,430px);margin-top:2rem;padding:15px 17px;border:1px solid rgba(255,250,240,.5);background:rgba(27,48,39,.68);backdrop-filter:blur(8px);color:#fffaf0}.tad-lo-partner span{grid-column:1;color:#e6a780;font-size:.5rem;font-weight:700;letter-spacing:.16em}.tad-lo-partner strong{grid-column:1;font-size:.78rem;letter-spacing:.025em}.tad-lo-partner b{grid-column:2;grid-row:1/3;align-self:center;color:#e6a780;font-size:1.3rem}
+  .tad-lo-intro{padding:clamp(5rem,9vw,8rem) 0}.tad-lo-intro__heading{max-width:800px}.tad-lo-intro__heading h2{margin-bottom:0}.tad-lo-intro__copy{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(2rem,5vw,5rem);max-width:930px;margin:2.3rem 0 3.5rem;color:#5f675f}.tad-lo-intro__copy p{margin:0;line-height:1.75}.tad-lo-intro__copy a{color:var(--green);font-weight:700;border-bottom:1px solid rgba(49,85,69,.35)}
+  .tad-lo-rhythms{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:rgba(49,85,69,.18);border:1px solid rgba(49,85,69,.18)}.tad-lo-rhythm{min-height:220px;padding:25px 23px;background:#f7f2e6}.tad-lo-rhythm span{display:inline-block;margin-bottom:28px;color:var(--terracotta);font:700 .58rem/1 'DM Sans',sans-serif;letter-spacing:.14em;text-transform:uppercase}.tad-lo-rhythm h3{margin:0 0 13px;color:var(--green);font-size:1.45rem;letter-spacing:-.035em}.tad-lo-rhythm p{margin:0;color:var(--muted);font-size:.76rem;line-height:1.6}
+  .tad-lo-section{padding:clamp(4.5rem,8vw,7.5rem) 0}.tad-lo-section__header{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.6fr);gap:clamp(2rem,6vw,6rem);align-items:end;margin-bottom:clamp(2.5rem,5vw,4rem)}.tad-lo-section__header h2{max-width:780px;margin:0}.tad-lo-section__aside p{margin:0 0 16px;color:var(--muted);font-size:.82rem;line-height:1.65}.tad-lo-section__aside a{color:var(--green);font-size:.67rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border-bottom:1px solid rgba(49,85,69,.35)}.tad-lo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1rem,2vw,1.45rem)}
+  .tad-lo-partner-band{padding:clamp(4rem,7vw,6.5rem) 0;background:var(--green);color:#fffdf8}.tad-lo-partner-band__inner{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:clamp(3rem,8vw,8rem);align-items:end}.tad-lo-partner-band h2{margin:0;color:#fffdf8;font-size:clamp(2.7rem,5vw,4.8rem)}.tad-lo-partner-band p{color:#cbd5cc;line-height:1.72}.tad-lo-partner-band a{display:inline-flex;gap:18px;margin-top:15px;padding-bottom:6px;border-bottom:1px solid #e6a780;color:#fffdf8;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.tad-lo-partner-band .eyebrow{color:#e6a780}
+  .tad-lo-planning{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:clamp(3rem,8vw,8rem);padding:clamp(5rem,9vw,8rem) 0}.tad-lo-planning__copy{position:sticky;top:110px;align-self:start}.tad-lo-planning__copy p:last-child{max-width:500px;color:var(--muted);line-height:1.7}.tad-lo-planning__links{display:grid;border-top:1px solid var(--line)}.tad-lo-planning__links a{display:grid;grid-template-columns:42px 1fr auto;gap:7px 16px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line)}.tad-lo-planning__links a>span{grid-row:1/3;color:var(--terracotta);font:500 1.1rem/1 Fraunces,serif}.tad-lo-planning__links strong{color:var(--green);font:500 1.25rem/1.1 Fraunces,serif}.tad-lo-planning__links small{grid-column:2;color:var(--muted)}.tad-lo-planning__links b{grid-column:3;grid-row:1/3;color:var(--terracotta);font-size:1.2rem}
+  @media(max-width:980px){.tad-lo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tad-lo-rhythms{grid-template-columns:repeat(2,minmax(0,1fr))}.tad-lo-section__header,.tad-lo-partner-band__inner,.tad-lo-planning{grid-template-columns:1fr}.tad-lo-planning__copy{position:static}}
+  @media(max-width:640px){.tad-lo-hero{min-height:88svh}.tad-lo-hero__content{width:calc(100% - 2rem);padding-bottom:2.5rem}.tad-lo-hero h1{font-size:clamp(4.5rem,26vw,7rem)}.tad-lo-intro__copy,.tad-lo-grid,.tad-lo-rhythms{grid-template-columns:1fr}.tad-lo-rhythm{min-height:0}.tad-lo-section__header{display:block}.tad-lo-section__aside{margin-top:1.7rem}}
 </style>
