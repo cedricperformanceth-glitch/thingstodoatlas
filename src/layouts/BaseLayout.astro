@@ -6,6 +6,7 @@ import '../styles/sri-lanka-cleanup.css';
 import '../styles/sri-lanka-ticket.css';
 import { countryNavigation } from '../data/atlasConfig';
 import TripDrawer from '../components/TripDrawer.astro';
+import TripPageContext from '../components/TripPageContext.astro';
 import TripManager from '../components/TripManager.astro';
 import TripSummaryModal from '../components/TripSummaryModal.astro';
 
@@ -80,6 +81,7 @@ const currentPath = Astro.url.pathname;
     <main id="main-content"><slot /></main>
 
     <TripDrawer />
+    <TripPageContext />
     <TripManager />
     <TripSummaryModal />
 
