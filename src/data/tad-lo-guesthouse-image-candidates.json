@@ -1,0 +1,50 @@
+[
+  {
+    "slug": "fandee-island",
+    "selectedImage": "https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D1920%2Cfit%3Dcrop/YrDJBMEl55IVE84z/371421975_648007923976758_5191678431984122789_n-YleQ09xxwnC0k72B.jpg",
+    "sourcePage": "https://www.fandee-island.com/",
+    "sourceType": "official-site",
+    "status": "approved",
+    "imageSourceUrl": "https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D1920%2Cfit%3Dcrop/YrDJBMEl55IVE84z/371421975_648007923976758_5191678431984122789_n-YleQ09xxwnC0k72B.jpg",
+    "imageSourceType": "official-site",
+    "imageAuthor": null,
+    "imageLicense": null,
+    "imageIsGeneric": false
+  },
+  {
+    "slug": "bolaven-garden",
+    "selectedImage": "https://ddylijzqbzdbskxoujlv.supabase.co/storage/v1/object/public/site-media/accommodation/2250df6e-b95e-4150-bcf0-a693ccac171f-Bolaven-Garden.jpg",
+    "sourcePage": "https://visit-tadlo.com/en/stay-eat/bolaven-garden",
+    "sourceType": "official-site",
+    "status": "approved",
+    "imageSourceUrl": "https://ddylijzqbzdbskxoujlv.supabase.co/storage/v1/object/public/site-media/accommodation/2250df6e-b95e-4150-bcf0-a693ccac171f-Bolaven-Garden.jpg",
+    "imageSourceType": "official-site",
+    "imageAuthor": null,
+    "imageLicense": null,
+    "imageIsGeneric": false
+  },
+  {
+    "slug": "mama-pap",
+    "selectedImage": "https://media-cdn.tripadvisor.com/media/photo-s/07/2e/68/06/mama-pap-s.jpg",
+    "sourcePage": "https://www.tripadvisor.com.br/LocationPhotoDirectLink-g11046564-d4274963-i120481798-Mama_Pap_s-Tad_Lo_Salavan_Province.html",
+    "sourceType": "public-directory",
+    "status": "approved",
+    "imageSourceUrl": "https://media-cdn.tripadvisor.com/media/photo-s/07/2e/68/06/mama-pap-s.jpg",
+    "imageSourceType": "public-directory",
+    "imageAuthor": null,
+    "imageLicense": null,
+    "imageIsGeneric": false
+  },
+  {
+    "slug": "tad-lo-lodge",
+    "selectedImage": "https://cache2.travelfish.org/b/assets/2015/gallery/thumbR/gallery_accommodation_thumbR_334_1737261066.jpg",
+    "sourcePage": "https://www.travelfish.org/accommodation_profile/laos/southern_laos/salavan/tad_lo/all/3021",
+    "sourceType": "public-directory",
+    "status": "approved",
+    "imageSourceUrl": "https://cache2.travelfish.org/b/assets/2015/gallery/thumbR/gallery_accommodation_thumbR_334_1737261066.jpg",
+    "imageSourceType": "public-directory",
+    "imageAuthor": "Cindy Fan",
+    "imageLicense": null,
+    "imageIsGeneric": false
+  }
+]
