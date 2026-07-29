@@ -1,8 +1,4 @@
 import placeImageResults from './place-images.generated.json';
-import accommodationImageCandidates from './accommodation-image-candidates.json';
-import gymImageCandidates from './gym-image-candidates.json';
-import marketImageCandidates from './markets-shopping-image-candidates.json';
-import essentialImageCandidates from './essential-information-image-candidates.json';
 
 export type ImageResult = {
   slug?: string;
@@ -45,12 +41,14 @@ const priority = (result: ImageResult) => {
   return 100;
 };
 
+const candidateModules = import.meta.glob('./*-image-candidates.json', {
+  eager: true,
+  import: 'default'
+}) as Record<string, ImageResult[]>;
+
 const candidateSources: readonly ImageResult[][] = [
   placeImageResults as ImageResult[],
-  accommodationImageCandidates as ImageResult[],
-  gymImageCandidates as ImageResult[],
-  marketImageCandidates as ImageResult[],
-  essentialImageCandidates as ImageResult[]
+  ...Object.values(candidateModules)
 ];
 
 const imageBySlug = new Map<string, ImageResult>();
