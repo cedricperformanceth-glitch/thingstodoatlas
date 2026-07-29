@@ -87,6 +87,20 @@ const bolavenPartner = {
   .landmark-partner-note strong { font: 600 .76rem/1.2 'DM Sans', sans-serif; }
   .landmark-partner-note b { color: #b76645; font: 600 .78rem/1 Fraunces, serif; }
   .landmark-action--partner { border: 1px solid #315545 !important; background: rgba(247, 242, 230, .88) !important; color: #315545 !important; }
+  .city-note__partner {
+    display: inline-block;
+    margin: 2px 0 7px;
+    padding: 4px 7px;
+    border: 1px solid rgba(31, 63, 86, .5);
+    color: #1f3f56;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    transform: rotate(-1deg);
+  }
   @media (max-width: 650px) { .landmark-partner-note { align-items: flex-start; flex-direction: column; } }
 </style>
 
@@ -116,6 +130,16 @@ const bolavenPartner = {
       dialog.querySelector<HTMLElement>('[data-close-landmark]')?.addEventListener('click', () => dialog.close());
       dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
     });
+  };
+
+  const bindTadLoMapPartner = () => {
+    const body = document.querySelector<HTMLElement>('.city-note--tadlo .city-note__body');
+    if (!body || body.querySelector('.city-note__partner')) return;
+    const label = document.createElement('span');
+    label.className = 'city-note__partner';
+    label.textContent = 'In partnership with visit-tadlo.com';
+    const closing = body.querySelector('small');
+    body.insertBefore(label, closing || null);
   };
 
   const bindLandmarkPartners = () => {
@@ -194,6 +218,7 @@ const bolavenPartner = {
 
   const setupLandmarkExperience = () => {
     bindLandmarkModals();
+    bindTadLoMapPartner();
     bindLandmarkPartners();
     bindLandmarkGuideButtons();
     bindLandmarkGuideDialogs();
