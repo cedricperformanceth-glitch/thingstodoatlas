@@ -11,6 +11,25 @@ export type TadLoSelectionPlace = TadLoPartnerPlace & {
   }>;
 };
 
+const fandeeGallery = [
+  {
+    src: 'https://mmjvwsiurlojruabssuf.supabase.co/storage/v1/object/sign/site-media/60490d2d-0386-4b29-a4a7-14c025ec1053-WhatsApp-Image-2026-01-09-at-09.57.26.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV83NDY2ZGE5Yy05YzQxLTRjYjUtYWJiOC1lNGQyMjUxY2Y2MjgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJzaXRlLW1lZGlhLzYwNDkwZDJkLTAzODYtNGIyOS1hNGE3LTE0YzAyNWVjMTA1My1XaGF0c0FwcC1JbWFnZS0yMDI2LTAxLTA5LWF0LTA5LjU3LjI2LmpwZWciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyMDE0MDgzLCJleHAiOjE4MTM1NTAwODN9.AowBO47_lfeGh3IdR0FqoPQf-wne7E0qTvn42hOHk5M',
+    alt: 'Tree house accommodation surrounded by tropical greenery at Fandee Island'
+  },
+  {
+    src: 'https://mmjvwsiurlojruabssuf.supabase.co/storage/v1/object/sign/site-media/aeb21f73-1492-464b-87c2-41bd98ac8b8e-241720782.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV83NDY2ZGE5Yy05YzQxLTRjYjUtYWJiOC1lNGQyMjUxY2Y2MjgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJzaXRlLW1lZGlhL2FlYjIxZjczLTE0OTItNDY0Yi04N2MyLTQxYmQ5OGFjOGI4ZS0yNDE3MjA3ODIuanBnIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MjAxNDA3MCwiZXhwIjoxODEzNTUwMDcwfQ.IeotbjvSFmqqwg9imar7j_qMbodTXUEx3LwWEX1I2CE',
+    alt: 'Nature accommodation and garden atmosphere at Fandee Island in Tad Lo'
+  },
+  {
+    src: 'https://mmjvwsiurlojruabssuf.supabase.co/storage/v1/object/sign/site-media/08048758-30f2-419a-943f-ba3c8d52db6b-626254071.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV83NDY2ZGE5Yy05YzQxLTRjYjUtYWJiOC1lNGQyMjUxY2Y2MjgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJzaXRlLW1lZGlhLzA4MDQ4NzU4LTMwZjItNDE5YS05NDNmLWJhM2M4ZDUyZGI2Yi02MjYyNTQwNzEuanBnIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MjAxNDA4OCwiZXhwIjoxODEzNTUwMDg4fQ.rCe4xCSWY-NPiXn4lZsNZgTey0Xkeubnpfg67L1zIKw',
+    alt: 'A quiet view across the Fandee Island property in southern Laos'
+  },
+  {
+    src: 'https://mmjvwsiurlojruabssuf.supabase.co/storage/v1/object/sign/site-media/b1c76c70-ae63-471e-878e-2c0263b42be7-626254102.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV83NDY2ZGE5Yy05YzQxLTRjYjUtYWJiOC1lNGQyMjUxY2Y2MjgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJzaXRlLW1lZGlhL2IxYzc2YzcwLWFlNjMtNDcxZS04NzhlLTJjMDI2M2I0MmJlNy02MjYyNTQxMDIuanBnIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MjAxMzc2NCwiZXhwIjoxODEzNTQ5NzY0fQ.zD4o3LG6Xw4G1CnjdfbL4pazlFkbGH46wkYJ8IU285w',
+    alt: 'Lake house accommodation beside the water at Fandee Island'
+  }
+];
+
 export const fandeeIslandSelection: TadLoSelectionPlace = {
   slug: 'fandee-island',
   name: 'Fandee Island',
@@ -19,26 +38,9 @@ export const fandeeIslandSelection: TadLoSelectionPlace = {
   cuisine: 'Lao, Asian and Western food',
   city: 'Tad Lo',
   country: 'Laos',
-  image: 'https://www.fandee-island.com/media/site/0c335541-c2a9-43c2-a4b8-239c80cb0b89-214958230_338768834594602_4219948812012573377_n.jpg',
-  imageAlt: 'Fandee Island nature accommodation beside the water in Tad Lo',
-  galleryImages: [
-    {
-      src: 'https://www.fandee-island.com/media/site/0c335541-c2a9-43c2-a4b8-239c80cb0b89-214958230_338768834594602_4219948812012573377_n.jpg',
-      alt: 'Fandee Island nature accommodation beside the water in Tad Lo'
-    },
-    {
-      src: 'https://www.fandee-island.com/media/site/60490d2d-0386-4b29-a4a7-14c025ec1053-WhatsApp-Image-2026-01-09-at-09.57.26.jpeg',
-      alt: 'A nature stay at Fandee Island in Tad Lo'
-    },
-    {
-      src: 'https://www.fandee-island.com/media/site/cbf71e59-7e89-48b3-9f8a-1dc07212dd5d-626254074.jpg',
-      alt: 'Fandee Island accommodation surrounded by tropical vegetation'
-    },
-    {
-      src: 'https://www.fandee-island.com/media/site/982b74e8-d01d-4bea-ab07-b9f53f97adb4-WhatsApp-Image-2026-02-05-at-11.16.28.jpeg',
-      alt: 'Fandee Island lakeside atmosphere in southern Laos'
-    }
-  ],
+  image: fandeeGallery[0].src,
+  imageAlt: fandeeGallery[0].alt,
+  galleryImages: fandeeGallery,
   cardNote: 'an island stay that feels apart from the road',
   shortDescription: 'Tree houses, lake houses and nature stays gathered around a quiet island in the heart of Tad Lo.',
   description: 'Fandee Island is an eco-minded resort inside Tad Lo village, with unusual accommodation ranging from tree houses and lake houses to the Stars Dome, Mountain House and Hilltop House. A lakeside restaurant and nearby activities make it possible to stay, eat and slow down in one place.',
