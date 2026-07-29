@@ -1,0 +1,86 @@
+:root {
+  --atlas-paper: #f4f0e7;
+  --atlas-paper-soft: #f8f5ec;
+  --atlas-paper-deep: #e8e3d6;
+  --atlas-ink: #252923;
+  --atlas-muted: #70766d;
+  --atlas-green: #315545;
+  --atlas-green-dark: #203c31;
+  --atlas-terracotta: #b76645;
+  --atlas-line: rgba(49, 85, 69, .2);
+  --atlas-shadow-sm: 3px 4px 0 rgba(49, 85, 69, .07);
+  --atlas-shadow-md: 6px 8px 0 rgba(49, 85, 69, .08), 0 16px 34px rgba(32, 60, 49, .1);
+  --atlas-content: 1180px;
+  --atlas-reading: 680px;
+  --atlas-radius: 0;
+  --atlas-space-1: .5rem;
+  --atlas-space-2: .75rem;
+  --atlas-space-3: 1rem;
+  --atlas-space-4: 1.5rem;
+  --atlas-space-5: 2rem;
+  --atlas-space-6: 3rem;
+  --atlas-space-7: 4.5rem;
+  --atlas-space-8: 7rem;
+}
+
+:where(button, a, select, input, textarea):focus-visible {
+  outline: 2px solid var(--atlas-terracotta);
+  outline-offset: 3px;
+}
+
+.atlas-shell {
+  width: min(var(--atlas-content), calc(100% - 2.5rem));
+  margin-inline: auto;
+}
+
+.atlas-paper-surface {
+  border: 1px solid var(--atlas-line);
+  background: var(--atlas-paper-soft);
+  box-shadow: var(--atlas-shadow-sm);
+}
+
+.atlas-kicker {
+  color: var(--atlas-terracotta);
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.atlas-support-copy {
+  max-width: var(--atlas-reading);
+  color: var(--atlas-muted);
+  font-size: .86rem;
+  line-height: 1.7;
+}
+
+.atlas-hand-note {
+  color: var(--atlas-green);
+  font: 500 1rem/1.15 Caveat, cursive;
+  transform: rotate(-1deg);
+}
+
+.atlas-divider {
+  border: 0;
+  border-top: 1px dashed var(--atlas-line);
+}
+
+@media (max-width: 700px) {
+  :root {
+    --atlas-space-7: 3.5rem;
+    --atlas-space-8: 5rem;
+  }
+
+  .atlas-shell {
+    width: calc(100% - 2rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
