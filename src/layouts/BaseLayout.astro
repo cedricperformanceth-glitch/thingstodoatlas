@@ -1,33 +1,38 @@
 ---
 import '../styles/global.css';
+import '../styles/atlas-system.css';
 import '../styles/restaurant-polaroids.css';
 import '../styles/sri-lanka-cleanup.css';
 import '../styles/sri-lanka-ticket.css';
-import PlanMyTrip from '../components/PlanMyTrip.astro';
-import TripManagerV2 from '../components/TripManagerV2.astro';
+import { countryNavigation } from '../data/atlasConfig';
+import TripDrawer from '../components/TripDrawer.astro';
+import TripPageContext from '../components/TripPageContext.astro';
+import TripManager from '../components/TripManager.astro';
 import TripSummaryModal from '../components/TripSummaryModal.astro';
-const { title, description = 'A thoughtful guide to places worth your time across Asia.', canonical = 'https://thingstodoatlas.com/' } = Astro.props;
-const countries = [
-  { name: 'Thailand', href: '/thailand', slug: 'thailand', number: '01' },
-  { name: 'Laos', href: '/laos', slug: 'laos', number: '02' },
-  { name: 'Sri Lanka', href: '/sri-lanka', slug: 'sri-lanka', number: '03' }
-];
+
+const {
+  title,
+  description = 'A thoughtful guide to places worth your time across Asia.',
+  canonical = 'https://thingstodoatlas.com/'
+} = Astro.props;
 const currentPath = Astro.url.pathname;
-const isPakseCafePage = currentPath === '/laos/pakse/cafes' || currentPath === '/laos/pakse/cafes/';
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#f4f0e7" />
     <title>{title} | ThingsToDoAtlas</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta property="og:title" content={`${title} | ThingsToDoAtlas`} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
   </head>
-  <body class:list={[{ 'cafe-category-page': isPakseCafePage }]}> 
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-header">
       <div class="site-brand-cluster">
         <div class="language-menu">
@@ -45,13 +50,13 @@ const isPakseCafePage = currentPath === '/laos/pakse/cafes' || currentPath === '
             <svg class="language-switcher__arrow" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" /></svg>
           </button>
           <div class="language-dropdown" id="language-dropdown" hidden>
-            <a class="language-dropdown__item" href="/fr/" hreflang="fr" lang="en">
+            <a class="language-dropdown__item" href="/fr/" hreflang="fr" lang="fr">
               <svg class="language-dropdown__flag" viewBox="0 0 3 2" aria-hidden="true"><path fill="#002395" d="M0 0h1v2H0z"/><path fill="#fff" d="M1 0h1v2H1z"/><path fill="#ed2939" d="M2 0h1v2H2z"/></svg>
-              <span>French</span>
+              <span>Français</span>
             </a>
-            <a class="language-dropdown__item" href="/es/" hreflang="es" lang="en">
+            <a class="language-dropdown__item" href="/es/" hreflang="es" lang="es">
               <svg class="language-dropdown__flag" viewBox="0 0 3 2" aria-hidden="true"><path fill="#aa151b" d="M0 0h3v2H0z"/><path fill="#f1bf00" d="M0 .5h3v1H0z"/></svg>
-              <span>Spanish</span>
+              <span>Español</span>
             </a>
           </div>
         </div>
@@ -60,93 +65,60 @@ const isPakseCafePage = currentPath === '/laos/pakse/cafes' || currentPath === '
         </a>
       </div>
       <nav class="country-nav" aria-label="Choose a country">
-        {countries.map((country) => <a class:list={[{ 'is-active': currentPath.startsWith(`/${country.slug}`) }]} href={country.href} aria-current={currentPath.startsWith(`/${country.slug}`) ? 'page' : undefined}><span class="nav-chapter">{country.number}</span>{country.name}</a>)}
+        {countryNavigation.map((country) => (
+          <a
+            class:list={[{ 'is-active': currentPath.startsWith(`/${country.slug}`), 'is-coming-soon': country.status !== 'open' }]}
+            href={country.href}
+            aria-current={currentPath.startsWith(`/${country.slug}`) ? 'page' : undefined}
+          >
+            <span class="nav-chapter">{country.number}</span>{country.name}
+          </a>
+        ))}
       </nav>
       <span class="header-note">Field Notes <i aria-hidden="true">·</i> Vol. 01</span>
     </header>
-    <main><slot /></main>
-    {isPakseCafePage && (
-      <script is:inline>
-        const cafeHeading = document.querySelector('.chapter-sheet__title');
-        const cafeAside = cafeHeading?.querySelector('.chapter-sheet__aside');
-        if (cafeHeading && cafeAside && !cafeHeading.querySelector('.cafe-heading-art')) {
-          const artwork = document.createElement('div');
-          artwork.className = 'cafe-heading-art';
-          artwork.setAttribute('aria-hidden', 'true');
-          artwork.innerHTML = `
-            <svg viewBox="0 0 260 210" role="presentation" focusable="false">
-              <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <g transform="translate(94 22) rotate(-11)">
-                  <path d="M4 28C5 10 18-2 33 1c15 3 23 19 18 35-5 17-21 28-35 23C5 55 2 42 4 28Z" stroke-width="2.25" />
-                  <path d="M31 5c-8 8-9 17-4 25 5 8 5 16-3 25" stroke-width="1.75" />
-                  <path d="M12 18l11-7M8 30l13-8M8 41l12-7M36 12l10 8M34 25l12 8M32 39l9 7" stroke-width=".8" opacity=".42" />
-                </g>
-                <g transform="translate(42 55) rotate(-34)">
-                  <path d="M3 25C5 9 17-1 30 1c15 2 23 17 19 32-4 16-18 27-31 24C6 54 1 41 3 25Z" stroke-width="2.15" />
-                  <path d="M29 5c-7 8-8 15-4 22 5 8 5 15-3 25" stroke-width="1.65" />
-                  <path d="M10 16l10-6M7 27l12-7M8 39l10-6M34 12l9 7M33 25l10 7M31 38l8 6" stroke-width=".78" opacity=".4" />
-                </g>
-                <g transform="translate(142 58) rotate(24)">
-                  <path d="M3 26C4 9 17-1 31 1c15 2 24 18 20 34-4 17-19 28-32 24C6 55 1 42 3 26Z" stroke-width="2.2" />
-                  <path d="M31 5c-8 8-8 16-4 24 5 8 5 16-3 25" stroke-width="1.7" />
-                  <path d="M10 16l11-7M7 28l13-8M8 40l11-7M36 13l9 7M35 27l10 7M33 40l8 6" stroke-width=".8" opacity=".42" />
-                </g>
-                <g transform="translate(78 92) rotate(9)">
-                  <path d="M3 31C4 11 19-2 35 1c18 3 28 22 23 40-5 20-22 33-38 28C6 65 1 49 3 31Z" stroke-width="2.55" />
-                  <path d="M35 6c-9 10-10 20-4 29 6 10 6 19-4 29" stroke-width="1.95" />
-                  <path d="M12 19l13-8M8 32l15-9M9 46l14-8M42 14l11 8M41 29l12 8M39 45l10 7M18 57l12-7" stroke-width=".9" opacity=".44" />
-                </g>
-                <g transform="translate(132 110) rotate(-21)">
-                  <path d="M3 30C5 11 19-2 35 1c17 3 27 21 22 39-5 19-21 32-37 28C6 64 1 48 3 30Z" stroke-width="2.5" />
-                  <path d="M35 6c-9 10-10 19-4 28 6 10 6 19-4 29" stroke-width="1.9" />
-                  <path d="M12 18l13-8M8 31l15-9M9 45l14-8M42 14l10 8M41 29l11 8M39 44l9 7" stroke-width=".88" opacity=".44" />
-                </g>
-                <g transform="translate(188 98) rotate(38)">
-                  <path d="M3 23C4 8 15-1 27 1c13 2 21 15 17 29-4 15-16 24-28 21C5 48 1 37 3 23Z" stroke-width="2" />
-                  <path d="M27 5c-7 7-7 13-3 20 4 7 4 13-3 22" stroke-width="1.55" />
-                  <path d="M9 14l9-6M7 24l10-6M8 35l9-5M31 11l8 6M30 23l8 6M28 35l7 5" stroke-width=".72" opacity=".38" />
-                </g>
-                <g transform="translate(28 128) rotate(-8)">
-                  <path d="M3 21C4 8 14 0 25 1c12 2 19 13 16 26-3 13-14 22-25 20C6 45 1 34 3 21Z" stroke-width="1.9" />
-                  <path d="M25 5c-6 6-7 12-3 18 4 6 4 12-3 20" stroke-width="1.45" />
-                  <path d="M8 13l8-5M6 22l9-5M7 32l8-5M29 10l7 5M28 20l7 5M27 31l6 4" stroke-width=".7" opacity=".36" />
-                </g>
-                <path d="M33 177c27 6 61 7 89 2M112 184c31 5 73 3 105-5M66 190c18 3 37 3 55 0" stroke-width="1" opacity=".22" />
-                <path d="M49 170l13-2M74 177l15-2M103 172l11-2M145 180l14-2M181 173l13-2" stroke-width=".85" opacity=".25" />
-              </g>
-            </svg>`;
-          cafeHeading.insertBefore(artwork, cafeAside);
-        }
-      </script>
-    )}
-    <PlanMyTrip />
-    <TripManagerV2 />
+
+    <main id="main-content"><slot /></main>
+
+    <TripDrawer />
+    <TripPageContext />
+    <TripManager />
     <TripSummaryModal />
-    <footer class="site-footer"><div><a class="wordmark" href="/">Things<span>ToDo</span>Atlas</a><p>A practical atlas for places worth your time.</p></div><small>Built for the curious. Chapters open as they are ready.</small></footer>
+
+    <footer class="site-footer">
+      <div><a class="wordmark" href="/">Things<span>ToDo</span>Atlas</a><p>A practical atlas for places worth your time.</p></div>
+      <small>Built for the curious. Chapters open as they are ready.</small>
+    </footer>
     <nav class="bottom-country-bar" aria-label="Country chapters">
-      {countries.map((country) => <a class:list={[{ 'is-active': currentPath.startsWith(`/${country.slug}`) }]} href={country.href} aria-current={currentPath.startsWith(`/${country.slug}`) ? 'page' : undefined}><span class="bottom-chapter">{country.number}</span>{country.name}</a>)}
+      {countryNavigation.map((country) => (
+        <a
+          class:list={[{ 'is-active': currentPath.startsWith(`/${country.slug}`), 'is-coming-soon': country.status !== 'open' }]}
+          href={country.href}
+          aria-current={currentPath.startsWith(`/${country.slug}`) ? 'page' : undefined}
+        >
+          <span class="bottom-chapter">{country.number}</span>{country.name}
+        </a>
+      ))}
     </nav>
+
     <script is:inline>
       const languageButton = document.querySelector('.language-switcher');
       const languageDropdown = document.querySelector('.language-dropdown');
-
       if (languageButton && languageDropdown) {
         const closeLanguageMenu = () => {
           languageDropdown.hidden = true;
           languageButton.setAttribute('aria-expanded', 'false');
         };
-
         languageButton.addEventListener('click', (event) => {
           event.stopPropagation();
           const willOpen = languageDropdown.hidden;
           languageDropdown.hidden = !willOpen;
           languageButton.setAttribute('aria-expanded', String(willOpen));
         });
-
         document.addEventListener('click', (event) => {
-          if (!event.target.closest('.language-menu')) closeLanguageMenu();
+          const target = event.target;
+          if (!(target instanceof Element) || !target.closest('.language-menu')) closeLanguageMenu();
         });
-
         document.addEventListener('keydown', (event) => {
           if (event.key === 'Escape') closeLanguageMenu();
         });
@@ -156,153 +128,30 @@ const isPakseCafePage = currentPath === '/laos/pakse/cafes' || currentPath === '
 </html>
 
 <style is:global>
-  .site-brand-cluster {
-    display: flex;
-    align-items: center;
-    gap: clamp(8px, 1vw, 14px);
-    min-width: 0;
+  .skip-link {
+    position: fixed;
+    z-index: 100;
+    top: .75rem;
+    left: .75rem;
+    padding: .65rem .85rem;
+    background: #315545;
+    color: #fffdf8;
+    transform: translateY(-180%);
   }
-
-  .language-menu {
-    position: relative;
-    z-index: 20;
-  }
-
-  .language-switcher {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 2px;
-    border: 0;
-    background: transparent;
-    color: currentColor;
-    cursor: pointer;
-  }
-
-  .language-switcher__flag,
-  .language-dropdown__flag {
-    display: block;
-    width: 24px;
-    height: 16px;
-    border: 1px solid rgba(28, 35, 31, .22);
-    box-shadow: 0 1px 2px rgba(28, 35, 31, .08);
-    flex: 0 0 auto;
-  }
-
-  .language-switcher__arrow {
-    display: block;
-    width: 9px;
-    height: 6px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.4;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    transition: transform .2s ease;
-  }
-
-  .language-switcher[aria-expanded="true"] .language-switcher__arrow {
-    transform: rotate(180deg);
-  }
-
-  .language-dropdown {
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
-    min-width: 132px;
-    padding: 6px;
-    border: 1px solid rgba(28, 35, 31, .16);
-    background: #f4f0e5;
-    box-shadow: 0 12px 30px rgba(28, 35, 31, .14);
-  }
-
-  .language-dropdown[hidden] {
-    display: none;
-  }
-
-  .language-dropdown__item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 10px;
-    color: inherit;
-    text-decoration: none;
-    font-size: .82rem;
-    letter-spacing: .03em;
-    white-space: nowrap;
-  }
-
-  .language-dropdown__item:hover,
-  .language-dropdown__item:focus-visible {
-    background: rgba(28, 35, 31, .07);
-    outline: none;
-  }
-
-  .plan-trip-widget[hidden],
-  .plan-trip-drawer[hidden],
-  .plan-trip-drawer__foot[hidden] {
-    display: none;
-  }
-
-  body.cafe-category-page .chapter-sheet__title {
-    grid-template-columns: minmax(0, 1.55fr) minmax(150px, .5fr) minmax(275px, .72fr);
-    gap: clamp(24px, 3vw, 54px);
-  }
-
-  .cafe-heading-art {
-    display: grid;
-    place-items: center;
-    align-self: center;
-    width: min(100%, 230px);
-    margin: 0 auto;
-    color: var(--green);
-    pointer-events: none;
-  }
-
-  .cafe-heading-art svg {
-    display: block;
-    width: 100%;
-    height: auto;
-    overflow: visible;
-  }
-
-  @media (max-width: 980px) {
-    body.cafe-category-page .chapter-sheet__title {
-      grid-template-columns: minmax(0, 1.25fr) minmax(125px, .42fr) minmax(240px, .72fr);
-      gap: 24px;
-    }
-
-    .cafe-heading-art { width: min(100%, 175px); }
-  }
-
+  .skip-link:focus { transform: translateY(0); }
+  .site-brand-cluster { display: flex; align-items: center; gap: clamp(8px, 1vw, 14px); min-width: 0; }
+  .language-menu { position: relative; z-index: 20; }
+  .language-switcher { display: inline-flex; align-items: center; gap: 6px; padding: 4px 2px; border: 0; background: transparent; color: currentColor; cursor: pointer; }
+  .language-switcher__flag, .language-dropdown__flag { display: block; width: 24px; height: 16px; border: 1px solid rgba(28, 35, 31, .22); box-shadow: 0 1px 2px rgba(28, 35, 31, .08); flex: 0 0 auto; }
+  .language-switcher__arrow { display: block; width: 9px; height: 6px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s ease; }
+  .language-switcher[aria-expanded="true"] .language-switcher__arrow { transform: rotate(180deg); }
+  .language-dropdown { position: absolute; top: calc(100% + 8px); left: 0; min-width: 132px; padding: 6px; border: 1px solid rgba(28, 35, 31, .16); background: #f4f0e5; box-shadow: 0 12px 30px rgba(28, 35, 31, .14); }
+  .language-dropdown[hidden] { display: none; }
+  .language-dropdown__item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; color: inherit; text-decoration: none; font-size: .82rem; letter-spacing: .03em; white-space: nowrap; }
+  .language-dropdown__item:hover, .language-dropdown__item:focus-visible { background: rgba(28, 35, 31, .07); outline: none; }
   @media (max-width: 700px) {
-    .site-brand-cluster {
-      gap: 7px;
-    }
-
-    .language-switcher__flag,
-    .language-dropdown__flag {
-      width: 21px;
-      height: 14px;
-    }
-
-    .language-switcher__arrow {
-      width: 8px;
-    }
-
-    .language-dropdown {
-      left: 0;
-      right: auto;
-    }
-
-    body.cafe-category-page .chapter-sheet__title {
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-
-    .cafe-heading-art {
-      width: 150px;
-      margin: -4px auto 0;
-    }
+    .site-brand-cluster { gap: 7px; }
+    .language-switcher__flag, .language-dropdown__flag { width: 21px; height: 14px; }
+    .language-switcher__arrow { width: 8px; }
   }
 </style>

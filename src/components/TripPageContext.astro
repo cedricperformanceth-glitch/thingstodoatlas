@@ -1,0 +1,17 @@
+<script is:inline>
+  (() => {
+    const STORAGE_KEY = 'thingsToDoAtlas.trips.v2';
+    try {
+      const countrySlug = window.location.pathname.split('/').filter(Boolean)[0] || '';
+      const store = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+      if (!countrySlug || store?.version !== 2 || !Array.isArray(store.trips)) return;
+      const rememberedId = store.activeTripByCountry?.[countrySlug];
+      if (!rememberedId || store.activeTripId === rememberedId) return;
+      if (!store.trips.some((trip) => trip.id === rememberedId && trip.countrySlug === countrySlug)) return;
+      store.activeTripId = rememberedId;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+    } catch {
+      // The main trip manager will recover corrupted or incomplete storage.
+    }
+  })();
+</script>

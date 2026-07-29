@@ -1,22 +1,27 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import CityCategoryListing from '../../../components/CityCategoryListing.astro';
+import { cityGuides, getCategoryDefinition } from '../../../data/contentModel';
 
 export function getStaticPaths() {
-  const categories = ['restaurants','cafes','accommodation','scooter-rental','things-to-do','gyms-fitness','markets-shopping','essential-information'];
-  const cities = [
-    { slug: 'negombo', name: 'Negombo' },
-    { slug: 'colombo', name: 'Colombo' },
-    { slug: 'mirissa', name: 'Mirissa' },
-    { slug: 'ahangama', name: 'Ahangama' },
-  ];
-  return cities.flatMap((city) => categories.map((category) => ({ params: { city: city.slug, category }, props: { cityName: city.name } })));
+  return cityGuides
+    .filter((city) => city.countrySlug === 'sri-lanka')
+    .flatMap((city) => city.categorySlugs.map((category) => ({
+      params: { city: city.slug, category },
+      props: { cityName: city.name }
+    })));
 }
 
 const { city, category } = Astro.params;
 const { cityName } = Astro.props;
-const categoryName = category?.split('-').map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(' ') ?? 'Guide';
+const definition = getCategoryDefinition(category || '');
+const categoryName = definition?.title || category?.split('-').map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(' ') || 'Guide';
 ---
-<BaseLayout title={`${categoryName} in ${cityName}, Sri Lanka`} description={`Explore ${categoryName.toLowerCase()} in ${cityName}. This city guide is being prepared.`} canonical={`https://thingstodoatlas.com/sri-lanka/${city}/${category}`}>
+
+<BaseLayout
+  title={`${categoryName} in ${cityName}, Sri Lanka`}
+  description={`Explore ${categoryName.toLowerCase()} in ${cityName}. This city guide is being prepared.`}
+  canonical={`https://thingstodoatlas.com/sri-lanka/${city}/${category}`}
+>
   <CityCategoryListing country="Sri Lanka" countrySlug="sri-lanka" city={cityName} citySlug={city} categorySlug={category} />
 </BaseLayout>

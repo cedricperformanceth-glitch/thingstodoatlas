@@ -1,97 +1,15 @@
-<style is:global>
-  .plan-trip-drawer__switcher {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: .55rem .7rem;
-    align-items: end;
-    margin: .55rem 0 .15rem;
-    padding-top: .75rem;
-    border-top: 1px dashed rgba(49, 85, 69, .2);
-  }
+---
+import { tripCountryConfig } from '../data/atlasConfig';
+---
 
-  .plan-trip-drawer__switcher label {
-    grid-column: 1 / -1;
-    color: #70766d;
-    font: 700 .48rem/1 'DM Sans', sans-serif;
-    letter-spacing: .14em;
-  }
-
-  .plan-trip-drawer__switcher select {
-    min-width: 0;
-    height: 36px;
-    padding: 0 .65rem;
-    border: 1px solid rgba(49, 85, 69, .28);
-    border-radius: 0;
-    background: rgba(247, 242, 230, .76);
-    color: #315545;
-    font: 600 .68rem/1 'DM Sans', sans-serif;
-  }
-
-  .plan-trip-drawer__switcher button {
-    min-height: 36px;
-    padding: 0 .72rem;
-    border: 1px solid #b76645;
-    background: transparent;
-    color: #b76645;
-    font: 700 .52rem/1 'DM Sans', sans-serif;
-    letter-spacing: .08em;
-    cursor: pointer;
-  }
-
-  .plan-trip-drawer__switcher button:hover {
-    background: rgba(183, 102, 69, .07);
-  }
-
-  .plan-trip-drawer__foot {
-    flex-wrap: wrap;
-  }
-
-  .plan-trip-drawer__foot [data-trip-delete] {
-    color: #9d4938;
-    border-bottom-color: rgba(157, 73, 56, .38);
-  }
-
-  @media (max-width: 380px) {
-    .plan-trip-drawer__switcher {
-      grid-template-columns: 1fr;
-    }
-
-    .plan-trip-drawer__switcher label {
-      grid-column: auto;
-    }
-  }
-</style>
+<script id="atlas-trip-config" type="application/json" set:html={JSON.stringify(tripCountryConfig)}></script>
 
 <script is:inline>
   (() => {
     const STORAGE_KEY = 'thingsToDoAtlas.trips.v2';
     const LEGACY_STORAGE_KEY = 'thingsToDoAtlas.trip.v1';
-
-    const COUNTRIES = {
-      laos: {
-        name: 'Laos',
-        route: '/laos',
-        cities: [
-          { slug: 'pakse', name: 'Pakse', route: '/laos/pakse' },
-          { slug: 'tad-lo', name: 'Tad Lo', route: '/laos/tad-lo' }
-        ]
-      },
-      'sri-lanka': {
-        name: 'Sri Lanka',
-        route: '/sri-lanka',
-        cities: [
-          { slug: 'negombo', name: 'Negombo', route: '/sri-lanka/negombo' },
-          { slug: 'colombo', name: 'Colombo', route: '/sri-lanka/colombo' },
-          { slug: 'ahangama', name: 'Ahangama', route: '/sri-lanka/ahangama' },
-          { slug: 'mirissa', name: 'Mirissa', route: '/sri-lanka/mirissa' }
-        ]
-      },
-      thailand: {
-        name: 'Thailand',
-        route: '/thailand',
-        cities: []
-      }
-    };
+    const configNode = document.getElementById('atlas-trip-config');
+    const COUNTRIES = configNode ? JSON.parse(configNode.textContent || '{}') : {};
 
     const slugify = (value) => String(value || '')
       .normalize('NFD')
@@ -104,11 +22,10 @@
 
     const getPageContext = () => {
       const segments = window.location.pathname.split('/').filter(Boolean);
-      const countryIndex = segments.findIndex((segment) => Boolean(COUNTRIES[segment]));
-      const countrySlug = countryIndex >= 0 ? segments[countryIndex] : '';
-      const citySlug = countryIndex >= 0 ? (segments[countryIndex + 1] || '') : '';
+      const countrySlug = segments.find((segment) => Boolean(COUNTRIES[segment])) || '';
+      const citySlug = countrySlug ? (segments[segments.indexOf(countrySlug) + 1] || '') : '';
       const country = COUNTRIES[countrySlug];
-      const city = country?.cities.find((entry) => entry.slug === citySlug);
+      const city = country?.cities?.find((entry) => entry.slug === citySlug);
       return {
         countrySlug,
         countryName: country?.name || '',
@@ -136,7 +53,7 @@
       }
     };
 
-    const getCity = (countrySlug, citySlug) => COUNTRIES[countrySlug]?.cities.find((city) => city.slug === citySlug) || null;
+    const getCity = (countrySlug, citySlug) => COUNTRIES[countrySlug]?.cities?.find((city) => city.slug === citySlug) || null;
 
     const normalizeItem = (rawItem, fallback = {}) => {
       const page = getPageContext();
@@ -171,7 +88,7 @@
 
     const setActiveTrip = (store, trip) => {
       store.activeTripId = trip?.id || null;
-      store.activeTripByCountry = store.activeTripByCountry || {};
+      store.activeTripByCountry ||= {};
       if (trip?.countrySlug) store.activeTripByCountry[trip.countrySlug] = trip.id;
     };
 
@@ -197,12 +114,7 @@
             cityName: city?.name || citySlug
           }))
         };
-        const migrated = {
-          version: 2,
-          activeTripId: trip.id,
-          activeTripByCountry: { laos: trip.id },
-          trips: [trip]
-        };
+        const migrated = { version: 2, activeTripId: trip.id, activeTripByCountry: { laos: trip.id }, trips: [trip] };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
         localStorage.removeItem(LEGACY_STORAGE_KEY);
         return migrated;
@@ -226,21 +138,15 @@
                 }))
               : []
           }));
-          const activeTripId = trips.some((trip) => trip.id === parsed.activeTripId)
-            ? parsed.activeTripId
-            : (trips[0]?.id || null);
+          const activeTripId = trips.some((trip) => trip.id === parsed.activeTripId) ? parsed.activeTripId : (trips[0]?.id || null);
           const activeTripByCountry = { ...(parsed.activeTripByCountry || {}) };
           Object.keys(activeTripByCountry).forEach((countrySlug) => {
-            if (!trips.some((trip) => trip.id === activeTripByCountry[countrySlug] && trip.countrySlug === countrySlug)) {
-              delete activeTripByCountry[countrySlug];
-            }
+            if (!trips.some((trip) => trip.id === activeTripByCountry[countrySlug] && trip.countrySlug === countrySlug)) delete activeTripByCountry[countrySlug];
           });
-          const activeTrip = trips.find((trip) => trip.id === activeTripId);
-          if (activeTrip && !activeTripByCountry[activeTrip.countrySlug]) activeTripByCountry[activeTrip.countrySlug] = activeTrip.id;
           return { version: 2, activeTripId, activeTripByCountry, trips };
         }
       } catch {
-        // Start again with an empty notebook if storage was corrupted.
+        // Corrupted browser storage is replaced by an empty notebook.
       }
       return migrateLegacyStore() || emptyStore();
     };
@@ -258,9 +164,10 @@
     };
 
     const createTrip = (store, countrySlug, options = {}) => {
-      const country = COUNTRIES[countrySlug] || { name: options.countryName || countrySlug, route: '/', cities: [] };
+      const country = COUNTRIES[countrySlug];
+      if (!country) return null;
       const trip = {
-        id: createId(`trip-${countrySlug || 'atlas'}`),
+        id: createId(`trip-${countrySlug}`),
         name: `${country.name} Trip ${getTripNumber(store, countrySlug)}`,
         countrySlug,
         countryName: country.name,
@@ -292,11 +199,11 @@
       if (!trip || trip.countrySlug !== item.countrySlug) trip = getCountryActiveTrip(store, item.countrySlug);
       if (!trip) {
         trip = createTrip(store, item.countrySlug, {
-          countryName: item.countryName,
           startingCity: item.citySlug,
           startingCityName: item.city
         });
       }
+      if (!trip) return null;
       if (!trip.startingCity && item.citySlug) {
         trip.startingCity = item.citySlug;
         trip.startingCityName = item.city;
@@ -319,14 +226,12 @@
           return null;
         }
       }
-
       const dialog = button.closest('.landmark-modal');
       if (!(dialog instanceof HTMLDialogElement)) return null;
       const name = dialog.querySelector('h2')?.textContent?.trim() || 'Landmark';
       const region = dialog.querySelector('.landmark-modal__region')?.textContent?.trim() || '';
       return normalizeItem({
         id: dialog.id,
-        originalId: dialog.id,
         kind: 'landmark',
         name,
         countrySlug: page.countrySlug,
@@ -337,11 +242,6 @@
         category: 'Landmark',
         address: region,
         url: `${window.location.pathname}#${dialog.id}`
-      }, {
-        countrySlug: page.countrySlug,
-        countryName: page.countryName,
-        citySlug: '',
-        cityName: ''
       });
     };
 
@@ -351,7 +251,7 @@
       if (group === 'accommodation' || /hostel|hotel|guesthouse|stay/.test(category)) return { key: 'stay', label: 'STAY' };
       if (/bar|beer|wine/.test(category)) return { key: 'bar', label: 'BAR' };
       if (group === 'restaurants' || group === 'cafes' || /restaurant|café|cafe|coffee|bakery|food|noodle|grill|bistro|trattoria/.test(category)) return { key: 'eat', label: 'EAT' };
-      return { key: 'explore', label: 'EXPLORE' };
+      return { key: 'explore', label: item.kind === 'landmark' ? 'LANDMARK' : 'EXPLORE' };
     };
 
     const closeDrawer = () => {
@@ -363,6 +263,17 @@
       widget?.classList.remove('is-open');
     };
 
+    const openDrawer = () => {
+      const widget = document.querySelector('[data-trip-widget]');
+      const drawer = document.querySelector('[data-trip-drawer]');
+      const toggle = document.querySelector('[data-trip-toggle]');
+      if (!drawer || !toggle) return;
+      drawer.hidden = false;
+      toggle.setAttribute('aria-expanded', 'true');
+      widget?.classList.add('is-open');
+      drawer.querySelector('[data-trip-close]')?.focus();
+    };
+
     const installControls = () => {
       const head = document.querySelector('.plan-trip-drawer__head');
       const summary = document.querySelector('[data-trip-summary]');
@@ -370,28 +281,21 @@
         const switcher = document.createElement('div');
         switcher.className = 'plan-trip-drawer__switcher';
         switcher.dataset.tripSwitcher = '';
-
         const label = document.createElement('label');
         label.htmlFor = 'plan-trip-select';
         label.textContent = 'ACTIVE TRIP';
-
         const select = document.createElement('select');
         select.id = 'plan-trip-select';
         select.dataset.tripSelect = '';
         select.setAttribute('aria-label', 'Choose one of your saved trips');
-
         const create = document.createElement('button');
         create.type = 'button';
         create.dataset.tripNew = '';
         create.textContent = '+ NEW TRIP';
-
         switcher.append(label, select, create);
         summary.insertAdjacentElement('afterend', switcher);
       }
-
       const footer = document.querySelector('[data-trip-footer]');
-      const clear = footer?.querySelector('[data-trip-clear]');
-      if (clear) clear.textContent = 'CLEAR CARDS';
       if (footer && !footer.querySelector('[data-trip-delete]')) {
         const removeTrip = document.createElement('button');
         removeTrip.type = 'button';
@@ -399,34 +303,6 @@
         removeTrip.textContent = 'DELETE TRIP';
         footer.append(removeTrip);
       }
-    };
-
-    const configureIntro = () => {
-      const select = document.querySelector('[data-trip-city-select]');
-      const start = document.querySelector('[data-trip-start]');
-      if (!(select instanceof HTMLSelectElement) || !(start instanceof HTMLButtonElement)) return;
-
-      const page = getPageContext();
-      const country = COUNTRIES[page.countrySlug];
-      if (!country?.cities.length) return;
-
-      const previousValue = select.value;
-      select.replaceChildren();
-      const placeholder = document.createElement('option');
-      placeholder.value = '';
-      placeholder.textContent = 'Select a starting point';
-      select.append(placeholder);
-      country.cities.forEach((city) => {
-        const option = document.createElement('option');
-        option.value = city.slug;
-        option.textContent = city.name;
-        option.dataset.route = city.route;
-        select.append(option);
-      });
-      if (country.cities.some((city) => city.slug === previousValue)) select.value = previousValue;
-      select.dataset.tripCountry = page.countrySlug;
-      start.dataset.tripCountry = page.countrySlug;
-      updateStartButton();
     };
 
     const updateStartButton = () => {
@@ -438,9 +314,31 @@
       const city = getCity(countrySlug, select.value);
       const hasCountryTrips = readStore().trips.some((trip) => trip.countrySlug === countrySlug);
       start.disabled = !city;
-      label.textContent = city
-        ? `${hasCountryTrips ? 'Start another trip in' : 'Begin in'} ${city.name}`
-        : 'Choose a city first';
+      label.textContent = city ? `${hasCountryTrips ? 'Start another trip in' : 'Begin in'} ${city.name}` : 'Choose a city first';
+    };
+
+    const configureIntro = () => {
+      const select = document.querySelector('[data-trip-city-select]');
+      if (!(select instanceof HTMLSelectElement)) return;
+      const countrySlug = select.dataset.tripCountry || getPageContext().countrySlug;
+      const country = COUNTRIES[countrySlug];
+      if (!country?.cities?.length) return;
+      const previousValue = select.value;
+      select.replaceChildren();
+      const placeholder = document.createElement('option');
+      placeholder.value = '';
+      placeholder.textContent = 'Select a starting point';
+      select.append(placeholder);
+      country.cities.forEach((city) => {
+        const option = document.createElement('option');
+        option.value = city.slug;
+        option.textContent = city.name;
+        select.append(option);
+      });
+      if (country.cities.some((city) => city.slug === previousValue)) select.value = previousValue;
+      select.dataset.tripCountry = countrySlug;
+      document.querySelector('[data-trip-start]')?.setAttribute('data-trip-country', countrySlug);
+      updateStartButton();
     };
 
     const renderTripSelector = (store, activeTrip) => {
@@ -470,28 +368,22 @@
         empty.className = 'plan-trip-empty';
         const title = document.createElement('strong');
         title.textContent = `${trip.name} is ready.`;
-        empty.append(title, document.createTextNode('Open any city guide and save the restaurants, stays, activities or landmarks that belong in this route.'));
+        empty.append(title, document.createTextNode('Explore freely and save the restaurants, stays, experiences or landmarks that belong in this route.'));
         content.append(empty);
         return;
       }
-
       const stack = document.createElement('section');
       stack.className = 'plan-trip-notes';
       stack.setAttribute('aria-label', `Saved cards in ${trip.name}`);
-
       trip.items.forEach((item, index) => {
         const noteType = getNoteType(item);
         const row = document.createElement('article');
         row.className = `plan-trip-note plan-trip-note--${noteType.key}`;
         if (index >= 4) row.hidden = true;
-
         const number = document.createElement('span');
         number.className = 'plan-trip-note__number';
-        number.setAttribute('aria-hidden', 'true');
         number.textContent = String(index + 1).padStart(2, '0');
-
         const details = document.createElement('div');
-        details.className = 'plan-trip-note__details';
         const stamp = document.createElement('span');
         stamp.className = 'plan-trip-note__stamp';
         stamp.textContent = noteType.label;
@@ -501,7 +393,6 @@
         const location = item.city || item.countryName || trip.countryName;
         meta.textContent = `${location}${item.address ? ` · ${item.address}` : ''}`;
         details.append(stamp, name, meta);
-
         if (item.url) {
           const link = document.createElement('a');
           link.className = 'plan-trip-note__link';
@@ -510,18 +401,15 @@
           link.textContent = 'Open the saved card →';
           details.append(link);
         }
-
         const remove = document.createElement('button');
         remove.className = 'plan-trip-note__remove';
         remove.type = 'button';
         remove.dataset.tripRemove = item.id;
         remove.setAttribute('aria-label', `Remove ${item.name} from ${trip.name}`);
         remove.textContent = '×';
-
         row.append(number, details, remove);
         stack.append(row);
       });
-
       if (trip.items.length > 4) {
         const more = document.createElement('button');
         more.className = 'plan-trip-more';
@@ -540,9 +428,7 @@
         if (!(button instanceof HTMLButtonElement)) return;
         const item = parseTripItem(button);
         if (!item) return;
-        const targetTrip = activeTrip?.countrySlug === item.countrySlug
-          ? activeTrip
-          : getCountryActiveTrip(store, item.countrySlug);
+        const targetTrip = activeTrip?.countrySlug === item.countrySlug ? activeTrip : getCountryActiveTrip(store, item.countrySlug);
         const saved = Boolean(targetTrip?.items.some((savedItem) => savedItem.id === item.id));
         button.textContent = saved ? 'Saved to My Trip' : 'Add to My Trip';
         button.disabled = saved;
@@ -554,6 +440,9 @@
     const render = () => {
       installControls();
       const store = readStore();
+      const page = getPageContext();
+      const pageTrip = page.countrySlug ? getCountryActiveTrip(store, page.countrySlug) : null;
+      if (pageTrip && store.activeTripId !== pageTrip.id) setActiveTrip(store, pageTrip);
       const activeTrip = getActiveTrip(store);
       const widget = document.querySelector('[data-trip-widget]');
       const drawer = document.querySelector('[data-trip-drawer]');
@@ -565,7 +454,6 @@
       const footer = document.querySelector('[data-trip-footer]');
       const explore = document.querySelector('[data-trip-explore]');
       const toggle = document.querySelector('[data-trip-toggle]');
-
       if (!widget || !drawer || !content || !count || !summary || !title || !fabTitle || !footer || !explore || !toggle) return;
       if (!activeTrip) {
         widget.hidden = true;
@@ -574,7 +462,6 @@
         updateStartButton();
         return;
       }
-
       widget.hidden = false;
       const itemCount = activeTrip.items.length;
       const cityCount = new Set(activeTrip.items.filter((item) => item.kind !== 'landmark').map((item) => item.city).filter(Boolean)).size;
@@ -587,11 +474,9 @@
       toggle.setAttribute('aria-label', `Open ${activeTrip.name} with ${itemCount} saved ${itemCount === 1 ? 'card' : 'cards'}`);
       drawer.setAttribute('aria-label', activeTrip.name);
       footer.hidden = false;
-
       const startingCity = getCity(activeTrip.countrySlug, activeTrip.startingCity);
       explore.href = startingCity?.route || COUNTRIES[activeTrip.countrySlug]?.route || '/';
       explore.firstChild.textContent = `CONTINUE EXPLORING ${activeTrip.countryName.toUpperCase()} `;
-
       renderTripSelector(store, activeTrip);
       renderItems(activeTrip, content);
       syncAddButtons(store, activeTrip);
@@ -601,36 +486,24 @@
     const openCardFromHash = () => {
       const hash = decodeURIComponent(window.location.hash.replace(/^#/, ''));
       if (!hash) return;
-
-      const landmarkTrigger = [...document.querySelectorAll('[data-open-landmark]')]
-        .find((trigger) => trigger.dataset.openLandmark === hash);
-      if (landmarkTrigger instanceof HTMLElement) {
-        landmarkTrigger.click();
-        return;
-      }
-
+      const landmarkTrigger = [...document.querySelectorAll('[data-open-landmark]')].find((trigger) => trigger.dataset.openLandmark === hash);
+      if (landmarkTrigger instanceof HTMLElement) return landmarkTrigger.click();
       const target = document.getElementById(hash);
       const placeTrigger = target?.querySelector?.('[data-place-open]');
-      if (placeTrigger instanceof HTMLElement) {
-        placeTrigger.click();
-        return;
-      }
-
+      if (placeTrigger instanceof HTMLElement) return placeTrigger.click();
       if (target instanceof HTMLDialogElement && !target.open) target.showModal();
     };
 
-    const stopManagedEvent = (event) => {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-    };
-
     const handleClick = (event) => {
-      const target = event.target instanceof Element ? event.target : null;
-      if (!target) return;
-
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const toggle = target.closest('[data-trip-toggle]');
+      if (toggle) { event.preventDefault(); openDrawer(); return; }
+      const close = target.closest('[data-trip-close]');
+      if (close) { event.preventDefault(); closeDrawer(); document.querySelector('[data-trip-toggle]')?.focus(); return; }
       const start = target.closest('[data-trip-start]');
       if (start instanceof HTMLButtonElement) {
-        stopManagedEvent(event);
+        event.preventDefault();
         const select = document.querySelector('[data-trip-city-select]');
         if (!(select instanceof HTMLSelectElement) || !select.value) return;
         const countrySlug = select.dataset.tripCountry || getPageContext().countrySlug;
@@ -642,14 +515,14 @@
         window.location.href = city.route;
         return;
       }
-
       const add = target.closest('[data-trip-add], [data-add-landmark]');
       if (add instanceof HTMLButtonElement) {
-        stopManagedEvent(event);
+        event.preventDefault();
         const item = parseTripItem(add);
         if (!item) return;
         const store = readStore();
         const trip = ensureTripForItem(store, item);
+        if (!trip) return;
         if (!trip.items.some((savedItem) => savedItem.id === item.id)) trip.items.push(item);
         trip.updatedAt = new Date().toISOString();
         setActiveTrip(store, trip);
@@ -657,10 +530,9 @@
         render();
         return;
       }
-
       const remove = target.closest('[data-trip-remove]');
       if (remove instanceof HTMLButtonElement) {
-        stopManagedEvent(event);
+        event.preventDefault();
         const store = readStore();
         const trip = getActiveTrip(store);
         if (!trip) return;
@@ -670,10 +542,9 @@
         render();
         return;
       }
-
       const more = target.closest('[data-trip-more]');
       if (more instanceof HTMLButtonElement) {
-        stopManagedEvent(event);
+        event.preventDefault();
         const expanded = more.getAttribute('aria-expanded') === 'true';
         const notes = [...more.parentElement.querySelectorAll('.plan-trip-note')];
         notes.forEach((note, index) => { if (index >= 4) note.hidden = expanded; });
@@ -682,10 +553,9 @@
         more.textContent = expanded ? `+ ${remaining} MORE SAVED ${remaining === 1 ? 'CARD' : 'CARDS'}` : 'SHOW FEWER CARDS';
         return;
       }
-
       const clear = target.closest('[data-trip-clear]');
       if (clear instanceof HTMLButtonElement) {
-        stopManagedEvent(event);
+        event.preventDefault();
         const store = readStore();
         const trip = getActiveTrip(store);
         if (!trip?.items.length || !window.confirm(`Remove every saved card from ${trip.name}?`)) return;
@@ -695,60 +565,52 @@
         render();
         return;
       }
-
       const deleteTrip = target.closest('[data-trip-delete]');
       if (deleteTrip instanceof HTMLButtonElement) {
-        stopManagedEvent(event);
+        event.preventDefault();
         const store = readStore();
         const trip = getActiveTrip(store);
         if (!trip || !window.confirm(`Delete ${trip.name}?`)) return;
         store.trips = store.trips.filter((entry) => entry.id !== trip.id);
         if (store.activeTripByCountry?.[trip.countrySlug] === trip.id) delete store.activeTripByCountry[trip.countrySlug];
-        const replacement = getCountryActiveTrip(store, getPageContext().countrySlug) || store.trips[0] || null;
-        setActiveTrip(store, replacement);
+        setActiveTrip(store, getCountryActiveTrip(store, getPageContext().countrySlug) || store.trips[0] || null);
         writeStore(store);
         render();
         return;
       }
-
       const newTrip = target.closest('[data-trip-new]');
       if (newTrip instanceof HTMLButtonElement) {
-        stopManagedEvent(event);
+        event.preventDefault();
         const store = readStore();
         const page = getPageContext();
         const active = getActiveTrip(store);
-        const countrySlug = page.countrySlug || active?.countrySlug || 'laos';
-        createTrip(store, countrySlug, {
-          startingCity: page.citySlug,
-          startingCityName: page.cityName
-        });
+        const fallbackCountry = Object.entries(COUNTRIES).find(([, country]) => country.cities?.length)?.[0] || 'laos';
+        const countrySlug = page.countrySlug || active?.countrySlug || fallbackCountry;
+        createTrip(store, countrySlug, { startingCity: page.citySlug, startingCityName: page.cityName });
         writeStore(store);
         render();
         return;
       }
-
       const cardLink = target.closest('[data-trip-open-card]');
       if (cardLink instanceof HTMLAnchorElement) {
         const destination = new URL(cardLink.href, window.location.href);
         if (destination.pathname === window.location.pathname && destination.search === window.location.search) {
-          stopManagedEvent(event);
+          event.preventDefault();
           closeDrawer();
           window.history.replaceState(null, '', `${destination.pathname}${destination.search}${destination.hash}`);
           openCardFromHash();
+          return;
         }
       }
+      const widget = document.querySelector('[data-trip-widget]');
+      const drawer = document.querySelector('[data-trip-drawer]');
+      if (widget?.classList.contains('is-open') && drawer && !widget.contains(target)) closeDrawer();
     };
 
     const handleChange = (event) => {
       const target = event.target;
-      if (target instanceof HTMLSelectElement && target.matches('[data-trip-city-select]')) {
-        stopManagedEvent(event);
-        updateStartButton();
-        return;
-      }
-
+      if (target instanceof HTMLSelectElement && target.matches('[data-trip-city-select]')) return updateStartButton();
       if (target instanceof HTMLSelectElement && target.matches('[data-trip-select]')) {
-        stopManagedEvent(event);
         const store = readStore();
         const trip = store.trips.find((entry) => entry.id === target.value);
         if (!trip) return;
@@ -759,36 +621,27 @@
       }
     };
 
-    let lastInitialisedPath = '';
     const init = () => {
-      installControls();
       configureIntro();
-      const page = getPageContext();
-      if (lastInitialisedPath !== window.location.pathname) {
-        const store = readStore();
-        const pageTrip = page.countrySlug ? getCountryActiveTrip(store, page.countrySlug) : null;
-        if (pageTrip) {
-          setActiveTrip(store, pageTrip);
-          writeStore(store);
-        }
-        lastInitialisedPath = window.location.pathname;
-      }
       render();
       window.setTimeout(openCardFromHash, 0);
     };
 
-    if (!window.__atlasTripManagerV2) {
-      window.__atlasTripManagerV2 = { init, render };
-      document.addEventListener('click', handleClick, true);
-      document.addEventListener('change', handleChange, true);
-      window.addEventListener('storage', () => window.setTimeout(render, 0));
+    if (!window.__atlasTripManager) {
+      window.__atlasTripManager = { init, render };
+      document.addEventListener('click', handleClick);
+      document.addEventListener('change', handleChange);
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeDrawer();
+      });
+      window.addEventListener('storage', render);
       window.addEventListener('atlas:trips-changed', render);
       window.addEventListener('hashchange', openCardFromHash);
       document.addEventListener('astro:page-load', init);
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
       else init();
     } else {
-      window.__atlasTripManagerV2.init();
+      window.__atlasTripManager.init();
     }
   })();
 </script>
