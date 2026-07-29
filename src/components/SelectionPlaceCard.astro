@@ -3,13 +3,27 @@ const { place, index = 0 } = Astro.props;
 const cardNumber = String(index + 1).padStart(2, '0');
 const dialogId = `selection-place-${place.slug}`;
 const titleId = `${dialogId}-title`;
-const imageFallbacks = place.slug === 'fandee-island'
-  ? [
-      'https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D1920%2Cfit%3Dcrop/YrDJBMEl55IVE84z/371421975_648007923976758_5191678431984122789_n-YleQ09xxwnC0k72B.jpg',
-      'https://www.fandee-island.com/media/site/60490d2d-0386-4b29-a4a7-14c025ec1053-WhatsApp-Image-2026-01-09-at-09.57.26.jpeg'
-    ]
-  : [];
-const imageFallbacksJson = JSON.stringify(imageFallbacks);
+const fandeeGallery = [
+  {
+    src: 'https://mmjvwsiurlojruabssuf.supabase.co/storage/v1/object/sign/site-media/b1c76c70-ae63-471e-878e-2c0263b42be7-626254102.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV83NDY2ZGE5Yy05YzQxLTRjYjUtYWJiOC1lNGQyMjUxY2Y2MjgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJzaXRlLW1lZGlhL2IxYzc2YzcwLWFlNjMtNDcxZS04NzhlLTJjMDI2M2I0MmJlNy02MjYyNTQxMDIuanBnIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MjAxMzc2NCwiZXhwIjoxODEzNTQ5NzY0fQ.zD4o3LG6Xw4G1CnjdfbL4pazlFkbGH46wkYJ8IU285w',
+    alt: 'Lake House beside the water at Fandee Island in Tad Lo'
+  },
+  {
+    src: 'https://mmjvwsiurlojruabssuf.supabase.co/storage/v1/object/sign/site-media/8f429686-2ecb-4e6d-b960-80b4aaadcf60-663543379.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV83NDY2ZGE5Yy05YzQxLTRjYjUtYWJiOC1lNGQyMjUxY2Y2MjgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJzaXRlLW1lZGlhLzhmNDI5Njg2LTJlY2ItNGU2ZC1iOTYwLTgwYjRhYWFkY2Y2MC02NjM1NDMzNzkuanBnIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MjAxNDE5NiwiZXhwIjoxODEzNTUwMTk2fQ.5fdd6pzyBHEizXhkjhcLIkuGGjN9d_C4MtTRuC2i_sY',
+    alt: 'Mountain House surrounded by tropical nature at Fandee Island'
+  },
+  {
+    src: 'https://mmjvwsiurlojruabssuf.supabase.co/storage/v1/object/sign/site-media/1fa975b4-39a7-4438-bd1b-88c96a7b11e8-751551619--1-.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV83NDY2ZGE5Yy05YzQxLTRjYjUtYWJiOC1lNGQyMjUxY2Y2MjgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJzaXRlLW1lZGlhLzFmYTk3NWI0LTM5YTctNDQzOC1iZDFiLTg4Yzk2YTdiMTFlOC03NTE1NTE2MTktLTEtLmpwZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODIyODAzOTIsImV4cCI6MTgxMzgxNjM5Mn0.rIV_34MdctWMzyMbZ7gDuER1w4y8mzQlOA5_sWD_IGY',
+    alt: 'Hilltop House overlooking the landscape at Fandee Island'
+  },
+  {
+    src: 'https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D1920%2Cfit%3Dcrop/YrDJBMEl55IVE84z/371421975_648007923976758_5191678431984122789_n-YleQ09xxwnC0k72B.jpg',
+    alt: 'Aerial view of Fandee Island surrounded by water and tropical forest'
+  }
+];
+const gallery = place.slug === 'fandee-island'
+  ? fandeeGallery
+  : [{ src: place.image, alt: place.imageAlt }];
 const tripPlace = JSON.stringify({
   id: place.slug,
   name: place.name,
@@ -24,8 +38,28 @@ const tripPlace = JSON.stringify({
 <article class="selection-card" id={place.slug}>
   <span class="selection-card__gold-corner selection-card__gold-corner--top" aria-hidden="true"></span>
   <span class="selection-card__gold-corner selection-card__gold-corner--bottom" aria-hidden="true"></span>
-  <div class="selection-card__image">
-    <img src={place.image} alt={place.imageAlt} width="720" height="520" loading="eager" decoding="async" referrerpolicy="no-referrer" data-selection-image data-selection-image-fallbacks={imageFallbacksJson} />
+  <div class="selection-card__image selection-gallery" data-selection-gallery>
+    {gallery.map((image, slideIndex) => (
+      <img
+        class="selection-gallery__slide"
+        src={image.src}
+        alt={image.alt}
+        width="720"
+        height="520"
+        loading={slideIndex === 0 ? 'eager' : 'lazy'}
+        decoding="async"
+        referrerpolicy="no-referrer"
+        data-selection-slide
+        hidden={slideIndex !== 0}
+      />
+    ))}
+    {gallery.length > 1 && (
+      <>
+        <button class="selection-gallery__control selection-gallery__control--previous" type="button" data-selection-gallery-previous aria-label={`Previous photo of ${place.name}`}>←</button>
+        <button class="selection-gallery__control selection-gallery__control--next" type="button" data-selection-gallery-next aria-label={`Next photo of ${place.name}`}>→</button>
+        <span class="selection-gallery__counter" aria-live="polite"><b data-selection-gallery-current>1</b> / <span data-selection-gallery-total>{gallery.length}</span></span>
+      </>
+    )}
     <span class="selection-card__number" aria-hidden="true">{cardNumber}</span>
     <span class="selection-card__badge">{place.selectionLabel}</span>
   </div>
@@ -40,8 +74,28 @@ const tripPlace = JSON.stringify({
   <dialog class="selection-dialog" id={dialogId} aria-labelledby={titleId}>
     <div class="selection-dialog__shell">
       <button class="selection-dialog__close" type="button" data-selection-card-close aria-label={`Close ${place.name}`}>×</button>
-      <div class="selection-dialog__visual">
-        <img src={place.image} alt={place.imageAlt} width="900" height="1200" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-selection-image data-selection-image-fallbacks={imageFallbacksJson} />
+      <div class="selection-dialog__visual selection-gallery" data-selection-gallery>
+        {gallery.map((image, slideIndex) => (
+          <img
+            class="selection-gallery__slide"
+            src={image.src}
+            alt={image.alt}
+            width="900"
+            height="1200"
+            loading="lazy"
+            decoding="async"
+            referrerpolicy="no-referrer"
+            data-selection-slide
+            hidden={slideIndex !== 0}
+          />
+        ))}
+        {gallery.length > 1 && (
+          <>
+            <button class="selection-gallery__control selection-gallery__control--previous" type="button" data-selection-gallery-previous aria-label={`Previous photo of ${place.name}`}>←</button>
+            <button class="selection-gallery__control selection-gallery__control--next" type="button" data-selection-gallery-next aria-label={`Next photo of ${place.name}`}>→</button>
+            <span class="selection-gallery__counter" aria-live="polite"><b data-selection-gallery-current>1</b> / <span data-selection-gallery-total>{gallery.length}</span></span>
+          </>
+        )}
         <span class="selection-dialog__number">{cardNumber}</span>
         <div class="selection-dialog__stamp"><small>THINGS TO DO ATLAS</small><strong>{place.selectionLabel}</strong></div>
       </div>
@@ -75,15 +129,18 @@ const tripPlace = JSON.stringify({
   .selection-card:hover{transform:translateY(-5px);box-shadow:0 0 0 5px rgba(179,138,61,.16),10px 13px 0 rgba(125,91,33,.12)}
   .selection-card__gold-corner{position:absolute;z-index:4;width:56px;height:56px;pointer-events:none}.selection-card__gold-corner:before,.selection-card__gold-corner:after{content:'';position:absolute;background:var(--gold)}
   .selection-card__gold-corner--top{top:7px;right:7px}.selection-card__gold-corner--bottom{bottom:7px;left:7px;transform:rotate(180deg)}.selection-card__gold-corner:before{top:0;right:0;width:38px;height:1px}.selection-card__gold-corner:after{top:0;right:0;width:1px;height:38px}
-  .selection-card__image{position:relative;height:230px;overflow:hidden;background:#d8c69c}.selection-card__image:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 38%,rgba(43,31,13,.58));pointer-events:none}.selection-card__image img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.84) contrast(.98)}
-  .selection-card__number,.selection-dialog__number{position:absolute;z-index:2;top:14px;left:14px;display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--gold-soft);border-radius:50%;background:rgba(55,40,15,.82);color:#fff8e8;font:500 .95rem/1 Fraunces,serif}
-  .selection-card__badge{position:absolute;z-index:2;right:14px;bottom:13px;padding:7px 10px;border:1px solid #e7d19c;background:rgba(63,45,14,.84);color:#fff5dc;font:800 .5rem/1 'DM Sans',sans-serif;letter-spacing:.16em;text-transform:uppercase;transform:rotate(-1deg)}
+  .selection-card__image{position:relative;height:230px;overflow:hidden;background:#d8c69c}.selection-card__image:after{content:'';position:absolute;z-index:1;inset:0;background:linear-gradient(180deg,transparent 38%,rgba(43,31,13,.58));pointer-events:none}.selection-card__image .selection-gallery__slide{width:100%;height:100%;object-fit:cover;filter:saturate(.84) contrast(.98)}
+  .selection-gallery__slide{display:block}.selection-gallery__slide[hidden]{display:none}.selection-gallery.is-empty:before{content:'Photo unavailable';position:absolute;inset:0;display:grid;place-items:center;color:rgba(63,49,27,.64);font:600 .62rem/1 'DM Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase}
+  .selection-gallery__control{position:absolute;z-index:6;top:50%;display:grid;place-items:center;width:32px;height:32px;padding:0;border:1px solid rgba(255,248,232,.72);border-radius:50%;background:rgba(52,39,17,.7);color:#fff8e8;font:600 .9rem/1 'DM Sans',sans-serif;cursor:pointer;transform:translateY(-50%);backdrop-filter:blur(3px)}.selection-gallery__control--previous{left:10px}.selection-gallery__control--next{right:10px}.selection-gallery__control:hover,.selection-gallery__control:focus-visible{background:rgba(52,39,17,.9);outline:2px solid #fff8e8;outline-offset:2px}
+  .selection-gallery__counter{position:absolute;z-index:6;top:14px;left:50%;padding:5px 8px;border:1px solid rgba(255,248,232,.55);background:rgba(52,39,17,.65);color:#fff8e8;font:700 .52rem/1 'DM Sans',sans-serif;letter-spacing:.09em;transform:translateX(-50%);backdrop-filter:blur(3px)}.selection-gallery__counter b{font:inherit}
+  .selection-card__number,.selection-dialog__number{position:absolute;z-index:5;top:14px;left:14px;display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--gold-soft);border-radius:50%;background:rgba(55,40,15,.82);color:#fff8e8;font:500 .95rem/1 Fraunces,serif}
+  .selection-card__badge{position:absolute;z-index:5;right:14px;bottom:13px;padding:7px 10px;border:1px solid #e7d19c;background:rgba(63,45,14,.84);color:#fff5dc;font:800 .5rem/1 'DM Sans',sans-serif;letter-spacing:.16em;text-transform:uppercase;transform:rotate(-1deg)}
   .selection-card__copy{display:flex;min-height:226px;flex-direction:column;padding:25px 24px 23px}.selection-card__copy p{margin:0 0 10px;color:#8d6928;font-size:.57rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.selection-card__copy h3{margin:0 0 11px;color:#3c311b;font:500 clamp(1.65rem,2.3vw,2.15rem)/1.04 Fraunces,serif}.selection-card__copy>span{color:#68604f;font-size:.79rem;line-height:1.58}.selection-card__copy b{width:max-content;margin-top:auto;padding-top:20px;border-bottom:1px solid var(--gold);color:#6f531f;font-size:.6rem;letter-spacing:.09em;text-transform:uppercase}.selection-card__copy i{color:#a77928;font-style:normal}
   .selection-card__open{position:absolute;z-index:3;inset:0;width:100%;border:0;background:transparent;cursor:pointer}.selection-card:has(.selection-card__open:focus-visible){outline:3px solid var(--gold);outline-offset:5px}
   .selection-dialog{--gold:#b38a3d;width:min(1040px,calc(100vw - 42px));max-width:none;max-height:none;margin:auto;padding:0;overflow:hidden;border:1px solid var(--gold);background:#f7f0df;color:var(--ink);box-shadow:0 0 0 5px rgba(179,138,61,.15),0 30px 90px rgba(22,18,10,.45)}.selection-dialog::backdrop{background:rgba(25,22,15,.79);backdrop-filter:blur(3px)}
-  .selection-dialog__shell{position:relative;display:grid;grid-template-columns:minmax(310px,.82fr) minmax(0,1.18fr);height:min(740px,88svh)}.selection-dialog__close{position:absolute;z-index:5;top:17px;right:17px;display:grid;place-items:center;width:42px;height:42px;border:1px solid rgba(179,138,61,.5);border-radius:50%;background:rgba(250,244,228,.95);color:#76591f;font:400 1.7rem/1 'DM Sans',sans-serif;cursor:pointer}
-  .selection-dialog__visual{position:relative;min-height:0;overflow:hidden;background:#4c3a18}.selection-dialog__visual:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,20,7,.02) 34%,rgba(38,27,8,.68));pointer-events:none}.selection-dialog__visual img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.86)}.selection-dialog__number{top:20px;left:20px;width:48px;height:48px}
-  .selection-dialog__stamp{position:absolute;z-index:3;right:20px;bottom:20px;left:20px;padding:13px 15px;border:1px solid #e3cc93;background:rgba(58,42,13,.82);color:#fff5dc}.selection-dialog__stamp small{display:block;margin-bottom:5px;color:#e7cc8b;font-size:.48rem;font-weight:800;letter-spacing:.17em}.selection-dialog__stamp strong{font:500 1.2rem/1 Fraunces,serif;text-transform:uppercase;letter-spacing:.04em}
+  .selection-dialog__shell{position:relative;display:grid;grid-template-columns:minmax(310px,.82fr) minmax(0,1.18fr);height:min(740px,88svh)}.selection-dialog__close{position:absolute;z-index:8;top:17px;right:17px;display:grid;place-items:center;width:42px;height:42px;border:1px solid rgba(179,138,61,.5);border-radius:50%;background:rgba(250,244,228,.95);color:#76591f;font:400 1.7rem/1 'DM Sans',sans-serif;cursor:pointer}
+  .selection-dialog__visual{position:relative;min-height:0;overflow:hidden;background:#4c3a18}.selection-dialog__visual:after{content:'';position:absolute;z-index:1;inset:0;background:linear-gradient(180deg,rgba(28,20,7,.02) 34%,rgba(38,27,8,.68));pointer-events:none}.selection-dialog__visual .selection-gallery__slide{width:100%;height:100%;object-fit:cover;filter:saturate(.86)}.selection-dialog__number{top:20px;left:20px;width:48px;height:48px}
+  .selection-dialog__stamp{position:absolute;z-index:5;right:20px;bottom:20px;left:20px;padding:13px 15px;border:1px solid #e3cc93;background:rgba(58,42,13,.82);color:#fff5dc}.selection-dialog__stamp small{display:block;margin-bottom:5px;color:#e7cc8b;font-size:.48rem;font-weight:800;letter-spacing:.17em}.selection-dialog__stamp strong{font:500 1.2rem/1 Fraunces,serif;text-transform:uppercase;letter-spacing:.04em}
   .selection-dialog__content{min-width:0;overflow-y:auto;padding:52px clamp(34px,5vw,62px) 42px}.selection-dialog__content h2{max-width:calc(100% - 38px);margin:0 0 18px;color:#493817;font-size:clamp(2.5rem,4.2vw,4.1rem)}.selection-dialog__description{margin:0 0 20px;color:#4e432e;font:500 clamp(1.08rem,1.7vw,1.4rem)/1.42 Fraunces,serif}.selection-dialog__recommend{margin:0 0 23px;padding:16px 18px;border-left:3px solid var(--gold);background:rgba(179,138,61,.08)}.selection-dialog__recommend span{display:block;margin-bottom:7px;color:#8a682a;font-size:.51rem;font-weight:800;letter-spacing:.13em}.selection-dialog__recommend p{margin:0;color:#69604f;font-size:.8rem;line-height:1.65}
   .selection-dialog__content ul{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 28px;padding:0;list-style:none}.selection-dialog__content li{padding:6px 9px;border:1px solid rgba(179,138,61,.42);color:#654d20;font-size:.61rem}.selection-dialog__practical{padding-top:21px;border-top:1px solid rgba(179,138,61,.32)}.selection-dialog__practical>span{display:block;margin-bottom:12px;color:#8d6928;font-size:.54rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase}.selection-dialog__practical dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:0;border-top:1px solid rgba(179,138,61,.2)}.selection-dialog__practical dl div{padding:12px 14px 12px 0;border-bottom:1px solid rgba(179,138,61,.2)}.selection-dialog__practical dl div:nth-child(even){padding-left:16px;border-left:1px solid rgba(179,138,61,.2)}.selection-dialog__practical dt{margin-bottom:4px;color:#82755e;font-size:.54rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase}.selection-dialog__practical dd{margin:0;color:#3f382a;font-size:.71rem;line-height:1.45}
   .selection-dialog__actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}.selection-dialog__actions a,.selection-dialog__actions button{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:10px 13px;font:700 .6rem/1 'DM Sans',sans-serif;cursor:pointer}.selection-dialog__official{border:1px solid #8f6b29;background:#8f6b29;color:#fff8e8}.selection-dialog__map{border:1px solid #8f6b29;background:transparent;color:#71531d}.selection-dialog__actions button{border:0;background:var(--terracotta);color:var(--white)}.selection-dialog__actions button:disabled{background:#b8afa0;cursor:default}
@@ -93,38 +150,77 @@ const tripPlace = JSON.stringify({
 </style>
 
 <script>
-  const bindSelectionImages = () => {
-    document.querySelectorAll<HTMLImageElement>('[data-selection-image]').forEach((image) => {
-      if (image.dataset.selectionImageBound === 'true') return;
-      image.dataset.selectionImageBound = 'true';
+  const setupSelectionGalleries = () => {
+    document.querySelectorAll<HTMLElement>('[data-selection-gallery]').forEach((gallery) => {
+      if (gallery.dataset.selectionGalleryReady === 'true') return;
+      gallery.dataset.selectionGalleryReady = 'true';
 
-      let fallbacks: string[] = [];
-      try {
-        fallbacks = JSON.parse(image.dataset.selectionImageFallbacks || '[]');
-      } catch {
-        fallbacks = [];
-      }
+      const slides = [...gallery.querySelectorAll<HTMLImageElement>('[data-selection-slide]')];
+      const previous = gallery.querySelector<HTMLButtonElement>('[data-selection-gallery-previous]');
+      const next = gallery.querySelector<HTMLButtonElement>('[data-selection-gallery-next]');
+      const currentLabel = gallery.querySelector<HTMLElement>('[data-selection-gallery-current]');
+      const totalLabel = gallery.querySelector<HTMLElement>('[data-selection-gallery-total]');
+      let currentSlide = 0;
 
-      let fallbackIndex = 0;
-      const loadNextFallback = () => {
-        while (fallbackIndex < fallbacks.length) {
-          const candidate = fallbacks[fallbackIndex++];
-          const absoluteCandidate = new URL(candidate, window.location.href).href;
-          if (image.src === absoluteCandidate) continue;
-          image.hidden = false;
-          image.src = candidate;
+      const availableSlides = () => slides.filter((slide) => slide.dataset.selectionFailed !== 'true');
+      const showAvailableIndex = (requestedIndex: number) => {
+        const available = availableSlides();
+        if (!available.length) {
+          gallery.classList.add('is-empty');
+          previous?.setAttribute('hidden', '');
+          next?.setAttribute('hidden', '');
+          gallery.querySelector<HTMLElement>('.selection-gallery__counter')?.setAttribute('hidden', '');
+          slides.forEach((slide) => { slide.hidden = true; });
           return;
         }
-        image.hidden = true;
+
+        gallery.classList.remove('is-empty');
+        const normalizedIndex = ((requestedIndex % available.length) + available.length) % available.length;
+        const selectedSlide = available[normalizedIndex];
+        currentSlide = slides.indexOf(selectedSlide);
+        slides.forEach((slide, slideIndex) => {
+          slide.hidden = slideIndex !== currentSlide;
+          slide.setAttribute('aria-hidden', String(slideIndex !== currentSlide));
+        });
+        if (currentLabel) currentLabel.textContent = String(normalizedIndex + 1);
+        if (totalLabel) totalLabel.textContent = String(available.length);
+        if (previous) previous.hidden = available.length < 2;
+        if (next) next.hidden = available.length < 2;
       };
 
-      image.addEventListener('error', loadNextFallback);
-      if (image.complete && image.naturalWidth === 0) loadNextFallback();
+      const move = (direction: number) => {
+        const available = availableSlides();
+        const activeIndex = available.indexOf(slides[currentSlide]);
+        showAvailableIndex((activeIndex < 0 ? 0 : activeIndex) + direction);
+      };
+
+      previous?.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        move(-1);
+      });
+      next?.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        move(1);
+      });
+
+      slides.forEach((slide) => {
+        const markFailed = () => {
+          slide.dataset.selectionFailed = 'true';
+          if (!slide.hidden) showAvailableIndex(0);
+          else if (totalLabel) totalLabel.textContent = String(availableSlides().length);
+        };
+        slide.addEventListener('error', markFailed);
+        if (slide.complete && slide.naturalWidth === 0) markFailed();
+      });
+
+      showAvailableIndex(0);
     });
   };
 
   const bindSelectionCards = () => {
-    bindSelectionImages();
+    setupSelectionGalleries();
     document.querySelectorAll<HTMLElement>('[data-selection-card-open]').forEach((trigger) => {
       if (trigger.dataset.selectionBound === 'true') return;
       trigger.dataset.selectionBound = 'true';
