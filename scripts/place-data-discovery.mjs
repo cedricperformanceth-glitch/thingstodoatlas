@@ -10,6 +10,14 @@ const EXCLUDED_SYSTEM_PATTERNS = [
   /(^|[^a-z])adams?[-_ ]?peak([^a-z]|$)/,
   /(^|[^a-z])sri[-_ ]?pada([^a-z]|$)/
 ];
+const SOURCE_DEFAULTS = [
+  {
+    pattern: /(^|[\\/])tadLoPlaces\.ts$/,
+    city: 'Tad Lo',
+    country: 'Laos',
+    excludedSlugs: new Set(['fandee-island'])
+  }
+];
 
 const normalize = (value = '') => value
   .normalize('NFD')
@@ -30,6 +38,8 @@ const field = (block, name) => {
   const singleQuoted = block.match(new RegExp(`${name}:\\s*'((?:\\\\.|[^'\\\\])*)'`));
   return singleQuoted ? unescapeString(singleQuoted[1]) : null;
 };
+
+const defaultsForFile = (file) => SOURCE_DEFAULTS.find(({ pattern }) => pattern.test(file)) ?? {};
 
 const walk = async (root) => {
   let entries;
@@ -117,6 +127,7 @@ const isExcludedSystem = (place) => {
 
 const parsePlacesFromFile = async (file) => {
   const source = await readFile(file, 'utf8');
+  const defaults = defaultsForFile(file);
   const bySlug = new Map();
 
   for (const block of extractObjectBlocks(source)) {
@@ -124,8 +135,8 @@ const parsePlacesFromFile = async (file) => {
       slug: field(block, 'slug'),
       name: field(block, 'name'),
       category: field(block, 'category'),
-      city: field(block, 'city'),
-      country: field(block, 'country'),
+      city: field(block, 'city') ?? defaults.city ?? null,
+      country: field(block, 'country') ?? defaults.country ?? null,
       subcategory: field(block, 'subcategory'),
       cuisine: field(block, 'cuisine'),
       image: field(block, 'image'),
@@ -133,6 +144,7 @@ const parsePlacesFromFile = async (file) => {
       sourceFile: file
     };
 
+    if (defaults.excludedSlugs?.has(place.slug)) continue;
     if (!place.slug || !place.name || !place.category || !place.city || !place.country) continue;
     if (!bySlug.has(place.slug)) bySlug.set(place.slug, place);
   }
