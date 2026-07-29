@@ -9,11 +9,18 @@ interface Props {
 }
 
 const { landmarks = [] } = Astro.props;
+const bolavenPartner = {
+  name: 'Visit Tad Lo',
+  domain: 'visit-tadlo.com',
+  url: 'https://visit-tadlo.com/en',
+  label: 'Explore Tad Lo and the Bolaven Plateau'
+};
 ---
 
 {landmarks.map((landmark) => {
   const guide = laosLandmarkGuides[landmark.slug];
   const guideModalId = `${landmark.slug}-visit-guide`;
+  const partner = landmark.slug === 'bolaven-plateau' ? bolavenPartner : null;
 
   return (
     <>
@@ -28,6 +35,18 @@ const { landmarks = [] } = Astro.props;
         gallery={landmark.gallery}
         facts={landmark.facts}
       />
+
+      {partner && (
+        <span
+          hidden
+          data-landmark-partner-config
+          data-parent-landmark-modal={landmark.modalId}
+          data-partner-name={partner.name}
+          data-partner-domain={partner.domain}
+          data-partner-url={partner.url}
+          data-partner-label={partner.label}
+        ></span>
+      )}
 
       {guide && (
         <>
@@ -51,6 +70,26 @@ const { landmarks = [] } = Astro.props;
   );
 })}
 
+<style is:global>
+  .landmark-partner-note {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 1rem 0 .8rem;
+    padding: .8rem .9rem;
+    border: 1px solid rgba(49, 85, 69, .28);
+    background: rgba(49, 85, 69, .065);
+    color: #315545;
+  }
+  .landmark-partner-note span { display: grid; gap: .22rem; }
+  .landmark-partner-note small { color: #b76645; font: 700 .46rem/1 'DM Sans', sans-serif; letter-spacing: .15em; }
+  .landmark-partner-note strong { font: 600 .76rem/1.2 'DM Sans', sans-serif; }
+  .landmark-partner-note b { color: #b76645; font: 600 .78rem/1 Fraunces, serif; }
+  .landmark-action--partner { border: 1px solid #315545 !important; background: rgba(247, 242, 230, .88) !important; color: #315545 !important; }
+  @media (max-width: 650px) { .landmark-partner-note { align-items: flex-start; flex-direction: column; } }
+</style>
+
 <script>
   const bindLandmarkModals = () => {
     const openLandmark = (trigger: HTMLElement) => {
@@ -62,7 +101,6 @@ const { landmarks = [] } = Astro.props;
     document.querySelectorAll<HTMLElement>('[data-open-landmark]').forEach((trigger) => {
       if (trigger.dataset.landmarkTriggerBound === 'true') return;
       trigger.dataset.landmarkTriggerBound = 'true';
-
       trigger.addEventListener('click', () => openLandmark(trigger));
       trigger.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' || event.key === ' ') {
@@ -75,11 +113,40 @@ const { landmarks = [] } = Astro.props;
     document.querySelectorAll<HTMLDialogElement>('.landmark-modal').forEach((dialog) => {
       if (dialog.dataset.landmarkDialogBound === 'true') return;
       dialog.dataset.landmarkDialogBound = 'true';
-
       dialog.querySelector<HTMLElement>('[data-close-landmark]')?.addEventListener('click', () => dialog.close());
-      dialog.addEventListener('click', (event) => {
-        if (event.target === dialog) dialog.close();
-      });
+      dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+    });
+  };
+
+  const bindLandmarkPartners = () => {
+    document.querySelectorAll<HTMLElement>('[data-landmark-partner-config]').forEach((config) => {
+      if (config.dataset.partnerConfigBound === 'true') return;
+      config.dataset.partnerConfigBound = 'true';
+      const parentId = config.dataset.parentLandmarkModal;
+      const dialog = parentId ? document.getElementById(parentId) : null;
+      if (!(dialog instanceof HTMLDialogElement)) return;
+      const actions = dialog.querySelector<HTMLElement>('.landmark-modal__actions');
+      const visual = dialog.querySelector<HTMLElement>('.landmark-modal__visual');
+      if (!actions || !visual || actions.querySelector('[data-landmark-partner-link]')) return;
+
+      const note = document.createElement('a');
+      note.className = 'landmark-partner-note';
+      note.href = config.dataset.partnerUrl || '#';
+      note.target = '_blank';
+      note.rel = 'noreferrer';
+      note.innerHTML = `<span><small>LOCAL PARTNER</small><strong>In partnership with ${config.dataset.partnerName}</strong></span><b>${config.dataset.partnerDomain} ↗</b>`;
+      visual.insertBefore(note, actions);
+
+      const link = document.createElement('a');
+      link.className = 'landmark-action landmark-action--partner';
+      link.href = config.dataset.partnerUrl || '#';
+      link.target = '_blank';
+      link.rel = 'noreferrer';
+      link.dataset.landmarkPartnerLink = '';
+      link.innerHTML = `<span aria-hidden="true">↗</span> ${config.dataset.partnerLabel || 'Open local partner guide'}`;
+      const mapsLink = actions.querySelector('.landmark-action--maps');
+      if (mapsLink) mapsLink.insertAdjacentElement('afterend', link);
+      else actions.prepend(link);
     });
   };
 
@@ -87,27 +154,22 @@ const { landmarks = [] } = Astro.props;
     document.querySelectorAll<HTMLElement>('[data-landmark-guide-config]').forEach((config) => {
       if (config.dataset.guideConfigBound === 'true') return;
       config.dataset.guideConfigBound = 'true';
-
       const parentId = config.dataset.parentLandmarkModal;
       const guideId = config.dataset.landmarkGuideModal;
       const parentDialog = parentId ? document.getElementById(parentId) : null;
       const guideDialog = guideId ? document.getElementById(guideId) : null;
       if (!(parentDialog instanceof HTMLDialogElement) || !(guideDialog instanceof HTMLDialogElement)) return;
-
       const actions = parentDialog.querySelector<HTMLElement>('.landmark-modal__actions');
       if (!actions || actions.querySelector('[data-open-landmark-guide]')) return;
-
       const button = document.createElement('button');
       button.className = 'landmark-action landmark-action--guide';
       button.type = 'button';
       button.dataset.openLandmarkGuide = guideId;
       button.setAttribute('aria-controls', guideId);
       button.innerHTML = '<span aria-hidden="true">✎</span> Plan the visit';
-
       const saveButton = actions.querySelector('[data-add-landmark]');
       actions.insertBefore(button, saveButton);
       actions.classList.add('has-guide-action');
-
       button.addEventListener('click', () => {
         if (parentDialog.open) parentDialog.close();
         if (!guideDialog.open) guideDialog.showModal();
@@ -119,7 +181,6 @@ const { landmarks = [] } = Astro.props;
     document.querySelectorAll<HTMLDialogElement>('[data-landmark-guide-dialog]').forEach((dialog) => {
       if (dialog.dataset.landmarkGuideBound === 'true') return;
       dialog.dataset.landmarkGuideBound = 'true';
-
       dialog.querySelector<HTMLElement>('[data-close-landmark-guide]')?.addEventListener('click', () => dialog.close());
       dialog.querySelector<HTMLElement>('[data-back-to-landmark]')?.addEventListener('click', () => {
         const parentId = dialog.dataset.parentLandmarkModal;
@@ -127,14 +188,13 @@ const { landmarks = [] } = Astro.props;
         dialog.close();
         if (parentDialog instanceof HTMLDialogElement && !parentDialog.open) parentDialog.showModal();
       });
-      dialog.addEventListener('click', (event) => {
-        if (event.target === dialog) dialog.close();
-      });
+      dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
     });
   };
 
   const setupLandmarkExperience = () => {
     bindLandmarkModals();
+    bindLandmarkPartners();
     bindLandmarkGuideButtons();
     bindLandmarkGuideDialogs();
   };
