@@ -86,7 +86,7 @@ Landmarks may open from country maps and city guides without requiring an artifi
 
 Use these statuses consistently:
 
-- `draft`: internal or incomplete content;
+- `demo`: placeholder or incomplete content that must not look verified;
 - `needs-review`: useful but not recently field-checked;
 - `verified`: location and practical details have been checked recently.
 
