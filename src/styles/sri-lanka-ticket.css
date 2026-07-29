@@ -49,6 +49,17 @@
   opacity: 1 !important;
   overflow: visible !important;
   z-index: 12 !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+}
+
+.pakse-page .pakse-hero > .pakse-hero__boat {
+  background-image: url('https://raw.githubusercontent.com/cedricperformanceth-glitch/thingstodoatlas/master/public/images/laos/pakse-boat.webp') !important;
+}
+
+.tad-lo-page .pakse-hero > .pakse-hero__boat {
+  background-image: url('https://raw.githubusercontent.com/cedricperformanceth-glitch/thingstodoatlas/master/public/images/laos/tad-lo-boat.webp') !important;
 }
 
 .pakse-hero > .pakse-hero__boat > img {
@@ -72,6 +83,7 @@
     right: 0 !important;
     left: auto !important;
     width: clamp(13rem, 18vw, 17rem) !important;
+    min-height: 12rem !important;
     margin: 0 !important;
     transform: rotate(-2deg) !important;
   }
@@ -83,6 +95,7 @@
     grid-column: 2 !important;
     grid-row: 2 !important;
     width: min(100%, 15rem) !important;
+    min-height: 10.5rem !important;
     margin: .35rem 0 0 auto !important;
   }
 }
@@ -93,6 +106,7 @@
     grid-column: 1 !important;
     grid-row: 3 !important;
     width: min(82vw, 18rem) !important;
+    min-height: 12rem !important;
     margin: .15rem auto 0 !important;
   }
 }
