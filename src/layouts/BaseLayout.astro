@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/atlas-system.css';
 import '../styles/restaurant-polaroids.css';
 import '../styles/sri-lanka-cleanup.css';
 import '../styles/sri-lanka-ticket.css';
@@ -113,7 +114,8 @@ const currentPath = Astro.url.pathname;
           languageButton.setAttribute('aria-expanded', String(willOpen));
         });
         document.addEventListener('click', (event) => {
-          if (!event.target.closest('.language-menu')) closeLanguageMenu();
+          const target = event.target;
+          if (!(target instanceof Element) || !target.closest('.language-menu')) closeLanguageMenu();
         });
         document.addEventListener('keydown', (event) => {
           if (event.key === 'Escape') closeLanguageMenu();
