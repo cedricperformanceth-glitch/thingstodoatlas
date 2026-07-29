@@ -15,7 +15,7 @@ export const fandeeIslandSelection: TadLoSelectionPlace = {
   cuisine: 'Lao, Asian and Western food',
   city: 'Tad Lo',
   country: 'Laos',
-  image: 'https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D1920%2Cfit%3Dcrop/YrDJBMEl55IVE84z/371421975_648007923976758_5191678431984122789_n-YleQ09xxwnC0k72B.jpg',
+  image: 'https://assets.zyrosite.com/YrDJBMEl55IVE84z/371421975_648007923976758_5191678431984122789_n-YleQ09xxwnC0k72B.jpg',
   imageAlt: 'Aerial view of Fandee Island surrounded by water and tropical forest in Tad Lo',
   cardNote: 'an island stay that feels apart from the road',
   shortDescription: 'Tree houses, lake houses and nature stays gathered around a quiet island in the heart of Tad Lo.',
