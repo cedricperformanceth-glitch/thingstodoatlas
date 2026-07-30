@@ -38,15 +38,15 @@ const {
   <body>
     <SiteHeader />
 
-    <main id="main-content">
+    <div id="main-content" role="main">
       <slot />
-    </main>
-
-    <SiteFooter />
+    </div>
 
     <TripDrawer />
     <TripPageContext />
     <TripManager />
     <TripSummaryModal />
+
+    <SiteFooter />
   </body>
 </html>
