@@ -64,17 +64,32 @@ const currentPath = Astro.url.pathname;
           <img src="https://raw.githubusercontent.com/cedricperformanceth-glitch/thingstodoatlas/master/calque%20SVG/ChatGPT%20Image%2026%20juil.%202026%2C%2001_49_26_result.webp" alt="ThingsToDoAtlas" width="1536" height="1024" />
         </a>
       </div>
-      <nav class="country-nav" aria-label="Choose a country">
-        {countryNavigation.map((country) => (
-          <a
-            class:list={[{ 'is-active': currentPath.startsWith(`/${country.slug}`), 'is-coming-soon': country.status !== 'open' }]}
-            href={country.href}
-            aria-current={currentPath.startsWith(`/${country.slug}`) ? 'page' : undefined}
-          >
-            <span class="nav-chapter">{country.number}</span>{country.name}
-          </a>
-        ))}
-      </nav>
+
+      <div class="header-navigation">
+        <nav class="country-nav" aria-label="Choose a country">
+          {countryNavigation.map((country) => (
+            <a
+              class:list={[
+                'country-nav__link',
+                `country-nav__link--${country.slug}`,
+                { 'is-active': currentPath.startsWith(`/${country.slug}`), 'is-coming-soon': country.status !== 'open' }
+              ]}
+              href={country.href}
+              aria-current={currentPath.startsWith(`/${country.slug}`) ? 'page' : undefined}
+            >
+              {country.name}
+            </a>
+          ))}
+        </nav>
+
+        <div class="site-menu">
+          <button class="site-menu__trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="site-menu-dropdown">
+            Menu
+          </button>
+          <div class="site-menu__dropdown" id="site-menu-dropdown" hidden></div>
+        </div>
+      </div>
+
       <span class="header-note">Field Notes <i aria-hidden="true">·</i> Vol. 01</span>
     </header>
 
@@ -92,11 +107,14 @@ const currentPath = Astro.url.pathname;
     <nav class="bottom-country-bar" aria-label="Country chapters">
       {countryNavigation.map((country) => (
         <a
-          class:list={[{ 'is-active': currentPath.startsWith(`/${country.slug}`), 'is-coming-soon': country.status !== 'open' }]}
+          class:list={[
+            `bottom-country-bar__link--${country.slug}`,
+            { 'is-active': currentPath.startsWith(`/${country.slug}`), 'is-coming-soon': country.status !== 'open' }
+          ]}
           href={country.href}
           aria-current={currentPath.startsWith(`/${country.slug}`) ? 'page' : undefined}
         >
-          <span class="bottom-chapter">{country.number}</span>{country.name}
+          {country.name}
         </a>
       ))}
     </nav>
@@ -121,6 +139,28 @@ const currentPath = Astro.url.pathname;
         });
         document.addEventListener('keydown', (event) => {
           if (event.key === 'Escape') closeLanguageMenu();
+        });
+      }
+
+      const siteMenuButton = document.querySelector('.site-menu__trigger');
+      const siteMenuDropdown = document.querySelector('.site-menu__dropdown');
+      if (siteMenuButton && siteMenuDropdown) {
+        const closeSiteMenu = () => {
+          siteMenuDropdown.hidden = true;
+          siteMenuButton.setAttribute('aria-expanded', 'false');
+        };
+        siteMenuButton.addEventListener('click', (event) => {
+          event.stopPropagation();
+          const willOpen = siteMenuDropdown.hidden;
+          siteMenuDropdown.hidden = !willOpen;
+          siteMenuButton.setAttribute('aria-expanded', String(willOpen));
+        });
+        document.addEventListener('click', (event) => {
+          const target = event.target;
+          if (!(target instanceof Element) || !target.closest('.site-menu')) closeSiteMenu();
+        });
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') closeSiteMenu();
         });
       }
     </script>
@@ -149,9 +189,102 @@ const currentPath = Astro.url.pathname;
   .language-dropdown[hidden] { display: none; }
   .language-dropdown__item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; color: inherit; text-decoration: none; font-size: .82rem; letter-spacing: .03em; white-space: nowrap; }
   .language-dropdown__item:hover, .language-dropdown__item:focus-visible { background: rgba(28, 35, 31, .07); outline: none; }
+
+  .header-navigation { display: flex; align-items: center; gap: clamp(22px, 2.4vw, 38px); }
+  .country-nav { align-items: center; }
+  .country-nav__link,
+  .site-menu__trigger {
+    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: 1.28rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: .015em;
+  }
+  .country-nav__link {
+    transition: color .2s ease, transform .2s ease;
+  }
+  .country-nav__link:hover,
+  .country-nav__link:focus-visible {
+    outline: none;
+    transform: translateY(-1px) rotate(-1deg);
+  }
+  .country-nav a.country-nav__link--thailand:hover,
+  .country-nav a.country-nav__link--thailand:focus-visible,
+  .country-nav a.country-nav__link--thailand.is-active { color: #3478b8; }
+  .country-nav a.country-nav__link--sri-lanka:hover,
+  .country-nav a.country-nav__link--sri-lanka:focus-visible,
+  .country-nav a.country-nav__link--sri-lanka.is-active { color: #d27b35; }
+  .country-nav a.country-nav__link--laos:hover,
+  .country-nav a.country-nav__link--laos:focus-visible,
+  .country-nav a.country-nav__link--laos.is-active { color: #b7473b; }
+  .country-nav__link--thailand.is-active::after { background: #3478b8 !important; }
+  .country-nav__link--sri-lanka.is-active::after { background: #d27b35 !important; }
+  .country-nav__link--laos.is-active::after { background: #b7473b !important; }
+
+  .site-menu { position: relative; z-index: 20; }
+  .site-menu__trigger {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 1px;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    transition: color .2s ease, transform .2s ease;
+  }
+  .site-menu__trigger:hover,
+  .site-menu__trigger:focus-visible,
+  .site-menu__trigger[aria-expanded="true"] {
+    color: var(--green);
+    outline: none;
+    transform: translateY(-1px) rotate(1deg);
+  }
+  .site-menu__dropdown {
+    position: absolute;
+    top: calc(100% + 13px);
+    right: -12px;
+    width: 176px;
+    min-height: 82px;
+    border: 1px solid rgba(31, 57, 45, .2);
+    background: #f4f0e5;
+    box-shadow: 0 14px 32px rgba(28, 35, 31, .14);
+    transform: rotate(-.4deg);
+  }
+  .site-menu__dropdown::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px dashed rgba(31, 57, 45, .12);
+    pointer-events: none;
+  }
+  .site-menu__dropdown[hidden] { display: none; }
+
   @media (max-width: 700px) {
     .site-brand-cluster { gap: 7px; }
     .language-switcher__flag, .language-dropdown__flag { width: 21px; height: 14px; }
     .language-switcher__arrow { width: 8px; }
+    .header-navigation { margin-left: auto; }
+    .site-menu__trigger { font-size: 1.16rem; }
+    .site-menu__dropdown { top: calc(100% + 16px); right: -4px; width: 154px; min-height: 74px; }
+    .bottom-country-bar a {
+      font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+      font-size: 1.08rem;
+      font-weight: 600;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: .015em;
+    }
+    .bottom-country-bar a.bottom-country-bar__link--thailand:hover,
+    .bottom-country-bar a.bottom-country-bar__link--thailand:focus-visible,
+    .bottom-country-bar a.bottom-country-bar__link--thailand.is-active { color: #78b8ec; }
+    .bottom-country-bar a.bottom-country-bar__link--sri-lanka:hover,
+    .bottom-country-bar a.bottom-country-bar__link--sri-lanka:focus-visible,
+    .bottom-country-bar a.bottom-country-bar__link--sri-lanka.is-active { color: #f2ad70; }
+    .bottom-country-bar a.bottom-country-bar__link--laos:hover,
+    .bottom-country-bar a.bottom-country-bar__link--laos:focus-visible,
+    .bottom-country-bar a.bottom-country-bar__link--laos.is-active { color: #ef8b80; }
+    .bottom-country-bar__link--thailand.is-active::after { background: #78b8ec !important; }
+    .bottom-country-bar__link--sri-lanka.is-active::after { background: #f2ad70 !important; }
+    .bottom-country-bar__link--laos.is-active::after { background: #ef8b80 !important; }
   }
 </style>
