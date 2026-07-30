@@ -144,7 +144,13 @@ const homepageCountryChapters = homepageCountries.map((country, index) => index 
           <span>Choose your next chapter</span>
           <svg viewBox="0 0 42 12" aria-hidden="true"><path d="M1 7 C12 5 24 8 39 5 M33 1 L40 5 L34 11" /></svg>
         </a>
-        <small class="journey-transition__destinations">Thailand · Laos · Sri Lanka</small>
+        <nav class="journey-transition__destinations" aria-label="Choose your next destination">
+          <a class="journey-transition__destination journey-transition__destination--thailand" href="/thailand">Thailand</a>
+          <span aria-hidden="true">·</span>
+          <a class="journey-transition__destination journey-transition__destination--laos" href="/laos">Laos</a>
+          <span aria-hidden="true">·</span>
+          <a class="journey-transition__destination journey-transition__destination--sri-lanka" href="/sri-lanka">Sri Lanka</a>
+        </nav>
       </div>
       <span class="journey-transition__coordinates">Mekong · Indian Ocean · Gulf of Thailand</span>
     </div>
@@ -160,7 +166,14 @@ const homepageCountryChapters = homepageCountries.map((country, index) => index 
     .journey-transition__cta:hover,.journey-transition__cta:focus-visible{color:var(--green-dark);outline:none;transform:translateY(-2px) rotate(-.5deg)}
     .journey-transition__cta:hover::after,.journey-transition__cta:focus-visible::after{opacity:.72;transform:scaleX(1) rotate(-1deg)}
     .journey-transition__cta:hover svg,.journey-transition__cta:focus-visible svg{transform:translateX(4px)}
-    .journey-transition__destinations{margin-top:11px;color:var(--muted);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
-    @media(max-width:700px){.journey-transition__message{padding:0 8px}.journey-transition__cta{margin-top:20px;font-size:1.24rem}.journey-transition__destinations{font-size:.55rem;letter-spacing:.1em}}
+    .journey-transition__destinations{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:11px;color:var(--muted);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+    .journey-transition__destination{position:relative;padding:3px 0;color:inherit;text-decoration:none;transition:color .2s ease,transform .2s ease}
+    .journey-transition__destination::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:999px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform .2s ease}
+    .journey-transition__destination:hover,.journey-transition__destination:focus-visible{outline:none;transform:translateY(-1px)}
+    .journey-transition__destination:hover::after,.journey-transition__destination:focus-visible::after{transform:scaleX(1)}
+    .journey-transition__destination--thailand:hover,.journey-transition__destination--thailand:focus-visible{color:#3478b8}
+    .journey-transition__destination--laos:hover,.journey-transition__destination--laos:focus-visible{color:#b7473b}
+    .journey-transition__destination--sri-lanka:hover,.journey-transition__destination--sri-lanka:focus-visible{color:#d27b35}
+    @media(max-width:700px){.journey-transition__message{padding:0 8px}.journey-transition__cta{margin-top:20px;font-size:1.24rem}.journey-transition__destinations{gap:6px;font-size:.55rem;letter-spacing:.1em}}
   </style>
 </BaseLayout>
