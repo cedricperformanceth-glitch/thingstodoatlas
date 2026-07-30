@@ -3,26 +3,9 @@ const { place, index = 0 } = Astro.props;
 const cardNumber = String(index + 1).padStart(2, '0');
 const dialogId = `selection-place-${place.slug}`;
 const titleId = `${dialogId}-title`;
-const fandeeGallery = [
-  {
-    src: 'https://mmjvwsiurlojruabssuf.supabase.co/storage/v1/object/sign/site-media/b1c76c70-ae63-471e-878e-2c0263b42be7-626254102.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV83NDY2ZGE5Yy05YzQxLTRjYjUtYWJiOC1lNGQyMjUxY2Y2MjgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJzaXRlLW1lZGlhL2IxYzc2YzcwLWFlNjMtNDcxZS04NzhlLTJjMDI2M2I0MmJlNy02MjYyNTQxMDIuanBnIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MjAxMzc2NCwiZXhwIjoxODEzNTQ5NzY0fQ.zD4o3LG6Xw4G1CnjdfbL4pazlFkbGH46wkYJ8IU285w',
-    alt: 'Lake House beside the water at Fandee Island in Tad Lo'
-  },
-  {
-    src: 'https://mmjvwsiurlojruabssuf.supabase.co/storage/v1/object/sign/site-media/8f429686-2ecb-4e6d-b960-80b4aaadcf60-663543379.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV83NDY2ZGE5Yy05YzQxLTRjYjUtYWJiOC1lNGQyMjUxY2Y2MjgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJzaXRlLW1lZGlhLzhmNDI5Njg2LTJlY2ItNGU2ZC1iOTYwLTgwYjRhYWFkY2Y2MC02NjM1NDMzNzkuanBnIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MjAxNDE5NiwiZXhwIjoxODEzNTUwMTk2fQ.5fdd6pzyBHEizXhkjhcLIkuGGjN9d_C4MtTRuC2i_sY',
-    alt: 'Mountain House surrounded by tropical nature at Fandee Island'
-  },
-  {
-    src: 'https://mmjvwsiurlojruabssuf.supabase.co/storage/v1/object/sign/site-media/1fa975b4-39a7-4438-bd1b-88c96a7b11e8-751551619--1-.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV83NDY2ZGE5Yy05YzQxLTRjYjUtYWJiOC1lNGQyMjUxY2Y2MjgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJzaXRlLW1lZGlhLzFmYTk3NWI0LTM5YTctNDQzOC1iZDFiLTg4Yzk2YTdiMTFlOC03NTE1NTE2MTktLTEtLmpwZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODIyODAzOTIsImV4cCI6MTgxMzgxNjM5Mn0.rIV_34MdctWMzyMbZ7gDuER1w4y8mzQlOA5_sWD_IGY',
-    alt: 'Hilltop House overlooking the landscape at Fandee Island'
-  },
-  {
-    src: 'https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D1920%2Cfit%3Dcrop/YrDJBMEl55IVE84z/371421975_648007923976758_5191678431984122789_n-YleQ09xxwnC0k72B.jpg',
-    alt: 'Aerial view of Fandee Island surrounded by water and tropical forest'
-  }
-];
-const gallery = place.slug === 'fandee-island'
-  ? fandeeGallery
+
+const gallery = place.galleryImages?.length
+  ? place.galleryImages
   : [{ src: place.image, alt: place.imageAlt }];
 const tripPlace = JSON.stringify({
   id: place.slug,
