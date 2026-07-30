@@ -6,7 +6,7 @@ const place = resolvePlaceImage(rawPlace);
 const cardNumber = String(index + 1).padStart(2, '0');
 const dialogId = `partner-place-${place.slug}`;
 const titleId = `${dialogId}-title`;
-const gallery = place.galleryImages?.length ? place.galleryImages : [{ src: place.image, alt: place.imageAlt }];
+const gallery = place.city === 'Tad Lo' && place.galleryImages?.length ? place.galleryImages : [{ src: place.image, alt: place.imageAlt }];
 const tripPlace = JSON.stringify({
   id: place.slug,
   name: place.name,
