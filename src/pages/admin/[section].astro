@@ -1,7 +1,8 @@
 ---
 import AdminLayout from '../../layouts/AdminLayout.astro';
 
-const sections = {
+export function getStaticPaths() {
+  const sections = {
   communication: {
     navLabel: 'Communication agents',
     eyebrow: 'Autonomous outreach',
@@ -191,9 +192,8 @@ const sections = {
     actionTitle: 'Analytics and SEO connections are intentionally inactive',
     actionText: 'Connection controls will be enabled after the production domain, consent approach, event plan and Google properties are ready.'
   }
-};
+  };
 
-export function getStaticPaths() {
   return Object.entries(sections).map(([section, data]) => ({
     params: { section },
     props: { data }
