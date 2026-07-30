@@ -138,12 +138,29 @@ const homepageCountryChapters = homepageCountries.map((country, index) => index 
     <div class="container journey-transition__inner">
       <img class="journal-drawing journal-drawing--surfboards" src="/images/hand-drawn/surfboards-palm.webp" alt="" width="1200" height="1200" loading="lazy" aria-hidden="true" />
       <span class="journey-transition__stamp">Field note<br /><b>01</b></span>
-      <p>There is always another road.<br /><em>Let’s see where it goes.</em></p>
+      <div class="journey-transition__message">
+        <p>There is always another road.<br /><em>Let’s see where it goes.</em></p>
+        <a class="journey-transition__cta" href="#countries">
+          <span>Choose your next chapter</span>
+          <svg viewBox="0 0 42 12" aria-hidden="true"><path d="M1 7 C12 5 24 8 39 5 M33 1 L40 5 L34 11" /></svg>
+        </a>
+        <small class="journey-transition__destinations">Thailand · Laos · Sri Lanka</small>
+      </div>
       <span class="journey-transition__coordinates">Mekong · Indian Ocean · Gulf of Thailand</span>
     </div>
   </section>
 
   <style>
     :global(#country-thailand .country-feature__copy::after){display:none;content:none}
+    .journey-transition__message{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;background:var(--paper-deep);padding:0 22px}
+    .journey-transition__message p{margin:0;padding:0;background:transparent}
+    .journey-transition__cta{position:relative;display:inline-flex;align-items:center;gap:11px;margin-top:24px;padding:2px 0 9px;color:var(--green);font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:clamp(1.28rem,2vw,1.58rem);font-weight:600;line-height:1;text-decoration:none;transition:transform .2s ease,color .2s ease}
+    .journey-transition__cta::after{content:'';position:absolute;left:0;right:46px;bottom:2px;height:3px;border-radius:999px;background:currentColor;opacity:.42;transform:scaleX(.34) rotate(-1deg);transform-origin:left center;transition:transform .22s ease,opacity .22s ease}
+    .journey-transition__cta svg{width:42px;height:12px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .22s ease}
+    .journey-transition__cta:hover,.journey-transition__cta:focus-visible{color:var(--green-dark);outline:none;transform:translateY(-2px) rotate(-.5deg)}
+    .journey-transition__cta:hover::after,.journey-transition__cta:focus-visible::after{opacity:.72;transform:scaleX(1) rotate(-1deg)}
+    .journey-transition__cta:hover svg,.journey-transition__cta:focus-visible svg{transform:translateX(4px)}
+    .journey-transition__destinations{margin-top:11px;color:var(--muted);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+    @media(max-width:700px){.journey-transition__message{padding:0 8px}.journey-transition__cta{margin-top:20px;font-size:1.24rem}.journey-transition__destinations{font-size:.55rem;letter-spacing:.1em}}
   </style>
 </BaseLayout>
