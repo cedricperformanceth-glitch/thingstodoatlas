@@ -65,6 +65,26 @@
   border-top: 1px dashed var(--atlas-line);
 }
 
+/* Homepage closing note: decorative beach-volleyball sketch above Field note 01. */
+.journey-transition__stamp {
+  position: relative;
+  z-index: 2;
+}
+
+.journey-transition__stamp::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 18px);
+  width: clamp(210px, 19vw, 285px);
+  aspect-ratio: 1.35;
+  background: url('/images/hand-drawn/beach-volleyball.webp') center / contain no-repeat;
+  opacity: .82;
+  pointer-events: none;
+  transform: translateX(-50%) rotate(8deg);
+  transform-origin: center bottom;
+}
+
 @media (max-width: 700px) {
   :root {
     --atlas-space-7: 3.5rem;
@@ -73,6 +93,12 @@
 
   .atlas-shell {
     width: calc(100% - 2rem);
+  }
+
+  .journey-transition__stamp::before {
+    bottom: calc(100% + 12px);
+    width: 175px;
+    transform: translateX(-48%) rotate(7deg);
   }
 }
 
