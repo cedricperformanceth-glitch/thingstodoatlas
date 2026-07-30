@@ -38,18 +38,20 @@
   align-items: center;
   justify-content: flex-end;
   box-sizing: border-box;
-  width: 190px;
+  width: 170px !important;
+  min-width: 170px !important;
+  max-width: 170px !important;
   height: 64px;
   margin-right: 0;
   margin-left: auto;
-  padding: 3px 10px;
+  padding: 2px 6px;
   overflow: visible;
   border: 1px solid rgba(31, 57, 45, .16);
   border-radius: 4px 3px 5px 3px;
   background: rgba(244, 240, 229, .9);
   box-shadow: 0 8px 22px rgba(28, 35, 31, .12);
   backdrop-filter: blur(12px);
-  flex: 0 0 auto;
+  flex: 0 0 170px !important;
   visibility: visible;
   opacity: 1;
   pointer-events: auto;
@@ -171,10 +173,13 @@
   }
 
   .atlas-header__logo.site-logo {
-    width: 145px;
+    width: 132px !important;
+    min-width: 132px !important;
+    max-width: 132px !important;
     height: 54px;
     margin-left: auto;
-    padding: 3px 7px;
+    padding: 2px 5px;
+    flex-basis: 132px !important;
   }
 
   .atlas-hero {
