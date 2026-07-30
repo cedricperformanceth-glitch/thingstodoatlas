@@ -69,6 +69,7 @@
 .journey-transition__stamp {
   position: relative;
   z-index: 2;
+  transform: translateY(40px) rotate(-9deg) !important;
 }
 
 .journey-transition__stamp::before {
@@ -85,6 +86,14 @@
   transform-origin: center bottom;
 }
 
+.journey-transition__coordinates {
+  position: relative;
+  z-index: 2;
+  padding: 4px 8px;
+  background: var(--paper-deep, var(--atlas-paper-deep));
+  transform: translateY(-42px);
+}
+
 @media (max-width: 700px) {
   :root {
     --atlas-space-7: 3.5rem;
@@ -95,10 +104,18 @@
     width: calc(100% - 2rem);
   }
 
+  .journey-transition__stamp {
+    transform: translateY(30px) rotate(-8deg) !important;
+  }
+
   .journey-transition__stamp::before {
     bottom: calc(100% + 12px);
     width: 175px;
     transform: translateX(-48%) rotate(7deg);
+  }
+
+  .journey-transition__coordinates {
+    transform: translateY(-30px);
   }
 }
 
