@@ -1,0 +1,45 @@
+---
+import { countryNavigation } from '../data/atlasConfig';
+import '../styles/site-footer.css';
+---
+
+<footer class="atlas-footer">
+  <div class="atlas-footer__inner">
+    <div class="atlas-footer__brand">
+      <a href="/" aria-label="ThingsToDoAtlas home">
+        <img
+          src="/images/branding/things-to-do-atlas-stamp-transparent.webp"
+          alt="ThingsToDoAtlas"
+          width="512"
+          height="512"
+          loading="lazy"
+        />
+      </a>
+    </div>
+
+    <div class="atlas-footer__content">
+      <div class="atlas-footer__heading">
+        <p>Things To Do Atlas</p>
+        <span aria-hidden="true"></span>
+      </div>
+
+      <div class="atlas-footer__links">
+        <nav aria-labelledby="footer-navigation-title">
+          <h2 id="footer-navigation-title">Navigation</h2>
+          <div class="atlas-footer__link-list">
+            {countryNavigation.map((country) => (
+              <a href={country.href}>{country.name}</a>
+            ))}
+          </div>
+        </nav>
+
+        <nav aria-labelledby="footer-contact-title">
+          <h2 id="footer-contact-title">Contact</h2>
+          <div class="atlas-footer__link-list">
+            <a href="/admin">Admin</a>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</footer>
