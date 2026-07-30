@@ -4,6 +4,8 @@ import '../styles/atlas-system.css';
 import '../styles/restaurant-polaroids.css';
 import '../styles/sri-lanka-cleanup.css';
 import '../styles/sri-lanka-ticket.css';
+import '../styles/site-header.css';
+import '../styles/site-footer.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import TripDrawer from '../components/TripDrawer.astro';
@@ -39,11 +41,11 @@ const {
       <slot />
     </main>
 
+    <SiteFooter />
+
     <TripDrawer />
     <TripPageContext />
     <TripManager />
     <TripSummaryModal />
-
-    <SiteFooter />
   </body>
 </html>
