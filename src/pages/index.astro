@@ -28,7 +28,7 @@ const homepageCountryChapters = homepageCountries.map((country, index) => index 
       <p class="eyebrow">A living travel companion</p>
       <h1 id="hero-title">Explore the Unexpected</h1>
       <h2 class="lede">Every destination has hidden gems waiting to be discovered. Explore authentic places, connect with local culture and uncover unforgettable experiences across Thailand, Laos and Sri Lanka.</h2>
-      <a class="button button--arrow" href="#countries">Choose your way in <span aria-hidden="true">↘</span></a>
+      <a class="button button--arrow" href="#countries">Open your chapter <span aria-hidden="true">↘</span></a>
       <span class="hand-note hero-hand-note">I always begin by<br />looking around.</span>
     </div>
     <div class="atlas-hero__visual">
@@ -78,7 +78,7 @@ const homepageCountryChapters = homepageCountries.map((country, index) => index 
     </div>
     <div class="country-list">
       {homepageCountryChapters.map((country, index) =>
-        <article class:list={["country-feature", "country-feature--1"]} id={index === 0 ? `country-${country.slug}` : `country-${country.slug}-${index + 1}`}>
+        <article class:list={["country-feature", `country-feature--${index + 1}`]} id={index === 0 ? `country-${country.slug}` : `country-${country.slug}-${index + 1}`}>
           <span class="country-feature__stitching" aria-hidden="true"></span>
           <div class="country-feature__image">
             {country.slug === 'sri-lanka'
