@@ -71,7 +71,7 @@
 
 /* Keep the homepage opening closer to the floating header. */
 .atlas-hero {
-  padding-top: 132px !important;
+  padding-top: 117px !important;
 }
 
 .atlas-footer.site-footer {
@@ -183,7 +183,7 @@
   }
 
   .atlas-hero {
-    padding-top: 100px !important;
+    padding-top: 85px !important;
   }
 
   .atlas-footer.site-footer {
