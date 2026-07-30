@@ -65,24 +65,24 @@ const currentPath = Astro.url.pathname;
           <button class="site-menu__trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="site-menu-dropdown">
             Menu
           </button>
-          <div class="site-menu__dropdown" id="site-menu-dropdown" hidden></div>
+          <div class="site-menu__dropdown" id="site-menu-dropdown" hidden>
+            <nav class="site-menu__destinations" aria-label="Choose a country">
+              {countryNavigation.map((country) => (
+                <a
+                  class:list={[
+                    'site-menu__destination',
+                    `site-menu__destination--${country.slug}`,
+                    { 'is-active': currentPath.startsWith(`/${country.slug}`), 'is-coming-soon': country.status !== 'open' }
+                  ]}
+                  href={country.href}
+                  aria-current={currentPath.startsWith(`/${country.slug}`) ? 'page' : undefined}
+                >
+                  {country.name}
+                </a>
+              ))}
+            </nav>
+          </div>
         </div>
-
-        <nav class="country-nav" aria-label="Choose a country">
-          {countryNavigation.map((country) => (
-            <a
-              class:list={[
-                'country-nav__link',
-                `country-nav__link--${country.slug}`,
-                { 'is-active': currentPath.startsWith(`/${country.slug}`), 'is-coming-soon': country.status !== 'open' }
-              ]}
-              href={country.href}
-              aria-current={currentPath.startsWith(`/${country.slug}`) ? 'page' : undefined}
-            >
-              {country.name}
-            </a>
-          ))}
-        </nav>
       </div>
 
       <a class="site-logo" href="/" aria-label="ThingsToDoAtlas home">
@@ -187,35 +187,8 @@ const currentPath = Astro.url.pathname;
   .language-dropdown__item:hover, .language-dropdown__item:focus-visible { background: rgba(28, 35, 31, .07); outline: none; }
 
   .header-navigation { display: flex; align-items: center; gap: clamp(18px, 2vw, 30px); min-width: 0; }
-  .country-nav { align-items: center; }
-  .country-nav__link,
-  .site-menu__trigger {
-    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
-    font-size: 1.28rem;
-    font-weight: 600;
-    line-height: 1;
-    letter-spacing: .015em;
-  }
-  .country-nav__link {
-    transition: color .2s ease, transform .2s ease;
-  }
-  .country-nav__link:hover,
-  .country-nav__link:focus-visible {
-    outline: none;
-    transform: translateY(-1px) rotate(-1deg);
-  }
-  .country-nav a.country-nav__link--thailand:hover,
-  .country-nav a.country-nav__link--thailand:focus-visible,
-  .country-nav a.country-nav__link--thailand.is-active { color: #3478b8; }
-  .country-nav a.country-nav__link--sri-lanka:hover,
-  .country-nav a.country-nav__link--sri-lanka:focus-visible,
-  .country-nav a.country-nav__link--sri-lanka.is-active { color: #d27b35; }
-  .country-nav a.country-nav__link--laos:hover,
-  .country-nav a.country-nav__link--laos:focus-visible,
-  .country-nav a.country-nav__link--laos.is-active { color: #b7473b; }
-  .country-nav__link--thailand.is-active::after { background: #3478b8 !important; }
-  .country-nav__link--sri-lanka.is-active::after { background: #d27b35 !important; }
-  .country-nav__link--laos.is-active::after { background: #b7473b !important; }
+  .site-header > .site-logo { margin-left: auto; margin-right: 0; }
+  .site-header > .site-logo img { object-position: right center; }
 
   .site-menu { position: relative; z-index: 20; }
   .site-menu__trigger {
@@ -226,6 +199,11 @@ const currentPath = Astro.url.pathname;
     background: transparent;
     color: var(--ink);
     cursor: pointer;
+    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: 1.28rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: .015em;
     transition: color .2s ease, transform .2s ease;
   }
   .site-menu__trigger:hover,
@@ -239,8 +217,8 @@ const currentPath = Astro.url.pathname;
     position: absolute;
     top: calc(100% + 13px);
     left: -12px;
-    width: 176px;
-    min-height: 82px;
+    width: 190px;
+    padding: 22px 22px 20px;
     border: 1px solid rgba(31, 57, 45, .2);
     background: #f4f0e5;
     box-shadow: 0 14px 32px rgba(28, 35, 31, .14);
@@ -254,13 +232,66 @@ const currentPath = Astro.url.pathname;
     pointer-events: none;
   }
   .site-menu__dropdown[hidden] { display: none; }
+  .site-menu__destinations {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    justify-items: start;
+    gap: 14px;
+  }
+  .site-menu__destination {
+    position: relative;
+    display: inline-block;
+    padding: 1px 0 7px;
+    color: var(--ink);
+    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: 1.32rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: .015em;
+    transition: color .2s ease, transform .2s ease;
+  }
+  .site-menu__destination::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 26px;
+    height: 3px;
+    border-radius: 999px;
+    background: currentColor;
+    opacity: .82;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform .2s ease;
+  }
+  .site-menu__destination:hover,
+  .site-menu__destination:focus-visible,
+  .site-menu__destination.is-active {
+    outline: none;
+    transform: translateX(2px) rotate(-1deg);
+  }
+  .site-menu__destination:hover::after,
+  .site-menu__destination:focus-visible::after,
+  .site-menu__destination.is-active::after { transform: scaleX(1); }
+  .site-menu__destination--thailand:hover,
+  .site-menu__destination--thailand:focus-visible,
+  .site-menu__destination--thailand.is-active { color: #3478b8; }
+  .site-menu__destination--sri-lanka:hover,
+  .site-menu__destination--sri-lanka:focus-visible,
+  .site-menu__destination--sri-lanka.is-active { color: #d27b35; }
+  .site-menu__destination--laos:hover,
+  .site-menu__destination--laos:focus-visible,
+  .site-menu__destination--laos.is-active { color: #b7473b; }
+  .site-menu__destination.is-coming-soon { color: var(--muted); }
 
   @media (max-width: 700px) {
     .header-navigation { gap: 14px; min-width: 0; }
     .language-switcher__flag, .language-dropdown__flag { width: 21px; height: 14px; }
     .language-switcher__arrow { width: 8px; }
     .site-menu__trigger { font-size: 1.16rem; }
-    .site-menu__dropdown { top: calc(100% + 16px); left: -4px; width: 154px; min-height: 74px; }
+    .site-menu__dropdown { top: calc(100% + 16px); left: -4px; width: 172px; padding: 20px; }
+    .site-menu__destination { font-size: 1.2rem; }
     .bottom-country-bar a {
       font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
       font-size: 1.08rem;
