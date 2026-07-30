@@ -88,9 +88,17 @@
   color: #263029 !important;
 }
 
-.journey-transition .journey-transition__message > p em,
-.journey-transition .journey-transition__cta {
+.journey-transition .journey-transition__message > p em {
   color: #315545 !important;
+}
+
+.journey-transition .journey-transition__cta {
+  color: var(--terracotta) !important;
+}
+
+.journey-transition .journey-transition__cta:hover,
+.journey-transition .journey-transition__cta:focus-visible {
+  color: #934d37 !important;
 }
 
 .journey-transition .journey-transition__destinations,
