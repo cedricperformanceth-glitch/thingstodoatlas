@@ -1,73 +1,8 @@
 /*
- * Final compatibility layer for the shared public header and footer.
+ * Final compatibility layer for shared homepage and footer details.
  * Loaded after the historical global stylesheet so legacy selectors cannot
  * hide or reshape the extracted components.
  */
-
-.atlas-header.site-header {
-  position: fixed;
-  top: 16px;
-  right: 24px;
-  left: 24px;
-  display: flex;
-  width: auto;
-  height: 64px;
-  margin: 0;
-  border: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  visibility: visible;
-  opacity: 1;
-  pointer-events: none;
-}
-
-.atlas-header.site-header .atlas-header__navigation {
-  min-height: 56px;
-  padding: 0 18px;
-  border: 1px solid rgba(31, 57, 45, .16);
-  border-radius: 3px 5px 3px 4px;
-  background: rgba(244, 240, 229, .9);
-  box-shadow: 0 8px 22px rgba(28, 35, 31, .12);
-  backdrop-filter: blur(12px);
-  pointer-events: auto;
-}
-
-.atlas-header__logo.site-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  width: 72px !important;
-  min-width: 72px !important;
-  max-width: 72px !important;
-  height: 64px;
-  margin-right: 0;
-  margin-left: auto;
-  padding: 3px 5px;
-  overflow: hidden;
-  border: 1px solid rgba(31, 57, 45, .16);
-  border-radius: 4px 3px 5px 3px;
-  background: rgba(244, 240, 229, .9);
-  box-shadow: 0 8px 22px rgba(28, 35, 31, .12);
-  backdrop-filter: blur(12px);
-  flex: 0 0 72px !important;
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.atlas-header__logo.site-logo img {
-  display: block !important;
-  width: 100% !important;
-  height: 100% !important;
-  max-width: 100%;
-  object-fit: contain !important;
-  object-position: center !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  filter: none !important;
-}
 
 /* Keep the homepage opening closer to the floating header. */
 .atlas-hero {
@@ -163,29 +98,6 @@
 }
 
 @media (max-width: 700px) {
-  .atlas-header.site-header {
-    top: 10px;
-    right: 12px;
-    left: 12px;
-    width: auto;
-    height: 54px;
-  }
-
-  .atlas-header.site-header .atlas-header__navigation {
-    min-height: 50px;
-    padding: 0 12px;
-  }
-
-  .atlas-header__logo.site-logo {
-    width: 62px !important;
-    min-width: 62px !important;
-    max-width: 62px !important;
-    height: 54px;
-    margin-left: auto;
-    padding: 3px 4px;
-    flex-basis: 62px !important;
-  }
-
   .atlas-hero {
     padding-top: 85px !important;
   }
