@@ -1,14 +1,13 @@
 ---
 import { countryNavigation } from '../data/atlasConfig';
-import '../styles/site-header.css';
 
 const currentPath = Astro.url.pathname;
 ---
 
 <a class="skip-link" href="#main-content">Skip to content</a>
 
-<header class="atlas-header">
-  <div class="atlas-header__navigation">
+<header class="site-header atlas-header">
+  <div class="header-navigation atlas-header__navigation">
     <div class="language-menu">
       <button
         class="language-switcher"
@@ -77,20 +76,22 @@ const currentPath = Astro.url.pathname;
     </div>
   </div>
 
-  <a class="atlas-header__logo" href="/" aria-label="ThingsToDoAtlas home">
+  <a class="site-logo atlas-header__logo" href="/" aria-label="ThingsToDoAtlas home">
     <img
       src="/images/branding/things-to-do-atlas-stamp-transparent.webp"
       alt="ThingsToDoAtlas"
       width="512"
       height="512"
+      decoding="async"
     />
   </a>
 </header>
 
-<nav class="atlas-mobile-nav" aria-label="Country chapters">
+<nav class="bottom-country-bar atlas-mobile-nav" aria-label="Country chapters">
   {countryNavigation.map((country) => (
     <a
       class:list={[
+        `bottom-country-bar__link--${country.slug}`,
         `atlas-mobile-nav__link--${country.slug}`,
         {
           'is-active': currentPath.startsWith(`/${country.slug}`),
