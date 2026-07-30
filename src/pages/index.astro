@@ -159,6 +159,9 @@ const homepageCountryChapters = homepageCountries.map((country, index) => index 
     :global(#country-thailand .country-feature__copy::after){display:none;content:none}
     :global(.intro-band__green-notebook){transform:translateY(70px)}
     :global(.intro-band__hand-note){transform:translateY(70px) rotate(-5deg)}
+    @media(min-width:701px){
+      :global(.intro-band__hand-note){left:-320px;top:170px;transform:rotate(-40deg)}
+    }
     .journey-transition__line{top:58%;transform:rotate(-8deg)}
     .journey-transition__stamp{transform:translateY(28px) rotate(-9deg)}
     .journey-transition__message{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;background:var(--paper-deep);padding:0 22px}
