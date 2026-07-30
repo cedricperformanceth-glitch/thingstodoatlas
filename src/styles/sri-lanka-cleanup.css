@@ -1,6 +1,5 @@
 @import './sri-lanka-ticket.css';
 @import './laos-notebook-repair.css';
-@import './header-refinement.css';
 
 /* Sri Lanka notebook: keep the right page clean around the map and CTA. */
 .country-section #country-sri-lanka-3 .country-feature__copy {
