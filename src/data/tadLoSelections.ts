@@ -13,20 +13,16 @@ export type TadLoSelectionPlace = TadLoPartnerPlace & {
 
 const fandeeGallery = [
   {
-    src: 'https://mmjvwsiurlojruabssuf.supabase.co/storage/v1/object/sign/site-media/60490d2d-0386-4b29-a4a7-14c025ec1053-WhatsApp-Image-2026-01-09-at-09.57.26.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV83NDY2ZGE5Yy05YzQxLTRjYjUtYWJiOC1lNGQyMjUxY2Y2MjgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJzaXRlLW1lZGlhLzYwNDkwZDJkLTAzODYtNGIyOS1hNGE3LTE0YzAyNWVjMTA1My1XaGF0c0FwcC1JbWFnZS0yMDI2LTAxLTA5LWF0LTA5LjU3LjI2LmpwZWciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyMDE0MDgzLCJleHAiOjE4MTM1NTAwODN9.AowBO47_lfeGh3IdR0FqoPQf-wne7E0qTvn42hOHk5M',
-    alt: 'Tree house accommodation surrounded by tropical greenery at Fandee Island'
+    src: '/images/tad-lo/iFandeeisland 01.webp',
+    alt: 'Fandee Island nature stay in Tad Lo, southern Laos'
   },
   {
-    src: 'https://mmjvwsiurlojruabssuf.supabase.co/storage/v1/object/sign/site-media/aeb21f73-1492-464b-87c2-41bd98ac8b8e-241720782.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV83NDY2ZGE5Yy05YzQxLTRjYjUtYWJiOC1lNGQyMjUxY2Y2MjgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJzaXRlLW1lZGlhL2FlYjIxZjczLTE0OTItNDY0Yi04N2MyLTQxYmQ5OGFjOGI4ZS0yNDE3MjA3ODIuanBnIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MjAxNDA3MCwiZXhwIjoxODEzNTUwMDcwfQ.IeotbjvSFmqqwg9imar7j_qMbodTXUEx3LwWEX1I2CE',
-    alt: 'Nature accommodation and garden atmosphere at Fandee Island in Tad Lo'
+    src: '/images/tad-lo/Fandee Island 02.webp',
+    alt: 'Fandee Island accommodation and garden setting'
   },
   {
-    src: 'https://mmjvwsiurlojruabssuf.supabase.co/storage/v1/object/sign/site-media/08048758-30f2-419a-943f-ba3c8d52db6b-626254071.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV83NDY2ZGE5Yy05YzQxLTRjYjUtYWJiOC1lNGQyMjUxY2Y2MjgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJzaXRlLW1lZGlhLzA4MDQ4NzU4LTMwZjItNDE5YS05NDNmLWJhM2M4ZDUyZGI2Yi02MjYyNTQwNzEuanBnIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MjAxNDA4OCwiZXhwIjoxODEzNTUwMDg4fQ.rCe4xCSWY-NPiXn4lZsNZgTey0Xkeubnpfg67L1zIKw',
-    alt: 'A quiet view across the Fandee Island property in southern Laos'
-  },
-  {
-    src: 'https://mmjvwsiurlojruabssuf.supabase.co/storage/v1/object/sign/site-media/b1c76c70-ae63-471e-878e-2c0263b42be7-626254102.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV83NDY2ZGE5Yy05YzQxLTRjYjUtYWJiOC1lNGQyMjUxY2Y2MjgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJzaXRlLW1lZGlhL2IxYzc2YzcwLWFlNjMtNDcxZS04NzhlLTJjMDI2M2I0MmJlNy02MjYyNTQxMDIuanBnIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MjAxMzc2NCwiZXhwIjoxODEzNTQ5NzY0fQ.zD4o3LG6Xw4G1CnjdfbL4pazlFkbGH46wkYJ8IU285w',
-    alt: 'Lake house accommodation beside the water at Fandee Island'
+    src: '/images/tad-lo/Fandee Island03.webp',
+    alt: 'Fandee Island lakeside atmosphere in Tad Lo'
   }
 ];
 
