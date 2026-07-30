@@ -55,18 +55,31 @@
 }
 
 #atlas-global-footer .atlas-footer__content {
+  --footer-content-gutter: clamp(38px, 5vw, 78px);
   display: block !important;
   min-width: 0;
-  padding-left: clamp(38px, 5vw, 78px);
+  padding-left: var(--footer-content-gutter);
   visibility: visible !important;
   opacity: 1 !important;
 }
 
 #atlas-global-footer .atlas-footer__heading {
   position: relative;
-  display: block !important;
+  display: flex !important;
+  align-items: flex-start;
+  justify-content: center;
+  width: calc(100% + var(--footer-content-gutter));
+  margin-left: calc(-1 * var(--footer-content-gutter));
   margin-bottom: clamp(42px, 5vw, 66px);
-  padding-bottom: 20px;
+  text-align: center;
+}
+
+#atlas-global-footer .atlas-footer__heading-mark {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: max-content;
+  max-width: 100%;
 }
 
 #atlas-global-footer .atlas-footer__heading p {
@@ -78,30 +91,32 @@
   font-weight: 500;
   line-height: 1;
   letter-spacing: -.055em;
+  white-space: nowrap;
   visibility: visible !important;
   opacity: 1 !important;
 }
 
-#atlas-global-footer .atlas-footer__heading span {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: block !important;
-  height: 13px;
-  overflow: hidden;
+#atlas-global-footer .atlas-footer__heading-underline {
+  display: block;
+  width: 100%;
+  height: clamp(18px, 2vw, 26px);
+  margin-top: 7px;
+  overflow: visible;
 }
 
-#atlas-global-footer .atlas-footer__heading span::after {
-  content: '';
-  position: absolute;
-  right: 1%;
-  bottom: 5px;
-  left: 0;
-  height: 12px;
-  border-bottom: 1.5px solid color-mix(in srgb, var(--green, #315545) 72%, transparent);
-  border-radius: 0 0 50% 50%;
-  transform: rotate(-.35deg);
+#atlas-global-footer .atlas-footer__heading-underline path {
+  fill: none;
+  stroke: var(--green, #315545);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  opacity: .78;
+}
+
+#atlas-global-footer .atlas-footer__heading-underline .atlas-footer__heading-underline-echo {
+  stroke-width: 1.1;
+  opacity: .22;
 }
 
 #atlas-global-footer .atlas-footer__links {
@@ -201,10 +216,13 @@
   }
 
   #atlas-global-footer .atlas-footer__content {
+    --footer-content-gutter: 0px;
     padding: 38px 0 0;
   }
 
   #atlas-global-footer .atlas-footer__heading {
+    width: 100%;
+    margin-left: 0;
     margin-bottom: 38px;
   }
 
@@ -215,6 +233,10 @@
 }
 
 @media (max-width: 440px) {
+  #atlas-global-footer .atlas-footer__heading p {
+    font-size: clamp(1.9rem, 10vw, 2.75rem);
+  }
+
   #atlas-global-footer .atlas-footer__links {
     grid-template-columns: 1fr;
   }
