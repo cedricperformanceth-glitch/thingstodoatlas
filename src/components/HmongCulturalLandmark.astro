@@ -58,10 +58,10 @@ const hmongGallery = [
     const namespace = 'http://www.w3.org/2000/svg';
     const point = { x: 258, y: 404 };
     const marker = document.createElementNS(namespace, 'g');
-    marker.setAttribute('class', 'city-marker city-marker--landmark city-marker--culture');
+    marker.setAttribute('class', 'city-marker city-marker--culture');
     marker.setAttribute('role', 'button');
     marker.setAttribute('tabindex', '0');
-    marker.setAttribute('aria-label', 'Open Hmong cultural note');
+    marker.setAttribute('aria-label', 'Open Hmong culture note');
     marker.setAttribute('data-open-landmark', 'hmong-cultural-modal');
 
     const ring = document.createElementNS(namespace, 'circle');
@@ -81,10 +81,10 @@ const hmongGallery = [
     leader.setAttribute('d', `M${point.x + 12} ${point.y - 8} L${point.x + 70} ${point.y - 42}`);
 
     const label = document.createElementNS(namespace, 'text');
-    label.setAttribute('class', 'city-marker__label city-marker__label--landmark');
+    label.setAttribute('class', 'city-marker__label city-marker__label--culture');
     label.setAttribute('x', String(point.x + 78));
     label.setAttribute('y', String(point.y - 48));
-    label.textContent = 'Hmong';
+    label.textContent = 'Hmong culture';
 
     // Astro scopes the Laos map styles with a generated data attribute. Because this
     // marker is created in JavaScript, copy that scope onto every generated SVG node.
@@ -132,9 +132,10 @@ const hmongGallery = [
 
   /* Fallback styling for the JavaScript-created SVG marker. */
   .laos-map-page[aria-labelledby="laos-map-title"] [data-open-landmark="hmong-cultural-modal"] .city-marker__ring {
-    fill: color-mix(in srgb, currentColor 14%, transparent);
+    fill: transparent;
     stroke: currentColor;
     stroke-width: 2.5px;
+    stroke-dasharray: 4 3;
     transform-box: fill-box;
     transform-origin: center;
     transform: scale(.5) !important;
@@ -142,8 +143,8 @@ const hmongGallery = [
   }
 
   .laos-map-page[aria-labelledby="laos-map-title"] [data-open-landmark="hmong-cultural-modal"] .city-marker__dot {
-    fill: currentColor;
-    stroke: #f4ecd9 !important;
+    fill: #fff;
+    stroke: currentColor !important;
     stroke-width: 2.5px;
     transform-box: fill-box;
     transform-origin: center;
@@ -160,7 +161,7 @@ const hmongGallery = [
   .laos-map-page[aria-labelledby="laos-map-title"] [data-open-landmark="hmong-cultural-modal"] .city-marker__label {
     fill: currentColor;
     font-family: Georgia, serif;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     paint-order: stroke;
     stroke: #fff;
