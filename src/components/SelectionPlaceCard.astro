@@ -4,7 +4,7 @@ const cardNumber = String(index + 1).padStart(2, '0');
 const dialogId = `selection-place-${place.slug}`;
 const titleId = `${dialogId}-title`;
 
-const gallery = place.galleryImages?.length
+const gallery = place.slug === 'fandee-island' && place.galleryImages?.length
   ? place.galleryImages
   : [{ src: place.image, alt: place.imageAlt }];
 const tripPlace = JSON.stringify({
