@@ -34,7 +34,7 @@ const currentPath = Astro.url.pathname;
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-header">
-      <div class="site-brand-cluster">
+      <div class="header-navigation">
         <div class="language-menu">
           <button class="language-switcher" type="button" aria-label="Choose language" aria-haspopup="true" aria-expanded="false" aria-controls="language-dropdown">
             <svg class="language-switcher__flag" viewBox="0 0 60 30" aria-hidden="true">
@@ -60,12 +60,14 @@ const currentPath = Astro.url.pathname;
             </a>
           </div>
         </div>
-        <a class="site-logo" href="/" aria-label="ThingsToDoAtlas home">
-          <img src="https://raw.githubusercontent.com/cedricperformanceth-glitch/thingstodoatlas/master/calque%20SVG/ChatGPT%20Image%2026%20juil.%202026%2C%2001_49_26_result.webp" alt="ThingsToDoAtlas" width="1536" height="1024" />
-        </a>
-      </div>
 
-      <div class="header-navigation">
+        <div class="site-menu">
+          <button class="site-menu__trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="site-menu-dropdown">
+            Menu
+          </button>
+          <div class="site-menu__dropdown" id="site-menu-dropdown" hidden></div>
+        </div>
+
         <nav class="country-nav" aria-label="Choose a country">
           {countryNavigation.map((country) => (
             <a
@@ -81,16 +83,11 @@ const currentPath = Astro.url.pathname;
             </a>
           ))}
         </nav>
-
-        <div class="site-menu">
-          <button class="site-menu__trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="site-menu-dropdown">
-            Menu
-          </button>
-          <div class="site-menu__dropdown" id="site-menu-dropdown" hidden></div>
-        </div>
       </div>
 
-      <span class="header-note">Field Notes <i aria-hidden="true">·</i> Vol. 01</span>
+      <a class="site-logo" href="/" aria-label="ThingsToDoAtlas home">
+        <img src="https://raw.githubusercontent.com/cedricperformanceth-glitch/thingstodoatlas/master/calque%20SVG/ChatGPT%20Image%2026%20juil.%202026%2C%2001_49_26_result.webp" alt="ThingsToDoAtlas" width="1536" height="1024" />
+      </a>
     </header>
 
     <main id="main-content"><slot /></main>
@@ -179,7 +176,6 @@ const currentPath = Astro.url.pathname;
     transform: translateY(-180%);
   }
   .skip-link:focus { transform: translateY(0); }
-  .site-brand-cluster { display: flex; align-items: center; gap: clamp(8px, 1vw, 14px); min-width: 0; }
   .language-menu { position: relative; z-index: 20; }
   .language-switcher { display: inline-flex; align-items: center; gap: 6px; padding: 4px 2px; border: 0; background: transparent; color: currentColor; cursor: pointer; }
   .language-switcher__flag, .language-dropdown__flag { display: block; width: 24px; height: 16px; border: 1px solid rgba(28, 35, 31, .22); box-shadow: 0 1px 2px rgba(28, 35, 31, .08); flex: 0 0 auto; }
@@ -190,7 +186,7 @@ const currentPath = Astro.url.pathname;
   .language-dropdown__item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; color: inherit; text-decoration: none; font-size: .82rem; letter-spacing: .03em; white-space: nowrap; }
   .language-dropdown__item:hover, .language-dropdown__item:focus-visible { background: rgba(28, 35, 31, .07); outline: none; }
 
-  .header-navigation { display: flex; align-items: center; gap: clamp(22px, 2.4vw, 38px); }
+  .header-navigation { display: flex; align-items: center; gap: clamp(18px, 2vw, 30px); min-width: 0; }
   .country-nav { align-items: center; }
   .country-nav__link,
   .site-menu__trigger {
@@ -242,7 +238,7 @@ const currentPath = Astro.url.pathname;
   .site-menu__dropdown {
     position: absolute;
     top: calc(100% + 13px);
-    right: -12px;
+    left: -12px;
     width: 176px;
     min-height: 82px;
     border: 1px solid rgba(31, 57, 45, .2);
@@ -260,12 +256,11 @@ const currentPath = Astro.url.pathname;
   .site-menu__dropdown[hidden] { display: none; }
 
   @media (max-width: 700px) {
-    .site-brand-cluster { gap: 7px; }
+    .header-navigation { gap: 14px; min-width: 0; }
     .language-switcher__flag, .language-dropdown__flag { width: 21px; height: 14px; }
     .language-switcher__arrow { width: 8px; }
-    .header-navigation { margin-left: auto; }
     .site-menu__trigger { font-size: 1.16rem; }
-    .site-menu__dropdown { top: calc(100% + 16px); right: -4px; width: 154px; min-height: 74px; }
+    .site-menu__dropdown { top: calc(100% + 16px); left: -4px; width: 154px; min-height: 74px; }
     .bottom-country-bar a {
       font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
       font-size: 1.08rem;
