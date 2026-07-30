@@ -67,6 +67,11 @@
   filter: none !important;
 }
 
+/* Keep the homepage opening closer to the floating header. */
+.atlas-hero {
+  padding-top: 132px !important;
+}
+
 .atlas-footer.site-footer {
   position: relative;
   z-index: 1;
@@ -170,6 +175,10 @@
     height: 54px;
     margin-left: auto;
     padding: 3px 7px;
+  }
+
+  .atlas-hero {
+    padding-top: 100px !important;
   }
 
   .atlas-footer.site-footer {
