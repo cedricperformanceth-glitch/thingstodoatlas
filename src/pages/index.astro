@@ -78,7 +78,7 @@ const homepageCountryChapters = homepageCountries.map((country, index) => index 
     </div>
     <div class="country-list">
       {homepageCountryChapters.map((country, index) =>
-        <article class:list={["country-feature", `country-feature--${index + 1}`]} id={index === 0 ? `country-${country.slug}` : `country-${country.slug}-${index + 1}`}>
+        <article class:list={["country-feature", "country-feature--1"]} id={index === 0 ? `country-${country.slug}` : `country-${country.slug}-${index + 1}`}>
           <span class="country-feature__stitching" aria-hidden="true"></span>
           <div class="country-feature__image">
             {country.slug === 'sri-lanka'
