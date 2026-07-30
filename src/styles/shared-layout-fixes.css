@@ -71,6 +71,33 @@
   filter: none !important;
 }
 
+/* Homepage final CTA: light sage paper palette. */
+.journey-transition {
+  --paper-deep: #dce3d7;
+  --ink: #263029;
+  --green: #315545;
+  background: #dce3d7 !important;
+  color: #263029 !important;
+}
+
+.journey-transition .journey-transition__message {
+  background: #dce3d7 !important;
+}
+
+.journey-transition .journey-transition__message > p {
+  color: #263029 !important;
+}
+
+.journey-transition .journey-transition__message > p em,
+.journey-transition .journey-transition__cta {
+  color: #315545 !important;
+}
+
+.journey-transition .journey-transition__destinations,
+.journey-transition .journey-transition__coordinates {
+  color: rgba(38, 48, 41, .62) !important;
+}
+
 @media (min-width: 701px) {
   .intro-band .intro-band__hand-note {
     position: absolute !important;
