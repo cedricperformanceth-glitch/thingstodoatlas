@@ -74,6 +74,10 @@
   padding-top: 117px !important;
 }
 
+.atlas-hero__visual > .micro-annotation.atlas-hero__stamp {
+  top: -9px !important;
+}
+
 .atlas-footer.site-footer {
   position: relative;
   z-index: 1;
@@ -184,6 +188,10 @@
 
   .atlas-hero {
     padding-top: 85px !important;
+  }
+
+  .atlas-hero__visual > .micro-annotation.atlas-hero__stamp {
+    top: -11px !important;
   }
 
   .atlas-footer.site-footer {
