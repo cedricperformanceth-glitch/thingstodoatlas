@@ -8,9 +8,9 @@
   margin: 0 !important;
   padding: 0 !important;
   overflow: visible !important;
-  border-top: 1px solid var(--line, #d5d0c4);
-  background: #e8e3d6 !important;
-  color: var(--ink, #252923) !important;
+  border-top: 1px solid rgba(255, 255, 255, .12);
+  background: var(--green, #315545) !important;
+  color: var(--white, #fffdf8) !important;
   visibility: visible !important;
   opacity: 1 !important;
   isolation: isolate;
@@ -32,7 +32,7 @@
   align-items: flex-start;
   min-width: 0;
   padding: 2px clamp(34px, 4vw, 62px) 0 0;
-  border-right: 1px solid color-mix(in srgb, var(--line, #d5d0c4) 82%, transparent);
+  border-right: 1px solid rgba(255, 255, 255, .18);
   visibility: visible !important;
   opacity: 1 !important;
 }
@@ -49,9 +49,9 @@
   max-width: 230px;
   object-fit: contain !important;
   object-position: left top !important;
-  filter: none !important;
+  filter: brightness(0) invert(1) !important;
   visibility: visible !important;
-  opacity: 1 !important;
+  opacity: .94 !important;
 }
 
 #atlas-global-footer .atlas-footer__content {
@@ -85,7 +85,7 @@
 #atlas-global-footer .atlas-footer__heading p {
   display: block !important;
   margin: 0;
-  color: var(--ink, #252923) !important;
+  color: var(--white, #fffdf8) !important;
   font-family: Fraunces, Georgia, serif;
   font-size: clamp(2rem, 4vw, 4rem);
   font-weight: 500;
@@ -106,17 +106,18 @@
 
 #atlas-global-footer .atlas-footer__heading-underline path {
   fill: none;
-  stroke: var(--green, #315545);
+  stroke: #d9dfcb;
   stroke-width: 2.4;
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
-  opacity: .78;
+  opacity: .9;
 }
 
 #atlas-global-footer .atlas-footer__heading-underline .atlas-footer__heading-underline-echo {
+  stroke: #fffdf8;
   stroke-width: 1.1;
-  opacity: .22;
+  opacity: .26;
 }
 
 #atlas-global-footer .atlas-footer__links {
@@ -136,7 +137,7 @@
 #atlas-global-footer .atlas-footer__links h2 {
   display: block !important;
   margin: 0 0 20px;
-  color: var(--terracotta, #b76645) !important;
+  color: var(--orange, #db8058) !important;
   font-family: 'DM Sans', Arial, sans-serif;
   font-size: .66rem;
   font-weight: 700;
@@ -156,14 +157,14 @@
 #atlas-global-footer .atlas-footer__link-list a {
   position: relative;
   display: inline-block !important;
-  color: var(--ink, #252923) !important;
+  color: #f7f2e7 !important;
   font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
   font-size: 1.28rem;
   font-weight: 600;
   line-height: 1.15;
   visibility: visible !important;
-  opacity: 1 !important;
-  transition: color .2s ease, transform .2s ease;
+  opacity: .88 !important;
+  transition: color .2s ease, opacity .2s ease, transform .2s ease;
 }
 
 #atlas-global-footer .atlas-footer__link-list a::after {
@@ -182,7 +183,8 @@
 
 #atlas-global-footer .atlas-footer__link-list a:hover,
 #atlas-global-footer .atlas-footer__link-list a:focus-visible {
-  color: var(--green, #315545) !important;
+  color: #f2ad70 !important;
+  opacity: 1 !important;
   outline: none;
   transform: translateX(2px);
 }
@@ -208,7 +210,7 @@
   #atlas-global-footer .atlas-footer__brand {
     padding: 0 0 34px;
     border-right: 0;
-    border-bottom: 1px solid color-mix(in srgb, var(--line, #d5d0c4) 82%, transparent);
+    border-bottom: 1px solid rgba(255, 255, 255, .18);
   }
 
   #atlas-global-footer .atlas-footer__brand a {
