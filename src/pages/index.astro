@@ -76,7 +76,6 @@ const homepageCountryChapters = homepageCountries.map((country, index) => index 
       <div><p class="eyebrow">The first chapters</p><h2 id="countries-title">Where will you<br /><em>begin?</em></h2></div>
       <p class="section-heading__aside">Three countries.<br />Many ways in.</p>
     </div>
-    <div class="country-route" aria-hidden="true"><svg viewBox="0 0 100 1000" preserveAspectRatio="none"><path d="M50 0 C24 110 76 205 50 330 C24 455 76 555 50 675 C28 790 71 885 50 1000" /><circle cx="50" cy="0" r="5" /><circle cx="50" cy="500" r="5" /><circle cx="50" cy="1000" r="5" /></svg></div>
     <div class="country-list">
       {homepageCountryChapters.map((country, index) =>
         <article class:list={["country-feature", "country-feature--1"]} id={index === 0 ? `country-${country.slug}` : `country-${country.slug}-${index + 1}`}>
