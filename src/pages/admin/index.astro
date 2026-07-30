@@ -1,0 +1,86 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+
+const adminAreas = [
+  {
+    number: '01',
+    title: 'Communication agents',
+    description: 'Prepare autonomous campaigns, define agent roles and organise the future publishing workflow.',
+    href: '/admin/communication',
+    meta: 'Campaign architecture'
+  },
+  {
+    number: '02',
+    title: 'Conversation agents',
+    description: 'Prepare the permanent website chat, its knowledge boundaries, memory and visitor experience.',
+    href: '/admin/conversations',
+    meta: 'Live chat architecture'
+  },
+  {
+    number: '03',
+    title: 'SEO & analytics',
+    description: 'Create the future home for Search Console, Analytics, technical SEO and opportunity monitoring.',
+    href: '/admin/seo',
+    meta: 'Visibility architecture'
+  }
+];
+---
+
+<AdminLayout
+  title="Control Room"
+  description="Internal architecture for ThingsToDoAtlas agents, communication and search visibility."
+  sectionLabel="Overview"
+>
+  <div class="admin-page">
+    <section class="admin-hero" aria-labelledby="admin-title">
+      <div>
+        <p class="admin-kicker">System architecture</p>
+        <h1 id="admin-title">One place to manage the atlas.</h1>
+        <p class="admin-hero__lede">
+          This workspace establishes the structure before any agent, platform or data source is connected. Each area is ready to receive its configuration later without reshaping the public website.
+        </p>
+      </div>
+
+      <aside class="admin-paper-note" aria-label="Build order">
+        <span>Build order</span>
+        <ol>
+          <li>Finish the site architecture.</li>
+          <li>Secure the private workspace.</li>
+          <li>Connect services and agents.</li>
+          <li>Test before enabling automation.</li>
+        </ol>
+      </aside>
+    </section>
+
+    <section aria-labelledby="workspace-title">
+      <div class="admin-section-heading">
+        <h2 id="workspace-title">Prepared workspaces</h2>
+        <p>Three separate systems, connected by one administration layer and one consistent visual language.</p>
+      </div>
+
+      <div class="admin-card-grid">
+        {adminAreas.map((area) => (
+          <a class="admin-area-card" href={area.href}>
+            <div class="admin-area-card__top">
+              <span class="admin-area-card__number">{area.number}</span>
+              <span class="admin-pill">Ready for integration</span>
+            </div>
+            <h3>{area.title}</h3>
+            <p>{area.description}</p>
+            <div class="admin-area-card__meta">
+              <span>{area.meta}</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <aside class="admin-scope-banner">
+      <strong>Current scope</strong>
+      <p>
+        These screens contain architecture and configuration placeholders only. No AI model, publishing channel, analytics property, Search Console account, visitor conversation or secret key is connected yet.
+      </p>
+    </aside>
+  </div>
+</AdminLayout>
