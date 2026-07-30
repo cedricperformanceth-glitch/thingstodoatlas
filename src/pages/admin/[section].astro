@@ -1,0 +1,315 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+
+const sections = {
+  communication: {
+    navLabel: 'Communication agents',
+    eyebrow: 'Autonomous outreach',
+    title: 'Communication agents',
+    description: 'A future campaign system for planning, producing and scheduling communication without turning the atlas into a generic social media dashboard.',
+    noteTitle: 'Human control first',
+    note: 'Autonomy should be introduced gradually: draft, review, approve, then schedule. Direct publishing comes only after the workflow is reliable.',
+    agents: [
+      {
+        name: 'Campaign strategist',
+        role: 'Transforms a business objective, destination and audience into a clear campaign brief.'
+      },
+      {
+        name: 'Content editor',
+        role: 'Creates channel-specific copy while preserving the ThingsToDoAtlas voice and local accuracy.'
+      },
+      {
+        name: 'Publishing coordinator',
+        role: 'Organises the calendar, cadence, approvals and future distribution queue.'
+      }
+    ],
+    rails: [
+      {
+        label: 'Instructions',
+        title: 'Brand and campaign rules',
+        text: 'Tone, target audience, prohibited claims, required context and campaign objectives.'
+      },
+      {
+        label: 'Knowledge',
+        title: 'Approved source material',
+        text: 'Destination guides, place records, editorial notes and validated visual assets.'
+      },
+      {
+        label: 'Guardrails',
+        title: 'Approval before publishing',
+        text: 'Draft status, human review, publishing permissions and emergency pause controls.'
+      }
+    ],
+    connections: [
+      {
+        name: 'Content library',
+        text: 'Approved destination facts, campaigns, reusable messages and brand references.'
+      },
+      {
+        name: 'Publishing channels',
+        text: 'Future connectors for social networks, newsletters or other communication surfaces.'
+      },
+      {
+        name: 'Campaign calendar',
+        text: 'Planned cadence, publishing windows, queue status and campaign history.'
+      }
+    ],
+    checklist: [
+      'Define the campaign objective and measurable outcome.',
+      'Choose which channels are allowed for each agent.',
+      'Create approval states before enabling scheduling.',
+      'Store every generated and published message in a log.',
+      'Prevent unsupported local claims or invented information.',
+      'Add a global pause control before autonomous publishing.'
+    ],
+    actionTitle: 'Agent configuration is intentionally inactive',
+    actionText: 'The configuration controls will be enabled after authentication, data storage and publishing permissions are designed.'
+  },
+  conversations: {
+    navLabel: 'Conversation agents',
+    eyebrow: 'Website assistance',
+    title: 'Conversation agents',
+    description: 'The future home of the permanent website chat: its role, knowledge, memory, interface behaviour and access to the visitor’s trip context.',
+    noteTitle: 'One useful agent first',
+    note: 'Start with a single Atlas travel companion. Specialist agents should only be introduced when the content and visitor demand genuinely require them.',
+    agents: [
+      {
+        name: 'Atlas travel companion',
+        role: 'Answers visitor questions using approved ThingsToDoAtlas information and current page context.'
+      },
+      {
+        name: 'Trip planning assistant',
+        role: 'Will help organise saved places and suggest a practical sequence without inventing locations.'
+      },
+      {
+        name: 'Local information specialist',
+        role: 'Reserved for future practical questions that require a narrower and carefully maintained knowledge scope.'
+      }
+    ],
+    rails: [
+      {
+        label: 'Behaviour',
+        title: 'Voice and response rules',
+        text: 'Language, answer length, travel tone, uncertainty handling and refusal to invent details.'
+      },
+      {
+        label: 'Context',
+        title: 'Page and trip awareness',
+        text: 'Current country, city, category, open place card and the visitor’s Plan My Trip selections.'
+      },
+      {
+        label: 'Memory',
+        title: 'Controlled conversation state',
+        text: 'Session history, optional preferences, retention limits and clear deletion controls.'
+      }
+    ],
+    connections: [
+      {
+        name: 'Atlas place database',
+        text: 'The approved source for restaurants, stays, activities, addresses and practical details.'
+      },
+      {
+        name: 'Plan My Trip context',
+        text: 'Read-only context first, followed later by explicit tools for adding or removing places.'
+      },
+      {
+        name: 'Conversation storage',
+        text: 'Future session IDs, message history, retention rules and anonymous visitor handling.'
+      }
+    ],
+    checklist: [
+      'Answer from approved site data rather than general model memory.',
+      'Show uncertainty when a price, schedule or detail is unavailable.',
+      'Keep the chat available across page navigation.',
+      'Separate anonymous sessions from future user accounts.',
+      'Require explicit confirmation before changing Plan My Trip.',
+      'Define retention, deletion and abuse protection before launch.'
+    ],
+    actionTitle: 'Chat agent configuration is intentionally inactive',
+    actionText: 'The controls will be enabled after the chat interface, Cloudflare agent infrastructure and visitor data policy are finalised.'
+  },
+  seo: {
+    navLabel: 'SEO & analytics',
+    eyebrow: 'Search visibility',
+    title: 'SEO & analytics',
+    description: 'A single workspace for Google Analytics, Search Console, technical SEO monitoring and future agents that turn real search data into clear actions.',
+    noteTitle: 'Data before automation',
+    note: 'The SEO system should observe verified data first. Agents can prioritise opportunities later, but they should never make blind site-wide changes.',
+    agents: [
+      {
+        name: 'Visibility monitor',
+        role: 'Surfaces meaningful changes in impressions, clicks, rankings, indexing and landing-page performance.'
+      },
+      {
+        name: 'SEO opportunity planner',
+        role: 'Connects search demand with existing destinations, categories and editorial gaps.'
+      },
+      {
+        name: 'Technical audit assistant',
+        role: 'Flags metadata, canonical, crawl, sitemap, internal linking and structured-data issues for review.'
+      }
+    ],
+    rails: [
+      {
+        label: 'Measurement',
+        title: 'One trusted data layer',
+        text: 'Analytics events, Search Console properties, conversions and consistent page identifiers.'
+      },
+      {
+        label: 'Priorities',
+        title: 'SEO decisions by impact',
+        text: 'Separate critical indexing issues from content opportunities and low-value cosmetic warnings.'
+      },
+      {
+        label: 'Control',
+        title: 'Recommendations before edits',
+        text: 'Agents prepare evidence and suggested actions; structural changes remain reviewed and deliberate.'
+      }
+    ],
+    connections: [
+      {
+        name: 'Google Analytics',
+        text: 'Future traffic, engagement, navigation and Plan My Trip conversion measurements.'
+      },
+      {
+        name: 'Google Search Console',
+        text: 'Future query, page, country, device, indexing, sitemap and search performance data.'
+      },
+      {
+        name: 'Technical site index',
+        text: 'Page inventory, metadata, canonicals, language versions, internal links and structured data.'
+      }
+    ],
+    checklist: [
+      'Define useful events instead of tracking every interaction.',
+      'Keep public guide pages indexable and admin pages excluded.',
+      'Connect each search landing page to a country, city and category.',
+      'Separate branded demand from destination and activity queries.',
+      'Require evidence before creating new SEO pages.',
+      'Review recommendations before any automated code change.'
+    ],
+    actionTitle: 'Analytics and SEO connections are intentionally inactive',
+    actionText: 'Connection controls will be enabled after the production domain, consent approach, event plan and Google properties are ready.'
+  }
+};
+
+export function getStaticPaths() {
+  return Object.entries(sections).map(([section, data]) => ({
+    params: { section },
+    props: { data }
+  }));
+}
+
+const { data } = Astro.props;
+---
+
+<AdminLayout
+  title={data.title}
+  description={data.description}
+  sectionLabel={data.navLabel}
+>
+  <div class="admin-page">
+    <section class="admin-hero admin-hero--section" aria-labelledby="section-title">
+      <div>
+        <p class="admin-kicker">{data.eyebrow}</p>
+        <h1 id="section-title">{data.title}</h1>
+        <p class="admin-hero__lede">{data.description}</p>
+      </div>
+
+      <aside class="admin-paper-note">
+        <span>{data.noteTitle}</span>
+        <p>{data.note}</p>
+      </aside>
+    </section>
+
+    <section aria-labelledby="agents-title">
+      <div class="admin-section-heading">
+        <h2 id="agents-title">Prepared agent roles</h2>
+        <p>Role slots only. Models, prompts, tools and permissions will be configured later.</p>
+      </div>
+
+      <div class="admin-blueprint">
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <div>
+              <h2>Agent workspace</h2>
+              <p>Responsibilities are separated before any automation is introduced.</p>
+            </div>
+            <span class="admin-pill">Not connected</span>
+          </div>
+
+          <div class="admin-agent-list">
+            {data.agents.map((agent, index) => (
+              <article class="admin-agent-card">
+                <span class="admin-agent-card__index">0{index + 1}</span>
+                <div>
+                  <h3>{agent.name}</h3>
+                  <p>{agent.role}</p>
+                </div>
+                <span class="admin-agent-card__status">Slot prepared</span>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <aside class="admin-panel admin-panel--dark">
+          <div class="admin-panel__header">
+            <div>
+              <h2>Configuration rails</h2>
+              <p>What must frame every future agent.</p>
+            </div>
+          </div>
+          <div class="admin-rail-list">
+            {data.rails.map((rail) => (
+              <div class="admin-rail-item">
+                <span>{rail.label}</span>
+                <strong>{rail.title}</strong>
+                <p>{rail.text}</p>
+              </div>
+            ))}
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section aria-labelledby="connections-title">
+      <div class="admin-section-heading">
+        <h2 id="connections-title">Future connections</h2>
+        <p>The interface reserves clear connection points without storing credentials or pretending that services are already active.</p>
+      </div>
+
+      <div class="admin-connection-grid">
+        {data.connections.map((connection, index) => (
+          <article class="admin-connection-card">
+            <div class="admin-connection-card__top">
+              <span>0{index + 1}</span>
+              <span>Awaiting setup</span>
+            </div>
+            <h3>{connection.name}</h3>
+            <p>{connection.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="admin-panel" aria-labelledby="rules-title">
+      <div class="admin-panel__header">
+        <div>
+          <h2 id="rules-title">Before activation</h2>
+          <p>The minimum architecture and control requirements for this workspace.</p>
+        </div>
+      </div>
+      <ul class="admin-checklist">
+        {data.checklist.map((item) => <li>{item}</li>)}
+      </ul>
+    </section>
+
+    <aside class="admin-placeholder-action">
+      <div>
+        <strong>{data.actionTitle}</strong>
+        <p>{data.actionText}</p>
+      </div>
+      <button type="button" disabled>Configure later</button>
+    </aside>
+  </div>
+</AdminLayout>
