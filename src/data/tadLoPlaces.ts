@@ -8,6 +8,7 @@ export type TadLoPartnerPlace = {
   country: string;
   image: string;
   imageAlt: string;
+  galleryImages?: Array<{ src: string; alt: string }>;
   cardNote: string;
   shortDescription: string;
   description: string;
@@ -72,8 +73,11 @@ export const tadLoExperiences: TadLoPartnerPlace[] = [
     name: 'Tad Lo Waterfall',
     subcategory: 'Waterfall · Walkable',
     cuisine: 'Waterfalls and swimming',
-    image: 'https://ddylijzqbzdbskxoujlv.supabase.co/storage/v1/object/public/site-media/waterfalls/207aa6ff-5a00-4300-8a4c-f86a1bec032f-Tad-Lo.jpg',
+    image: '/images/tad-lo/Tad lo 02.webp',
     imageAlt: 'Tad Lo Waterfall flowing through the village landscape',
+    galleryImages: [
+      { src: '/images/tad-lo/Tad lo 02.webp', alt: 'Tad Lo Waterfall flowing through the village landscape' }
+    ],
     cardNote: 'waterfall woven into village life',
     shortDescription: 'A graceful waterfall best experienced slowly as part of a day around the village.',
     description: 'Follow the nearby paths, pause beside the river and notice how Tad Lo Waterfall changes with the light, rain and season.',
@@ -89,6 +93,12 @@ export const tadLoExperiences: TadLoPartnerPlace[] = [
     name: 'Tad Soung Waterfall',
     subcategory: 'Waterfall · Rural excursion',
     cuisine: 'Waterfalls and swimming',
+    image: '/images/tad-lo/Tad Soung 01.webp',
+    imageAlt: 'Tad Soung Waterfall near Tad Lo in southern Laos',
+    galleryImages: [
+      { src: '/images/tad-lo/Tad Soung 01.webp', alt: 'Tad Soung Waterfall near Tad Lo in southern Laos' },
+      { src: '/images/tad-lo/Tad Soung.webp', alt: 'Tad Soung Waterfall in the surrounding forest' }
+    ],
     cardNote: 'keep half a day for the road',
     shortDescription: 'A higher waterfall reached through fields and villages, with wide views and a longer outing.',
     description: 'Tad Soung turns the waterfall visit into a rural half-day journey. Upper and lower access points offer different experiences.',
@@ -136,6 +146,13 @@ export const tadLoExperiences: TadLoPartnerPlace[] = [
     name: 'Fandee Adventure Park',
     subcategory: 'Adventure · Walkable',
     cuisine: 'Adventure',
+    image: '/images/tad-lo/fandee adventure park 01.webp',
+    imageAlt: 'Fandee Adventure Park in Tad Lo, southern Laos',
+    galleryImages: [
+      { src: '/images/tad-lo/fandee adventure park 01.webp', alt: 'Fandee Adventure Park in Tad Lo, southern Laos' },
+      { src: '/images/tad-lo/fandee adventure park 02.webp', alt: 'Forest adventure course at Fandee Adventure Park' },
+      { src: '/images/tad-lo/Fandee adventure park.webp', alt: 'Fandee Adventure Park activity area' }
+    ],
     cardNote: 'a little height between slow days',
     shortDescription: 'A guided forest course with thirteen ziplines and suspended bridges close to the village.',
     description: 'The course at Fandee Island adds an active half-day with safety equipment, staff coaching and aerial obstacles through the forest.',
@@ -150,6 +167,12 @@ export const tadLoExperiences: TadLoPartnerPlace[] = [
     name: 'Coffee and Katu Culture with Mr Hook',
     subcategory: 'Coffee · Culture',
     cuisine: 'Coffee experiences',
+    image: '/images/tad-lo/Mr Hook 01.webp',
+    imageAlt: 'Coffee and Katu culture experience with Mr Hook near Tad Lo',
+    galleryImages: [
+      { src: '/images/tad-lo/Mr Hook 01.webp', alt: 'Coffee and Katu culture experience with Mr Hook near Tad Lo' },
+      { src: '/images/tad-lo/Mr Hook 02.webp', alt: 'Mr Hook coffee and Katu culture experience' }
+    ],
     cardNote: 'coffee is only the doorway',
     shortDescription: 'A personal introduction to coffee, useful plants and Katu cultural perspectives in Mr Hook’s home area.',
     description: 'The experience connects coffee growing with plants, place and local cultural context rather than functioning as a simple tasting stop.',
@@ -249,6 +272,12 @@ export const tadLoLocalAddresses: TadLoPartnerPlace[] = [
     category: 'accommodation',
     subcategory: 'Lodge · Waterfall location',
     cuisine: 'Lodge restaurant',
+    image: '/images/tad-lo/TadLoLodge 01.webp',
+    imageAlt: 'Tad Lo Lodge beside the waterfall landscape',
+    galleryImages: [
+      { src: '/images/tad-lo/TadLoLodge 01.webp', alt: 'Tad Lo Lodge beside the waterfall landscape' },
+      { src: '/images/tad-lo/Tadlo Loge02.webp', alt: 'Tad Lo Lodge in Tad Lo village' }
+    ],
     cardNote: 'stay close to the falls',
     shortDescription: 'A lodge in a prominent position near Tad Lo Waterfall.',
     description: 'Tad Lo Lodge suits travellers who want the waterfall landscape to remain part of the stay rather than only a daytime visit.',
