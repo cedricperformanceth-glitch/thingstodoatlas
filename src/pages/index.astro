@@ -158,6 +158,8 @@ const homepageCountryChapters = homepageCountries.map((country, index) => index 
 
   <style>
     :global(#country-thailand .country-feature__copy::after){display:none;content:none}
+    .journey-transition__line{top:58%;transform:rotate(-8deg)}
+    .journey-transition__stamp{transform:translateY(28px) rotate(-9deg)}
     .journey-transition__message{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;background:var(--paper-deep);padding:0 22px}
     .journey-transition__message p{margin:0;padding:0;background:transparent}
     .journey-transition__cta{position:relative;display:inline-flex;align-items:center;gap:11px;margin-top:24px;padding:2px 0 9px;color:var(--green);font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:clamp(1.28rem,2vw,1.58rem);font-weight:600;line-height:1;text-decoration:none;transition:transform .2s ease,color .2s ease}
@@ -174,6 +176,6 @@ const homepageCountryChapters = homepageCountries.map((country, index) => index 
     .journey-transition__destination--thailand:hover,.journey-transition__destination--thailand:focus-visible{color:#3478b8}
     .journey-transition__destination--laos:hover,.journey-transition__destination--laos:focus-visible{color:#b7473b}
     .journey-transition__destination--sri-lanka:hover,.journey-transition__destination--sri-lanka:focus-visible{color:#d27b35}
-    @media(max-width:700px){.journey-transition__message{padding:0 8px}.journey-transition__cta{margin-top:20px;font-size:1.24rem}.journey-transition__destinations{gap:6px;font-size:.55rem;letter-spacing:.1em}}
+    @media(max-width:700px){.journey-transition__line{top:56%;transform:rotate(-10deg)}.journey-transition__stamp{transform:translateY(18px) rotate(-8deg)}.journey-transition__message{padding:0 8px}.journey-transition__cta{margin-top:20px;font-size:1.24rem}.journey-transition__destinations{gap:6px;font-size:.55rem;letter-spacing:.1em}}
   </style>
 </BaseLayout>
