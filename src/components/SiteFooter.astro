@@ -2,7 +2,11 @@
 import { countryNavigation } from '../data/atlasConfig';
 ---
 
-<footer class="site-footer atlas-footer">
+<footer
+  id="atlas-global-footer"
+  class="atlas-footer"
+  aria-label="Things To Do Atlas footer"
+>
   <div class="atlas-footer__inner">
     <div class="atlas-footer__brand">
       <a href="/" aria-label="ThingsToDoAtlas home">
@@ -42,3 +46,29 @@ import { countryNavigation } from '../data/atlasConfig';
     </div>
   </div>
 </footer>
+
+<script is:inline>
+  (() => {
+    const mountFooter = () => {
+      const footer = document.getElementById('atlas-global-footer');
+      if (!(footer instanceof HTMLElement)) return;
+
+      footer.hidden = false;
+      footer.removeAttribute('aria-hidden');
+
+      /*
+       * Some legacy pages still contain their own <main> element inside the
+       * shared layout. Browsers may repair that invalid nesting differently.
+       * Mounting the shared footer directly under <body> guarantees one footer
+       * in the same place on every public route.
+       */
+      if (footer.parentElement !== document.body) document.body.appendChild(footer);
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', mountFooter, { once: true });
+    } else {
+      mountFooter();
+    }
+  })();
+</script>
