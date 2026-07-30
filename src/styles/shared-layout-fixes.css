@@ -1,0 +1,84 @@
+/*
+ * Final compatibility layer for the shared public header and footer.
+ * Loaded after the historical global stylesheet so legacy selectors cannot
+ * hide or reshape the extracted components.
+ */
+
+.atlas-header.site-header {
+  display: flex;
+  visibility: visible;
+  opacity: 1;
+}
+
+.atlas-header__logo.site-logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 210px;
+  height: 64px;
+  margin-right: 0;
+  margin-left: auto;
+  overflow: visible;
+  flex: 0 0 auto;
+  visibility: visible;
+  opacity: 1;
+}
+
+.atlas-header__logo.site-logo img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100%;
+  object-fit: contain !important;
+  object-position: right center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+.atlas-footer.site-footer {
+  position: relative;
+  z-index: 1;
+  display: block !important;
+  clear: both;
+  width: 100%;
+  margin: 0;
+  padding: 0 !important;
+  overflow: visible;
+  color: var(--ink);
+  font-size: inherit;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.atlas-footer .atlas-footer__inner,
+.atlas-footer .atlas-footer__brand,
+.atlas-footer .atlas-footer__content,
+.atlas-footer .atlas-footer__heading,
+.atlas-footer .atlas-footer__links {
+  visibility: visible;
+  opacity: 1;
+}
+
+.atlas-footer .atlas-footer__brand img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: left top !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+@media (max-width: 700px) {
+  .atlas-header__logo.site-logo {
+    width: 160px;
+    height: 54px;
+    margin-left: auto;
+  }
+
+  .atlas-footer.site-footer {
+    padding-bottom: 64px !important;
+  }
+}
