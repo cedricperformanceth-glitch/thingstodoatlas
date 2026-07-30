@@ -4,7 +4,8 @@ import '../styles/atlas-system.css';
 import '../styles/restaurant-polaroids.css';
 import '../styles/sri-lanka-cleanup.css';
 import '../styles/sri-lanka-ticket.css';
-import { countryNavigation } from '../data/atlasConfig';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import TripDrawer from '../components/TripDrawer.astro';
 import TripPageContext from '../components/TripPageContext.astro';
 import TripManager from '../components/TripManager.astro';
@@ -15,8 +16,8 @@ const {
   description = 'A thoughtful guide to places worth your time across Asia.',
   canonical = 'https://thingstodoatlas.com/'
 } = Astro.props;
-const currentPath = Astro.url.pathname;
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -32,285 +33,17 @@ const currentPath = Astro.url.pathname;
     <meta property="og:url" content={canonical} />
   </head>
   <body>
-    <a class="skip-link" href="#main-content">Skip to content</a>
-    <header class="site-header">
-      <div class="header-navigation">
-        <div class="language-menu">
-          <button class="language-switcher" type="button" aria-label="Choose language" aria-haspopup="true" aria-expanded="false" aria-controls="language-dropdown">
-            <svg class="language-switcher__flag" viewBox="0 0 60 30" aria-hidden="true">
-              <clipPath id="uk-flag-clip"><path d="M0 0v30h60V0z" /></clipPath>
-              <g clip-path="url(#uk-flag-clip)">
-                <path fill="#012169" d="M0 0v30h60V0z" />
-                <path stroke="#fff" stroke-width="6" d="M0 0l60 30M60 0L0 30" />
-                <path stroke="#c8102e" stroke-width="4" d="M0 0l60 30M60 0L0 30" />
-                <path stroke="#fff" stroke-width="10" d="M30 0v30M0 15h60" />
-                <path stroke="#c8102e" stroke-width="6" d="M30 0v30M0 15h60" />
-              </g>
-            </svg>
-            <svg class="language-switcher__arrow" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" /></svg>
-          </button>
-          <div class="language-dropdown" id="language-dropdown" hidden>
-            <a class="language-dropdown__item" href="/fr/" hreflang="fr" lang="fr">
-              <svg class="language-dropdown__flag" viewBox="0 0 3 2" aria-hidden="true"><path fill="#002395" d="M0 0h1v2H0z"/><path fill="#fff" d="M1 0h1v2H1z"/><path fill="#ed2939" d="M2 0h1v2H2z"/></svg>
-              <span>Français</span>
-            </a>
-            <a class="language-dropdown__item" href="/es/" hreflang="es" lang="es">
-              <svg class="language-dropdown__flag" viewBox="0 0 3 2" aria-hidden="true"><path fill="#aa151b" d="M0 0h3v2H0z"/><path fill="#f1bf00" d="M0 .5h3v1H0z"/></svg>
-              <span>Español</span>
-            </a>
-          </div>
-        </div>
+    <SiteHeader />
 
-        <div class="site-menu">
-          <button class="site-menu__trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="site-menu-dropdown">
-            Menu
-          </button>
-          <div class="site-menu__dropdown" id="site-menu-dropdown" hidden>
-            <nav class="site-menu__destinations" aria-label="Choose a country">
-              {countryNavigation.map((country) => (
-                <a
-                  class:list={[
-                    'site-menu__destination',
-                    `site-menu__destination--${country.slug}`,
-                    { 'is-active': currentPath.startsWith(`/${country.slug}`), 'is-coming-soon': country.status !== 'open' }
-                  ]}
-                  href={country.href}
-                  aria-current={currentPath.startsWith(`/${country.slug}`) ? 'page' : undefined}
-                >
-                  {country.name}
-                </a>
-              ))}
-            </nav>
-          </div>
-        </div>
-      </div>
-
-      <a class="site-logo" href="/" aria-label="ThingsToDoAtlas home">
-        <img src="/images/branding/things-to-do-atlas-stamp-transparent.webp" alt="ThingsToDoAtlas" width="512" height="512" />
-      </a>
-    </header>
-
-    <main id="main-content"><slot /></main>
+    <main id="main-content">
+      <slot />
+    </main>
 
     <TripDrawer />
     <TripPageContext />
     <TripManager />
     <TripSummaryModal />
 
-    <footer class="site-footer">
-      <div><a class="wordmark" href="/">Things<span>ToDo</span>Atlas</a><p>A practical atlas for places worth your time.</p></div>
-      <small>Built for the curious. Chapters open as they are ready.</small>
-    </footer>
-    <nav class="bottom-country-bar" aria-label="Country chapters">
-      {countryNavigation.map((country) => (
-        <a
-          class:list={[
-            `bottom-country-bar__link--${country.slug}`,
-            { 'is-active': currentPath.startsWith(`/${country.slug}`), 'is-coming-soon': country.status !== 'open' }
-          ]}
-          href={country.href}
-          aria-current={currentPath.startsWith(`/${country.slug}`) ? 'page' : undefined}
-        >
-          {country.name}
-        </a>
-      ))}
-    </nav>
-
-    <script is:inline>
-      const languageButton = document.querySelector('.language-switcher');
-      const languageDropdown = document.querySelector('.language-dropdown');
-      if (languageButton && languageDropdown) {
-        const closeLanguageMenu = () => {
-          languageDropdown.hidden = true;
-          languageButton.setAttribute('aria-expanded', 'false');
-        };
-        languageButton.addEventListener('click', (event) => {
-          event.stopPropagation();
-          const willOpen = languageDropdown.hidden;
-          languageDropdown.hidden = !willOpen;
-          languageButton.setAttribute('aria-expanded', String(willOpen));
-        });
-        document.addEventListener('click', (event) => {
-          const target = event.target;
-          if (!(target instanceof Element) || !target.closest('.language-menu')) closeLanguageMenu();
-        });
-        document.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape') closeLanguageMenu();
-        });
-      }
-
-      const siteMenuButton = document.querySelector('.site-menu__trigger');
-      const siteMenuDropdown = document.querySelector('.site-menu__dropdown');
-      if (siteMenuButton && siteMenuDropdown) {
-        const closeSiteMenu = () => {
-          siteMenuDropdown.hidden = true;
-          siteMenuButton.setAttribute('aria-expanded', 'false');
-        };
-        siteMenuButton.addEventListener('click', (event) => {
-          event.stopPropagation();
-          const willOpen = siteMenuDropdown.hidden;
-          siteMenuDropdown.hidden = !willOpen;
-          siteMenuButton.setAttribute('aria-expanded', String(willOpen));
-        });
-        document.addEventListener('click', (event) => {
-          const target = event.target;
-          if (!(target instanceof Element) || !target.closest('.site-menu')) closeSiteMenu();
-        });
-        document.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape') closeSiteMenu();
-        });
-      }
-    </script>
+    <SiteFooter />
   </body>
 </html>
-
-<style is:global>
-  .skip-link {
-    position: fixed;
-    z-index: 100;
-    top: .75rem;
-    left: .75rem;
-    padding: .65rem .85rem;
-    background: #315545;
-    color: #fffdf8;
-    transform: translateY(-180%);
-  }
-  .skip-link:focus { transform: translateY(0); }
-  .language-menu { position: relative; z-index: 20; }
-  .language-switcher { display: inline-flex; align-items: center; gap: 6px; padding: 4px 2px; border: 0; background: transparent; color: currentColor; cursor: pointer; }
-  .language-switcher__flag, .language-dropdown__flag { display: block; width: 24px; height: 16px; border: 1px solid rgba(28, 35, 31, .22); box-shadow: 0 1px 2px rgba(28, 35, 31, .08); flex: 0 0 auto; }
-  .language-switcher__arrow { display: block; width: 9px; height: 6px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s ease; }
-  .language-switcher[aria-expanded="true"] .language-switcher__arrow { transform: rotate(180deg); }
-  .language-dropdown { position: absolute; top: calc(100% + 8px); left: 0; min-width: 132px; padding: 6px; border: 1px solid rgba(28, 35, 31, .16); background: #f4f0e5; box-shadow: 0 12px 30px rgba(28, 35, 31, .14); }
-  .language-dropdown[hidden] { display: none; }
-  .language-dropdown__item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; color: inherit; text-decoration: none; font-size: .82rem; letter-spacing: .03em; white-space: nowrap; }
-  .language-dropdown__item:hover, .language-dropdown__item:focus-visible { background: rgba(28, 35, 31, .07); outline: none; }
-
-  .header-navigation { display: flex; align-items: center; gap: clamp(18px, 2vw, 30px); min-width: 0; }
-  .site-header > .site-logo { margin-left: auto; margin-right: 0; }
-  .site-header > .site-logo img { object-position: right center; }
-
-  .site-menu { position: relative; z-index: 20; }
-  .site-menu__trigger {
-    display: inline-flex;
-    align-items: center;
-    padding: 4px 1px;
-    border: 0;
-    background: transparent;
-    color: var(--ink);
-    cursor: pointer;
-    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
-    font-size: 1.28rem;
-    font-weight: 600;
-    line-height: 1;
-    letter-spacing: .015em;
-    transition: color .2s ease, transform .2s ease;
-  }
-  .site-menu__trigger:hover,
-  .site-menu__trigger:focus-visible,
-  .site-menu__trigger[aria-expanded="true"] {
-    color: var(--green);
-    outline: none;
-    transform: translateY(-1px) rotate(1deg);
-  }
-  .site-menu__dropdown {
-    position: absolute;
-    top: calc(100% + 13px);
-    left: -12px;
-    width: 190px;
-    padding: 22px 22px 20px;
-    border: 1px solid rgba(31, 57, 45, .2);
-    background: #f4f0e5;
-    box-shadow: 0 14px 32px rgba(28, 35, 31, .14);
-    transform: rotate(-.4deg);
-  }
-  .site-menu__dropdown::before {
-    content: '';
-    position: absolute;
-    inset: 8px;
-    border: 1px dashed rgba(31, 57, 45, .12);
-    pointer-events: none;
-  }
-  .site-menu__dropdown[hidden] { display: none; }
-  .site-menu__destinations {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    justify-items: start;
-    gap: 14px;
-  }
-  .site-menu__destination {
-    position: relative;
-    display: inline-block;
-    padding: 1px 0 7px;
-    color: var(--ink);
-    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
-    font-size: 1.32rem;
-    font-weight: 600;
-    line-height: 1;
-    letter-spacing: .015em;
-    transition: color .2s ease, transform .2s ease;
-  }
-  .site-menu__destination::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 26px;
-    height: 3px;
-    border-radius: 999px;
-    background: currentColor;
-    opacity: .82;
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform .2s ease;
-  }
-  .site-menu__destination:hover,
-  .site-menu__destination:focus-visible,
-  .site-menu__destination.is-active {
-    outline: none;
-    transform: translateX(2px) rotate(-1deg);
-  }
-  .site-menu__destination:hover::after,
-  .site-menu__destination:focus-visible::after,
-  .site-menu__destination.is-active::after { transform: scaleX(1); }
-  .site-menu__destination--thailand:hover,
-  .site-menu__destination--thailand:focus-visible,
-  .site-menu__destination--thailand.is-active { color: #3478b8; }
-  .site-menu__destination--sri-lanka:hover,
-  .site-menu__destination--sri-lanka:focus-visible,
-  .site-menu__destination--sri-lanka.is-active { color: #d27b35; }
-  .site-menu__destination--laos:hover,
-  .site-menu__destination--laos:focus-visible,
-  .site-menu__destination--laos.is-active { color: #b7473b; }
-  .site-menu__destination.is-coming-soon { color: var(--muted); }
-
-  @media (max-width: 700px) {
-    .header-navigation { gap: 14px; min-width: 0; }
-    .language-switcher__flag, .language-dropdown__flag { width: 21px; height: 14px; }
-    .language-switcher__arrow { width: 8px; }
-    .site-menu__trigger { font-size: 1.16rem; }
-    .site-menu__dropdown { top: calc(100% + 16px); left: -4px; width: 172px; padding: 20px; }
-    .site-menu__destination { font-size: 1.2rem; }
-    .bottom-country-bar a {
-      font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
-      font-size: 1.08rem;
-      font-weight: 600;
-      line-height: 1;
-      text-transform: none;
-      letter-spacing: .015em;
-    }
-    .bottom-country-bar a.bottom-country-bar__link--thailand:hover,
-    .bottom-country-bar a.bottom-country-bar__link--thailand:focus-visible,
-    .bottom-country-bar a.bottom-country-bar__link--thailand.is-active { color: #78b8ec; }
-    .bottom-country-bar a.bottom-country-bar__link--sri-lanka:hover,
-    .bottom-country-bar a.bottom-country-bar__link--sri-lanka:focus-visible,
-    .bottom-country-bar a.bottom-country-bar__link--sri-lanka.is-active { color: #f2ad70; }
-    .bottom-country-bar a.bottom-country-bar__link--laos:hover,
-    .bottom-country-bar a.bottom-country-bar__link--laos:focus-visible,
-    .bottom-country-bar a.bottom-country-bar__link--laos.is-active { color: #ef8b80; }
-    .bottom-country-bar__link--thailand.is-active::after { background: #78b8ec !important; }
-    .bottom-country-bar__link--sri-lanka.is-active::after { background: #f2ad70 !important; }
-    .bottom-country-bar__link--laos.is-active::after { background: #ef8b80 !important; }
-  }
-</style>
