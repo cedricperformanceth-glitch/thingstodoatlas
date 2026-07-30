@@ -49,9 +49,9 @@
   max-width: 230px;
   object-fit: contain !important;
   object-position: left top !important;
-  filter: brightness(0) invert(1) !important;
+  filter: none !important;
   visibility: visible !important;
-  opacity: .94 !important;
+  opacity: 1 !important;
 }
 
 #atlas-global-footer .atlas-footer__content {
