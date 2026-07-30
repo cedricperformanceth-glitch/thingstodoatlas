@@ -71,6 +71,20 @@
   filter: none !important;
 }
 
+@media (min-width: 701px) {
+  .intro-band .intro-band__hand-note {
+    position: absolute !important;
+    left: -45px !important;
+    top: 145px !important;
+    width: max-content;
+    margin-left: 0 !important;
+    transform: rotate(-40deg) !important;
+    transform-origin: center bottom;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
 @media (max-width: 700px) {
   .atlas-header__logo.site-logo {
     width: 160px;
