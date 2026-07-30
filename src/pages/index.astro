@@ -49,7 +49,6 @@ const homepageCountryChapters = homepageCountries.map((country, index) => index 
       </aside>
       <div class="intro-band__main">
         <h2 id="intro-title">Your journey comes together<br /><em>as you explore.</em></h2>
-        <p class="intro-band__description">Discover places naturally, keep the ones that catch your attention, and find them later in one simple trip summary.</p>
         <div class="journey-sequence" aria-label="How your journey grows">
           <div class="journey-step"><span class="journey-step__mark" aria-hidden="true">↗</span><strong>Explore</strong><small>Find what feels right</small></div>
           <div class="journey-step"><span class="journey-step__mark" aria-hidden="true">+</span><strong>Save</strong><small>Add it to My Trip</small></div>
@@ -158,6 +157,8 @@ const homepageCountryChapters = homepageCountries.map((country, index) => index 
 
   <style>
     :global(#country-thailand .country-feature__copy::after){display:none;content:none}
+    :global(.intro-band__green-notebook){transform:translateY(70px)}
+    :global(.intro-band__hand-note){transform:translateY(70px) rotate(-5deg)}
     .journey-transition__line{top:58%;transform:rotate(-8deg)}
     .journey-transition__stamp{transform:translateY(28px) rotate(-9deg)}
     .journey-transition__message{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;background:var(--paper-deep);padding:0 22px}
