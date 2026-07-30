@@ -1,0 +1,321 @@
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: .75rem;
+  left: .75rem;
+  padding: .65rem .85rem;
+  background: #315545;
+  color: #fffdf8;
+  transform: translateY(-180%);
+}
+
+.skip-link:focus { transform: translateY(0); }
+
+.atlas-header {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(1280px, calc(100% - 48px));
+  height: 76px;
+  margin: auto;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.atlas-header__navigation {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 2vw, 30px);
+  min-width: 0;
+}
+
+.atlas-header__logo {
+  display: flex;
+  align-items: center;
+  width: 210px;
+  height: 64px;
+  margin-left: auto;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+
+.atlas-header__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: right center;
+}
+
+.language-menu,
+.site-menu {
+  position: relative;
+  z-index: 20;
+}
+
+.language-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 2px;
+  border: 0;
+  background: transparent;
+  color: currentColor;
+  cursor: pointer;
+}
+
+.language-switcher__flag,
+.language-dropdown__flag {
+  display: block;
+  width: 24px;
+  height: 16px;
+  border: 1px solid rgba(28, 35, 31, .22);
+  box-shadow: 0 1px 2px rgba(28, 35, 31, .08);
+  flex: 0 0 auto;
+}
+
+.language-switcher__arrow {
+  display: block;
+  width: 9px;
+  height: 6px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform .2s ease;
+}
+
+.language-switcher[aria-expanded='true'] .language-switcher__arrow { transform: rotate(180deg); }
+
+.language-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 132px;
+  padding: 6px;
+  border: 1px solid rgba(28, 35, 31, .16);
+  background: #f4f0e5;
+  box-shadow: 0 12px 30px rgba(28, 35, 31, .14);
+}
+
+.language-dropdown[hidden],
+.site-menu__dropdown[hidden] { display: none; }
+
+.language-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  color: inherit;
+  text-decoration: none;
+  font-size: .82rem;
+  letter-spacing: .03em;
+  white-space: nowrap;
+}
+
+.language-dropdown__item:hover,
+.language-dropdown__item:focus-visible {
+  background: rgba(28, 35, 31, .07);
+  outline: none;
+}
+
+.site-menu__trigger {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 1px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+  font-size: 1.28rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .015em;
+  transition: color .2s ease, transform .2s ease;
+}
+
+.site-menu__trigger:hover,
+.site-menu__trigger:focus-visible,
+.site-menu__trigger[aria-expanded='true'] {
+  color: var(--green);
+  outline: none;
+  transform: translateY(-1px) rotate(1deg);
+}
+
+.site-menu__dropdown {
+  position: absolute;
+  top: calc(100% + 13px);
+  left: -12px;
+  width: 190px;
+  padding: 22px 22px 20px;
+  border: 1px solid rgba(31, 57, 45, .2);
+  background: #f4f0e5;
+  box-shadow: 0 14px 32px rgba(28, 35, 31, .14);
+  transform: rotate(-.4deg);
+}
+
+.site-menu__dropdown::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px dashed rgba(31, 57, 45, .12);
+  pointer-events: none;
+}
+
+.site-menu__destinations {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+}
+
+.site-menu__destination {
+  position: relative;
+  display: inline-block;
+  padding: 1px 0 7px;
+  color: var(--ink);
+  font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+  font-size: 1.32rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .015em;
+  transition: color .2s ease, transform .2s ease;
+}
+
+.site-menu__destination::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 26px;
+  height: 3px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: .82;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .2s ease;
+}
+
+.site-menu__destination:hover,
+.site-menu__destination:focus-visible,
+.site-menu__destination.is-active {
+  outline: none;
+  transform: translateX(2px) rotate(-1deg);
+}
+
+.site-menu__destination:hover::after,
+.site-menu__destination:focus-visible::after,
+.site-menu__destination.is-active::after { transform: scaleX(1); }
+
+.site-menu__destination--thailand:hover,
+.site-menu__destination--thailand:focus-visible,
+.site-menu__destination--thailand.is-active { color: #3478b8; }
+
+.site-menu__destination--sri-lanka:hover,
+.site-menu__destination--sri-lanka:focus-visible,
+.site-menu__destination--sri-lanka.is-active { color: #d27b35; }
+
+.site-menu__destination--laos:hover,
+.site-menu__destination--laos:focus-visible,
+.site-menu__destination--laos.is-active { color: #b7473b; }
+
+.site-menu__destination.is-coming-soon { color: var(--muted); }
+
+.atlas-mobile-nav { display: none; }
+
+@media (max-width: 700px) {
+  body { padding-bottom: 64px; }
+
+  .atlas-header {
+    width: calc(100% - 32px);
+    height: 64px;
+  }
+
+  .atlas-header__navigation { gap: 14px; }
+
+  .atlas-header__logo {
+    width: 160px;
+    height: 54px;
+  }
+
+  .language-switcher__flag,
+  .language-dropdown__flag {
+    width: 21px;
+    height: 14px;
+  }
+
+  .language-switcher__arrow { width: 8px; }
+  .site-menu__trigger { font-size: 1.16rem; }
+
+  .site-menu__dropdown {
+    top: calc(100% + 16px);
+    left: -4px;
+    width: 172px;
+    padding: 20px;
+  }
+
+  .site-menu__destination { font-size: 1.2rem; }
+
+  .atlas-mobile-nav {
+    position: fixed;
+    z-index: 25;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    height: 64px;
+    padding: 0 16px;
+    background: var(--green-dark);
+    color: var(--white);
+    box-shadow: 0 -6px 20px rgba(32, 60, 49, .12);
+  }
+
+  .atlas-mobile-nav a {
+    position: relative;
+    min-width: 88px;
+    padding: 11px 3px;
+    text-align: center;
+    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: 1.08rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: .015em;
+  }
+
+  .atlas-mobile-nav a.is-active::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 4px;
+    left: 0;
+    height: 2px;
+  }
+
+  .atlas-mobile-nav__link--thailand:hover,
+  .atlas-mobile-nav__link--thailand:focus-visible,
+  .atlas-mobile-nav__link--thailand.is-active { color: #78b8ec; }
+
+  .atlas-mobile-nav__link--sri-lanka:hover,
+  .atlas-mobile-nav__link--sri-lanka:focus-visible,
+  .atlas-mobile-nav__link--sri-lanka.is-active { color: #f2ad70; }
+
+  .atlas-mobile-nav__link--laos:hover,
+  .atlas-mobile-nav__link--laos:focus-visible,
+  .atlas-mobile-nav__link--laos.is-active { color: #ef8b80; }
+
+  .atlas-mobile-nav__link--thailand.is-active::after { background: #78b8ec; }
+  .atlas-mobile-nav__link--sri-lanka.is-active::after { background: #f2ad70; }
+  .atlas-mobile-nav__link--laos.is-active::after { background: #ef8b80; }
+}
