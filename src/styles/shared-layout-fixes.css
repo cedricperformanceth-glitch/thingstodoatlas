@@ -48,6 +48,16 @@
   filter: none !important;
 }
 
+/* Country map titles */
+.laos-map-page[aria-labelledby='laos-map-title'] .map-sheet__title,
+.country-map--thailand .country-map__title-block h1 {
+  color: #C86443 !important;
+}
+
+.laos-map-page[aria-labelledby='sri-lanka-map-title'] .map-sheet__title {
+  fill: #C86443 !important;
+}
+
 /* Homepage final CTA: light sage paper palette. */
 .journey-transition {
   --paper-deep: #dce3d7;
