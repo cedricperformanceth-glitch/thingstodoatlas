@@ -22,7 +22,7 @@ type ImageablePlace = {
   imageIsGeneric?: boolean;
 };
 
-const isLocalImage = (image: string) => image.startsWith('/images/');
+const isLocalImage = (image: string) => image.startsWith('/images/places/');
 const isApproved = (result?: ImageResult): result is ImageResult & { slug: string; selectedImage: string } =>
   Boolean(result?.slug && result.selectedImage && result.status === 'approved');
 
@@ -66,12 +66,13 @@ export const resolvePlaceImage = <T extends ImageablePlace>(place: T): T => {
   const candidate = imageBySlug.get(place.slug);
   if (!candidate?.selectedImage) return place;
 
-  // A local asset is editorially final. Candidate registries may complement
-  // data, but must never replace an explicitly stored image.
-  if (isLocalImage(place.image)) return place;
+  // Keep this user-supplied Tad Lo photo set isolated from the shared resolver.
+  // All other places retain their existing candidate-resolution behaviour.
+  if (place.image.startsWith('/images/tad-lo/')) return place;
 
-  // A generic candidate cannot displace an exact image already declared in data.
-  if (candidate.imageIsGeneric && place.imageIsGeneric === false) return place;
+  // A generic candidate cannot displace a local or exact image already
+  // declared in atlas.ts. This preserves the authored fallback as required.
+  if (candidate.imageIsGeneric && (isLocalImage(place.image) || place.imageIsGeneric === false)) return place;
 
   return {
     ...place,
