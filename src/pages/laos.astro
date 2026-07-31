@@ -13,7 +13,7 @@ const mapLandmarks = [...laosLandmarks, thamNangAenLandmark];
 const pakse = { x: 679, y: 1024 };
 const vientiane = { x: 384, y: 657 };
 const tadLo = { x: 736, y: 970 };
-const thakhek = { x: 555, y: 850 };
+const thakhek = { x: 562, y: 850 };
 const thamNangAen = { x: 605, y: 850 };
 const donDet = { x: 696, y: 1152 };
 const luangPrabang = { x: 356, y: 576 };
@@ -83,8 +83,8 @@ const hmongCulture = { x: 258, y: 404 };
           <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Tham Nang Aen Cave landmark details" data-open-landmark="tham-nang-aen-modal">
             <circle class="city-marker__ring" cx={thamNangAen.x} cy={thamNangAen.y} r="20"/>
             <circle class="city-marker__dot" cx={thamNangAen.x} cy={thamNangAen.y} r="8"/>
-            <path class="city-marker__leader" d={`M${thamNangAen.x + 12} ${thamNangAen.y + 8} L${thamNangAen.x + 53} ${thamNangAen.y + 40}`}/>
-            <text class="city-marker__label city-marker__label--landmark" x={thamNangAen.x + 61} y={thamNangAen.y + 53}>Tham Nang Aen</text>
+            <path class="city-marker__leader" d={`M${thamNangAen.x - 12} ${thamNangAen.y + 8} L${thamNangAen.x - 53} ${thamNangAen.y + 40}`}/>
+            <text class="city-marker__label city-marker__label--left city-marker__label--landmark" x={thamNangAen.x - 61} y={thamNangAen.y + 53}>Tham Nang Aen</text>
           </g>
           <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Pha Pa Tou landmark details" data-open-landmark="pha-pa-tou-modal"><circle class="city-marker__ring" cx={phaPaTou.x} cy={phaPaTou.y} r="20"/><circle class="city-marker__dot" cx={phaPaTou.x} cy={phaPaTou.y} r="8"/><path class="city-marker__leader" d={`M${phaPaTou.x + 12} ${phaPaTou.y} L${phaPaTou.x + 74} ${phaPaTou.y}`}/><text class="city-marker__label city-marker__label--landmark" x={phaPaTou.x + 82} y={phaPaTou.y + 8}>Pha Pa Tou</text></g>
           <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Kong Lor Cave landmark details" data-open-landmark="kong-lor-modal"><circle class="city-marker__ring" cx={kongLor.x} cy={kongLor.y} r="20"/><circle class="city-marker__dot" cx={kongLor.x} cy={kongLor.y} r="8"/><path class="city-marker__leader" d={`M${kongLor.x + 12} ${kongLor.y} L${kongLor.x + 74} ${kongLor.y}`}/><text class="city-marker__label city-marker__label--landmark" x={kongLor.x + 82} y={kongLor.y + 8}>Kong Lor</text></g>
