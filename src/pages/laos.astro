@@ -93,8 +93,8 @@ const hmongCulture = { x: 258, y: 404 };
           <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Vang Vieng guide coming soon">
             <circle class="city-marker__ring" cx={vangVieng.x} cy={vangVieng.y} r="22"/>
             <circle class="city-marker__dot" cx={vangVieng.x} cy={vangVieng.y} r="9"/>
-            <path class="city-marker__leader" d={`M${vangVieng.x + 15} ${vangVieng.y - 4} L${vangVieng.x + 63} ${vangVieng.y - 22}`}/>
-            <text class="city-marker__label" x={vangVieng.x + 71} y={vangVieng.y - 27}>Vang Vieng</text>
+            <path class="city-marker__leader" d={`M${vangVieng.x - 15} ${vangVieng.y - 4} L${vangVieng.x - 63} ${vangVieng.y - 22}`}/>
+            <text class="city-marker__label city-marker__label--left" x={vangVieng.x - 71} y={vangVieng.y - 27}>Vang Vieng</text>
           </g>
 
           <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Vientiane guide coming soon"><circle class="city-marker__ring" cx={vientiane.x} cy={vientiane.y} r="22"/><circle class="city-marker__dot" cx={vientiane.x} cy={vientiane.y} r="9"/><path class="city-marker__leader" d={`M${vientiane.x - 15} ${vientiane.y + 4} L${vientiane.x - 76} ${vientiane.y + 65}`}/><text class="city-marker__label city-marker__label--left" x={vientiane.x - 84} y={vientiane.y + 73}>Vientiane</text><foreignObject class="city-preview" x="34" y="830" width="470" height="430"><div class="city-note city-note--vientiane" xmlns="http://www.w3.org/1999/xhtml"><span class="city-note__tape" aria-hidden="true"></span><img src="/images/laos/vientiane.webp" alt="Vientiane, Laos"/><div class="city-note__body"><span class="city-note__badge">Field notes underway</span><strong>Vientiane</strong><p>This chapter is currently being documented. Local addresses and practical notes are on the way.</p><small>Available soon.</small></div></div></foreignObject></g>
