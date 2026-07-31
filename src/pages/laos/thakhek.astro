@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CityLandmarkSection from '../../components/CityLandmarkSection.astro';
+import LandmarkModalSet from '../../components/LandmarkModalSet.astro';
+import { thakhekLandmarks } from '../../data/thakhekLandmarks';
+---
+
+<BaseLayout
+  title="Things to do in Thakhek, Laos"
+  description="Use Thakhek as a base for Kong Lor Cave, Xe Bang Fai Cave and Tham Nang Aen Cave, with field notes for planning the cave roads of Khammouane."
+  canonical="https://thingstodoatlas.com/laos/thakhek"
+>
+  <main class="thakhek-page">
+    <section class="thakhek-hero" aria-labelledby="thakhek-title">
+      <a class="thakhek-hero__back" href="/laos">← Back to the Laos map</a>
+
+      <div class="thakhek-hero__copy">
+        <p class="thakhek-hero__eyebrow">LAOS · CHAPTER 02</p>
+        <h1 id="thakhek-title">Thakhek</h1>
+        <p class="thakhek-hero__lede">A Mekong town that becomes a starting line: limestone roads, cave country and the long arc of the Thakhek Loop.</p>
+        <div class="thakhek-hero__meta" aria-label="Thakhek notebook information">
+          <span>Khammouane Province</span>
+          <span>Mekong river town</span>
+          <span>Cave-road base</span>
+          <span>Loop gateway</span>
+        </div>
+        <span class="thakhek-hero__field-note">FIELD NOTE — old streets · limestone roads beginning east</span>
+      </div>
+
+      <figure class="thakhek-hero__visual">
+        <span class="thakhek-hero__tape" aria-hidden="true"></span>
+        <span class="thakhek-hero__stamp" aria-hidden="true">THAKHEK<br />KHAMMOUANE</span>
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:Redirect/file/ThaKhek_%40Mekong-2010.jpg?width=1600"
+          alt="Thakhek seen from the Mekong River in central Laos"
+          width="1600"
+          height="970"
+          fetchpriority="high"
+        />
+        <figcaption>
+          Mekong light before the road turns east ·
+          <a href="https://commons.wikimedia.org/wiki/File:ThaKhek_@Mekong-2010.jpg" target="_blank" rel="noreferrer">BacLuong / Wikimedia Commons</a>
+        </figcaption>
+      </figure>
+
+      <aside class="thakhek-hero__route-note" aria-label="Thakhek route note">
+        <span class="thakhek-hero__route-tape" aria-hidden="true"></span>
+        <p>ROUTE NOTE · KHAMMOUANE</p>
+        <strong>Three caves, three very different journeys.</strong>
+        <span>Begin close to town at Tham Nang Aen, carry the loop toward Kong Lor, and treat Xe Bang Fai as the remote expedition.</span>
+      </aside>
+    </section>
+
+    <CityLandmarkSection
+      cityName="Thakhek"
+      eyebrow="THAKHEK · THREE CAVE FIELD NOTES"
+      title="Begin where the road enters the limestone"
+      landmarks={thakhekLandmarks}
+      asideTitle="A town designed around the journey beyond it"
+      asideParagraphs={[
+        'Thakhek is the practical base. The real scale of Khammouane appears after the road leaves the Mekong and begins moving through karst mountains, villages and cave systems.',
+        'Tham Nang Aen is the easy first stop, Kong Lor anchors the classic loop, and Xe Bang Fai belongs to a more remote expedition with local planning.'
+      ]}
+      asideNote="Choose the cave by distance and difficulty, not only by the photograph."
+    />
+  </main>
+  <LandmarkModalSet landmarks={thakhekLandmarks} />
+</BaseLayout>
+
+<style>
+  .thakhek-page{min-height:100vh;background:#f2eee3;color:#1f2924}
+  .thakhek-hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(19rem,31rem);gap:clamp(2rem,6vw,6rem);align-items:center;width:min(1180px,calc(100% - 2.5rem));margin:0 auto;padding:clamp(6rem,9vw,8rem) 0 clamp(2.8rem,5vw,4.8rem)}
+  .thakhek-hero__back{position:absolute;top:clamp(5.15rem,7vw,6.2rem);right:0;color:rgba(31,57,45,.62);font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .thakhek-hero__copy{position:relative;z-index:2;max-width:34rem;padding-top:1.25rem}
+  .thakhek-hero__eyebrow{margin:0 0 .7rem;color:#8a4d36;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+  .thakhek-hero h1{width:max-content;margin:0;color:#1f392d;font:400 clamp(4.2rem,9vw,7.3rem)/.84 Georgia,'Times New Roman',serif;letter-spacing:-.07em}
+  .thakhek-hero__lede{max-width:33rem;margin:clamp(1.1rem,2vw,1.55rem) 0 0;color:#3f4943;font:400 clamp(1rem,1.5vw,1.2rem)/1.55 Georgia,'Times New Roman',serif}
+  .thakhek-hero__meta{display:grid;grid-template-columns:repeat(2,minmax(0,max-content));gap:.45rem 1.1rem;margin-top:1.15rem;color:rgba(31,57,45,.72);font:600 .68rem/1.25 'Segoe Print','Bradley Hand',cursive}
+  .thakhek-hero__meta span{white-space:nowrap}
+  .thakhek-hero__field-note{display:inline-block;margin-top:1rem;color:rgba(31,57,45,.62);font:500 clamp(.72rem,.9vw,.82rem)/1.25 'Segoe Print','Bradley Hand',cursive;letter-spacing:.035em;transform:rotate(-1.4deg)}
+  .thakhek-hero__visual{position:relative;margin:2rem 0 0;padding:.48rem .48rem 1.55rem;background:#fbf8f0;box-shadow:0 12px 28px rgba(38,45,40,.11);transform:rotate(.65deg)}
+  .thakhek-hero__visual img{display:block;width:100%;height:clamp(15rem,28vw,22rem);object-fit:cover;object-position:center 58%;filter:saturate(.82) contrast(.96)}
+  .thakhek-hero__visual figcaption{position:absolute;left:.75rem;right:.75rem;bottom:.38rem;color:rgba(31,41,36,.62);font:500 .56rem/1.2 'Segoe Print','Bradley Hand',cursive}
+  .thakhek-hero__visual figcaption a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+  .thakhek-hero__tape{position:absolute;z-index:2;top:-.45rem;left:44%;width:4.5rem;height:1rem;background:rgba(196,177,139,.52);transform:translateX(-50%) rotate(-4deg)}
+  .thakhek-hero__stamp{position:absolute;z-index:2;top:1rem;right:-1.1rem;display:grid;place-items:center;width:4rem;height:4rem;border:1px solid rgba(138,77,54,.42);border-radius:50%;color:rgba(138,77,54,.62);font-size:.47rem;font-weight:700;letter-spacing:.08em;line-height:1.25;text-align:center;transform:rotate(8deg)}
+  .thakhek-hero__stamp::after{content:'';position:absolute;inset:.28rem;border:1px dashed currentColor;border-radius:50%;opacity:.55}
+  .thakhek-hero__route-note{position:absolute;left:clamp(15rem,28vw,25rem);bottom:.4rem;width:min(22rem,40%);padding:1rem 1.15rem;border:1px solid rgba(31,57,45,.2);background:rgba(247,242,230,.9);box-shadow:0 7px 18px rgba(31,41,36,.045);transform:rotate(-.8deg)}
+  .thakhek-hero__route-note p{margin:0 0 .4rem;color:#8a4d36;font-size:.5rem;font-weight:800;letter-spacing:.16em}
+  .thakhek-hero__route-note strong{display:block;color:#315545;font:500 1rem/1.18 Georgia,'Times New Roman',serif}
+  .thakhek-hero__route-note>span:not(.thakhek-hero__route-tape){display:block;margin-top:.45rem;color:rgba(31,41,36,.7);font:500 .68rem/1.45 'Segoe Print','Bradley Hand',cursive}
+  .thakhek-hero__route-tape{position:absolute;top:-.42rem;right:1.6rem;width:3.8rem;height:.82rem;background:rgba(205,190,157,.58);transform:rotate(3deg)}
+  @media(max-width:860px){
+    .thakhek-hero{grid-template-columns:1fr;gap:1rem;padding-top:5.3rem;padding-bottom:3rem}
+    .thakhek-hero__back{top:4.4rem}
+    .thakhek-hero__copy{max-width:39rem;padding-top:0}
+    .thakhek-hero__visual{width:min(100%,36rem);margin:1rem auto 0}
+    .thakhek-hero__route-note{position:relative;left:auto;bottom:auto;width:min(100%,32rem);margin:-.5rem 0 0 auto}
+  }
+  @media(max-width:560px){
+    .thakhek-hero{width:min(100% - 2rem,1180px);padding-top:4.9rem;padding-bottom:2.5rem}
+    .thakhek-hero__back{top:4.05rem;font-size:.52rem;letter-spacing:.075em}
+    .thakhek-hero h1{font-size:clamp(4rem,22vw,5.7rem)}
+    .thakhek-hero__meta{grid-template-columns:1fr 1fr;gap:.4rem .7rem;font-size:.62rem}
+    .thakhek-hero__visual img{height:12.5rem}
+    .thakhek-hero__stamp{right:-.4rem}
+    .thakhek-hero__route-note{width:100%;margin-top:.25rem}
+  }
+</style>
