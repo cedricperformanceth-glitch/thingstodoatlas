@@ -17,7 +17,7 @@ const tadLo = { x: 736, y: 970 };
 const thakhek = { x: 562, y: 850 };
 const thamNangAen = { x: 605, y: 850 };
 const donDet = { x: 696, y: 1152 };
-const luangPrabang = { x: 356, y: 576 };
+const luangPrabang = { x: 356, y: 566 };
 const bolavenPlateau = { x: 800, y: 930 };
 const watPhou = { x: 586, y: 1060 };
 const khonePhapheng = { x: 696, y: 1188 };
@@ -87,7 +87,14 @@ const hmongCulture = { x: 258, y: 404 };
             <path class="city-marker__leader" d={`M${thamNangAen.x - 12} ${thamNangAen.y + 8} L${thamNangAen.x - 53} ${thamNangAen.y + 40}`}/>
             <text class="city-marker__label city-marker__label--left city-marker__label--landmark" x={thamNangAen.x - 61} y={thamNangAen.y + 53}>Tham Nang Aen</text>
           </g>
-          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Pha Pa Tou landmark details" data-open-landmark="pha-pa-tou-modal"><circle class="city-marker__ring" cx={phaPaTou.x} cy={phaPaTou.y} r="20"/><circle class="city-marker__dot" cx={phaPaTou.x} cy={phaPaTou.y} r="8"/><path class="city-marker__leader" d={`M${phaPaTou.x - 19} ${phaPaTou.y + 6} L${phaPaTou.x - 74} ${phaPaTou.y + 16}`}/><text class="city-marker__label city-marker__label--left city-marker__label--landmark" x={phaPaTou.x - 82} y={phaPaTou.y + 21}>Pha Pa Tou</text></g>
+
+          <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Pha Pa Tou landmark details" data-open-landmark="pha-pa-tou-modal">
+            <circle class="city-marker__ring" cx={phaPaTou.x} cy={phaPaTou.y} r="20"/>
+            <circle class="city-marker__dot" cx={phaPaTou.x} cy={phaPaTou.y} r="8"/>
+            <path class="city-marker__leader" d={`M${phaPaTou.x - 14} ${phaPaTou.y - 14} L${phaPaTou.x - 49} ${phaPaTou.y - 49}`}/>
+            <text class="city-marker__label city-marker__label--left city-marker__label--landmark" x={phaPaTou.x - 57} y={phaPaTou.y - 54}>Pha Pa Tou</text>
+          </g>
+
           <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Kong Lor Cave landmark details" data-open-landmark="kong-lor-modal"><circle class="city-marker__ring" cx={kongLor.x} cy={kongLor.y} r="20"/><circle class="city-marker__dot" cx={kongLor.x} cy={kongLor.y} r="8"/><path class="city-marker__leader" d={`M${kongLor.x + 17} ${kongLor.y - 7} L${kongLor.x + 74} ${kongLor.y - 22}`}/><text class="city-marker__label city-marker__label--landmark" x={kongLor.x + 82} y={kongLor.y - 27}>Kong Lor</text></g>
 
           <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Vang Vieng guide coming soon">
@@ -103,7 +110,13 @@ const hmongCulture = { x: 258, y: 404 };
 
           <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Don Det guide coming soon"><circle class="city-marker__ring" cx={donDet.x} cy={donDet.y} r="22"/><circle class="city-marker__dot" cx={donDet.x} cy={donDet.y} r="9"/><path class="city-marker__leader" d={`M${donDet.x + 15} ${donDet.y + 2} L${donDet.x + 76} ${donDet.y + 18}`}/><text class="city-marker__label" x={donDet.x + 84} y={donDet.y + 27}>Don Det</text><foreignObject class="city-preview" x="34" y="830" width="470" height="430"><div class="city-note city-note--dondet" xmlns="http://www.w3.org/1999/xhtml"><span class="city-note__tape" aria-hidden="true"></span><img src="/images/laos/don-det.webp" alt="Don Det, Laos"/><div class="city-note__body"><span class="city-note__badge">Next chapter</span><strong>Don Det</strong><p>The island guide is still taking shape, with places, routes and riverside notes to come.</p><small>Work in progress.</small></div></div></foreignObject></g>
 
-          <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Luang Prabang guide coming soon"><circle class="city-marker__ring" cx={luangPrabang.x} cy={luangPrabang.y} r="22"/><circle class="city-marker__dot" cx={luangPrabang.x} cy={luangPrabang.y} r="9"/><path class="city-marker__leader" d={`M${luangPrabang.x + 15} ${luangPrabang.y - 5} L${luangPrabang.x + 76} ${luangPrabang.y - 48}`}/><text class="city-marker__label" x={luangPrabang.x + 84} y={luangPrabang.y - 53}>Luang Prabang</text><foreignObject class="city-preview" x="34" y="830" width="470" height="430"><div class="city-note city-note--luang" xmlns="http://www.w3.org/1999/xhtml"><span class="city-note__tape" aria-hidden="true"></span><img src="/images/laos/luang-prabang.webp" alt="Luang Prabang, Laos"/><div class="city-note__body"><span class="city-note__badge">On the road</span><strong>Luang Prabang</strong><p>Research is underway. A carefully selected city guide will be added here soon.</p><small>Coming later.</small></div></div></foreignObject></g>
+          <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Luang Prabang guide coming soon">
+            <circle class="city-marker__ring" cx={luangPrabang.x} cy={luangPrabang.y} r="22"/>
+            <circle class="city-marker__dot" cx={luangPrabang.x} cy={luangPrabang.y} r="9"/>
+            <path class="city-marker__leader" d={`M${luangPrabang.x + 15} ${luangPrabang.y - 5} L${luangPrabang.x + 55} ${luangPrabang.y - 28}`}/>
+            <text class="city-marker__label" x={luangPrabang.x + 63} y={luangPrabang.y - 33}>Luang Prabang</text>
+            <foreignObject class="city-preview" x="34" y="830" width="470" height="430"><div class="city-note city-note--luang" xmlns="http://www.w3.org/1999/xhtml"><span class="city-note__tape" aria-hidden="true"></span><img src="/images/laos/luang-prabang.webp" alt="Luang Prabang, Laos"/><div class="city-note__body"><span class="city-note__badge">On the road</span><strong>Luang Prabang</strong><p>Research is underway. A carefully selected city guide will be added here soon.</p><small>Coming later.</small></div></div></foreignObject>
+          </g>
         </svg>
       </div>
     </div>
