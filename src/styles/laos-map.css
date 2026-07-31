@@ -214,7 +214,7 @@
 /* Fine-tune Thakhek and nearby cave placement together. */
 .map-overlay > a[href='/laos/thakhek'],
 .map-overlay > [data-open-landmark='tham-nang-aen-modal'] {
-  transform: translate(10px, -10px);
+  transform: translate(25px, -35px);
 }
 
 .laos-map-page .city-marker--active { color: #002868; }
