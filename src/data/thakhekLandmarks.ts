@@ -22,11 +22,22 @@ export const thamNangAenLandmark: LaosLandmark = {
   mapsUrl: 'https://maps.app.goo.gl/UbvyD3oxhyWVjLyC6',
   gallery: [
     {
-      src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/10_Nang_Aen_cane_-_panoramio.jpg?width=1600',
-      alt: 'Interior of Tham Nang Aen Cave near Thakhek in Khammouane Province',
-      sourcePage: 'https://commons.wikimedia.org/wiki/File:10_Nang_Aen_cane_-_panoramio.jpg',
-      author: 'Adriaan Castermans',
-      license: 'Wikimedia Commons'
+      src: 'https://mdw-travel-data-us-east-1.s3.amazonaws.com/img/country/Laos/Tham-Nang-Aen-Cave/img_03.jpg',
+      alt: 'Boat approaching the green cave entrance at Tham Nang Aen near Thakhek',
+      sourcePage: 'https://www.goglobbie.com/country/Laos/attraction/Tham-Nang-Aen-Cave',
+      author: 'Go Globbie travel gallery'
+    },
+    {
+      src: 'https://mdw-travel-data-us-east-1.s3.amazonaws.com/img/country/Laos/Tham-Nang-Aen-Cave/img_01.jpg',
+      alt: 'Illuminated limestone formations and walkways inside Tham Nang Aen Cave',
+      sourcePage: 'https://www.goglobbie.com/country/Laos/attraction/Tham-Nang-Aen-Cave',
+      author: 'Go Globbie travel gallery'
+    },
+    {
+      src: 'https://mdw-travel-data-us-east-1.s3.amazonaws.com/img/country/Laos/Tham-Nang-Aen-Cave/img_02.jpg',
+      alt: 'Colourful cave chamber and underground pathways at Tham Nang Aen',
+      sourcePage: 'https://www.goglobbie.com/country/Laos/attraction/Tham-Nang-Aen-Cave',
+      author: 'Go Globbie travel gallery'
     }
   ],
   facts: [
