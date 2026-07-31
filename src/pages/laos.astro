@@ -11,7 +11,8 @@ const gridRows = Array.from({ length: 12 }, (_, index) => index + 1);
 const mapLandmarks = [...laosLandmarks, thamNangAenLandmark];
 
 const pakse = { x: 679, y: 1024 };
-const vientiane = { x: 384, y: 657 };
+const vientiane = { x: 384, y: 662 };
+const vangVieng = { x: 400, y: 618 };
 const tadLo = { x: 736, y: 970 };
 const thakhek = { x: 562, y: 850 };
 const thamNangAen = { x: 605, y: 850 };
@@ -54,7 +55,7 @@ const hmongCulture = { x: 258, y: 404 };
 
         <svg class="map-overlay" viewBox="0 0 1024 1536" role="img" aria-labelledby="map-title map-description">
           <title id="map-title">Destinations, landmarks and cultural notes on the Laos map</title>
-          <desc id="map-description">Pakse, Tad Lo and Thakhek open city guides. Bolaven Plateau, Wat Phou, Khone Phapheng Falls, Xe Bang Fai Cave, Tham Nang Aen Cave, Pha Pa Tou and Kong Lor Cave open landmark field cards. A Hmong culture note is marked symbolically in northern Laos. Vientiane, Don Det and Luang Prabang are being documented.</desc>
+          <desc id="map-description">Pakse, Tad Lo and Thakhek open city guides. Bolaven Plateau, Wat Phou, Khone Phapheng Falls, Xe Bang Fai Cave, Tham Nang Aen Cave, Pha Pa Tou and Kong Lor Cave open landmark field cards. A Hmong culture note is marked symbolically in northern Laos. Vientiane, Vang Vieng, Don Det and Luang Prabang are being documented.</desc>
 
           <g class="city-marker city-marker--culture" role="button" tabindex="0" aria-label="Open Hmong culture note" data-open-landmark="hmong-cultural-modal">
             <circle class="city-marker__ring" cx={hmongCulture.x} cy={hmongCulture.y} r="20"/>
@@ -88,6 +89,13 @@ const hmongCulture = { x: 258, y: 404 };
           </g>
           <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Pha Pa Tou landmark details" data-open-landmark="pha-pa-tou-modal"><circle class="city-marker__ring" cx={phaPaTou.x} cy={phaPaTou.y} r="20"/><circle class="city-marker__dot" cx={phaPaTou.x} cy={phaPaTou.y} r="8"/><path class="city-marker__leader" d={`M${phaPaTou.x + 12} ${phaPaTou.y} L${phaPaTou.x + 74} ${phaPaTou.y}`}/><text class="city-marker__label city-marker__label--landmark" x={phaPaTou.x + 82} y={phaPaTou.y + 8}>Pha Pa Tou</text></g>
           <g class="city-marker city-marker--landmark" role="button" tabindex="0" aria-label="Open Kong Lor Cave landmark details" data-open-landmark="kong-lor-modal"><circle class="city-marker__ring" cx={kongLor.x} cy={kongLor.y} r="20"/><circle class="city-marker__dot" cx={kongLor.x} cy={kongLor.y} r="8"/><path class="city-marker__leader" d={`M${kongLor.x + 12} ${kongLor.y} L${kongLor.x + 74} ${kongLor.y}`}/><text class="city-marker__label city-marker__label--landmark" x={kongLor.x + 82} y={kongLor.y + 8}>Kong Lor</text></g>
+
+          <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Vang Vieng guide coming soon">
+            <circle class="city-marker__ring" cx={vangVieng.x} cy={vangVieng.y} r="22"/>
+            <circle class="city-marker__dot" cx={vangVieng.x} cy={vangVieng.y} r="9"/>
+            <path class="city-marker__leader" d={`M${vangVieng.x + 15} ${vangVieng.y - 4} L${vangVieng.x + 63} ${vangVieng.y - 22}`}/>
+            <text class="city-marker__label" x={vangVieng.x + 71} y={vangVieng.y - 27}>Vang Vieng</text>
+          </g>
 
           <g class="city-marker city-marker--city city-marker--inactive" tabindex="0" role="button" aria-disabled="true" aria-label="Vientiane guide coming soon"><circle class="city-marker__ring" cx={vientiane.x} cy={vientiane.y} r="22"/><circle class="city-marker__dot" cx={vientiane.x} cy={vientiane.y} r="9"/><path class="city-marker__leader" d={`M${vientiane.x - 15} ${vientiane.y + 4} L${vientiane.x - 76} ${vientiane.y + 65}`}/><text class="city-marker__label city-marker__label--left" x={vientiane.x - 84} y={vientiane.y + 73}>Vientiane</text><foreignObject class="city-preview" x="34" y="830" width="470" height="430"><div class="city-note city-note--vientiane" xmlns="http://www.w3.org/1999/xhtml"><span class="city-note__tape" aria-hidden="true"></span><img src="/images/laos/vientiane.webp" alt="Vientiane, Laos"/><div class="city-note__body"><span class="city-note__badge">Field notes underway</span><strong>Vientiane</strong><p>This chapter is currently being documented. Local addresses and practical notes are on the way.</p><small>Available soon.</small></div></div></foreignObject></g>
 
