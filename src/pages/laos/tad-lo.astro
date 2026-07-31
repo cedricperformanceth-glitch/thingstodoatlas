@@ -8,7 +8,7 @@ import SelectionPlaceCard from '../../components/SelectionPlaceCard.astro';
 import { tadLoExperiences, tadLoLocalAddresses } from '../../data/tadLoPlaces';
 import { fandeeIslandSelection } from '../../data/tadLoSelections';
 
-const tadLoSpotlights = tadLoExperiences.slice(0, 3).map((place) => ({
+const waterfallSpotlights = tadLoExperiences.slice(0, 3).map((place) => ({
   slug: place.slug,
   name: place.name,
   image: place.image,
@@ -19,6 +19,22 @@ const tadLoSpotlights = tadLoExperiences.slice(0, 3).map((place) => ({
   route: place.address,
   dialogId: `partner-place-${place.slug}`
 }));
+
+const tadLoSpotlights = [
+  ...waterfallSpotlights,
+  {
+    slug: 'fandee-island-treasure-hunt',
+    name: 'Fandee Island Treasure Hunt',
+    image: '/images/tad-lo/iFandeeisland 01.webp',
+    imageAlt: 'Fandee Island nature setting in Tad Lo, southern Laos',
+    kicker: 'TREASURE HUNT · WALKABLE',
+    summary: 'A small adventure through Tad Lo built around thirteen quests to solve along the way.',
+    duration: '13 quests around Tad Lo',
+    route: 'Fandee Island · Tad Lo',
+    href: 'https://treasure-hunt.fandee-island.com/',
+    external: true
+  }
+];
 
 const tadLoGuesthouses = tadLoLocalAddresses.filter((place) => place.category === 'accommodation' && place.slug !== 'fandee-island');
 const tadLoRestaurants = tadLoLocalAddresses.filter((place) => place.category === 'restaurants');
@@ -34,7 +50,7 @@ const categoryTabs = [
 
 <BaseLayout
   title="Tad Lo travel guide"
-  description="Explore Tad Lo through three waterfall field notes and a single-page guide to activities, guesthouses, restaurants and practical information, in partnership with Visit Tad Lo."
+  description="Explore Tad Lo through waterfall field notes, a thirteen-quest treasure hunt and a single-page guide to activities, guesthouses, restaurants and practical information."
   canonical="https://thingstodoatlas.com/laos/tad-lo"
 >
   <main class="tad-lo-page">
@@ -74,16 +90,17 @@ const categoryTabs = [
 
     <CitySpotlightSection
       cityName="Tad Lo"
-      eyebrow="TAD LO · THREE WATERFALL NOTES"
+      eyebrow="TAD LO · FOUR FIELD NOTES"
       title="Begin with the water"
       items={tadLoSpotlights}
       panelSlug="things-to-do"
-      asideTitle="A village shaped by the waterfalls around it"
+      maxItems={4}
+      asideTitle="Three waterfalls, then a different kind of trail"
       asideParagraphs={[
         'Tad Hang, Tad Lo and Tad Soung give the village its natural rhythm. Each one asks for a different amount of time, transport and attention.',
-        'Start with the walkable falls, then decide whether the road toward Tad Soung belongs in this stay. The complete practical layer remains connected to the local Visit Tad Lo guide.'
+        'After the waterfalls, Fandee Island turns the village into a small playground with thirteen quests to solve around Tad Lo.'
       ]}
-      asideNote="Open a waterfall note first. The practical notebook stays on the same page below."
+      asideNote="Open a waterfall field note or begin the treasure hunt in a new tab."
     />
 
     <CityCategorySPA
