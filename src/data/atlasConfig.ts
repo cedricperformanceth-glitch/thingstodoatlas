@@ -35,6 +35,7 @@ export const atlasCountries: AtlasCountry[] = [
     cities: [
       { slug: 'pakse', name: 'Pakse', route: '/laos/pakse', status: 'open', tripEnabled: true },
       { slug: 'tad-lo', name: 'Tad Lo', route: '/laos/tad-lo', status: 'open', tripEnabled: true },
+      { slug: 'thakhek', name: 'Thakhek', route: '/laos/thakhek', status: 'open', tripEnabled: true },
       { slug: 'vientiane', name: 'Vientiane', route: '/laos/vientiane', status: 'planned', tripEnabled: false },
       { slug: 'don-det', name: 'Don Det', route: '/laos/don-det', status: 'planned', tripEnabled: false },
       { slug: 'luang-prabang', name: 'Luang Prabang', route: '/laos/luang-prabang', status: 'planned', tripEnabled: false }
