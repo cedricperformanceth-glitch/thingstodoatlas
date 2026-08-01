@@ -80,7 +80,7 @@
 
 @media (max-width: 980px) {
   .city-postcard-hero {
-    width: min(100% - 2rem, 1180px);
+    width: min(1180px, calc(100% - 2rem));
     margin-right: auto;
     margin-left: auto;
   }
