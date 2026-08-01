@@ -159,9 +159,9 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
 
   .city-postcard-hero__back {
     position: absolute;
+    z-index: 4;
     top: clamp(4.45rem, 5.7vw, 5.35rem);
     right: 0;
-    z-index: 4;
     color: rgba(31, 57, 45, .62);
     font-size: .62rem;
     font-weight: 700;
@@ -187,7 +187,8 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
     position: relative;
     width: 60%;
     aspect-ratio: 16 / 9;
-    justify-self: end;
+    justify-self: start;
+    margin: 0;
     background: transparent;
   }
 
@@ -201,7 +202,7 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
     width: var(--card-size);
     height: var(--card-size);
     min-width: 0;
-    overflow: visible;
+    overflow: hidden;
     padding: clamp(2rem, 3vw, 2.7rem);
     background: transparent;
     transform: scale(var(--card-scale)) rotate(-.15deg);
@@ -211,16 +212,15 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
   .city-postcard__template {
     position: absolute;
     z-index: -1;
-    inset: 0;
+    inset: -8% -7%;
     display: block;
-    width: 100%;
-    height: 100%;
+    width: 114%;
+    height: 116%;
+    max-width: none;
     object-fit: fill;
     pointer-events: none;
     user-select: none;
-    -webkit-clip-path: polygon(2.7% 4.2%, 97.6% 3.2%, 98.4% 95.7%, 2.2% 97%);
-    clip-path: polygon(2.7% 4.2%, 97.6% 3.2%, 98.4% 95.7%, 2.2% 97%);
-    filter: drop-shadow(0 15px 18px rgba(48, 45, 38, .14));
+    mix-blend-mode: multiply;
   }
 
   .city-postcard__media,
@@ -513,7 +513,7 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
       --card-size: 125%;
       width: 80%;
       aspect-ratio: 16 / 9;
-      justify-self: center;
+      justify-self: start;
     }
 
     .city-postcard-hero__aside {
@@ -548,6 +548,12 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
       gap: .45rem;
       padding: .95rem;
       transform: none;
+    }
+
+    .city-postcard__template {
+      inset: -5%;
+      width: 110%;
+      height: 110%;
     }
 
     .city-postcard__media { padding: .15rem .15rem .6rem; }
