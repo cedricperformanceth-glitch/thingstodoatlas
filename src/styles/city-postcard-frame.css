@@ -1,0 +1,51 @@
+/* Shared finishing layer for the reusable city postcard hero. */
+.city-postcard-hero .city-postcard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background: transparent url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDU2MyIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPHBhdGggZD0iTTEyIDEwQzE4MCA2IDM0MiAxMiA1MDMgOUM2NzMgNiA4MzcgMTIgOTg5IDlDOTk0IDE0NSA5OTAgMjgyIDk5MyA0MjFDOTk0IDQ2OCA5OTIgNTE1IDk4OSA1NTJDNzMzIDU1OCA1MTMgNTUwIDI1NCA1NTRDMTY1IDU1NiA4MiA1NTIgMTEgNTUzQzggNDA2IDEzIDI3NCA5IDEzOUM4IDkyIDEwIDQ4IDEyIDEwWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNWU0OTMxIiBzdHJva2Utb3BhY2l0eT0iLjYyIiBzdHJva2Utd2lkdGg9IjIuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPHBhdGggZD0iTTE3IDE1QzE4MSAxMiAzNDQgMTcgNTA0IDE0QzY3MiAxMSA4MzMgMTcgOTg0IDE0Qzk4OCAxNDcgOTg1IDI4MSA5ODcgNDE5Qzk4OCA0NjYgOTg3IDUxMSA5ODQgNTQ3QzczMSA1NTEgNTEzIDU0NSAyNTYgNTQ5QzE2NiA1NTAgODcgNTQ3IDE3IDU0OEMxNCA0MDQgMTggMjc0IDE0IDE0MUMxMyA5NCAxNSA1MiAxNyAxNVoiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzVlNDkzMSIgc3Ryb2tlLW9wYWNpdHk9Ii4yNCIgc3Ryb2tlLXdpZHRoPSIxLjEiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4=") center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+
+.city-postcard-hero .city-postcard-hero__layout {
+  grid-template-columns: minmax(0, 1fr) minmax(13.2rem, 17.4rem);
+}
+
+.city-postcard-hero .city-postcard-hero__drawing {
+  width: min(100%, 15.6rem);
+}
+
+.city-postcard-hero .city-postcard-hero__partner {
+  width: 100%;
+  gap: 4.8px 16.8px;
+  padding: 14.4px 15.6px;
+}
+
+.city-postcard-hero .city-postcard-hero__partner span {
+  font-size: .552rem;
+}
+
+.city-postcard-hero .city-postcard-hero__partner strong {
+  font-size: .816rem;
+}
+
+.city-postcard-hero .city-postcard-hero__partner b {
+  font-size: 1.32rem;
+}
+
+@media (max-width: 980px) and (min-width: 761px) {
+  .city-postcard-hero .city-postcard-hero__aside {
+    grid-template-columns: minmax(12rem, 15.6rem) minmax(18rem, 26.4rem);
+  }
+}
+
+@media (max-width: 760px) {
+  .city-postcard-hero .city-postcard-hero__drawing {
+    width: min(100%, 15.6rem);
+  }
+
+  .city-postcard-hero .city-postcard-hero__partner {
+    width: min(100%, 26.4rem);
+  }
+}
