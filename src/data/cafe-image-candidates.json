@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "lancien-cafe-pakse",
+    "selectedImage": "/images/places/lancien-cafe-pakse.webp",
+    "sourcePage": null,
+    "sourceType": "user-supplied",
+    "status": "approved",
+    "imageSourceUrl": "/images/places/lancien-cafe-pakse.webp",
+    "imageSourceType": "user-supplied",
+    "imageAuthor": null,
+    "imageLicense": null,
+    "imageIsGeneric": false
+  },
+  {
+    "slug": "amor-cafe-pakse",
+    "selectedImage": "/images/places/amor-cafe-pakse.webp",
+    "sourcePage": null,
+    "sourceType": "user-supplied",
+    "status": "approved",
+    "imageSourceUrl": "/images/places/amor-cafe-pakse.webp",
+    "imageSourceType": "user-supplied",
+    "imageAuthor": null,
+    "imageLicense": null,
+    "imageIsGeneric": false
+  },
+  {
+    "slug": "sesouk-coffee-pakse",
+    "selectedImage": "/images/places/sesouk-coffee-pakse.webp",
+    "sourcePage": null,
+    "sourceType": "user-supplied",
+    "status": "approved",
+    "imageSourceUrl": "/images/places/sesouk-coffee-pakse.webp",
+    "imageSourceType": "user-supplied",
+    "imageAuthor": null,
+    "imageLicense": null,
+    "imageIsGeneric": false
+  }
+]
