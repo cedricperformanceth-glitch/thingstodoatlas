@@ -20,6 +20,8 @@ const {
   description = 'A thoughtful guide to places worth your time across Asia.',
   canonical = 'https://thingstodoatlas.com/'
 } = Astro.props;
+
+const isHomepage = (Astro.url.pathname.replace(/\/+$/, '') || '/') === '/';
 ---
 
 <!doctype html>
@@ -36,7 +38,7 @@ const {
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
   </head>
-  <body>
+  <body class={isHomepage ? 'is-homepage' : undefined}>
     <SiteHeader />
 
     <div id="main-content" role="main">
@@ -54,6 +56,10 @@ const {
 </html>
 
 <style is:global>
+  .is-homepage .atlas-hero__copy > .button--arrow {
+    display: none;
+  }
+
   @media (min-width: 701px) {
     .atlas-hero__copy .hero-hand-note {
       bottom: 9.5rem;
