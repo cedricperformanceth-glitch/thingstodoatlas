@@ -8,8 +8,8 @@
   pointer-events: none;
 }
 
-/* Higher specificity than the component's scoped rule so the hero really
-   sits against the left side of the viewport on desktop. */
+/* Desktop: postcard stays left; the illustration block is centered in the
+   remaining space instead of sticking to either the card or viewport edge. */
 #main-content .city-postcard-hero {
   width: min(1180px, calc(100vw - 2rem));
   margin-right: 0;
@@ -17,9 +17,9 @@
 }
 
 #main-content .city-postcard-hero .city-postcard-hero__layout {
-  grid-template-columns: 34rem 24rem;
+  grid-template-columns: 34rem minmax(22rem, 1fr);
   justify-content: start;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 #main-content .city-postcard-hero .city-postcard-shell {
@@ -28,59 +28,92 @@
 }
 
 #main-content .city-postcard-hero .city-postcard-hero__aside {
-  width: 24rem;
-  justify-self: start;
+  width: 22rem;
+  justify-self: center;
   align-items: center;
 }
 
-.city-postcard-hero .city-postcard-hero__drawing {
+#main-content .city-postcard-hero .city-postcard-hero__drawing {
   width: 22rem;
   max-width: 100%;
 }
 
-.city-postcard-hero .city-postcard-hero__drawing figcaption {
+#main-content .city-postcard-hero .city-postcard-hero__drawing figcaption {
   margin-top: 0;
   font-size: .66rem;
 }
 
-.city-postcard-hero .city-postcard-hero__partner {
+#main-content .city-postcard-hero .city-postcard-hero__partner {
   display: flex;
   align-items: center;
-  width: 24rem;
+  align-self: center;
+  width: 19rem;
   max-width: 100%;
-  margin-top: 1rem;
-  padding: 14px 16px;
-  gap: 10px;
+  margin-top: .85rem;
+  padding: 11px 14px;
+  gap: 8px;
   white-space: nowrap;
 }
 
-.city-postcard-hero .city-postcard-hero__partner span,
-.city-postcard-hero .city-postcard-hero__partner strong,
-.city-postcard-hero .city-postcard-hero__partner b {
+#main-content .city-postcard-hero .city-postcard-hero__partner span,
+#main-content .city-postcard-hero .city-postcard-hero__partner strong,
+#main-content .city-postcard-hero .city-postcard-hero__partner b {
   display: inline-block;
   grid-column: auto;
   grid-row: auto;
   white-space: nowrap;
 }
 
-.city-postcard-hero .city-postcard-hero__partner span {
+#main-content .city-postcard-hero .city-postcard-hero__partner span {
   flex: 0 0 auto;
-  font-size: .5rem;
+  font-size: .46rem;
 }
 
-.city-postcard-hero .city-postcard-hero__partner strong {
+#main-content .city-postcard-hero .city-postcard-hero__partner strong {
   flex: 1 1 auto;
-  font-size: .78rem;
+  font-size: .72rem;
   line-height: 1;
 }
 
-.city-postcard-hero .city-postcard-hero__partner b {
+#main-content .city-postcard-hero .city-postcard-hero__partner b {
   flex: 0 0 auto;
   margin-left: auto;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
 }
 
-@media (max-width: 980px) {
+@media (max-width: 980px) and (min-width: 761px) {
+  #main-content .city-postcard-hero {
+    width: min(100% - 2rem, 1180px);
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  #main-content .city-postcard-hero .city-postcard-hero__layout {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  #main-content .city-postcard-hero .city-postcard-hero__aside {
+    display: grid;
+    grid-template-columns: 16rem 19rem;
+    width: min(100%, 38rem);
+    justify-self: center;
+    justify-content: center;
+    align-items: end;
+    gap: 1.5rem;
+  }
+
+  #main-content .city-postcard-hero .city-postcard-hero__drawing {
+    width: 16rem;
+  }
+
+  #main-content .city-postcard-hero .city-postcard-hero__partner {
+    width: 19rem;
+    margin: 0 0 .7rem;
+  }
+}
+
+@media (max-width: 760px) {
   #main-content .city-postcard-hero {
     width: min(100% - 2rem, 1180px);
     margin-right: auto;
@@ -93,40 +126,29 @@
 
   #main-content .city-postcard-hero .city-postcard-hero__aside {
     width: 100%;
+    justify-self: center;
   }
 
-  .city-postcard-hero .city-postcard-hero__drawing {
-    width: 22rem;
-  }
-
-  .city-postcard-hero .city-postcard-hero__partner {
-    width: 24rem;
-    margin: 0 0 .7rem;
-  }
-}
-
-@media (max-width: 760px) {
-  .city-postcard-hero .city-postcard-hero__drawing {
+  #main-content .city-postcard-hero .city-postcard-hero__drawing {
     width: 20rem;
     max-width: 100%;
   }
 
-  .city-postcard-hero .city-postcard-hero__partner {
-    width: 100%;
-    max-width: 24rem;
-    padding: 12px 13px;
+  #main-content .city-postcard-hero .city-postcard-hero__partner {
+    width: min(100%, 19rem);
+    padding: 11px 12px;
     gap: 7px;
   }
 
-  .city-postcard-hero .city-postcard-hero__partner span {
+  #main-content .city-postcard-hero .city-postcard-hero__partner span {
     font-size: .44rem;
   }
 
-  .city-postcard-hero .city-postcard-hero__partner strong {
+  #main-content .city-postcard-hero .city-postcard-hero__partner strong {
     font-size: .68rem;
   }
 
-  .city-postcard-hero .city-postcard-hero__partner b {
+  #main-content .city-postcard-hero .city-postcard-hero__partner b {
     font-size: 1rem;
   }
 }
