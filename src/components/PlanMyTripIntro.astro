@@ -6,6 +6,15 @@ const currentPath = Astro.url.pathname;
 const isLaosMapPage = currentPath === '/laos' || currentPath === '/laos/';
 const country = getCountryFromPath(currentPath);
 const cities = country?.cities.filter((city) => city.tripEnabled && city.status === 'open') ?? [];
+const cityDescriptions: Record<string, string> = {
+  pakse: 'Southern Laos base',
+  'tad-lo': 'Waterfalls & village roads',
+  thakhek: 'Limestone roads & cave loop',
+  negombo: 'Coast, lagoon & first landing',
+  colombo: 'Capital streets & city stops',
+  ahangama: 'Surf coast & slow mornings',
+  mirissa: 'Beach days & ocean evenings'
+};
 ---
 
 <section class="plan-trip-intro" aria-label="Plan my trip">
@@ -26,13 +35,38 @@ const cities = country?.cities.filter((city) => city.tripEnabled && city.status 
     <p class="plan-trip-intro__question">Where do you want to begin?</p>
     {country && cities.length > 0 ? (
       <>
-        <label class="plan-trip-intro__label" for={`trip-start-city-${country.slug}`}>Choose a city</label>
-        <select id={`trip-start-city-${country.slug}`} data-trip-city-select data-trip-country={country.slug}>
+        <div class="plan-trip-intro__cities" role="list" aria-label={`Available starting points in ${country.name}`}>
+          {cities.map((city, index) => (
+            <button
+              class="plan-trip-intro__city"
+              type="button"
+              role="listitem"
+              data-trip-city-choice={city.slug}
+              data-trip-country={country.slug}
+            >
+              <span class="plan-trip-intro__city-number">{String(index + 1).padStart(2, '0')}</span>
+              <span class="plan-trip-intro__city-copy">
+                <strong>{city.name}</strong>
+                <small>{cityDescriptions[city.slug] || 'Open the city notebook'}</small>
+              </span>
+              <span class="plan-trip-intro__city-action">Begin here <b aria-hidden="true">→</b></span>
+            </button>
+          ))}
+        </div>
+
+        <select
+          class="plan-trip-intro__native-control"
+          id={`trip-start-city-${country.slug}`}
+          data-trip-city-select
+          data-trip-country={country.slug}
+          aria-hidden="true"
+          tabindex="-1"
+        >
           <option value="">Select a starting point</option>
           {cities.map((city) => <option value={city.slug}>{city.name}</option>)}
         </select>
-        <button class="plan-trip-intro__cta" type="button" data-trip-start data-trip-country={country.slug} disabled>
-          <span data-trip-start-label>Choose a city first</span><span aria-hidden="true">→</span>
+        <button class="plan-trip-intro__native-control" type="button" data-trip-start data-trip-country={country.slug} disabled>
+          <span data-trip-start-label>Choose a city first</span>
         </button>
         <p class="plan-trip-intro__note">Or explore freely. Your first saved card can create the trip for you.</p>
       </>
@@ -53,8 +87,8 @@ const cities = country?.cities.filter((city) => city.tripEnabled && city.status 
     margin: 2.5rem auto 0;
     padding: clamp(2rem, 4vw, 3.8rem) clamp(1.2rem, 4vw, 4rem);
     display: grid;
-    grid-template-columns: minmax(0, 1.25fr) minmax(260px, .75fr);
-    gap: clamp(2.5rem, 7vw, 7rem);
+    grid-template-columns: minmax(0, 1.08fr) minmax(340px, .92fr);
+    gap: clamp(2.5rem, 6vw, 6rem);
     align-items: center;
     border-top: 1px solid rgba(49, 85, 69, .2);
     border-bottom: 1px solid rgba(49, 85, 69, .15);
@@ -70,12 +104,45 @@ const cities = country?.cities.filter((city) => city.tripEnabled && city.status 
   .plan-trip-intro__notebook { position: absolute; z-index: 2; right: -5.25rem; bottom: 1.25rem; width: 9.4rem; height: 7.8rem; overflow: hidden; pointer-events: none; transform: rotate(3deg); }
   .plan-trip-intro__notebook img { position: absolute; top: -5.15rem; left: -1.35rem; width: 12.7rem; max-width: none; height: auto; mix-blend-mode: multiply; }
   .plan-trip-intro__choice { padding-left: clamp(1.2rem, 3vw, 2.5rem); border-left: 1px solid rgba(49, 85, 69, .22); }
-  .plan-trip-intro__question { margin: 0 0 1.3rem; color: #315545; font: 500 clamp(1.5rem, 2.5vw, 2.1rem)/1.1 Fraunces, serif; }
-  .plan-trip-intro__label { display: block; margin-bottom: .45rem; color: #70766d; font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-  .plan-trip-intro select { width: 100%; min-height: 48px; padding: 0 .85rem; border: 1px solid rgba(49, 85, 69, .28); border-radius: 0; background: transparent; color: #315545; font: 500 .9rem 'DM Sans', sans-serif; }
-  .plan-trip-intro__cta { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1rem; padding: .85rem 0; border: 0; border-bottom: 1px solid #b76645; background: transparent; color: #315545; font: 600 1rem 'DM Sans', sans-serif; text-align: left; cursor: pointer; }
-  .plan-trip-intro__cta:disabled { color: #9ca39c; border-bottom-color: rgba(183, 102, 69, .28); cursor: not-allowed; }
-  .plan-trip-intro__cta:not(:disabled):hover { color: #b76645; }
+  .plan-trip-intro__question { margin: 0 0 1.15rem; color: #315545; font: 500 clamp(1.5rem, 2.5vw, 2.1rem)/1.1 Fraunces, serif; }
+  .plan-trip-intro__cities { display: grid; gap: .62rem; }
+  .plan-trip-intro__city {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    gap: .8rem;
+    align-items: center;
+    width: 100%;
+    min-height: 70px;
+    padding: .75rem .85rem;
+    border: 1px solid rgba(49, 85, 69, .22);
+    border-radius: 0;
+    background: rgba(248, 243, 232, .68);
+    color: #315545;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: 3px 4px 0 rgba(49, 85, 69, .05);
+    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+  }
+  .plan-trip-intro__city:nth-child(odd) { transform: rotate(-.18deg); }
+  .plan-trip-intro__city:nth-child(even) { transform: rotate(.16deg); }
+  .plan-trip-intro__city:hover,
+  .plan-trip-intro__city:focus-visible {
+    outline: none;
+    border-color: rgba(183, 102, 69, .52);
+    background: #faf6ed;
+    box-shadow: 5px 6px 0 rgba(49, 85, 69, .07);
+    transform: translateY(-2px) rotate(0);
+  }
+  .plan-trip-intro__city-number { color: #b76645; font: 500 .75rem/1 Caveat, 'Segoe Print', cursive; }
+  .plan-trip-intro__city-copy { display: grid; gap: .2rem; min-width: 0; }
+  .plan-trip-intro__city-copy strong { color: #315545; font: 500 1.2rem/1.05 Fraunces, Georgia, serif; }
+  .plan-trip-intro__city-copy small { overflow: hidden; color: #70766d; font: 500 .62rem/1.25 'DM Sans', sans-serif; text-overflow: ellipsis; white-space: nowrap; }
+  .plan-trip-intro__city-action { display: inline-flex; align-items: center; gap: .55rem; color: #315545; font-size: .54rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; white-space: nowrap; }
+  .plan-trip-intro__city-action b { color: #b76645; font-size: .95rem; transition: transform 180ms ease; }
+  .plan-trip-intro__city:hover .plan-trip-intro__city-action b,
+  .plan-trip-intro__city:focus-visible .plan-trip-intro__city-action b { transform: translateX(3px); }
+  .plan-trip-intro__native-control { display: none !important; }
   .plan-trip-intro__note { margin: 1rem 0 0; color: #70766d; font: 400 1rem/1.1 Caveat, cursive; transform: rotate(-1deg); }
   .plan-trip-intro__coming { padding: 1rem 0; border-top: 1px dashed rgba(49, 85, 69, .25); }
   .plan-trip-intro__coming strong { display: block; margin-bottom: .55rem; color: #315545; font: 500 1.2rem/1.2 Fraunces, serif; }
@@ -90,5 +157,30 @@ const cities = country?.cities.filter((city) => city.tripEnabled && city.status 
     .plan-trip-intro__notebook { right: -.75rem; bottom: -.2rem; width: 7.2rem; height: 5.8rem; }
     .plan-trip-intro__notebook img { top: -3.95rem; left: -1rem; width: 9.6rem; }
     .plan-trip-intro__choice { padding: 1.8rem 0 0; border-top: 1px solid rgba(49, 85, 69, .22); border-left: 0; }
+    .plan-trip-intro__city { grid-template-columns: 1.7rem minmax(0, 1fr); }
+    .plan-trip-intro__city-action { grid-column: 2; justify-self: start; }
   }
 </style>
+
+<script>
+  const setupTripCityChoices = () => {
+    document.querySelectorAll<HTMLButtonElement>('[data-trip-city-choice]').forEach((button) => {
+      if (button.dataset.tripCityChoiceReady === 'true') return;
+      button.dataset.tripCityChoiceReady = 'true';
+      button.addEventListener('click', () => {
+        const section = button.closest('.plan-trip-intro');
+        const select = section?.querySelector<HTMLSelectElement>('[data-trip-city-select]');
+        const start = section?.querySelector<HTMLButtonElement>('[data-trip-start]');
+        const citySlug = button.dataset.tripCityChoice || '';
+        if (!select || !start || !citySlug) return;
+        select.value = citySlug;
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+        start.disabled = false;
+        requestAnimationFrame(() => start.click());
+      });
+    });
+  };
+
+  setupTripCityChoices();
+  document.addEventListener('astro:page-load', setupTripCityChoices);
+</script>
