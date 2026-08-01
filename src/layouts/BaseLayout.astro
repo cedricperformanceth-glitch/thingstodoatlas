@@ -21,7 +21,9 @@ const {
   canonical = 'https://thingstodoatlas.com/'
 } = Astro.props;
 
-const isHomepage = (Astro.url.pathname.replace(/\/+$/, '') || '/') === '/';
+const normalizedPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const isHomepage = normalizedPath === '/';
+const isPaksePage = normalizedPath === '/laos/pakse';
 ---
 
 <!doctype html>
@@ -42,6 +44,7 @@ const isHomepage = (Astro.url.pathname.replace(/\/+$/, '') || '/') === '/';
     <SiteHeader />
 
     <div id="main-content" role="main">
+      {isPaksePage && <a class="pakse-map-back" href="/laos">← Back to the Laos map</a>}
       <slot />
       <JourneyUxEnhancements />
     </div>
@@ -60,9 +63,37 @@ const isHomepage = (Astro.url.pathname.replace(/\/+$/, '') || '/') === '/';
     display: none;
   }
 
+  .pakse-map-back {
+    position: absolute;
+    z-index: 20;
+    top: clamp(5.5rem, 7vw, 6.75rem);
+    right: max(1.25rem, calc((100vw - 1180px) / 2));
+    display: inline-flex;
+    margin: 0;
+    color: rgba(31, 57, 45, .62);
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .pakse-map-back:hover,
+  .pakse-map-back:focus-visible {
+    color: #8a4d36;
+  }
+
   @media (min-width: 701px) {
     .atlas-hero__copy .hero-hand-note {
       bottom: 9.5rem;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .pakse-map-back {
+      top: 4rem;
+      right: 1rem;
     }
   }
 </style>
