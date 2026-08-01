@@ -84,6 +84,17 @@ const isPaksePage = normalizedPath === '/laos/pakse';
     color: #8a4d36;
   }
 
+  .pakse-page .pakse-hero__boat > .pakse-hero__field-note {
+    display: block;
+    width: max-content;
+    max-width: calc(100% + 3rem);
+    margin: .15rem auto .2rem;
+    text-align: center;
+    white-space: nowrap;
+    transform: rotate(-5deg);
+    transform-origin: center;
+  }
+
   @media (min-width: 701px) {
     .atlas-hero__copy .hero-hand-note {
       bottom: 9.5rem;
@@ -97,3 +108,20 @@ const isPaksePage = normalizedPath === '/laos/pakse';
     }
   }
 </style>
+
+<script is:inline>
+  (() => {
+    const placePakseFieldNote = () => {
+      const boat = document.querySelector('.pakse-page .pakse-hero__boat');
+      const note = document.querySelector('.pakse-page .pakse-hero__field-note');
+      if (!(boat instanceof HTMLElement) || !(note instanceof HTMLElement) || note.parentElement === boat) return;
+      const caption = boat.querySelector('figcaption');
+      if (caption) caption.insertAdjacentElement('beforebegin', note);
+      else boat.append(note);
+    };
+
+    document.addEventListener('astro:page-load', placePakseFieldNote);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', placePakseFieldNote, { once: true });
+    else placePakseFieldNote();
+  })();
+</script>
