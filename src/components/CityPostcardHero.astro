@@ -182,11 +182,11 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
   }
 
   .city-postcard-shell {
-    --card-scale: .5;
-    --card-size: 200%;
+    --card-scale: .6;
+    --card-size: 166.667%;
     position: relative;
-    width: 50%;
-    aspect-ratio: 3 / 2;
+    width: 60%;
+    aspect-ratio: 16 / 9;
     justify-self: end;
     background: transparent;
   }
@@ -218,6 +218,8 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
     object-fit: fill;
     pointer-events: none;
     user-select: none;
+    -webkit-clip-path: polygon(2.7% 4.2%, 97.6% 3.2%, 98.4% 95.7%, 2.2% 97%);
+    clip-path: polygon(2.7% 4.2%, 97.6% 3.2%, 98.4% 95.7%, 2.2% 97%);
     filter: drop-shadow(0 15px 18px rgba(48, 45, 38, .14));
   }
 
@@ -507,9 +509,10 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
     .city-postcard-hero__layout { grid-template-columns: 1fr; }
 
     .city-postcard-shell {
-      --card-scale: .7;
-      --card-size: 142.857%;
-      width: 70%;
+      --card-scale: .8;
+      --card-size: 125%;
+      width: 80%;
+      aspect-ratio: 16 / 9;
       justify-self: center;
     }
 
