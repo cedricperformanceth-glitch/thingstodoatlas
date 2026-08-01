@@ -13,6 +13,7 @@ import TripDrawer from '../components/TripDrawer.astro';
 import TripPageContext from '../components/TripPageContext.astro';
 import TripManager from '../components/TripManager.astro';
 import TripSummaryModal from '../components/TripSummaryModal.astro';
+import JourneyUxEnhancements from '../components/JourneyUxEnhancements.astro';
 
 const {
   title,
@@ -40,6 +41,7 @@ const {
 
     <div id="main-content" role="main">
       <slot />
+      <JourneyUxEnhancements />
     </div>
 
     <TripDrawer />
