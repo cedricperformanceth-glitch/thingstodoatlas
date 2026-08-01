@@ -13,7 +13,7 @@
   },
   {
     "slug": "bolaven-trail-guesthouse",
-    "selectedImage": "https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?auto=format&fit=crop&w=1200&q=84",
+    "selectedImage": "/images/places/bolaven-trail-guesthouse.webp",
     "sourcePage": "https://www.booking.com/hotel/la/bolaven-trail-guesthouse.html",
     "sourceType": "public-directory",
     "status": "approved",
@@ -37,7 +37,7 @@
   },
   {
     "slug": "pakse-backpacker-dorms-restaurant",
-    "selectedImage": "https://images.unsplash.com/photo-1520277739336-7bf67edfa768?auto=format&fit=crop&w=1200&q=84",
+    "selectedImage": "/images/places/pakse-backpacker-dorms-restaurant.webp",
     "sourcePage": "https://wanderlog.com/place/details/8336747/pakse-backpacker-dorms--restaurant",
     "sourceType": "public-directory",
     "status": "approved",
@@ -49,7 +49,7 @@
   },
   {
     "slug": "sanga-rooftop-hostel",
-    "selectedImage": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/775340184.jpg?k=02c8970e238825e54ab99c120ad884c4ebd1dda74b623287eb929c2de2312697&o=",
+    "selectedImage": "/images/places/sanga-rooftop-hostel.webp",
     "sourcePage": "https://www.booking.com/hotel/la/sanga-rooftop-hostel.html",
     "sourceType": "public-directory",
     "status": "approved",
@@ -61,7 +61,7 @@
   },
   {
     "slug": "sanga-hostel-and-souvenir",
-    "selectedImage": "https://images.unsplash.com/photo-1541971875076-8f970d573be6?auto=format&fit=crop&w=1200&q=84",
+    "selectedImage": "/images/places/sanga-hostel-and-souvenir.webp",
     "sourcePage": "https://wanderlog.com/place/details/2683311/sanga-hostel-and-souvenir",
     "sourceType": "public-directory",
     "status": "approved",
@@ -73,7 +73,7 @@
   },
   {
     "slug": "pakse-hotel-restaurant-stay",
-    "selectedImage": "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1200&q=84",
+    "selectedImage": "/images/places/pakse-hotel-restaurant-stay.webp",
     "sourcePage": "https://www.hotelpakse.com/",
     "sourceType": "official-site",
     "status": "approved",
@@ -97,7 +97,7 @@
   },
   {
     "slug": "le-jardin-hotel-pakse",
-    "selectedImage": "https://www.lejardindepakse.com/wp-content/uploads/2015/03/lejardin-pool.png",
+    "selectedImage": "/images/places/le-jardin-hotel-pakse.webp",
     "sourcePage": "https://www.lejardindepakse.com/",
     "sourceType": "official-site",
     "status": "approved",
@@ -109,7 +109,7 @@
   },
   {
     "slug": "st-central-hotel",
-    "selectedImage": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=1200&q=84",
+    "selectedImage": "/images/places/st-central-hotel.webp",
     "sourcePage": "https://www.booking.com/hotel/la/st-central-pakse.html",
     "sourceType": "public-directory",
     "status": "approved",
@@ -121,7 +121,7 @@
   },
   {
     "slug": "champa-palace-hotel",
-    "selectedImage": "https://images.unsplash.com/photo-1455587734955-081b22074882?auto=format&fit=crop&w=1200&q=84",
+    "selectedImage": "/images/places/champa-palace-hotel.webp",
     "sourcePage": "https://discoverlaos.today/hotel/champasak-palace-hotel",
     "sourceType": "public-directory",
     "status": "approved",

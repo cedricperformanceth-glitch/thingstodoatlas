@@ -73,10 +73,10 @@ export const tadLoExperiences: TadLoPartnerPlace[] = [
     name: 'Tad Lo Waterfall',
     subcategory: 'Waterfall · Walkable',
     cuisine: 'Waterfalls and swimming',
-    image: '/images/tad-lo/Tad lo 02.webp',
+    image: '/images/tad-lo/tad-lo-waterfall-01.webp',
     imageAlt: 'Tad Lo Waterfall flowing through the village landscape',
     galleryImages: [
-      { src: '/images/tad-lo/Tad lo 02.webp', alt: 'Tad Lo Waterfall flowing through the village landscape' }
+      { src: '/images/tad-lo/tad-lo-waterfall-01.webp', alt: 'Tad Lo Waterfall flowing through the village landscape' }
     ],
     cardNote: 'waterfall woven into village life',
     shortDescription: 'A graceful waterfall best experienced slowly as part of a day around the village.',
@@ -292,6 +292,12 @@ export const tadLoLocalAddresses: TadLoPartnerPlace[] = [
     category: 'restaurants',
     subcategory: 'Restaurant · Massage',
     cuisine: 'Local village restaurant',
+    image: '/images/tad-lo/tim-restaurant-01.webp',
+    imageAlt: 'Tim Restaurant and Massage in Tad Lo village',
+    galleryImages: [
+      { src: '/images/tad-lo/tim-restaurant-01.webp', alt: 'Tim Restaurant and Massage in Tad Lo village' },
+      { src: '/images/tad-lo/tim-restaurant-02.webp', alt: 'Tim Restaurant and Guesthouse in Tad Lo village' }
+    ],
     cardNote: 'food first, massage by arrangement',
     shortDescription: 'A village restaurant with traditional Lao massage available by arrangement.',
     description: 'Tim combines a practical local meal stop with massage that can be organised separately after walking, riding or a waterfall day.',
