@@ -23,7 +23,6 @@ const {
 
 const normalizedPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const isHomepage = normalizedPath === '/';
-const isPaksePage = normalizedPath === '/laos/pakse';
 ---
 
 <!doctype html>
@@ -44,7 +43,6 @@ const isPaksePage = normalizedPath === '/laos/pakse';
     <SiteHeader />
 
     <div id="main-content" role="main">
-      {isPaksePage && <a class="pakse-map-back" href="/laos">← Back to the Laos map</a>}
       <slot />
       <JourneyUxEnhancements />
     </div>
@@ -63,152 +61,9 @@ const isPaksePage = normalizedPath === '/laos/pakse';
     display: none;
   }
 
-  .pakse-map-back {
-    position: absolute;
-    z-index: 20;
-    top: clamp(5.5rem, 7vw, 6.75rem);
-    right: max(1.25rem, calc((100vw - 1180px) / 2));
-    display: inline-flex;
-    margin: 0;
-    color: rgba(31, 57, 45, .62);
-    font-size: .62rem;
-    font-weight: 700;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    white-space: nowrap;
-  }
-
-  .pakse-map-back:hover,
-  .pakse-map-back:focus-visible {
-    color: #8a4d36;
-  }
-
-  .pakse-page .pakse-hero__boat > .pakse-hero__field-note {
-    display: block;
-    width: max-content;
-    max-width: calc(100% + 3rem);
-    margin: .15rem auto .2rem;
-    text-align: center;
-    white-space: nowrap;
-    transform: translate(-41px, 72px) rotate(-5deg);
-    transform-origin: center;
-  }
-
-  .pakse-page .pakse-hero__visual > .pakse-hero__notebook-meta {
-    position: absolute;
-    z-index: 7;
-    left: -1.65rem;
-    bottom: -1.45rem;
-    width: max-content;
-    margin: 0;
-    transform: translate(23px, 11px);
-  }
-
-  .pakse-page .pakse-hero__partner {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 4px 20px;
-    width: min(100%, 410px);
-    margin-top: calc(1.2rem + 10px);
-    padding: 13px 15px;
-    border: 1px solid rgba(49, 85, 69, .35);
-    background: rgba(247, 242, 230, .78);
-    color: #315545;
-    text-decoration: none;
-    transition: border-color .18s ease, color .18s ease, transform .18s ease;
-  }
-
-  .pakse-page .pakse-hero__partner span {
-    grid-column: 1;
-    color: #b76645;
-    font-size: .48rem;
-    font-weight: 800;
-    letter-spacing: .15em;
-  }
-
-  .pakse-page .pakse-hero__partner strong {
-    grid-column: 1;
-    font-size: .72rem;
-  }
-
-  .pakse-page .pakse-hero__partner b {
-    grid-column: 2;
-    grid-row: 1 / 3;
-    align-self: center;
-    color: #b76645;
-    font-size: 1.2rem;
-  }
-
-  .pakse-page .pakse-hero__partner:hover,
-  .pakse-page .pakse-hero__partner:focus-visible {
-    border-color: #b76645;
-    color: #8a4d36;
-    outline: none;
-    transform: translateY(-2px);
-  }
-
   @media (min-width: 701px) {
     .atlas-hero__copy .hero-hand-note {
       bottom: 9.5rem;
     }
   }
-
-  @media (max-width: 820px) {
-    .pakse-map-back {
-      top: 4rem;
-      right: 1rem;
-    }
-
-    .pakse-page .pakse-hero__visual > .pakse-hero__notebook-meta {
-      position: relative;
-      left: auto;
-      bottom: auto;
-      width: min(100%, 24rem);
-      margin: .85rem auto 0;
-      transform: none;
-    }
-  }
 </style>
-
-<script is:inline>
-  (() => {
-    const enhancePakseHero = () => {
-      const page = document.querySelector('.pakse-page');
-      if (!(page instanceof HTMLElement)) return;
-
-      const visual = page.querySelector('.pakse-hero__visual');
-      const copy = page.querySelector('.pakse-hero__copy');
-      const boat = page.querySelector('.pakse-hero__boat');
-      const note = page.querySelector('.pakse-hero__field-note');
-      const meta = page.querySelector('.pakse-hero__notebook-meta');
-      const roadAnnotation = page.querySelector('.pakse-hero__annotation');
-
-      if (roadAnnotation) roadAnnotation.remove();
-
-      if (visual instanceof HTMLElement && meta instanceof HTMLElement && meta.parentElement !== visual) {
-        visual.append(meta);
-      }
-
-      if (copy instanceof HTMLElement && !copy.querySelector('.pakse-hero__partner')) {
-        const partner = document.createElement('a');
-        partner.className = 'pakse-hero__partner';
-        partner.href = 'https://muaythaipakse.com';
-        partner.target = '_blank';
-        partner.rel = 'noreferrer';
-        partner.innerHTML = '<span>LOCAL PARTNER</span><strong>In partnership with Muay Thai Pakse</strong><b aria-hidden="true">↗</b>';
-        copy.append(partner);
-      }
-
-      if (boat instanceof HTMLElement && note instanceof HTMLElement && note.parentElement !== boat) {
-        const caption = boat.querySelector('figcaption');
-        if (caption) caption.insertAdjacentElement('beforebegin', note);
-        else boat.append(note);
-      }
-    };
-
-    document.addEventListener('astro:page-load', enhancePakseHero);
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', enhancePakseHero, { once: true });
-    else enhancePakseHero();
-  })();
-</script>
