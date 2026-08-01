@@ -98,10 +98,11 @@ const isPaksePage = normalizedPath === '/laos/pakse';
   .pakse-page .pakse-hero__visual > .pakse-hero__notebook-meta {
     position: absolute;
     z-index: 7;
-    left: calc(-1.65rem + 13px);
-    bottom: calc(-1.45rem - 7px);
+    left: -1.65rem;
+    bottom: -1.45rem;
     width: max-content;
     margin: 0;
+    transform: translate(23px, 11px);
   }
 
   .pakse-page .pakse-hero__partner {
@@ -165,6 +166,7 @@ const isPaksePage = normalizedPath === '/laos/pakse';
       bottom: auto;
       width: min(100%, 24rem);
       margin: .85rem auto 0;
+      transform: none;
     }
   }
 </style>
