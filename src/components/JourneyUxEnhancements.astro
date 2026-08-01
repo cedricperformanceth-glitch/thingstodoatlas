@@ -1,0 +1,451 @@
+---
+const normalizedPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const isHomepage = normalizedPath === '/';
+const isPaksePage = normalizedPath === '/laos/pakse';
+
+const destinations = [
+  { chapter: '01', name: 'Thailand', href: '/thailand', tone: 'blue' },
+  { chapter: '02', name: 'Laos', href: '/laos', tone: 'red' },
+  { chapter: '03', name: 'Sri Lanka', href: '/sri-lanka', tone: 'orange' }
+];
+---
+
+{isHomepage && (
+  <nav class="hero-destination-chooser" data-hero-destination-chooser aria-label="Choose a country">
+    <p>Where are you going?</p>
+    <div class="hero-destination-chooser__links">
+      {destinations.map((destination) => (
+        <a class={`hero-destination-chooser__link hero-destination-chooser__link--${destination.tone}`} href={destination.href}>
+          <small>CH. {destination.chapter}</small>
+          <strong>{destination.name}</strong>
+          <span aria-hidden="true">↗</span>
+        </a>
+      ))}
+    </div>
+  </nav>
+)}
+
+{isPaksePage && (
+  <section class="pakse-next-stop" aria-labelledby="pakse-next-stop-title">
+    <div class="pakse-next-stop__inner">
+      <div class="pakse-next-stop__copy">
+        <p>ANOTHER CHAPTER NEARBY</p>
+        <h2 id="pakse-next-stop-title">Continue to Tad Lo</h2>
+        <span>Leave the city base behind for waterfalls, village roads and a slower stay on the Bolaven Plateau.</span>
+      </div>
+      <div class="pakse-next-stop__actions">
+        <a class="pakse-next-stop__primary" href="/laos/tad-lo">Explore Tad Lo <span aria-hidden="true">→</span></a>
+        <a class="pakse-next-stop__secondary" href="/laos">Back to the Laos map</a>
+      </div>
+      <span class="pakse-next-stop__field-note">FIELD NOTE — The road keeps climbing east.</span>
+    </div>
+  </section>
+)}
+
+<style is:global>
+  .hero-destination-chooser {
+    width: min(100%, 35rem);
+    margin-top: 1.35rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(49, 85, 69, .2);
+  }
+
+  .hero-destination-chooser > p {
+    margin: 0 0 .68rem;
+    color: #315545;
+    font: 600 1.12rem/1 Caveat, 'Segoe Print', cursive;
+    transform: rotate(-1deg);
+  }
+
+  .hero-destination-chooser__links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid rgba(31, 57, 45, .15);
+    border-bottom: 1px solid rgba(31, 57, 45, .15);
+  }
+
+  .hero-destination-chooser__link {
+    --destination-accent: #315545;
+    position: relative;
+    display: grid;
+    gap: .2rem;
+    min-width: 0;
+    padding: .72rem 1.7rem .72rem .05rem;
+    color: #1f2924;
+    text-decoration: none;
+    transition: color 180ms ease, transform 180ms ease, background 180ms ease;
+  }
+
+  .hero-destination-chooser__link + .hero-destination-chooser__link {
+    padding-left: .85rem;
+    border-left: 1px solid rgba(31, 57, 45, .15);
+  }
+
+  .hero-destination-chooser__link small {
+    color: var(--destination-accent);
+    font-size: .48rem;
+    font-weight: 800;
+    letter-spacing: .15em;
+  }
+
+  .hero-destination-chooser__link strong {
+    overflow: hidden;
+    font: 500 clamp(.88rem, 1.25vw, 1.05rem)/1.1 Fraunces, Georgia, serif;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .hero-destination-chooser__link > span {
+    position: absolute;
+    right: .35rem;
+    bottom: .72rem;
+    color: var(--destination-accent);
+    font-size: .82rem;
+    transition: transform 180ms ease;
+  }
+
+  .hero-destination-chooser__link:hover,
+  .hero-destination-chooser__link:focus-visible {
+    color: var(--destination-accent);
+    outline: none;
+    background: rgba(49, 85, 69, .035);
+    transform: translateY(-1px);
+  }
+
+  .hero-destination-chooser__link:hover > span,
+  .hero-destination-chooser__link:focus-visible > span { transform: translate(2px, -2px); }
+  .hero-destination-chooser__link--blue { --destination-accent: #3478b8; }
+  .hero-destination-chooser__link--red { --destination-accent: #b7473b; }
+  .hero-destination-chooser__link--orange { --destination-accent: #d27b35; }
+
+  .pakse-next-stop {
+    margin-top: -3.5rem;
+    padding: 0 1.25rem 6.5rem;
+    background: #f2eee3;
+    color: #1f2924;
+  }
+
+  .pakse-next-stop__inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(15rem, .55fr);
+    gap: 2rem 5rem;
+    align-items: end;
+    width: min(1180px, 100%);
+    margin: 0 auto;
+    padding: clamp(2.2rem, 4vw, 3.5rem) clamp(1.4rem, 3vw, 2.6rem);
+    border-top: 1px solid rgba(31, 57, 45, .2);
+    border-bottom: 1px solid rgba(31, 57, 45, .14);
+    background: rgba(247, 242, 230, .62);
+  }
+
+  .pakse-next-stop__copy > p {
+    margin: 0 0 .55rem;
+    color: #8a4d36;
+    font-size: .62rem;
+    font-weight: 800;
+    letter-spacing: .18em;
+  }
+
+  .pakse-next-stop__copy h2 {
+    margin: 0;
+    color: #1f392d;
+    font: 400 clamp(2.5rem, 4.6vw, 4.4rem)/.96 Georgia, 'Times New Roman', serif;
+    letter-spacing: -.05em;
+  }
+
+  .pakse-next-stop__copy > span {
+    display: block;
+    max-width: 42rem;
+    margin-top: 1rem;
+    color: rgba(31, 41, 36, .74);
+    font: 400 1rem/1.6 Georgia, 'Times New Roman', serif;
+  }
+
+  .pakse-next-stop__actions {
+    display: grid;
+    gap: .8rem;
+    justify-items: stretch;
+  }
+
+  .pakse-next-stop__primary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .95rem 0;
+    border-bottom: 1px solid #b76645;
+    color: #315545;
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .pakse-next-stop__primary span { color: #b76645; font-size: 1.1rem; transition: transform 180ms ease; }
+  .pakse-next-stop__primary:hover span,
+  .pakse-next-stop__primary:focus-visible span { transform: translateX(3px); }
+
+  .pakse-next-stop__secondary {
+    justify-self: start;
+    color: rgba(31, 57, 45, .62);
+    font-size: .66rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .pakse-next-stop__field-note {
+    position: absolute;
+    right: 2rem;
+    bottom: -1.05rem;
+    padding: .25rem .55rem;
+    background: #f2eee3;
+    color: rgba(31, 57, 45, .58);
+    font: 400 .74rem/1 Caveat, 'Segoe Print', cursive;
+    transform: rotate(-1.5deg);
+  }
+
+  .plan-trip-notes--grouped {
+    display: grid;
+    gap: 1.15rem;
+    padding: .1rem 0 .35rem;
+  }
+
+  .plan-trip-city-group {
+    display: grid;
+    gap: .55rem;
+  }
+
+  .plan-trip-city-group + .plan-trip-city-group {
+    padding-top: 1.05rem;
+    border-top: 1px dashed rgba(49, 85, 69, .25);
+  }
+
+  .plan-trip-city-group__title {
+    margin: 0 0 .08rem;
+    color: #315545;
+    font: 500 1.42rem/1 Fraunces, Georgia, serif;
+    letter-spacing: -.035em;
+  }
+
+  .plan-trip-group {
+    border: 1px solid rgba(49, 85, 69, .2);
+    background: rgba(248, 243, 232, .76);
+    box-shadow: 3px 4px 0 rgba(49, 85, 69, .055);
+  }
+
+  .plan-trip-group summary {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .25rem 1rem;
+    align-items: center;
+    padding: .82rem 2.7rem .78rem .9rem;
+    color: #315545;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .plan-trip-group summary::-webkit-details-marker { display: none; }
+  .plan-trip-group summary::after {
+    content: '+';
+    position: absolute;
+    right: .95rem;
+    top: 50%;
+    color: #b76645;
+    font: 500 1.1rem/1 Fraunces, serif;
+    transform: translateY(-50%);
+  }
+  .plan-trip-group[open] summary::after { content: '−'; }
+
+  .plan-trip-group__label {
+    font-size: .63rem;
+    font-weight: 800;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+  }
+
+  .plan-trip-group__count {
+    display: grid;
+    place-items: center;
+    min-width: 28px;
+    height: 28px;
+    border: 1px solid #b76645;
+    border-radius: 50%;
+    color: #b76645;
+    font: 500 .72rem/1 Fraunces, serif;
+  }
+
+  .plan-trip-group__hint {
+    grid-column: 1 / -1;
+    color: #777d75;
+    font: 400 .82rem/1 Caveat, 'Segoe Print', cursive;
+  }
+
+  .plan-trip-group__items {
+    display: grid;
+    gap: .58rem;
+    padding: .15rem .65rem .72rem;
+    border-top: 1px dashed rgba(49, 85, 69, .2);
+  }
+
+  .plan-trip-group__items .plan-trip-note {
+    margin: .55rem 0 0;
+  }
+
+  @media (max-width: 760px) {
+    .hero-destination-chooser__links { grid-template-columns: 1fr; }
+    .hero-destination-chooser__link + .hero-destination-chooser__link { padding-left: .05rem; border-top: 1px solid rgba(31, 57, 45, .15); border-left: 0; }
+    .pakse-next-stop { margin-top: -2rem; padding-right: 1rem; padding-left: 1rem; }
+    .pakse-next-stop__inner { grid-template-columns: 1fr; gap: 1.5rem; }
+    .pakse-next-stop__field-note { right: 1rem; }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const STORAGE_KEY = 'thingsToDoAtlas.trips.v2';
+
+    const mountHomepageChooser = () => {
+      const chooser = document.querySelector('[data-hero-destination-chooser]');
+      const heroCopy = document.querySelector('.atlas-hero__copy');
+      const primaryAction = heroCopy?.querySelector('.button--arrow');
+      if (!(chooser instanceof HTMLElement) || !(heroCopy instanceof HTMLElement) || !primaryAction) return;
+      if (chooser.parentElement !== heroCopy) primaryAction.insertAdjacentElement('afterend', chooser);
+    };
+
+    const readActiveTrip = () => {
+      try {
+        const store = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+        if (!store || !Array.isArray(store.trips)) return null;
+        const selectedTripId = document.querySelector('[data-trip-select]')?.value || store.activeTripId;
+        return store.trips.find((trip) => trip.id === selectedTripId) || store.trips[0] || null;
+      } catch {
+        return null;
+      }
+    };
+
+    const groupName = (group, count) => {
+      const labels = {
+        restaurants: ['restaurant', 'restaurants'],
+        cafes: ['café', 'cafés'],
+        accommodation: ['stay', 'stays'],
+        'scooter-rental': ['scooter rental', 'scooter rentals'],
+        'gyms-fitness': ['training place', 'training places'],
+        'markets-shopping': ['market or shop', 'markets & shops'],
+        'essential-information': ['useful address', 'useful addresses'],
+        'things-to-do': ['experience', 'experiences'],
+        waterfalls: ['waterfall', 'waterfalls'],
+        'bolaven-loop': ['road note', 'road notes'],
+        landmarks: ['landmark', 'landmarks']
+      };
+      const pair = labels[String(group || '').toLowerCase()];
+      if (pair) return pair[count === 1 ? 0 : 1];
+      const fallback = String(group || 'saved place').replace(/-/g, ' ');
+      return count === 1 ? fallback : `${fallback}s`;
+    };
+
+    const groupDrawer = () => {
+      const content = document.querySelector('[data-trip-content]');
+      const stack = content?.querySelector('.plan-trip-notes');
+      if (!(content instanceof HTMLElement) || !(stack instanceof HTMLElement) || stack.dataset.tripGrouped === 'true') return;
+
+      const trip = readActiveTrip();
+      if (!trip || !Array.isArray(trip.items) || !trip.items.length) return;
+
+      const notes = [...stack.querySelectorAll('.plan-trip-note')];
+      if (!notes.length) return;
+
+      const itemsById = new Map(trip.items.map((item) => [String(item.id), item]));
+      const cities = new Map();
+
+      notes.forEach((note) => {
+        if (!(note instanceof HTMLElement)) return;
+        note.hidden = false;
+        const itemId = note.querySelector('[data-trip-remove]')?.dataset.tripRemove || '';
+        const item = itemsById.get(itemId);
+        if (!item) return;
+        const cityName = item.city || (item.kind === 'landmark' ? 'Field notes' : trip.countryName || 'Saved places');
+        const groupKey = String(item.group || (item.kind === 'landmark' ? 'landmarks' : 'saved-places'));
+        if (!cities.has(cityName)) cities.set(cityName, new Map());
+        const cityGroups = cities.get(cityName);
+        if (!cityGroups.has(groupKey)) cityGroups.set(groupKey, []);
+        cityGroups.get(groupKey).push(note);
+      });
+
+      if (!cities.size) return;
+
+      stack.querySelector('[data-trip-more]')?.remove();
+      stack.replaceChildren();
+      stack.classList.add('plan-trip-notes--grouped');
+      stack.dataset.tripGrouped = 'true';
+
+      const summaryParts = [];
+
+      cities.forEach((cityGroups, cityName) => {
+        const citySection = document.createElement('section');
+        citySection.className = 'plan-trip-city-group';
+        const title = document.createElement('h3');
+        title.className = 'plan-trip-city-group__title';
+        title.textContent = cityName;
+        citySection.append(title);
+
+        const citySummary = [];
+
+        cityGroups.forEach((groupNotes, groupKey) => {
+          const details = document.createElement('details');
+          details.className = 'plan-trip-group';
+          const summary = document.createElement('summary');
+          const label = document.createElement('span');
+          label.className = 'plan-trip-group__label';
+          label.textContent = groupName(groupKey, groupNotes.length);
+          const count = document.createElement('b');
+          count.className = 'plan-trip-group__count';
+          count.textContent = String(groupNotes.length);
+          const hint = document.createElement('small');
+          hint.className = 'plan-trip-group__hint';
+          hint.textContent = groupNotes.length === 1 ? 'Open the saved address' : 'Open the saved addresses';
+          const items = document.createElement('div');
+          items.className = 'plan-trip-group__items';
+          groupNotes.forEach((note) => items.append(note));
+          summary.append(label, count, hint);
+          details.append(summary, items);
+          citySection.append(details);
+          citySummary.push(`${groupNotes.length} ${groupName(groupKey, groupNotes.length)}`);
+        });
+
+        summaryParts.push(`${cityName}: ${citySummary.join(', ')}`);
+        stack.append(citySection);
+      });
+
+      const summary = document.querySelector('[data-trip-summary]');
+      if (summary instanceof HTMLElement && summaryParts.length) summary.textContent = `${summaryParts.join(' · ')}.`;
+    };
+
+    let groupingQueued = false;
+    const scheduleGrouping = () => {
+      if (groupingQueued) return;
+      groupingQueued = true;
+      queueMicrotask(() => {
+        groupingQueued = false;
+        groupDrawer();
+      });
+    };
+
+    const setup = () => {
+      mountHomepageChooser();
+      const content = document.querySelector('[data-trip-content]');
+      if (content instanceof HTMLElement && content.dataset.tripGroupingReady !== 'true') {
+        content.dataset.tripGroupingReady = 'true';
+        new MutationObserver(scheduleGrouping).observe(content, { childList: true });
+      }
+      scheduleGrouping();
+    };
+
+    document.addEventListener('astro:page-load', setup);
+    window.addEventListener('atlas:trips-changed', scheduleGrouping);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setup, { once: true });
+    else setup();
+  })();
+</script>
