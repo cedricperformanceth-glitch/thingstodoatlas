@@ -1,7 +1,7 @@
 [
   {
     "slug": "sabai-ca-baille",
-    "selectedImage": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=84",
+    "selectedImage": "/images/places/sabai-ca-baille.webp",
     "sourcePage": "https://www.booking.com/hotel/la/sabai-ca-baille-guesthouse.html",
     "sourceType": "public-directory",
     "status": "approved",
@@ -18,18 +18,6 @@
     "sourceType": "public-directory",
     "status": "approved",
     "imageSourceUrl": "https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?auto=format&fit=crop&w=1200&q=84",
-    "imageSourceType": "public-directory",
-    "imageAuthor": null,
-    "imageLicense": null,
-    "imageIsGeneric": true
-  },
-  {
-    "slug": "kaemse-guest-house",
-    "selectedImage": "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1200&q=84",
-    "sourcePage": "https://www.top-rated.online/countries/Laos/cities/Xongxai/all/top-rated",
-    "sourceType": "public-directory",
-    "status": "approved",
-    "imageSourceUrl": "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1200&q=84",
     "imageSourceType": "public-directory",
     "imageAuthor": null,
     "imageLicense": null,
