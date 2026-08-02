@@ -1,0 +1,43 @@
+/* Pakse envelope hero only. Loaded after city-postcard-frame.css. */
+
+@media (min-width: 981px) {
+  #main-content .pakse-page .city-postcard-hero {
+    width: calc(100vw - 2rem);
+    max-width: none;
+  }
+
+  /* Keep the same left origin, then extend the envelope up to 150px to the right. */
+  #main-content .pakse-page .city-postcard-hero__layout {
+    grid-template-columns: clamp(34rem, calc(100vw - 31rem), 43.375rem) minmax(22rem, 1fr);
+    gap: 2rem;
+  }
+
+  /* The extra width only adds a small amount of height. */
+  #main-content .pakse-page .city-postcard-shell {
+    width: 100%;
+    aspect-ratio: 2.15 / 1;
+  }
+
+  /* Crop only the white canvas around the asset. The pencil line and the
+     red/blue airmail edge stay inside the visible envelope. */
+  #main-content .pakse-page .city-postcard::before {
+    inset: -3% -2.2%;
+    background-position: center;
+    background-size: 100% 100%;
+  }
+
+  /* Remove the previous global shift, then move the illustration itself. */
+  #main-content .pakse-page .city-postcard-hero__aside {
+    transform: none;
+  }
+
+  #main-content .pakse-page .city-postcard-hero__drawing {
+    transform: translateX(40px) rotate(-2deg);
+  }
+}
+
+@media (min-width: 1200px) {
+  #main-content .pakse-page .city-postcard-hero__drawing {
+    transform: translateX(100px) rotate(-2deg);
+  }
+}
