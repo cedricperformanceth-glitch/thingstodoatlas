@@ -7,17 +7,17 @@
   display: none !important;
 }
 
-/* Crop the white canvas surrounding the WebP while retaining the pencil
-   outline and the red/blue airmail edge. */
+/* Remove the white canvas at the top and bottom only. Do not crop the left
+   or right edges, so the pencil outline remains visible on both sides. */
 #main-content .pakse-page .city-postcard::before {
-  inset: -6.5% -5.5%;
+  inset: -9% 0;
   background-position: center;
   background-size: 100% 100%;
 }
 
 @media (min-width: 761px) {
   /* Use the four address rules already drawn on the envelope: Pakse on the
-     first one, then exactly three fixed lines of copy beneath it. */
+     first one, then the complete original copy on the following three. */
   #main-content .pakse-page .city-postcard__message {
     --envelope-line-gap: 3.15rem;
     position: relative;
@@ -30,7 +30,7 @@
   #main-content .pakse-page .city-postcard h1 {
     position: absolute;
     top: 46.5%;
-    left: 7%;
+    left: 13.5%;
     margin: 0;
     color: #315545;
     font-family: 'Segoe Print', 'Bradley Hand', cursive;
@@ -45,8 +45,8 @@
   #main-content .pakse-page .city-postcard__description {
     position: absolute;
     top: calc(46.5% + var(--envelope-line-gap));
-    left: 7%;
-    width: 86%;
+    left: 13.5%;
+    width: 80%;
     margin: 0;
     color: transparent;
     font-size: 0;
@@ -54,13 +54,13 @@
   }
 
   #main-content .pakse-page .city-postcard__description::before {
-    content: 'The gateway to Southern Laos.\A A relaxed base for the Bolaven Plateau.\A Wat Phou and the roads south begin here.';
+    content: 'The gateway to Southern Laos. More than a list of city sights,\A Pakse is a relaxed riverside base for the Bolaven Plateau,\A Wat Phou and the roads that continue south.';
     display: block;
     color: #3f4943;
     font-family: 'Segoe Print', 'Bradley Hand', cursive;
-    font-size: 1.14rem;
+    font-size: 1.04rem;
     font-weight: 500;
-    letter-spacing: .005em;
+    letter-spacing: 0;
     line-height: var(--envelope-line-gap);
     white-space: pre;
     transform: translateY(-.22rem) rotate(-.25deg);
@@ -84,12 +84,11 @@
     aspect-ratio: 2.15 / 1;
   }
 
-  /* Move the drawing and its partner button together, preserving their
-     shared left edge instead of translating only the drawing. */
+  /* Drawing and partner button move together, now 45px back to the left. */
   #main-content .pakse-page .city-postcard-hero__aside {
     width: 22rem;
     align-items: flex-start;
-    transform: translateX(100px);
+    transform: translateX(55px);
   }
 
   #main-content .pakse-page .city-postcard-hero__drawing {
@@ -105,7 +104,6 @@
     padding: 12px 15px;
   }
 
-  /* A slightly taller photograph and readable notebook facts beneath it. */
   #main-content .pakse-page .city-postcard__photo img {
     height: 17rem;
   }
@@ -131,7 +129,7 @@
     width: 22rem;
     justify-self: center;
     align-items: flex-start;
-    transform: translateX(32px);
+    transform: none;
   }
 
   #main-content .pakse-page .city-postcard-hero__drawing {
@@ -157,7 +155,7 @@
 
 @media (max-width: 760px) {
   #main-content .pakse-page .city-postcard::before {
-    inset: -4.5% -4%;
+    inset: -6% 0;
   }
 
   #main-content .pakse-page .city-postcard-hero__aside {
