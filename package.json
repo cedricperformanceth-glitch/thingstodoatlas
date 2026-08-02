@@ -4,10 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "node scripts/prepare-pakse-envelope.mjs",
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/prepare-pakse-envelope.mjs && astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "prepare:pakse-envelope": "node scripts/prepare-pakse-envelope.mjs",
     "images:sync": "node scripts/sync-place-images.mjs",
     "images:all": "node scripts/sync-place-images.mjs",
     "images:refresh-all": "node scripts/sync-place-images.mjs --refresh-generic",
