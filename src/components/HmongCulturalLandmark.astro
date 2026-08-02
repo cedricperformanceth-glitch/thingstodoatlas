@@ -1,5 +1,7 @@
 ---
+import EditorialGuide from './EditorialGuide.astro';
 import LandmarkModal from './LandmarkModal.astro';
+import { laosEditorialGuide } from '../data/editorialGuides';
 
 const hmongGallery = [
   {
@@ -25,6 +27,8 @@ const hmongGallery = [
   }
 ];
 ---
+
+<EditorialGuide guide={laosEditorialGuide} mountSelector=".map-layers" />
 
 <LandmarkModal
   id="hmong-cultural-modal"
