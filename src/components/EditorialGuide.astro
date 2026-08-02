@@ -1,6 +1,8 @@
 ---
+import EditorialFactIcon from './EditorialFactIcon.astro';
 import type { EditorialGuideData } from '../data/editorialGuides';
 import '../styles/editorial-guide.css';
+import '../styles/editorial-guide-columns.css';
 
 interface Props {
   guide: EditorialGuideData;
@@ -112,35 +114,42 @@ const guideHash = `#${guide.slug}`;
               hidden
               data-editorial-guide-view-panel={section.id}
             >
-              <div class="editorial-guide__section-heading">
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <div>
-                  {section.eyebrow && <p>{section.eyebrow}</p>}
-                  <h3>{section.title}</h3>
+              <div class="editorial-guide__chapter-grid">
+                <div class="editorial-guide__chapter-rail">
+                  {section.facts && section.facts.length > 0 && (
+                    <dl class="editorial-guide__facts">
+                      {section.facts.map((fact) => (
+                        <div>
+                          <EditorialFactIcon label={fact.label} />
+                          <dt>{fact.label}</dt>
+                          <dd>{fact.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+
+                  {section.note && (
+                    <aside class="editorial-guide__note">
+                      <span>{section.note.label || 'Field note'}</span>
+                      <p>{section.note.text}</p>
+                    </aside>
+                  )}
+                </div>
+
+                <div class="editorial-guide__chapter-copy">
+                  <div class="editorial-guide__section-heading">
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <div>
+                      {section.eyebrow && <p>{section.eyebrow}</p>}
+                      <h3>{section.title}</h3>
+                    </div>
+                  </div>
+
+                  <div class="editorial-guide__prose">
+                    {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+                  </div>
                 </div>
               </div>
-
-              <div class="editorial-guide__prose">
-                {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-              </div>
-
-              {section.facts && section.facts.length > 0 && (
-                <dl class="editorial-guide__facts">
-                  {section.facts.map((fact) => (
-                    <div>
-                      <dt>{fact.label}</dt>
-                      <dd>{fact.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              )}
-
-              {section.note && (
-                <aside class="editorial-guide__note">
-                  <span>{section.note.label || 'Field note'}</span>
-                  <p>{section.note.text}</p>
-                </aside>
-              )}
             </article>
           );
         })}
