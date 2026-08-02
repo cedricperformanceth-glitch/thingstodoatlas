@@ -9,8 +9,8 @@ interface Props {
 
 const { guide, mountSelector } = Astro.props;
 const dialogId = `${guide.slug}-dialog`;
-const titleId = `${guide.slug}-title`;
-const descriptionId = `${guide.slug}-description`;
+const titleId = `${guide.slug}-dialog-title`;
+const introId = `${guide.slug}-intro`;
 const guideHash = `#${guide.slug}`;
 ---
 
@@ -45,96 +45,120 @@ const guideHash = `#${guide.slug}`;
       role="dialog"
       aria-modal="true"
       aria-labelledby={titleId}
-      aria-describedby={descriptionId}
       data-editorial-guide-panel
     >
-      <button class="editorial-guide__close" type="button" data-editorial-guide-close>
-        <span>Close</span>
-        <b aria-hidden="true">×</b>
-      </button>
+      <h2 id={titleId} class="editorial-guide__sr-only">{guide.destination} field guide</h2>
 
-      <aside class="editorial-guide__index">
-        <div>
-          <p class="editorial-guide__stamp">{guide.typeLabel}</p>
-          <p class="editorial-guide__destination">{guide.destination}</p>
-          <h2 id={titleId}>{guide.title}</h2>
-          <p id={descriptionId} class="editorial-guide__intro">{guide.intro}</p>
-          {guide.edition && <p class="editorial-guide__edition">{guide.edition}</p>}
-        </div>
+      <header class="editorial-guide__topbar">
+        <button class="editorial-guide__home" type="button" data-editorial-guide-home aria-current="page">
+          <span>{guide.typeLabel}</span>
+          <strong>{guide.destination}</strong>
+          <small>Before you begin</small>
+        </button>
 
-        <nav class="editorial-guide__nav" aria-label={`${guide.destination} field guide chapters`}>
-          {guide.sections.map((section, index) => (
-            <button type="button" data-editorial-guide-jump={`${guide.slug}-${section.id}`}>
+        <button class="editorial-guide__close" type="button" data-editorial-guide-close>
+          <span>Close</span>
+          <b aria-hidden="true">×</b>
+        </button>
+      </header>
+
+      <nav class="editorial-guide__nav" aria-label={`${guide.destination} field guide chapters`} role="tablist">
+        {guide.sections.map((section, index) => {
+          const tabId = `${guide.slug}-${section.id}-tab`;
+          const panelId = `${guide.slug}-${section.id}-panel`;
+
+          return (
+            <button
+              id={tabId}
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls={panelId}
+              tabindex="-1"
+              data-editorial-guide-view={section.id}
+            >
               <span>{String(index + 1).padStart(2, '0')}</span>
-              {section.title}
+              <strong>{section.title}</strong>
             </button>
-          ))}
-        </nav>
+          );
+        })}
+      </nav>
 
-        {guide.warning && (
-          <p class="editorial-guide__warning">
-            <strong>Practical note</strong>
-            {guide.warning}
-          </p>
-        )}
-      </aside>
+      <div class="editorial-guide__stage" data-editorial-guide-stage>
+        <section
+          class="editorial-guide__view editorial-guide__view--intro"
+          id={introId}
+          data-editorial-guide-view-panel="intro"
+          aria-hidden="false"
+        >
+          <p class="editorial-guide__eyebrow">{guide.typeLabel} · {guide.destination}</p>
+          <h3>{guide.title}</h3>
+          <p class="editorial-guide__lead">{guide.intro}</p>
+          <span class="editorial-guide__hint">Choose a chapter above</span>
+        </section>
 
-      <div class="editorial-guide__content" data-editorial-guide-scroll>
-        <header class="editorial-guide__hero">
-          <p>{guide.typeLabel} · {guide.destination}</p>
-          <h3>{guide.subtitle}</h3>
-          <span aria-hidden="true">Notes for the road</span>
-        </header>
+        {guide.sections.map((section, index) => {
+          const tabId = `${guide.slug}-${section.id}-tab`;
+          const panelId = `${guide.slug}-${section.id}-panel`;
 
-        {guide.sections.map((section, index) => (
-          <section class="editorial-guide__section" id={`${guide.slug}-${section.id}`}>
-            <div class="editorial-guide__section-heading">
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <div>
-                {section.eyebrow && <p>{section.eyebrow}</p>}
-                <h3>{section.title}</h3>
+          return (
+            <article
+              class="editorial-guide__view editorial-guide__view--chapter"
+              id={panelId}
+              role="tabpanel"
+              tabindex="0"
+              aria-labelledby={tabId}
+              aria-hidden="true"
+              hidden
+              data-editorial-guide-view-panel={section.id}
+            >
+              <div class="editorial-guide__section-heading">
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <div>
+                  {section.eyebrow && <p>{section.eyebrow}</p>}
+                  <h3>{section.title}</h3>
+                </div>
               </div>
-            </div>
 
-            <div class="editorial-guide__prose">
-              {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-            </div>
+              <div class="editorial-guide__prose">
+                {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+              </div>
 
-            {section.facts && section.facts.length > 0 && (
-              <dl class="editorial-guide__facts">
-                {section.facts.map((fact) => (
-                  <div>
-                    <dt>{fact.label}</dt>
-                    <dd>{fact.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            )}
+              {section.facts && section.facts.length > 0 && (
+                <dl class="editorial-guide__facts">
+                  {section.facts.map((fact) => (
+                    <div>
+                      <dt>{fact.label}</dt>
+                      <dd>{fact.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
 
-            {section.note && (
-              <aside class="editorial-guide__note">
-                <span>{section.note.label || 'Field note'}</span>
-                <p>{section.note.text}</p>
-              </aside>
-            )}
-          </section>
-        ))}
-
-        <footer class="editorial-guide__footer">
-          <div>
-            <p>Ready to choose a place?</p>
-            <button type="button" data-editorial-guide-close>Return to the Laos map <span aria-hidden="true">↗</span></button>
-          </div>
-          {guide.links && guide.links.length > 0 && (
-            <div class="editorial-guide__links">
-              <span>Official checks</span>
-              {guide.links.map((link) => (
-                <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>
-              ))}
-            </div>
-          )}
-        </footer>
+              {section.note && (
+                <aside class="editorial-guide__note">
+                  <span>{section.note.label || 'Field note'}</span>
+                  <p>{section.note.text}</p>
+                </aside>
+              )}
+            </article>
+          );
+        })}
       </div>
+
+      <footer class="editorial-guide__footer">
+        <button type="button" data-editorial-guide-home>Back to introduction</button>
+
+        {guide.links && guide.links.length > 0 && (
+          <div class="editorial-guide__links">
+            {guide.links.map((link) => (
+              <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>
+            ))}
+          </div>
+        )}
+
+        <button type="button" data-editorial-guide-close>Return to the Laos map <span aria-hidden="true">↗</span></button>
+      </footer>
     </section>
   </div>
 </div>
@@ -148,12 +172,15 @@ const guideHash = `#${guide.slug}`;
       const trigger = root.querySelector<HTMLButtonElement>('[data-editorial-guide-trigger]');
       const overlay = root.querySelector<HTMLElement>('[data-editorial-guide-overlay]');
       const panel = root.querySelector<HTMLElement>('[data-editorial-guide-panel]');
-      const scrollArea = root.querySelector<HTMLElement>('[data-editorial-guide-scroll]');
+      const stage = root.querySelector<HTMLElement>('[data-editorial-guide-stage]');
+      const homeButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-editorial-guide-home]'));
+      const viewButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-editorial-guide-view]'));
+      const viewPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-editorial-guide-view-panel]'));
       const mountSelector = root.dataset.mountSelector;
       const guideHash = root.dataset.guideHash || '';
       let previousFocus: Element | null = null;
 
-      if (!trigger || !overlay || !panel || !scrollArea) return;
+      if (!trigger || !overlay || !panel || !stage || viewPanels.length === 0) return;
 
       if (mountSelector) {
         const mount = document.querySelector(mountSelector);
@@ -165,8 +192,31 @@ const guideHash = `#${guide.slug}`;
         document.documentElement.classList.toggle('editorial-guide-open', Boolean(hasOpenGuide));
       };
 
+      const showView = (viewId = 'intro') => {
+        viewPanels.forEach((view) => {
+          const isActive = view.dataset.editorialGuideViewPanel === viewId;
+          view.hidden = !isActive;
+          view.setAttribute('aria-hidden', String(!isActive));
+        });
+
+        viewButtons.forEach((button) => {
+          const isActive = button.dataset.editorialGuideView === viewId;
+          button.setAttribute('aria-selected', String(isActive));
+          button.tabIndex = isActive ? 0 : -1;
+          button.classList.toggle('is-active', isActive);
+        });
+
+        homeButtons.forEach((button) => {
+          if (viewId === 'intro') button.setAttribute('aria-current', 'page');
+          else button.removeAttribute('aria-current');
+        });
+
+        stage.scrollTo({ top: 0, behavior: 'auto' });
+      };
+
       const openGuide = (updateHash = true) => {
         previousFocus = document.activeElement;
+        showView('intro');
         overlay.hidden = false;
         overlay.setAttribute('aria-hidden', 'false');
         trigger.setAttribute('aria-expanded', 'true');
@@ -177,7 +227,7 @@ const guideHash = `#${guide.slug}`;
         }
 
         requestAnimationFrame(() => {
-          overlay.querySelector<HTMLButtonElement>('[data-editorial-guide-close]')?.focus();
+          homeButtons[0]?.focus();
         });
       };
 
@@ -197,20 +247,39 @@ const guideHash = `#${guide.slug}`;
 
       trigger.addEventListener('click', () => openGuide());
 
+      homeButtons.forEach((button) => {
+        button.addEventListener('click', () => showView('intro'));
+      });
+
+      viewButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+          const viewId = button.dataset.editorialGuideView;
+          if (viewId) showView(viewId);
+        });
+
+        button.addEventListener('keydown', (event) => {
+          if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+          event.preventDefault();
+
+          let nextIndex = index;
+          if (event.key === 'ArrowRight') nextIndex = (index + 1) % viewButtons.length;
+          if (event.key === 'ArrowLeft') nextIndex = (index - 1 + viewButtons.length) % viewButtons.length;
+          if (event.key === 'Home') nextIndex = 0;
+          if (event.key === 'End') nextIndex = viewButtons.length - 1;
+
+          const nextButton = viewButtons[nextIndex];
+          const viewId = nextButton?.dataset.editorialGuideView;
+          nextButton?.focus();
+          if (viewId) showView(viewId);
+        });
+      });
+
       overlay.querySelectorAll('[data-editorial-guide-close]').forEach((button) => {
         button.addEventListener('click', () => closeGuide());
       });
 
       overlay.addEventListener('click', (event) => {
         if (event.target === overlay) closeGuide();
-      });
-
-      root.querySelectorAll<HTMLButtonElement>('[data-editorial-guide-jump]').forEach((button) => {
-        button.addEventListener('click', () => {
-          const targetId = button.getAttribute('data-editorial-guide-jump');
-          const target = targetId ? document.getElementById(targetId) : null;
-          target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
       });
 
       panel.addEventListener('keydown', (event) => {
@@ -222,7 +291,7 @@ const guideHash = `#${guide.slug}`;
 
         if (event.key !== 'Tab') return;
         const focusable = Array.from(panel.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'))
-          .filter((element) => element instanceof HTMLElement && !element.hidden);
+          .filter((element) => element.getClientRects().length > 0);
         const first = focusable[0];
         const last = focusable[focusable.length - 1];
         if (!first || !last) return;
