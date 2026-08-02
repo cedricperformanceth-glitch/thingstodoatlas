@@ -87,11 +87,17 @@
     aspect-ratio: 2.15 / 1;
   }
 
-  /* Drawing and partner button move together. */
+  /* Keep the photo and its four notebook facts safely inside the airmail
+     border by moving the complete media block together. */
+  #main-content .pakse-page .city-postcard__media {
+    transform: translate(2rem, 1.5rem);
+  }
+
+  /* Drawing and partner button stay aligned and move 40px back to the left. */
   #main-content .pakse-page .city-postcard-hero__aside {
     width: 22rem;
     align-items: flex-start;
-    transform: translateX(55px);
+    transform: translateX(15px);
   }
 
   #main-content .pakse-page .city-postcard-hero__drawing {
@@ -130,6 +136,10 @@
   #main-content .pakse-page .city-postcard-shell {
     width: 96%;
     justify-self: start;
+  }
+
+  #main-content .pakse-page .city-postcard__media {
+    transform: translate(1.25rem, 1rem);
   }
 
   #main-content .pakse-page .city-postcard-hero__aside {
