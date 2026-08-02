@@ -7,12 +7,14 @@
   display: none !important;
 }
 
-/* Remove the white canvas at the top and bottom only. Do not crop the left
-   or right edges, so the pencil outline remains visible on both sides. */
+/* The generated asset keeps the original 1536×1024 canvas and makes only
+   the exterior white pixels transparent. No crop, zoom or changed inset. */
 #main-content .pakse-page .city-postcard::before {
-  inset: -9% 0;
+  inset: 0;
+  background-image: url('/images/laos/pakse-airmail-envelope.webp');
   background-position: center;
   background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 @media (min-width: 761px) {
@@ -84,7 +86,7 @@
     aspect-ratio: 2.15 / 1;
   }
 
-  /* Drawing and partner button move together, now 45px back to the left. */
+  /* Drawing and partner button move together. */
   #main-content .pakse-page .city-postcard-hero__aside {
     width: 22rem;
     align-items: flex-start;
@@ -154,10 +156,6 @@
 }
 
 @media (max-width: 760px) {
-  #main-content .pakse-page .city-postcard::before {
-    inset: -6% 0;
-  }
-
   #main-content .pakse-page .city-postcard-hero__aside {
     display: flex;
     flex-direction: column;
