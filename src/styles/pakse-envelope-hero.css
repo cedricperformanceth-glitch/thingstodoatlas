@@ -75,9 +75,10 @@
     max-width: none;
   }
 
-  /* Same left origin as before, with up to 150px of additional envelope width. */
+  /* The previous envelope track was 34–43.375rem. Every value is now
+     multiplied by 1.2, so the whole envelope grows by exactly 20%. */
   #main-content .pakse-page .city-postcard-hero__layout {
-    grid-template-columns: clamp(34rem, calc(100vw - 31rem), 43.375rem) minmax(22rem, 1fr);
+    grid-template-columns: clamp(40.8rem, calc(120vw - 37.2rem), 52.05rem) minmax(22rem, 1fr);
     gap: 2rem;
   }
 
@@ -125,6 +126,12 @@
 }
 
 @media (max-width: 980px) and (min-width: 761px) {
+  /* The component used 80% here; 96% is the same envelope enlarged by 20%. */
+  #main-content .pakse-page .city-postcard-shell {
+    width: 96%;
+    justify-self: start;
+  }
+
   #main-content .pakse-page .city-postcard-hero__aside {
     display: flex;
     flex-direction: column;
