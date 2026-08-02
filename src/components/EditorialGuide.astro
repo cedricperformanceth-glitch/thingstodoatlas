@@ -1,0 +1,252 @@
+---
+import type { EditorialGuideData } from '../data/editorialGuides';
+import '../styles/editorial-guide.css';
+
+interface Props {
+  guide: EditorialGuideData;
+  mountSelector?: string;
+}
+
+const { guide, mountSelector } = Astro.props;
+const dialogId = `${guide.slug}-dialog`;
+const titleId = `${guide.slug}-title`;
+const descriptionId = `${guide.slug}-description`;
+const guideHash = `#${guide.slug}`;
+---
+
+<div
+  class="editorial-guide"
+  data-editorial-guide-root
+  data-mount-selector={mountSelector}
+  data-guide-hash={guideHash}
+>
+  <button
+    class="editorial-guide__trigger"
+    type="button"
+    aria-controls={dialogId}
+    aria-expanded="false"
+    data-editorial-guide-trigger
+  >
+    <span class="editorial-guide__trigger-tape" aria-hidden="true"></span>
+    <span class="editorial-guide__trigger-eyebrow">{guide.triggerEyebrow}</span>
+    <span class="editorial-guide__trigger-title">{guide.triggerTitle}</span>
+    <span class="editorial-guide__trigger-arrow" aria-hidden="true">↝</span>
+  </button>
+
+  <div
+    class="editorial-guide__overlay"
+    id={dialogId}
+    aria-hidden="true"
+    hidden
+    data-editorial-guide-overlay
+  >
+    <section
+      class="editorial-guide__panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={titleId}
+      aria-describedby={descriptionId}
+      data-editorial-guide-panel
+    >
+      <button class="editorial-guide__close" type="button" data-editorial-guide-close>
+        <span>Close</span>
+        <b aria-hidden="true">×</b>
+      </button>
+
+      <aside class="editorial-guide__index">
+        <div>
+          <p class="editorial-guide__stamp">{guide.typeLabel}</p>
+          <p class="editorial-guide__destination">{guide.destination}</p>
+          <h2 id={titleId}>{guide.title}</h2>
+          <p id={descriptionId} class="editorial-guide__intro">{guide.intro}</p>
+          {guide.edition && <p class="editorial-guide__edition">{guide.edition}</p>}
+        </div>
+
+        <nav class="editorial-guide__nav" aria-label={`${guide.destination} field guide chapters`}>
+          {guide.sections.map((section, index) => (
+            <button type="button" data-editorial-guide-jump={`${guide.slug}-${section.id}`}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              {section.title}
+            </button>
+          ))}
+        </nav>
+
+        {guide.warning && (
+          <p class="editorial-guide__warning">
+            <strong>Practical note</strong>
+            {guide.warning}
+          </p>
+        )}
+      </aside>
+
+      <div class="editorial-guide__content" data-editorial-guide-scroll>
+        <header class="editorial-guide__hero">
+          <p>{guide.typeLabel} · {guide.destination}</p>
+          <h3>{guide.subtitle}</h3>
+          <span aria-hidden="true">Notes for the road</span>
+        </header>
+
+        {guide.sections.map((section, index) => (
+          <section class="editorial-guide__section" id={`${guide.slug}-${section.id}`}>
+            <div class="editorial-guide__section-heading">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                {section.eyebrow && <p>{section.eyebrow}</p>}
+                <h3>{section.title}</h3>
+              </div>
+            </div>
+
+            <div class="editorial-guide__prose">
+              {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+
+            {section.facts && section.facts.length > 0 && (
+              <dl class="editorial-guide__facts">
+                {section.facts.map((fact) => (
+                  <div>
+                    <dt>{fact.label}</dt>
+                    <dd>{fact.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+
+            {section.note && (
+              <aside class="editorial-guide__note">
+                <span>{section.note.label || 'Field note'}</span>
+                <p>{section.note.text}</p>
+              </aside>
+            )}
+          </section>
+        ))}
+
+        <footer class="editorial-guide__footer">
+          <div>
+            <p>Ready to choose a place?</p>
+            <button type="button" data-editorial-guide-close>Return to the Laos map <span aria-hidden="true">↗</span></button>
+          </div>
+          {guide.links && guide.links.length > 0 && (
+            <div class="editorial-guide__links">
+              <span>Official checks</span>
+              {guide.links.map((link) => (
+                <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>
+              ))}
+            </div>
+          )}
+        </footer>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+  const setupEditorialGuides = () => {
+    document.querySelectorAll<HTMLElement>('[data-editorial-guide-root]').forEach((root) => {
+      if (root.dataset.editorialGuideReady === 'true') return;
+      root.dataset.editorialGuideReady = 'true';
+
+      const trigger = root.querySelector<HTMLButtonElement>('[data-editorial-guide-trigger]');
+      const overlay = root.querySelector<HTMLElement>('[data-editorial-guide-overlay]');
+      const panel = root.querySelector<HTMLElement>('[data-editorial-guide-panel]');
+      const scrollArea = root.querySelector<HTMLElement>('[data-editorial-guide-scroll]');
+      const mountSelector = root.dataset.mountSelector;
+      const guideHash = root.dataset.guideHash || '';
+      let previousFocus: Element | null = null;
+
+      if (!trigger || !overlay || !panel || !scrollArea) return;
+
+      if (mountSelector) {
+        const mount = document.querySelector(mountSelector);
+        if (mount) mount.appendChild(trigger);
+      }
+
+      const syncPageLock = () => {
+        const hasOpenGuide = document.querySelector<HTMLElement>('[data-editorial-guide-overlay]:not([hidden])');
+        document.documentElement.classList.toggle('editorial-guide-open', Boolean(hasOpenGuide));
+      };
+
+      const openGuide = (updateHash = true) => {
+        previousFocus = document.activeElement;
+        overlay.hidden = false;
+        overlay.setAttribute('aria-hidden', 'false');
+        trigger.setAttribute('aria-expanded', 'true');
+        syncPageLock();
+
+        if (updateHash && guideHash && window.location.hash !== guideHash) {
+          history.pushState({ editorialGuide: guideHash }, '', guideHash);
+        }
+
+        requestAnimationFrame(() => {
+          overlay.querySelector<HTMLButtonElement>('[data-editorial-guide-close]')?.focus();
+        });
+      };
+
+      const closeGuide = (updateHash = true) => {
+        overlay.hidden = true;
+        overlay.setAttribute('aria-hidden', 'true');
+        trigger.setAttribute('aria-expanded', 'false');
+        syncPageLock();
+
+        if (updateHash && guideHash && window.location.hash === guideHash) {
+          history.replaceState(history.state, '', `${window.location.pathname}${window.location.search}`);
+        }
+
+        if (previousFocus instanceof HTMLElement && document.contains(previousFocus)) previousFocus.focus();
+        else trigger.focus();
+      };
+
+      trigger.addEventListener('click', () => openGuide());
+
+      overlay.querySelectorAll('[data-editorial-guide-close]').forEach((button) => {
+        button.addEventListener('click', () => closeGuide());
+      });
+
+      overlay.addEventListener('click', (event) => {
+        if (event.target === overlay) closeGuide();
+      });
+
+      root.querySelectorAll<HTMLButtonElement>('[data-editorial-guide-jump]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const targetId = button.getAttribute('data-editorial-guide-jump');
+          const target = targetId ? document.getElementById(targetId) : null;
+          target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      panel.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          closeGuide();
+          return;
+        }
+
+        if (event.key !== 'Tab') return;
+        const focusable = Array.from(panel.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'))
+          .filter((element) => element instanceof HTMLElement && !element.hidden);
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (!first || !last) return;
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      });
+
+      const syncFromHash = () => {
+        if (guideHash && window.location.hash === guideHash && overlay.hidden) openGuide(false);
+        if (guideHash && window.location.hash !== guideHash && !overlay.hidden) closeGuide(false);
+      };
+
+      window.addEventListener('hashchange', syncFromHash);
+      window.addEventListener('popstate', syncFromHash);
+      syncFromHash();
+    });
+  };
+
+  setupEditorialGuides();
+  document.addEventListener('astro:page-load', setupEditorialGuides);
+</script>
