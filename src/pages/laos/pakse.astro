@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CityPostcardHero from '../../components/CityPostcardHero.astro';
+import PakseEditorialGuide from '../../components/PakseEditorialGuide.astro';
 import CityLandmarkSection from '../../components/CityLandmarkSection.astro';
 import LandmarkModalSet from '../../components/LandmarkModalSet.astro';
 import CityCategorySPA from '../../components/CityCategorySPA.astro';
@@ -75,6 +76,7 @@ const getRestaurantFilterTags = (place: (typeof categoryTabs)[number]['places'][
         href: 'https://muaythaipakse.com'
       }}
     />
+    <PakseEditorialGuide />
 
     <CityLandmarkSection
       cityName="Pakse"
