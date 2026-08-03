@@ -81,13 +81,13 @@
   font-size: 1.05rem;
 }
 
-/* Pakse only: replace the postcard sheet with the back of the airmail
-   envelope while keeping exactly the same left origin and content box. */
-#main-content .pakse-page .city-postcard__template {
-  opacity: 0;
+/* Pakse and Tad Lo use the finished airmail envelope instead of the former
+   generic postcard sheet and its SVG outline. */
+#main-content :is(.pakse-page, .tad-lo-page) .city-postcard__template {
+  display: none;
 }
 
-#main-content .pakse-page .city-postcard::before {
+#main-content :is(.pakse-page, .tad-lo-page) .city-postcard::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -96,16 +96,16 @@
   pointer-events: none;
 }
 
-#main-content .pakse-page .city-postcard::after {
+#main-content :is(.pakse-page, .tad-lo-page) .city-postcard::after {
   display: none;
 }
 
 @media (min-width: 981px) {
-  #main-content .pakse-page .city-postcard-hero__aside {
+  #main-content :is(.pakse-page, .tad-lo-page) .city-postcard-hero__aside {
     transform: translateX(1.35rem);
   }
 
-  #main-content .pakse-page .city-postcard-hero__partner {
+  #main-content :is(.pakse-page, .tad-lo-page) .city-postcard-hero__partner {
     width: 20.5rem;
     padding: 12px 15px;
   }
@@ -142,11 +142,11 @@
     margin: 0 0 .7rem;
   }
 
-  #main-content .pakse-page .city-postcard-hero__aside {
+  #main-content :is(.pakse-page, .tad-lo-page) .city-postcard-hero__aside {
     transform: translateX(.75rem);
   }
 
-  #main-content .pakse-page .city-postcard-hero__partner {
+  #main-content :is(.pakse-page, .tad-lo-page) .city-postcard-hero__partner {
     width: 20rem;
   }
 }
@@ -190,7 +190,7 @@
     font-size: 1rem;
   }
 
-  #main-content .pakse-page .city-postcard-hero__partner {
+  #main-content :is(.pakse-page, .tad-lo-page) .city-postcard-hero__partner {
     width: min(100%, 20rem);
   }
 }
