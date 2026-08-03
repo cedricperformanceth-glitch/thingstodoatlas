@@ -1,0 +1,61 @@
+---
+import EditorialGuide from './EditorialGuide.astro';
+import { pakseEditorialGuide } from '../data/pakseEditorialGuide';
+---
+
+<EditorialGuide guide={pakseEditorialGuide} mountSelector=".city-postcard__media" />
+
+<style is:global>
+  .city-postcard__media > .editorial-guide__trigger {
+    position: relative;
+    inset: auto;
+    display: grid;
+    flex: 0 0 auto;
+    width: calc(100% - .25rem);
+    margin: .72rem 0 0 .08rem;
+    padding: .58rem .68rem .52rem;
+    border-color: rgba(49, 85, 69, .18);
+    background: rgba(247, 242, 230, .78);
+    box-shadow: 3px 4px 0 rgba(49, 85, 69, .055);
+    transform: rotate(-.65deg);
+  }
+
+  .city-postcard__media > .editorial-guide__trigger:hover,
+  .city-postcard__media > .editorial-guide__trigger:focus-visible {
+    background: rgba(251, 247, 237, .96);
+    box-shadow: 4px 5px 0 rgba(49, 85, 69, .075);
+    transform: translateY(-1px) rotate(-.2deg);
+  }
+
+  .city-postcard__media > .editorial-guide__trigger .editorial-guide__trigger-tape {
+    top: -.38rem;
+    left: 1rem;
+    width: 2.8rem;
+    height: .72rem;
+  }
+
+  .city-postcard__media > .editorial-guide__trigger .editorial-guide__trigger-eyebrow {
+    margin-bottom: .1rem;
+    font-size: .56rem;
+  }
+
+  .city-postcard__media > .editorial-guide__trigger .editorial-guide__trigger-title {
+    font-size: .88rem;
+    line-height: 1.04;
+  }
+
+  .city-postcard__media > .editorial-guide__trigger .editorial-guide__trigger-arrow {
+    margin-left: .45rem;
+    font-size: 1.35rem;
+  }
+
+  @media (max-width: 700px) {
+    .city-postcard__media > .editorial-guide__trigger {
+      bottom: auto;
+      left: auto;
+      width: calc(100% - .1rem);
+      margin-top: .55rem;
+      padding: .48rem .55rem .44rem;
+    }
+  }
+</style>
