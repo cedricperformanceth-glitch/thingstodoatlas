@@ -1,3 +1,5 @@
+@import './pakse-envelope-metrics.css';
+
 /* Pakse envelope hero only. Loaded after city-postcard-frame.css. */
 
 /* Keep only the postal details already drawn on the envelope asset. */
@@ -18,22 +20,24 @@
 }
 
 @media (min-width: 761px) {
-  /* Use the four address rules already drawn on the envelope: Pakse on the
-     first one, then the complete original copy on the following three. */
+  /* The message is positioned against the complete envelope, not against the
+     right-hand grid column. Its x coordinate therefore matches the WebP at
+     every displayed width. */
   #main-content .pakse-page .city-postcard__message {
     --envelope-line-gap: 3.15rem;
-    --envelope-text-start: calc(13.5% - 2px);
-    position: relative;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
     display: block;
-    align-self: stretch;
     min-height: 0;
     padding: 0;
+    pointer-events: none;
   }
 
   #main-content .pakse-page .city-postcard h1 {
     position: absolute;
-    top: 46.5%;
-    left: var(--envelope-text-start);
+    top: calc(46.5% + .19rem);
+    left: var(--pakse-envelope-rule-start);
     margin: 0;
     color: #315545;
     font-family: 'Segoe Print', 'Bradley Hand', cursive;
@@ -47,9 +51,9 @@
 
   #main-content .pakse-page .city-postcard__description {
     position: absolute;
-    top: calc(46.5% + var(--envelope-line-gap));
-    left: var(--envelope-text-start);
-    width: 80%;
+    top: calc(46.5% + .19rem + var(--envelope-line-gap));
+    left: var(--pakse-envelope-rule-start);
+    width: calc(96% - var(--pakse-envelope-rule-start));
     margin: 0;
     color: transparent;
     font-size: 0;
@@ -175,13 +179,12 @@
   }
 
   #main-content .pakse-page .city-postcard__facts {
-    gap: .55rem 1rem;
-    font-size: .95rem;
+    font-size: .94rem;
   }
 
   #main-content .pakse-page .city-postcard__facts svg {
-    width: 1.12rem;
-    height: 1.12rem;
+    width: 1.05rem;
+    height: 1.05rem;
   }
 }
 
