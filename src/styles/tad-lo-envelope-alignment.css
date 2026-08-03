@@ -1,0 +1,6 @@
+/* Tad Lo shares the measured address-rule origin of the Pakse airmail envelope.
+   This file is intentionally separate from pakse-envelope-metrics.css because
+   that generated file is rewritten during every Cloudflare build. */
+#main-content .tad-lo-page .city-postcard {
+  --pakse-envelope-rule-start: 55%;
+}
