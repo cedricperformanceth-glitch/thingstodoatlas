@@ -1,4 +1,4 @@
 /* Generated from calque SVG/airmail-postcard-template.webp before Astro builds. */
-#main-content .pakse-page .city-postcard {
+#main-content :is(.pakse-page, .tad-lo-page) .city-postcard {
   --pakse-envelope-rule-start: 55%;
 }
