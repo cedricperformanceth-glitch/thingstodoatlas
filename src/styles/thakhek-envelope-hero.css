@@ -1,0 +1,189 @@
+/* Thakhek uses the same finished airmail-envelope composition as Pakse. */
+#main-content .thakhek-page .city-postcard__template {
+  display: none;
+}
+
+#main-content .thakhek-page .city-postcard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: transparent url('/images/laos/pakse-airmail-envelope.webp') center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+
+#main-content .thakhek-page .city-postcard::after,
+#main-content .thakhek-page .city-postcard__postage,
+#main-content .thakhek-page .city-postcard__eyebrow,
+#main-content .thakhek-page .city-postcard__field-note {
+  display: none !important;
+}
+
+#main-content .thakhek-page .city-postcard {
+  --pakse-envelope-rule-start: 51.5%;
+}
+
+@media (min-width: 761px) {
+  #main-content .thakhek-page .city-postcard__message {
+    --envelope-line-gap: 3.15rem;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: block;
+    min-height: 0;
+    padding: 0;
+    pointer-events: none;
+  }
+
+  #main-content .thakhek-page .city-postcard h1 {
+    position: absolute;
+    top: calc(46.5% + .19rem);
+    left: var(--pakse-envelope-rule-start);
+    margin: 0;
+    color: #315545;
+    font-family: 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: 3.25rem;
+    font-weight: 600;
+    letter-spacing: -.035em;
+    line-height: var(--envelope-line-gap);
+    white-space: nowrap;
+    transform: translateY(-.28rem) rotate(-.8deg);
+  }
+
+  #main-content .thakhek-page .city-postcard__description {
+    position: absolute;
+    top: calc(46.5% + .19rem + var(--envelope-line-gap));
+    left: var(--pakse-envelope-rule-start);
+    width: calc(96% - var(--pakse-envelope-rule-start));
+    margin: 0;
+    color: transparent;
+    font-size: 0;
+    line-height: 0;
+  }
+
+  #main-content .thakhek-page .city-postcard__description::before {
+    content: 'A Mekong town that becomes a starting line for limestone roads,\A cave country and the long arc of the Thakhek Loop. Stay for the\A old streets, then let the road carry the chapter east.';
+    display: block;
+    color: #3f4943;
+    font-family: 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: 1.04rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: var(--envelope-line-gap);
+    white-space: pre;
+    transform: translateY(-.22rem) rotate(-.25deg);
+  }
+}
+
+@media (min-width: 981px) {
+  #main-content .thakhek-page .city-postcard-hero {
+    width: calc(100vw - 2rem);
+    max-width: none;
+  }
+
+  #main-content .thakhek-page .city-postcard-hero__layout {
+    grid-template-columns: clamp(40.8rem, calc(120vw - 37.2rem), 52.05rem) minmax(22rem, 1fr);
+    gap: 2rem;
+  }
+
+  #main-content .thakhek-page .city-postcard-shell {
+    width: 100%;
+    aspect-ratio: 2.15 / 1;
+  }
+
+  #main-content .thakhek-page .city-postcard__media {
+    width: 103%;
+    max-width: none;
+    transform: translate(1.75rem, 1.4rem);
+    transform-origin: top left;
+  }
+
+  #main-content .thakhek-page .city-postcard-hero__aside {
+    width: 22rem;
+    align-items: flex-start;
+    transform: translateX(15px);
+  }
+
+  #main-content .thakhek-page .city-postcard-hero__drawing {
+    width: 22rem;
+    margin: 0;
+    transform: rotate(-2deg);
+  }
+
+  #main-content .thakhek-page .city-postcard__photo img {
+    height: 17.4rem;
+  }
+
+  #main-content .thakhek-page .city-postcard__facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .65rem 1.2rem;
+    margin-top: 1.05rem;
+    font-size: 1.1rem;
+    line-height: 1.15;
+  }
+
+  #main-content .thakhek-page .city-postcard__facts svg {
+    width: 1.28rem;
+    height: 1.28rem;
+  }
+}
+
+@media (max-width: 980px) and (min-width: 761px) {
+  #main-content .thakhek-page .city-postcard-shell {
+    width: 96%;
+    justify-self: start;
+  }
+
+  #main-content .thakhek-page .city-postcard__media {
+    width: 102%;
+    max-width: none;
+    transform: translate(1.15rem, .95rem);
+    transform-origin: top left;
+  }
+
+  #main-content .thakhek-page .city-postcard-hero__aside {
+    display: flex;
+    flex-direction: column;
+    width: 22rem;
+    justify-self: center;
+    align-items: flex-start;
+    transform: none;
+  }
+
+  #main-content .thakhek-page .city-postcard-hero__drawing {
+    width: 22rem;
+    margin: 0;
+    transform: rotate(-2deg);
+  }
+
+  #main-content .thakhek-page .city-postcard__photo img {
+    height: 15.1rem;
+  }
+
+  #main-content .thakhek-page .city-postcard__facts {
+    font-size: .94rem;
+  }
+
+  #main-content .thakhek-page .city-postcard__facts svg {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+}
+
+@media (max-width: 760px) {
+  #main-content .thakhek-page .city-postcard-hero__aside {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: none;
+  }
+
+  #main-content .thakhek-page .city-postcard-hero__drawing {
+    margin: 0;
+    transform: rotate(-2deg);
+  }
+
+  #main-content .thakhek-page .city-postcard__facts {
+    font-size: .72rem;
+  }
+}
