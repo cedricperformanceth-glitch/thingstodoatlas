@@ -22,6 +22,7 @@
      first one, then the complete original copy on the following three. */
   #main-content .pakse-page .city-postcard__message {
     --envelope-line-gap: 3.15rem;
+    --envelope-text-start: calc(13.5% - 2px);
     position: relative;
     display: block;
     align-self: stretch;
@@ -32,7 +33,7 @@
   #main-content .pakse-page .city-postcard h1 {
     position: absolute;
     top: 46.5%;
-    left: 13.5%;
+    left: var(--envelope-text-start);
     margin: 0;
     color: #315545;
     font-family: 'Segoe Print', 'Bradley Hand', cursive;
@@ -47,7 +48,7 @@
   #main-content .pakse-page .city-postcard__description {
     position: absolute;
     top: calc(46.5% + var(--envelope-line-gap));
-    left: 13.5%;
+    left: var(--envelope-text-start);
     width: 80%;
     margin: 0;
     color: transparent;
@@ -87,10 +88,13 @@
     aspect-ratio: 2.15 / 1;
   }
 
-  /* Keep the photo and its four notebook facts safely inside the airmail
-     border by moving the complete media block together. */
+  /* Enlarge the complete photo/facts block slightly while keeping its edges
+     safely inside the red and blue airmail border. */
   #main-content .pakse-page .city-postcard__media {
-    transform: translate(2rem, 1.5rem);
+    width: 103%;
+    max-width: none;
+    transform: translate(1.75rem, 1.4rem);
+    transform-origin: top left;
   }
 
   /* Drawing and partner button stay aligned and move 40px back to the left. */
@@ -114,20 +118,20 @@
   }
 
   #main-content .pakse-page .city-postcard__photo img {
-    height: 17rem;
+    height: 17.4rem;
   }
 
   #main-content .pakse-page .city-postcard__facts {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: .62rem 1.15rem;
-    margin-top: 1rem;
-    font-size: 1.05rem;
+    gap: .65rem 1.2rem;
+    margin-top: 1.05rem;
+    font-size: 1.1rem;
     line-height: 1.15;
   }
 
   #main-content .pakse-page .city-postcard__facts svg {
-    width: 1.22rem;
-    height: 1.22rem;
+    width: 1.28rem;
+    height: 1.28rem;
   }
 }
 
@@ -139,7 +143,10 @@
   }
 
   #main-content .pakse-page .city-postcard__media {
-    transform: translate(1.25rem, 1rem);
+    width: 102%;
+    max-width: none;
+    transform: translate(1.15rem, .95rem);
+    transform-origin: top left;
   }
 
   #main-content .pakse-page .city-postcard-hero__aside {
@@ -164,11 +171,17 @@
   }
 
   #main-content .pakse-page .city-postcard__photo img {
-    height: 14.75rem;
+    height: 15.1rem;
   }
 
   #main-content .pakse-page .city-postcard__facts {
-    font-size: .9rem;
+    gap: .55rem 1rem;
+    font-size: .95rem;
+  }
+
+  #main-content .pakse-page .city-postcard__facts svg {
+    width: 1.12rem;
+    height: 1.12rem;
   }
 }
 
