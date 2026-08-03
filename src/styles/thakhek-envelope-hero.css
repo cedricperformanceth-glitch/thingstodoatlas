@@ -23,6 +23,14 @@
   --pakse-envelope-rule-start: 51.5%;
 }
 
+/* The original Thakhek photograph is wider than the postcard window. Keep the
+   complete frame visible instead of cropping both sides with object-fit: cover. */
+#main-content .thakhek-page .city-postcard__photo img {
+  object-fit: contain;
+  object-position: center;
+  background: #d8d2c5;
+}
+
 @media (min-width: 761px) {
   #main-content .thakhek-page .city-postcard__message {
     --envelope-line-gap: 3.15rem;
