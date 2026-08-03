@@ -23,11 +23,11 @@
   --pakse-envelope-rule-start: 51.5%;
 }
 
-/* The supplied Thakhek photograph is 3:2. Give the Polaroid the same ratio so
-   the image fills its frame without grey side bands, distortion or excess crop. */
+/* The supplied Thakhek photograph is 3:2. Keep the source ratio and display it
+   ten percent smaller than the previous 90% treatment. */
 #main-content .thakhek-page .city-postcard__photo {
   align-self: flex-start;
-  width: 90%;
+  width: 81%;
 }
 
 #main-content .thakhek-page .city-postcard__photo img {
@@ -180,7 +180,7 @@
 
 @media (max-width: 760px) {
   #main-content .thakhek-page .city-postcard__photo {
-    width: 100%;
+    width: 90%;
   }
 
   #main-content .thakhek-page .city-postcard-hero__aside {
