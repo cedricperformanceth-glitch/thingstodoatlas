@@ -2,15 +2,25 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CityPostcardHero from '../../components/CityPostcardHero.astro';
 import ThakhekEditorialGuide from '../../components/ThakhekEditorialGuide.astro';
+import CityCategorySPA from '../../components/CityCategorySPA.astro';
+import CityCategoryPanel from '../../components/CityCategoryPanel.astro';
 import CityLandmarkSection from '../../components/CityLandmarkSection.astro';
 import LandmarkModalSet from '../../components/LandmarkModalSet.astro';
+import MapAddressCard from '../../components/MapAddressCard.astro';
 import { thakhekLandmarks } from '../../data/thakhekLandmarks';
+import { thakhekGuesthouses, thakhekRestaurants } from '../../data/thakhekPlaces';
 
 const thakhekPostcardFacts = [
   { label: 'July 2026', icon: 'calendar' as const },
   { label: 'Loop road base', icon: 'road' as const },
   { label: 'Limestone & caves', icon: 'climate' as const },
   { label: 'Khammouane Province', icon: 'location' as const }
+];
+
+const categoryTabs = [
+  { slug: 'restaurants', title: 'Restaurants', kicker: 'EAT · LOCAL · RIVERSIDE', icon: 'restaurants' as const, count: thakhekRestaurants.length },
+  { slug: 'guesthouses', title: 'Guesthouses', kicker: 'SLEEP · LOOP · OLD TOWN', icon: 'guesthouses' as const, count: thakhekGuesthouses.length },
+  { slug: 'things-to-do', title: 'Things to do', kicker: 'CAVES · LOOP · EXPLORE', icon: 'explore' as const, count: thakhekLandmarks.length }
 ];
 ---
 
@@ -39,18 +49,70 @@ const thakhekPostcardFacts = [
     />
     <ThakhekEditorialGuide />
 
-    <CityLandmarkSection
+    <CityCategorySPA
       cityName="Thakhek"
-      eyebrow="THAKHEK · THREE CAVE FIELD NOTES"
-      title="Begin where the road enters the limestone"
-      landmarks={thakhekLandmarks}
-      asideTitle="A town designed around the journey beyond it"
-      asideParagraphs={[
-        'Thakhek is the practical base. The real scale of Khammouane appears after the road leaves the Mekong and begins moving through karst mountains, villages and cave systems.',
-        'Tham Nang Aen is the easy first stop, Kong Lor anchors the classic loop, and Xe Bang Fai belongs to a more remote expedition with local planning.'
-      ]}
-      asideNote="Choose the cave by distance and difficulty, not only by the photograph."
-    />
+      categories={categoryTabs}
+      defaultSlug="restaurants"
+      title="Plan your stay in Thakhek"
+      intro="Start with three useful sections only: places to eat, places to sleep and the cave roads worth exploring from town."
+    >
+      <CityCategoryPanel
+        slug="restaurants"
+        cityName="Thakhek"
+        title="Restaurants"
+        count={thakhekRestaurants.length}
+        noun="restaurants"
+        intro="The first Google Maps address is saved here. Its public name and practical details remain clearly marked for confirmation."
+        active
+      >
+        {thakhekRestaurants.length ? (
+          <div class="city-panel-list">
+            {thakhekRestaurants.map((place, index) => <MapAddressCard place={place} cityName="Thakhek" index={index} />)}
+          </div>
+        ) : (
+          <div class="city-panel-empty"><h4>Restaurant notes are being checked.</h4><p>The section is ready for the first verified addresses.</p></div>
+        )}
+      </CityCategoryPanel>
+
+      <CityCategoryPanel
+        slug="guesthouses"
+        cityName="Thakhek"
+        title="Guesthouses"
+        count={thakhekGuesthouses.length}
+        noun="guesthouses"
+        intro="Simple bases for the old town, luggage storage and the first or final night of the loop."
+      >
+        {thakhekGuesthouses.length ? (
+          <div class="city-panel-list">
+            {thakhekGuesthouses.map((place, index) => <MapAddressCard place={place} cityName="Thakhek" index={index} />)}
+          </div>
+        ) : (
+          <div class="city-panel-empty"><h4>Guesthouse notes are being checked.</h4><p>The tab is ready and will fill as addresses are confirmed.</p></div>
+        )}
+      </CityCategoryPanel>
+
+      <CityCategoryPanel
+        slug="things-to-do"
+        cityName="Thakhek"
+        title="Things to do"
+        count={thakhekLandmarks.length}
+        noun="field notes"
+        intro="Three cave journeys already documented, from the easiest stop near town to the remote expedition east."
+      >
+        <CityLandmarkSection
+          cityName="Thakhek"
+          eyebrow="THAKHEK · THREE CAVE FIELD NOTES"
+          title="Begin where the road enters the limestone"
+          landmarks={thakhekLandmarks}
+          asideTitle="A town designed around the journey beyond it"
+          asideParagraphs={[
+            'Thakhek is the practical base. The real scale of Khammouane appears after the road leaves the Mekong and begins moving through karst mountains, villages and cave systems.',
+            'Tham Nang Aen is the easy first stop, Kong Lor anchors the classic loop, and Xe Bang Fai belongs to a more remote expedition with local planning.'
+          ]}
+          asideNote="Choose the cave by distance and difficulty, not only by the photograph."
+        />
+      </CityCategoryPanel>
+    </CityCategorySPA>
   </main>
   <LandmarkModalSet landmarks={thakhekLandmarks} />
 </BaseLayout>
@@ -60,5 +122,12 @@ const thakhekPostcardFacts = [
     min-height: 100vh;
     background: #f2eee3;
     color: #1f2924;
+  }
+
+  .thakhek-page :global(.city-category-panel__content .city-landmarks) {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-top: 0;
   }
 </style>
