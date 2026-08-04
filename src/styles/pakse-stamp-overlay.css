@@ -8,10 +8,10 @@
 #main-content .pakse-page .city-postcard::after {
   content: '';
   position: absolute;
-  inset: 6.4% 3.75% auto auto;
+  inset: 7.15% 3.8% auto auto;
   z-index: 4;
   display: block;
-  width: 8.35%;
+  width: 4.95%;
   aspect-ratio: 180 / 220;
   background: transparent url('/images/timbre-laos/timbre-pakse.svg') center / contain no-repeat;
   pointer-events: none;
@@ -21,7 +21,7 @@
 
 @media (max-width: 760px) {
   #main-content .pakse-page .city-postcard::after {
-    inset: 6.2% 3.6% auto auto;
-    width: 8.6%;
+    inset: 7% 3.65% auto auto;
+    width: 5.15%;
   }
 }
