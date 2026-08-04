@@ -10,12 +10,16 @@
   pointer-events: none;
 }
 
-/* Pakse uses the build-generated envelope with its city stamp already fitted. */
+/* Each city uses the same generated envelope composition with its own stamp. */
 #main-content .pakse-page .city-postcard::before {
   background-image: url('/images/laos/pakse-airmail-envelope-stamped-v3.webp');
 }
 
-#main-content .pakse-page .city-postcard::after {
+#main-content .tad-lo-page .city-postcard::before {
+  background-image: url('/images/laos/tad-lo-airmail-envelope-stamped-v1.webp');
+}
+
+#main-content :is(.pakse-page, .tad-lo-page) .city-postcard::after {
   content: '';
   position: absolute;
   top: calc(27.5% - 28px);
@@ -31,7 +35,7 @@
   transform: rotate(-6deg);
 }
 
-#main-content .pakse-page .city-postcard-hero__back {
+#main-content :is(.pakse-page, .tad-lo-page) .city-postcard-hero__back {
   top: calc(clamp(4.45rem, 5.7vw, 5.35rem) + 25px);
   right: 10px;
 }
@@ -214,7 +218,7 @@
     font-size: .72rem;
   }
 
-  #main-content .pakse-page .city-postcard::after {
+  #main-content :is(.pakse-page, .tad-lo-page) .city-postcard::after {
     top: calc(26% - 28px);
     right: 23%;
     width: 22%;
