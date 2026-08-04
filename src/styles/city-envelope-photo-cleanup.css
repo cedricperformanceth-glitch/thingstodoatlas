@@ -8,3 +8,15 @@
   background: transparent;
   box-shadow: none;
 }
+
+/* Pakse uses the build-generated envelope with the trimmed WebP stamp already
+   fitted into the detected postage box. This replaces every former CSS overlay. */
+#main-content .pakse-page .city-postcard::before {
+  background-image: url('/images/laos/pakse-airmail-envelope-stamped.webp');
+}
+
+#main-content .pakse-page .city-postcard::after {
+  content: none;
+  display: none;
+  background: none;
+}
