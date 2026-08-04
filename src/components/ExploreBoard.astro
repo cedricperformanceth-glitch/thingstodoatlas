@@ -1,0 +1,461 @@
+---
+import type { CityLandmark } from '../data/laosLandmarks';
+
+interface Props {
+  cityName: string;
+  landmarks: CityLandmark[];
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  note?: string;
+}
+
+const {
+  cityName,
+  landmarks,
+  eyebrow = 'WHAT CAN I ACTUALLY DO HERE?',
+  title = `Explore ${cityName}`,
+  intro = `Choose a landmark to open the complete field note, practical details and route information from ${cityName}.`,
+  note = 'Tap a landmark to open the full field note.'
+} = Astro.props;
+
+const sectionId = `explore-board-${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+const thumbnailSrc = (src?: string) => src ? src.replace(/([?&])width=\d+/i, '$1width=720') : '';
+---
+
+<section class="explore-board-section" aria-labelledby={sectionId}>
+  <div class="explore-board-frame">
+    <div class="explore-board">
+      <span class="explore-board__smudge explore-board__smudge--one" aria-hidden="true"></span>
+      <span class="explore-board__smudge explore-board__smudge--two" aria-hidden="true"></span>
+
+      <header class="explore-board__header">
+        <p>{eyebrow}</p>
+        <h2 id={sectionId}>{title}</h2>
+        <div class="explore-board__underline" aria-hidden="true"></div>
+        <span>{intro}</span>
+      </header>
+
+      <div class="explore-board__content" aria-label={`Landmarks and journeys to explore from ${cityName}`}>
+        {landmarks.map((landmark, index) => (
+          <button
+            class:list={['explore-board-card', `explore-board-card--${index % 6}`]}
+            type="button"
+            data-open-landmark={landmark.modalId}
+            aria-label={`Open the complete ${landmark.name} field note`}
+          >
+            <span class="explore-board-card__pin" aria-hidden="true"></span>
+            <span class="explore-board-card__photo">
+              <img
+                src={thumbnailSrc(landmark.gallery[0]?.src)}
+                alt={landmark.gallery[0]?.alt || landmark.name}
+                width="420"
+                height="300"
+                loading="lazy"
+                decoding="async"
+              />
+              <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            </span>
+
+            <span class="explore-board-card__copy">
+              <small>{landmark.cityContext.kicker}</small>
+              <strong>{landmark.name}</strong>
+              <span class="explore-board-card__summary">{landmark.cityContext.summary}</span>
+              <span class="explore-board-card__meta">
+                <span>{landmark.cityContext.duration}</span>
+                <i aria-hidden="true"></i>
+                <span>{landmark.cityContext.route}</span>
+              </span>
+              <span class="explore-board-card__action">Open field note <b aria-hidden="true">↗</b></span>
+            </span>
+          </button>
+        ))}
+      </div>
+
+      <aside class="explore-board__paper-note">
+        <span aria-hidden="true"></span>
+        <p>{note}</p>
+      </aside>
+
+      <p class="explore-board__chalk-note" aria-hidden="true">start with the road that feels right →</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .explore-board-section {
+    width: min(1220px, calc(100% - 2.5rem));
+    margin: 0 auto;
+    padding: clamp(2.4rem, 5vw, 5rem) 0 clamp(3.25rem, 7vw, 6rem);
+  }
+
+  .explore-board-frame {
+    position: relative;
+    padding: clamp(.72rem, 1.5vw, 1.05rem);
+    border: 1px solid rgba(57, 39, 24, .72);
+    background:
+      linear-gradient(90deg, rgba(255,255,255,.08), transparent 12%, transparent 88%, rgba(0,0,0,.12)),
+      repeating-linear-gradient(2deg, #725235 0 7px, #68492f 7px 13px, #79583a 13px 20px);
+    box-shadow: 0 20px 42px rgba(28, 31, 27, .18), inset 0 0 0 1px rgba(255,255,255,.1);
+    transform: rotate(-.08deg);
+  }
+
+  .explore-board-frame::before,
+  .explore-board-frame::after {
+    content: '';
+    position: absolute;
+    z-index: 3;
+    width: clamp(3.2rem, 7vw, 5.3rem);
+    height: clamp(.85rem, 1.7vw, 1.2rem);
+    background: rgba(212, 195, 156, .58);
+    box-shadow: 0 1px 2px rgba(39, 31, 22, .12);
+    pointer-events: none;
+  }
+
+  .explore-board-frame::before { top: -.35rem; left: 8%; transform: rotate(-4deg); }
+  .explore-board-frame::after { right: 7%; bottom: -.38rem; transform: rotate(3deg); }
+
+  .explore-board {
+    position: relative;
+    min-height: 42rem;
+    overflow: hidden;
+    padding: clamp(2rem, 4.2vw, 3.8rem);
+    border: 1px solid rgba(236, 232, 211, .12);
+    background:
+      radial-gradient(circle at 14% 18%, rgba(255,255,255,.035), transparent 26%),
+      radial-gradient(circle at 85% 74%, rgba(255,255,255,.025), transparent 31%),
+      repeating-linear-gradient(176deg, rgba(255,255,255,.012) 0 1px, transparent 1px 5px),
+      #182720;
+    box-shadow: inset 0 0 46px rgba(0,0,0,.38), inset 0 0 0 2px rgba(255,255,255,.025);
+    color: #f0eddf;
+  }
+
+  .explore-board__header {
+    position: relative;
+    z-index: 2;
+    max-width: 44rem;
+    margin-bottom: clamp(2rem, 4vw, 3.4rem);
+  }
+
+  .explore-board__header p {
+    margin: 0 0 .55rem;
+    color: rgba(241, 235, 214, .7);
+    font: 700 clamp(.58rem, 1vw, .7rem)/1.2 'DM Sans', sans-serif;
+    letter-spacing: .22em;
+  }
+
+  .explore-board__header h2 {
+    margin: 0;
+    color: #f4f0df;
+    font-family: 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: clamp(2.6rem, 6vw, 5.6rem);
+    font-weight: 500;
+    letter-spacing: -.065em;
+    line-height: .95;
+    text-shadow: 0 0 1px rgba(255,255,255,.55);
+    transform: rotate(-.7deg);
+  }
+
+  .explore-board__underline {
+    width: min(27rem, 72%);
+    height: .55rem;
+    margin: .3rem 0 .65rem .5rem;
+    border-top: 2px solid rgba(239, 234, 214, .68);
+    border-radius: 50%;
+    transform: rotate(-1.5deg);
+  }
+
+  .explore-board__header > span {
+    display: block;
+    max-width: 38rem;
+    color: rgba(240, 237, 223, .74);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(.93rem, 1.5vw, 1.08rem);
+    line-height: 1.55;
+  }
+
+  .explore-board__content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: clamp(1.2rem, 2.5vw, 2.2rem);
+    align-items: start;
+  }
+
+  .explore-board-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(9rem, .72fr) minmax(0, 1fr);
+    gap: clamp(1rem, 2.2vw, 1.75rem);
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 190ms ease, filter 190ms ease;
+  }
+
+  .explore-board-card--0 { grid-column: 1 / span 7; transform: rotate(-.45deg); }
+  .explore-board-card--1 { grid-column: 8 / span 5; grid-template-columns: 1fr; transform: translateY(-2.4rem) rotate(.55deg); }
+  .explore-board-card--2 { grid-column: 6 / span 7; margin-top: -.35rem; transform: rotate(-.2deg); }
+  .explore-board-card--3 { grid-column: 1 / span 5; transform: rotate(.4deg); }
+  .explore-board-card--4 { grid-column: 6 / span 7; transform: rotate(-.45deg); }
+  .explore-board-card--5 { grid-column: 2 / span 7; transform: rotate(.35deg); }
+
+  .explore-board-card:hover,
+  .explore-board-card:focus-visible {
+    z-index: 5;
+    filter: brightness(1.06);
+    outline: none;
+    transform: translateY(-4px) rotate(0deg);
+  }
+
+  .explore-board-card__photo {
+    position: relative;
+    display: block;
+    padding: .45rem .45rem 1.45rem;
+    background: #f5f0e3;
+    box-shadow: 0 8px 18px rgba(0,0,0,.28);
+    transition: box-shadow 190ms ease, transform 190ms ease;
+  }
+
+  .explore-board-card:hover .explore-board-card__photo,
+  .explore-board-card:focus-visible .explore-board-card__photo {
+    box-shadow: 0 14px 25px rgba(0,0,0,.36);
+    transform: scale(1.015);
+  }
+
+  .explore-board-card__photo img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    filter: saturate(.72) contrast(.96) sepia(.08);
+  }
+
+  .explore-board-card__photo > span {
+    position: absolute;
+    right: .62rem;
+    bottom: .35rem;
+    color: #425046;
+    font-family: 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: .72rem;
+    font-weight: 700;
+    transform: rotate(-4deg);
+  }
+
+  .explore-board-card__pin {
+    position: absolute;
+    z-index: 4;
+    top: -.38rem;
+    left: clamp(4.2rem, 13%, 6.2rem);
+    width: .72rem;
+    height: .72rem;
+    border-radius: 50%;
+    background: #a85e43;
+    box-shadow: 0 2px 3px rgba(0,0,0,.42), inset 0 1px 1px rgba(255,255,255,.3);
+  }
+
+  .explore-board-card__copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: .2rem 0;
+  }
+
+  .explore-board-card__copy small {
+    margin-bottom: .35rem;
+    color: rgba(237, 231, 207, .58);
+    font: 800 .54rem/1.25 'DM Sans', sans-serif;
+    letter-spacing: .14em;
+  }
+
+  .explore-board-card__copy strong {
+    color: #f2eedc;
+    font-family: 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: clamp(1.45rem, 3vw, 2.25rem);
+    font-weight: 500;
+    letter-spacing: -.035em;
+    line-height: 1.05;
+  }
+
+  .explore-board-card__summary {
+    margin-top: .5rem;
+    color: rgba(239, 235, 219, .72);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(.78rem, 1.3vw, .9rem);
+    line-height: 1.45;
+  }
+
+  .explore-board-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .45rem;
+    margin-top: .65rem;
+    color: #d8b58d;
+    font-family: 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: .68rem;
+    font-weight: 600;
+  }
+
+  .explore-board-card__meta i {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .explore-board-card__action {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    align-self: flex-start;
+    margin-top: .75rem;
+    border-bottom: 1px dashed rgba(240, 235, 215, .46);
+    color: rgba(244, 240, 224, .88);
+    font-family: 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: .72rem;
+    line-height: 1.45;
+  }
+
+  .explore-board-card__action b { font-size: .9rem; transition: transform 180ms ease; }
+  .explore-board-card:hover .explore-board-card__action b,
+  .explore-board-card:focus-visible .explore-board-card__action b { transform: translate(2px, -2px); }
+
+  .explore-board-card--1 {
+    padding: .95rem 1rem 1.15rem;
+    border: 1px solid rgba(235, 227, 200, .22);
+  }
+
+  .explore-board-card--1 .explore-board-card__photo { width: min(100%, 14.5rem); justify-self: center; }
+  .explore-board-card--1 .explore-board-card__copy { align-items: center; text-align: center; }
+  .explore-board-card--1 .explore-board-card__meta { justify-content: center; }
+  .explore-board-card--1 .explore-board-card__action { align-self: center; }
+  .explore-board-card--1 .explore-board-card__pin { left: 50%; transform: translateX(-50%); }
+
+  .explore-board__paper-note {
+    position: absolute;
+    z-index: 4;
+    top: clamp(2rem, 4vw, 3.2rem);
+    right: clamp(1.4rem, 3.5vw, 3rem);
+    width: clamp(9.5rem, 17vw, 13rem);
+    padding: 1.25rem 1rem 1rem;
+    background: #e6d7ad;
+    color: #3b4038;
+    box-shadow: 0 7px 16px rgba(0,0,0,.25);
+    clip-path: polygon(1% 3%, 98% 0, 100% 92%, 94% 100%, 5% 97%, 0 11%);
+    transform: rotate(2.3deg);
+  }
+
+  .explore-board__paper-note > span {
+    position: absolute;
+    top: -.36rem;
+    left: 50%;
+    width: 3.2rem;
+    height: .8rem;
+    background: rgba(220, 204, 165, .72);
+    transform: translateX(-50%) rotate(-3deg);
+  }
+
+  .explore-board__paper-note p {
+    margin: 0;
+    font-family: 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: clamp(.7rem, 1.1vw, .82rem);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .explore-board__chalk-note {
+    position: absolute;
+    z-index: 1;
+    right: 3.3rem;
+    bottom: 1.5rem;
+    margin: 0;
+    color: rgba(240, 235, 214, .38);
+    font-family: 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: clamp(.7rem, 1.2vw, .9rem);
+    transform: rotate(-2deg);
+  }
+
+  .explore-board__smudge {
+    position: absolute;
+    z-index: 0;
+    border-radius: 50%;
+    border: 4px solid rgba(240, 235, 214, .025);
+    filter: blur(1px);
+    pointer-events: none;
+  }
+
+  .explore-board__smudge--one { top: 3rem; left: 51%; width: 11rem; height: 4rem; transform: rotate(-7deg); }
+  .explore-board__smudge--two { right: 8%; bottom: 18%; width: 8rem; height: 8rem; }
+
+  @media (max-width: 980px) {
+    .explore-board__paper-note { position: relative; top: auto; right: auto; width: min(15rem, 58%); margin: 2.3rem 0 0 auto; }
+    .explore-board-card--0 { grid-column: 1 / span 7; }
+    .explore-board-card--1 { grid-column: 8 / span 5; transform: rotate(.55deg); }
+    .explore-board-card--2 { grid-column: 3 / span 9; margin-top: .5rem; }
+    .explore-board__chalk-note { left: 2.5rem; right: auto; bottom: 2rem; }
+  }
+
+  @media (max-width: 760px) {
+    .explore-board-section { width: min(100% - 1.25rem, 1220px); padding-top: 2rem; }
+    .explore-board-frame { padding: .55rem; }
+    .explore-board { min-height: 0; padding: 2rem 1.1rem 4rem; }
+    .explore-board__header { margin-bottom: 2.2rem; }
+    .explore-board__header > span { font-size: .88rem; }
+    .explore-board__content { display: flex; flex-direction: column; gap: 2.5rem; }
+    .explore-board-card,
+    .explore-board-card--0,
+    .explore-board-card--1,
+    .explore-board-card--2,
+    .explore-board-card--3,
+    .explore-board-card--4,
+    .explore-board-card--5 {
+      display: grid;
+      grid-template-columns: minmax(7.5rem, .72fr) minmax(0, 1fr);
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      transform: rotate(-.2deg);
+    }
+    .explore-board-card:nth-child(even) { transform: rotate(.3deg); }
+    .explore-board-card--1 .explore-board-card__photo { width: 100%; justify-self: stretch; }
+    .explore-board-card--1 .explore-board-card__copy { align-items: flex-start; text-align: left; }
+    .explore-board-card--1 .explore-board-card__meta { justify-content: flex-start; }
+    .explore-board-card--1 .explore-board-card__action { align-self: flex-start; }
+    .explore-board-card--1 .explore-board-card__pin { left: 13%; transform: none; }
+    .explore-board-card__summary { font-size: .78rem; }
+    .explore-board__paper-note { width: min(14rem, 72%); margin-top: 2.6rem; }
+    .explore-board__chalk-note { left: 1.4rem; bottom: 1.25rem; }
+  }
+
+  @media (max-width: 480px) {
+    .explore-board { padding-inline: .9rem; }
+    .explore-board-card,
+    .explore-board-card--0,
+    .explore-board-card--1,
+    .explore-board-card--2,
+    .explore-board-card--3,
+    .explore-board-card--4,
+    .explore-board-card--5 { grid-template-columns: 6.5rem minmax(0, 1fr); gap: .8rem; }
+    .explore-board-card__photo { padding: .3rem .3rem 1.1rem; }
+    .explore-board-card__copy small { font-size: .46rem; }
+    .explore-board-card__copy strong { font-size: 1.28rem; }
+    .explore-board-card__summary { display: none; }
+    .explore-board-card__meta { font-size: .56rem; }
+    .explore-board-card__action { margin-top: .55rem; font-size: .62rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .explore-board-card,
+    .explore-board-card__photo,
+    .explore-board-card__action b { transition: none; }
+  }
+</style>
