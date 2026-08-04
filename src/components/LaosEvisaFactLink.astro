@@ -1,0 +1,56 @@
+<script>
+  const setupLaosEvisaFactLink = () => {
+    document
+      .querySelectorAll<HTMLElement>('[data-guide-hash="#laos-field-guide"]')
+      .forEach((guideRoot) => {
+        const evisaCard = guideRoot.querySelector<HTMLElement>(
+          '[data-editorial-guide-view-panel="entry"] .editorial-guide__facts > div:first-child'
+        );
+
+        if (!evisaCard || evisaCard.querySelector('[data-laos-evisa-link]')) return;
+
+        evisaCard.classList.add('editorial-guide__fact--link');
+
+        const link = document.createElement('a');
+        link.className = 'editorial-guide__fact-link';
+        link.href = 'https://laoevisa.gov.la/apply';
+        link.target = '_blank';
+        link.rel = 'noreferrer';
+        link.setAttribute('aria-label', 'Apply for the official Lao eVisa');
+        link.setAttribute('data-laos-evisa-link', '');
+
+        evisaCard.appendChild(link);
+      });
+  };
+
+  setupLaosEvisaFactLink();
+  document.addEventListener('astro:page-load', setupLaosEvisaFactLink);
+</script>
+
+<style is:global>
+  .editorial-guide__fact--link {
+    position: relative;
+    cursor: pointer;
+    transition: background-color .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+
+  .editorial-guide__fact--link:hover,
+  .editorial-guide__fact--link:focus-within {
+    border-color: rgba(183, 102, 69, .36) !important;
+    background: rgba(255, 255, 255, .72) !important;
+    box-shadow: 4px 5px 0 rgba(49, 85, 69, .075) !important;
+  }
+
+  .editorial-guide__fact-link {
+    position: absolute;
+    z-index: 3;
+    inset: 0;
+    display: block;
+    cursor: pointer;
+  }
+
+  .editorial-guide__fact-link:focus-visible {
+    outline: 2px solid #b76645;
+    outline-offset: 3px;
+  }
+</style>
