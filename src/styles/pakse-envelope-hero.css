@@ -15,6 +15,10 @@
   background-image: url('/images/laos/pakse-airmail-envelope-stamped-v3.webp');
 }
 
+#main-content .tad-lo-page .city-postcard {
+  --pakse-envelope-rule-start: 51.5%;
+}
+
 #main-content .tad-lo-page .city-postcard::before {
   background-image: url('/images/laos/tad-lo-airmail-envelope-stamped-v1.webp');
 }
