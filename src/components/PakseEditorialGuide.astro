@@ -11,9 +11,9 @@ import { pakseEditorialGuide } from '../data/pakseEditorialGuide';
     inset: auto;
     display: grid;
     flex: 0 0 auto;
-    width: calc(100% - .25rem);
+    width: min(18.5rem, calc(100% - 1.8rem));
     margin: calc(1.02rem + 25px) 0 0 .08rem;
-    padding: .58rem .68rem .52rem;
+    padding: .5rem .62rem .46rem;
     border-color: rgba(49, 85, 69, .18);
     background: rgba(247, 242, 230, .78);
     box-shadow: 3px 4px 0 rgba(49, 85, 69, .055);
@@ -35,27 +35,36 @@ import { pakseEditorialGuide } from '../data/pakseEditorialGuide';
   }
 
   .city-postcard__media > .editorial-guide__trigger .editorial-guide__trigger-eyebrow {
-    margin-bottom: .1rem;
-    font-size: .56rem;
+    margin: 0 0 .02rem;
+    font-size: .66rem;
+    line-height: 1;
   }
 
   .city-postcard__media > .editorial-guide__trigger .editorial-guide__trigger-title {
-    font-size: .88rem;
-    line-height: 1.04;
+    font-size: 1rem;
+    line-height: 1.02;
   }
 
   .city-postcard__media > .editorial-guide__trigger .editorial-guide__trigger-arrow {
-    margin-left: .45rem;
-    font-size: 1.35rem;
+    margin-left: .4rem;
+    font-size: 1.28rem;
   }
 
   @media (max-width: 700px) {
     .city-postcard__media > .editorial-guide__trigger {
       bottom: auto;
       left: auto;
-      width: calc(100% - .1rem);
+      width: min(17rem, calc(100% - 1rem));
       margin-top: calc(.72rem + 25px);
-      padding: .48rem .55rem .44rem;
+      padding: .46rem .55rem .42rem;
+    }
+
+    .city-postcard__media > .editorial-guide__trigger .editorial-guide__trigger-eyebrow {
+      font-size: .62rem;
+    }
+
+    .city-postcard__media > .editorial-guide__trigger .editorial-guide__trigger-title {
+      font-size: .94rem;
     }
   }
 </style>
