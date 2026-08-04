@@ -16,6 +16,11 @@ const stampedEnvelopeConfigs = [
     cityName: 'Tad Lo',
     stampPath: path.join(projectRoot, 'public', 'images', 'timbre-laos', 'timbre-tad-lo.webp'),
     outputPath: path.join(projectRoot, 'public', 'images', 'laos', 'tad-lo-airmail-envelope-stamped-v1.webp')
+  },
+  {
+    cityName: 'Thakhek',
+    stampPath: path.join(projectRoot, 'public', 'images', 'timbre-laos', 'timbre-thakhek.webp'),
+    outputPath: path.join(projectRoot, 'public', 'images', 'laos', 'thakhek-airmail-envelope-stamped-v1.webp')
   }
 ];
 
