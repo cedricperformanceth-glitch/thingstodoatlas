@@ -1,8 +1,5 @@
 ---
-import postcardTemplateUrl from '../../calque SVG/postcard-template.webp?url';
-
 type CityFactIcon = 'calendar' | 'road' | 'climate' | 'location';
-type StampMotif = 'river' | 'sun' | 'temple' | 'mountain';
 
 interface CityFact {
   label: string;
@@ -17,17 +14,12 @@ interface CityPartner {
 
 interface Props {
   cityName: string;
-  eyebrow: string;
-  description: string;
+  description: string | string[];
   photoSrc: string;
   photoAlt: string;
   facts: CityFact[];
-  fieldNote: string;
   backHref: string;
   backLabel: string;
-  postmarkDate: string;
-  stampLabel: string;
-  stampMotif?: StampMotif;
   drawingSrc: string;
   drawingAlt: string;
   drawingCaption?: string;
@@ -36,23 +28,19 @@ interface Props {
 
 const {
   cityName,
-  eyebrow,
   description,
   photoSrc,
   photoAlt,
   facts,
-  fieldNote,
   backHref,
   backLabel,
-  postmarkDate,
-  stampLabel,
-  stampMotif = 'river',
   drawingSrc,
   drawingAlt,
   drawingCaption,
   partner
 } = Astro.props as Props;
 
+const descriptionLines = Array.isArray(description) ? description : [description];
 const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcard-title`;
 ---
 
@@ -62,16 +50,6 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
   <div class="city-postcard-hero__layout">
     <div class="city-postcard-shell">
       <article class="city-postcard">
-        <img
-          class="city-postcard__template"
-          src={postcardTemplateUrl}
-          alt=""
-          aria-hidden="true"
-          width="1536"
-          height="1024"
-          decoding="async"
-        />
-
         <div class="city-postcard__media">
           <figure class="city-postcard__photo">
             <img src={photoSrc} alt={photoAlt} width="1600" height="1100" fetchpriority="high" />
@@ -99,34 +77,10 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
         </div>
 
         <div class="city-postcard__message">
-          <div class="city-postcard__postage" aria-hidden="true">
-            <div class="city-postcard__postmark">
-              <strong>{cityName.toUpperCase()}</strong>
-              <span>{postmarkDate}</span>
-              <i></i><i></i><i></i>
-            </div>
-
-            <div class="city-postcard__stamp">
-              <small>{stampLabel}</small>
-              {stampMotif === 'river' && (
-                <svg viewBox="0 0 54 42"><path d="M4 31c10-7 17-7 25-3 8 4 13 4 21-2M4 35c9-5 18-5 26-1 7 3 12 3 20-2M8 25c7-9 14-14 22-17 4 5 8 11 12 18"/></svg>
-              )}
-              {stampMotif === 'sun' && (
-                <svg viewBox="0 0 54 42"><circle cx="27" cy="19" r="8"/><path d="M27 3v6M27 29v7M11 19h7M36 19h7M16 8l5 5M33 26l5 5M38 8l-5 5M21 26l-5 5"/></svg>
-              )}
-              {stampMotif === 'temple' && (
-                <svg viewBox="0 0 54 42"><path d="M9 34h36M14 30h26M18 25h18M22 20h10M27 6v14M20 13l7-7 7 7"/></svg>
-              )}
-              {stampMotif === 'mountain' && (
-                <svg viewBox="0 0 54 42"><path d="M4 34 20 12l8 10 7-8 15 20M14 34h28"/></svg>
-              )}
-            </div>
-          </div>
-
-          <p class="city-postcard__eyebrow">{eyebrow}</p>
           <h1 id={headingId}>{cityName}</h1>
-          <p class="city-postcard__description">{description}</p>
-          <span class="city-postcard__field-note">{fieldNote}</span>
+          <p class="city-postcard__description">
+            {descriptionLines.map((line) => <span>{line}</span>)}
+          </p>
         </div>
       </article>
     </div>
@@ -154,7 +108,6 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
     width: min(1180px, calc(100% - 2.5rem));
     margin: 0 auto;
     padding: clamp(5.6rem, 7vw, 6.8rem) 0 clamp(2.1rem, 3vw, 3rem);
-    background: transparent;
   }
 
   .city-postcard-hero__back {
@@ -188,8 +141,6 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
     width: 60%;
     aspect-ratio: 16 / 9;
     justify-self: start;
-    margin: 0;
-    background: transparent;
   }
 
   .city-postcard {
@@ -209,20 +160,6 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
     transform-origin: top left;
   }
 
-  .city-postcard__template {
-    position: absolute;
-    z-index: -1;
-    inset: -8% -7%;
-    display: block;
-    width: 114%;
-    height: 116%;
-    max-width: none;
-    object-fit: fill;
-    pointer-events: none;
-    user-select: none;
-    mix-blend-mode: multiply;
-  }
-
   .city-postcard__media,
   .city-postcard__message {
     position: relative;
@@ -239,9 +176,9 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
   .city-postcard__photo {
     position: relative;
     margin: 0;
-    padding: .36rem .36rem .9rem;
-    background: rgba(255, 253, 247, .94);
-    box-shadow: 0 7px 18px rgba(43, 45, 39, .1);
+    padding: 0;
+    border: 0;
+    background: transparent;
     transform: rotate(.45deg);
   }
 
@@ -291,15 +228,6 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
     padding: clamp(5.2rem, 7vw, 6.1rem) clamp(.8rem, 1.8vw, 1.5rem) .7rem clamp(1.1rem, 2vw, 1.7rem);
   }
 
-  .city-postcard__eyebrow {
-    margin: 0 0 .45rem;
-    color: #8a4d36;
-    font-size: .64rem;
-    font-weight: 800;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-  }
-
   .city-postcard h1 {
     margin: 0;
     color: #1f392d;
@@ -319,122 +247,13 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
     line-height: 1.55;
   }
 
-  .city-postcard__field-note {
-    display: inline-block;
-    align-self: flex-start;
-    margin-top: auto;
-    padding-top: 1.15rem;
-    color: rgba(31, 57, 45, .66);
-    font-family: 'Segoe Print', 'Bradley Hand', cursive;
-    font-size: clamp(.69rem, .85vw, .78rem);
-    letter-spacing: .035em;
-    transform: rotate(-2deg);
-  }
-
-  .city-postcard__postage {
-    position: absolute;
-    top: .35rem;
-    right: .55rem;
-    width: 12.3rem;
-    height: 4.9rem;
-    pointer-events: none;
-  }
-
-  .city-postcard__stamp {
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: grid;
-    grid-template-rows: auto 1fr;
-    width: 4.1rem;
-    height: 4.75rem;
-    padding: .32rem;
-    border: 1px solid rgba(138, 77, 54, .55);
-    background: rgba(239, 224, 190, .48);
-    color: rgba(138, 77, 54, .72);
-    text-align: center;
-    transform: rotate(2.5deg);
-  }
-
-  .city-postcard__stamp::before {
-    content: '';
-    position: absolute;
-    inset: .18rem;
-    border: 1px dashed currentColor;
-    opacity: .48;
-  }
-
-  .city-postcard__stamp small {
-    position: relative;
-    z-index: 1;
-    font-size: .42rem;
-    font-weight: 800;
-    letter-spacing: .14em;
-  }
-
-  .city-postcard__stamp svg {
-    position: relative;
-    z-index: 1;
-    align-self: center;
-    width: 100%;
-    height: 2.65rem;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.15;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .city-postcard__postmark {
-    position: absolute;
-    top: .58rem;
-    right: 3.45rem;
-    display: grid;
-    place-items: center;
-    width: 5rem;
-    height: 3.55rem;
-    border: 1px solid rgba(49, 85, 69, .5);
-    border-radius: 50%;
-    color: rgba(49, 85, 69, .58);
-    font-size: .46rem;
-    letter-spacing: .08em;
-    line-height: 1.15;
-    text-align: center;
-    transform: rotate(-7deg);
-  }
-
-  .city-postcard__postmark::after {
-    content: '';
-    position: absolute;
-    inset: .25rem;
-    border: 1px dashed currentColor;
-    border-radius: 50%;
-    opacity: .55;
-  }
-
-  .city-postcard__postmark strong,
-  .city-postcard__postmark span {
-    position: relative;
-    z-index: 1;
-  }
-
-  .city-postcard__postmark i {
-    position: absolute;
-    left: 4.2rem;
-    width: 4.5rem;
-    border-top: 1px solid currentColor;
-    opacity: .65;
-  }
-
-  .city-postcard__postmark i:nth-of-type(1) { top: 1rem; }
-  .city-postcard__postmark i:nth-of-type(2) { top: 1.55rem; }
-  .city-postcard__postmark i:nth-of-type(3) { top: 2.1rem; }
+  .city-postcard__description span { display: block; }
 
   .city-postcard-hero__aside {
     display: flex;
+    min-width: 0;
     flex-direction: column;
     align-items: stretch;
-    min-width: 0;
   }
 
   .city-postcard-hero__drawing {
@@ -513,7 +332,6 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
       --card-size: 125%;
       width: 80%;
       aspect-ratio: 16 / 9;
-      justify-self: start;
     }
 
     .city-postcard-hero__aside {
@@ -550,19 +368,13 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
       transform: none;
     }
 
-    .city-postcard__template {
-      inset: -5%;
-      width: 110%;
-      height: 110%;
-    }
-
     .city-postcard__media { padding: .15rem .15rem .6rem; }
     .city-postcard__photo img { height: clamp(10rem, 42vw, 14rem); }
     .city-postcard__facts { width: min(100%, 24rem); margin: 1rem auto 0; }
 
     .city-postcard__message {
-      min-height: 19rem;
-      padding: 5.25rem .75rem .7rem;
+      min-height: 0;
+      padding: 1rem .75rem .7rem;
     }
 
     .city-postcard h1 { font-size: clamp(3.8rem, 17vw, 5.3rem); }
@@ -583,17 +395,6 @@ const headingId = `${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-postcar
       grid-template-columns: 1fr 1fr;
       gap: .45rem .65rem;
       font-size: .61rem;
-    }
-
-    .city-postcard__postage {
-      right: .25rem;
-      transform: scale(.9);
-      transform-origin: top right;
-    }
-
-    .city-postcard__message {
-      padding-left: .45rem;
-      padding-right: .45rem;
     }
   }
 </style>
