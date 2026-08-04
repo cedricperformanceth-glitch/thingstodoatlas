@@ -20,3 +20,9 @@
   display: none;
   background: none;
 }
+
+/* Pakse only: lower the back link by 25px and move it 10px to the left. */
+#main-content .pakse-page .city-postcard-hero__back {
+  top: calc(clamp(4.45rem, 5.7vw, 5.35rem) + 25px);
+  right: 10px;
+}
