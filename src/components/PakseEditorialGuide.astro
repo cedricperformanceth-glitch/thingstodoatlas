@@ -11,9 +11,9 @@ import { pakseEditorialGuide } from '../data/pakseEditorialGuide';
     inset: auto;
     display: grid;
     flex: 0 0 auto;
-    width: min(18.5rem, calc(100% - 1.8rem));
+    width: min(19.25rem, calc(100% - 1.25rem));
     margin: calc(1.02rem + 25px) 0 0 .08rem;
-    padding: .5rem .62rem .46rem;
+    padding: .52rem .68rem .48rem;
     border-color: rgba(49, 85, 69, .18);
     background: rgba(247, 242, 230, .78);
     box-shadow: 3px 4px 0 rgba(49, 85, 69, .055);
@@ -47,14 +47,14 @@ import { pakseEditorialGuide } from '../data/pakseEditorialGuide';
   }
 
   .city-postcard__media > .editorial-guide__trigger .editorial-guide__trigger-title {
-    font-size: 1.18rem;
+    font-size: 1.26rem;
     line-height: 1.02;
   }
 
   .city-postcard__media > .editorial-guide__trigger .editorial-guide__trigger-arrow {
     align-self: center;
-    margin-left: .4rem;
-    font-size: 1.28rem;
+    margin-left: .45rem;
+    font-size: 1.34rem;
   }
 
   /* Pakse only: give the envelope priority and quieten the secondary drawing column. */
@@ -68,15 +68,22 @@ import { pakseEditorialGuide } from '../data/pakseEditorialGuide';
       width: 100%;
     }
 
+    #main-content .pakse-page .city-postcard__media {
+      transform: translate(2.2rem, 1.4rem);
+    }
+
     #main-content .pakse-page .city-postcard__message {
       --envelope-line-gap: 3.42rem;
     }
 
     #main-content .pakse-page .city-postcard h1 {
+      left: calc(var(--pakse-envelope-rule-start) + .55rem);
       font-size: 3.58rem;
     }
 
     #main-content .pakse-page .city-postcard__description {
+      left: calc(var(--pakse-envelope-rule-start) + .55rem);
+      width: calc(95% - var(--pakse-envelope-rule-start));
       font-size: 1.11rem;
     }
 
@@ -136,15 +143,22 @@ import { pakseEditorialGuide } from '../data/pakseEditorialGuide';
       width: 100%;
     }
 
+    #main-content .pakse-page .city-postcard__media {
+      transform: translate(1.55rem, .95rem);
+    }
+
     #main-content .pakse-page .city-postcard__message {
       --envelope-line-gap: 3.28rem;
     }
 
     #main-content .pakse-page .city-postcard h1 {
+      left: calc(var(--pakse-envelope-rule-start) + .4rem);
       font-size: 3.42rem;
     }
 
     #main-content .pakse-page .city-postcard__description {
+      left: calc(var(--pakse-envelope-rule-start) + .4rem);
+      width: calc(95% - var(--pakse-envelope-rule-start));
       font-size: 1.08rem;
     }
 
@@ -174,9 +188,9 @@ import { pakseEditorialGuide } from '../data/pakseEditorialGuide';
     .city-postcard__media > .editorial-guide__trigger {
       bottom: auto;
       left: auto;
-      width: min(17rem, calc(100% - 1rem));
+      width: min(17.75rem, calc(100% - .75rem));
       margin-top: calc(.72rem + 25px);
-      padding: .46rem .55rem .42rem;
+      padding: .48rem .6rem .44rem;
     }
 
     .city-postcard__media > .editorial-guide__trigger .editorial-guide__trigger-eyebrow {
@@ -185,7 +199,7 @@ import { pakseEditorialGuide } from '../data/pakseEditorialGuide';
     }
 
     .city-postcard__media > .editorial-guide__trigger .editorial-guide__trigger-title {
-      font-size: 1.08rem;
+      font-size: 1.14rem;
     }
 
     #main-content .pakse-page .city-postcard-hero__drawing {
