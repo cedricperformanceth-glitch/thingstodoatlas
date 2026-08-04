@@ -15,18 +15,18 @@
   background-image: url('/images/laos/pakse-airmail-envelope-stamped-v3.webp');
 }
 
-/* Vintage airmail rubber stamp placed in the free postal area below the stamp.
-   The external SVG stays sharp at every envelope size and blends with the paper. */
+/* Vintage English airmail rubber stamp placed in the free area between the
+   photograph and the postage stamp, just above the handwritten city name. */
 #main-content .pakse-page .city-postcard::after {
   content: '';
   position: absolute;
-  top: 23.5%;
-  right: 11.5%;
+  top: 27.5%;
+  right: 27%;
   bottom: auto;
   left: auto;
   z-index: 4;
   display: block;
-  width: 18%;
+  width: 19%;
   aspect-ratio: 360 / 168;
   background-color: transparent;
   background-image: url('/images/laos/pakse-airmail-postmark.svg');
@@ -36,7 +36,7 @@
   opacity: .76;
   pointer-events: none;
   mix-blend-mode: multiply;
-  transform: rotate(-7deg);
+  transform: rotate(-6deg);
   transform-origin: center;
 }
 
@@ -48,8 +48,8 @@
 
 @media (max-width: 760px) {
   #main-content .pakse-page .city-postcard::after {
-    top: 22.5%;
-    right: 9.5%;
-    width: 21%;
+    top: 26%;
+    right: 23%;
+    width: 22%;
   }
 }
