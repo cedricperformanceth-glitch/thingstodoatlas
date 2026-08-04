@@ -19,21 +19,25 @@
   background-repeat: no-repeat;
 }
 
-/* Pakse only: place the original transparent WebP stamp inside the postage
-   square already drawn on the envelope. */
+/* Pakse only: fit the original transparent WebP stamp inside the postage
+   square already drawn on the envelope. The image keeps its full height;
+   only the transparent side margins of its 1536×1024 canvas sit outside. */
 #main-content .pakse-page .city-postcard::after {
   content: '';
   position: absolute;
-  top: 6.35%;
-  right: 3.7%;
+  top: 7.15%;
+  right: 3.8%;
   z-index: 4;
   display: block;
-  width: 8.35%;
+  width: 4.95%;
   aspect-ratio: 180 / 220;
-  background: transparent url('/images/timbre-laos/timbre-pakse.webp') center / 265% auto no-repeat;
+  background-color: transparent;
+  background-image: url('/images/timbre-laos/timbre-pakse.webp');
+  background-position: center;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
   pointer-events: none;
-  transform: rotate(1.2deg);
-  transform-origin: center;
+  transform: none;
 }
 
 @media (min-width: 761px) {
