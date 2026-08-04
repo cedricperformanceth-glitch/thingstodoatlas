@@ -19,6 +19,23 @@
   background-repeat: no-repeat;
 }
 
+/* Pakse only: place the original transparent WebP stamp inside the postage
+   square already drawn on the envelope. */
+#main-content .pakse-page .city-postcard::after {
+  content: '';
+  position: absolute;
+  top: 6.35%;
+  right: 3.7%;
+  z-index: 4;
+  display: block;
+  width: 8.35%;
+  aspect-ratio: 180 / 220;
+  background: transparent url('/images/timbre-laos/timbre-pakse.webp') center / 265% auto no-repeat;
+  pointer-events: none;
+  transform: rotate(1.2deg);
+  transform-origin: center;
+}
+
 @media (min-width: 761px) {
   /* The message is positioned against the complete envelope, not against the
      right-hand grid column. Its x coordinate therefore matches the WebP at
