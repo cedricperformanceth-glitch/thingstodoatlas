@@ -179,7 +179,7 @@ const prepareStampedEnvelope = async () => {
     centeredTop + verticalOffset,
     box.top + box.height - renderedHeight
   );
-  const top = fittedTop + 5;
+  const top = fittedTop + 20;
 
   await sharp(envelopePath)
     .composite([{ input: fittedStamp, left, top }])
