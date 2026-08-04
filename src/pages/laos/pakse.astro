@@ -56,17 +56,16 @@ const getRestaurantFilterTags = (place: (typeof categoryTabs)[number]['places'][
   <main class="pakse-page">
     <CityPostcardHero
       cityName="Pakse"
-      eyebrow="LAOS · CHAPTER 02"
-      description="The gateway to Southern Laos. More than a list of city sights, Pakse is a relaxed riverside base for the Bolaven Plateau, Wat Phou and the roads that continue south."
+      description={[
+        'The gateway to Southern Laos. More than a list of city sights,',
+        'Pakse is a relaxed riverside base for the Bolaven Plateau,',
+        'Wat Phou and the roads that continue south.'
+      ]}
       photoSrc="/images/laos/pakse.webp"
       photoAlt="A view of Pakse in southern Laos"
       facts={paksePostcardFacts}
-      fieldNote="FIELD NOTE — Mekong light · roads beginning here"
       backHref="/laos"
       backLabel="Back to the Laos map"
-      postmarkDate="07 · 2026"
-      stampLabel="LAOS"
-      stampMotif="river"
       drawingSrc="/images/laos/pakse-fisherman-boat-v3.webp"
       drawingAlt="Hand-drawn boat on the Mekong near Pakse"
       drawingCaption="Mekong · the road beside the river"
