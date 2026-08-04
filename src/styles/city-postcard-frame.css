@@ -100,22 +100,6 @@
   display: none;
 }
 
-/* Pakse: replace the generic CSS stamp inside the envelope's existing
-   postage square with the dedicated transparent vintage stamp asset. */
-#main-content .pakse-page .city-postcard__stamp {
-  overflow: hidden;
-  padding: 0;
-  border: 0;
-  background: transparent url('/images/timbre-laos/timbre-pakse.webp') center / auto 112% no-repeat;
-  color: transparent;
-  transform: rotate(1.5deg);
-}
-
-#main-content .pakse-page .city-postcard__stamp::before,
-#main-content .pakse-page .city-postcard__stamp > * {
-  display: none;
-}
-
 @media (min-width: 981px) {
   #main-content :is(.pakse-page, .tad-lo-page) .city-postcard-hero__aside {
     transform: translateX(1.35rem);
