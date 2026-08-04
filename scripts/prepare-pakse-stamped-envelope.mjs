@@ -163,7 +163,7 @@ const prepareStampedEnvelope = async () => {
     box.width / trimmedInfo.width,
     box.height / trimmedInfo.height
   );
-  const scale = Math.min(fittedScale * 1.06, maximumScale);
+  const scale = Math.min(fittedScale * 1.11, maximumScale);
   const renderedWidth = Math.max(1, Math.round(trimmedInfo.width * scale));
   const renderedHeight = Math.max(1, Math.round(trimmedInfo.height * scale));
 
@@ -174,7 +174,7 @@ const prepareStampedEnvelope = async () => {
 
   const left = Math.round(box.left + (box.width - renderedWidth) / 2);
   const centeredTop = Math.round(box.top + (box.height - renderedHeight) / 2);
-  const verticalOffset = Math.round(box.height * 0.025);
+  const verticalOffset = Math.round(box.height * 0.04);
   const top = Math.min(
     centeredTop + verticalOffset,
     box.top + box.height - renderedHeight
