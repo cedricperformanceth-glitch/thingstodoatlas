@@ -7,7 +7,7 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, '..');
 const envelopePath = path.join(projectRoot, 'public', 'images', 'laos', 'pakse-airmail-envelope.webp');
 const stampPath = path.join(projectRoot, 'public', 'images', 'timbre-laos', 'timbre-pakse.webp');
-const outputPath = path.join(projectRoot, 'public', 'images', 'laos', 'pakse-airmail-envelope-stamped-v2.webp');
+const outputPath = path.join(projectRoot, 'public', 'images', 'laos', 'pakse-airmail-envelope-stamped-v3.webp');
 
 const projectRequire = createRequire(import.meta.url);
 const astroPackagePath = projectRequire.resolve('astro/package.json');
@@ -163,7 +163,8 @@ const prepareStampedEnvelope = async () => {
     box.width / trimmedInfo.width,
     box.height / trimmedInfo.height
   );
-  const scale = Math.min(fittedScale * 1.11, maximumScale);
+  const baseScale = Math.min(fittedScale * 1.11, maximumScale);
+  const scale = baseScale * 1.015;
   const renderedWidth = Math.max(1, Math.round(trimmedInfo.width * scale));
   const renderedHeight = Math.max(1, Math.round(trimmedInfo.height * scale));
 
@@ -179,7 +180,7 @@ const prepareStampedEnvelope = async () => {
     centeredTop + verticalOffset,
     box.top + box.height - renderedHeight
   );
-  const top = fittedTop + 20;
+  const top = fittedTop + 23;
 
   await sharp(envelopePath)
     .composite([{ input: fittedStamp, left, top }])
