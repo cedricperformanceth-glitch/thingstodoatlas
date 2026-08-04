@@ -155,10 +155,15 @@ const prepareStampedEnvelope = async () => {
     .trim({ background: { r: 0, g: 0, b: 0, alpha: 0 }, threshold: 8 })
     .toBuffer({ resolveWithObject: true });
 
-  const scale = Math.min(
+  const fittedScale = Math.min(
     availableWidth / trimmedInfo.width,
     availableHeight / trimmedInfo.height
   );
+  const maximumScale = Math.min(
+    box.width / trimmedInfo.width,
+    box.height / trimmedInfo.height
+  );
+  const scale = Math.min(fittedScale * 1.06, maximumScale);
   const renderedWidth = Math.max(1, Math.round(trimmedInfo.width * scale));
   const renderedHeight = Math.max(1, Math.round(trimmedInfo.height * scale));
 
@@ -168,7 +173,12 @@ const prepareStampedEnvelope = async () => {
     .toBuffer();
 
   const left = Math.round(box.left + (box.width - renderedWidth) / 2);
-  const top = Math.round(box.top + (box.height - renderedHeight) / 2);
+  const centeredTop = Math.round(box.top + (box.height - renderedHeight) / 2);
+  const verticalOffset = Math.round(box.height * 0.025);
+  const top = Math.min(
+    centeredTop + verticalOffset,
+    box.top + box.height - renderedHeight
+  );
 
   await sharp(envelopePath)
     .composite([{ input: fittedStamp, left, top }])
