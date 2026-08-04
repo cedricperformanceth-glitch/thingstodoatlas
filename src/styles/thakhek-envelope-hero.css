@@ -1,8 +1,4 @@
 /* Thakhek uses the same finished airmail-envelope composition as Pakse. */
-#main-content .thakhek-page .city-postcard__template {
-  display: none;
-}
-
 #main-content .thakhek-page .city-postcard::before {
   content: '';
   position: absolute;
@@ -12,19 +8,10 @@
   pointer-events: none;
 }
 
-#main-content .thakhek-page .city-postcard::after,
-#main-content .thakhek-page .city-postcard__postage,
-#main-content .thakhek-page .city-postcard__eyebrow,
-#main-content .thakhek-page .city-postcard__field-note {
-  display: none !important;
-}
-
 #main-content .thakhek-page .city-postcard {
   --pakse-envelope-rule-start: 51.5%;
 }
 
-/* The supplied Thakhek photograph is 3:2. Keep the source ratio and display it
-   ten percent smaller than the previous 90% treatment. */
 #main-content .thakhek-page .city-postcard__photo {
   align-self: flex-start;
   width: 81%;
@@ -72,22 +59,17 @@
     left: var(--pakse-envelope-rule-start);
     width: calc(96% - var(--pakse-envelope-rule-start));
     margin: 0;
-    color: transparent;
-    font-size: 0;
-    line-height: 0;
-  }
-
-  #main-content .thakhek-page .city-postcard__description::before {
-    content: 'A Mekong town that becomes a starting line for limestone roads,\A cave country and the long arc of the Thakhek Loop. Stay for the\A old streets, then let the road carry the chapter east.';
-    display: block;
     color: #3f4943;
     font-family: 'Segoe Print', 'Bradley Hand', cursive;
     font-size: 1.04rem;
     font-weight: 500;
     letter-spacing: 0;
     line-height: var(--envelope-line-gap);
-    white-space: pre;
     transform: translateY(-.22rem) rotate(-.25deg);
+  }
+
+  #main-content .thakhek-page .city-postcard__description span {
+    white-space: nowrap;
   }
 }
 
