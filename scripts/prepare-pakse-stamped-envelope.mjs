@@ -7,7 +7,7 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, '..');
 const envelopePath = path.join(projectRoot, 'public', 'images', 'laos', 'pakse-airmail-envelope.webp');
 const stampPath = path.join(projectRoot, 'public', 'images', 'timbre-laos', 'timbre-pakse.webp');
-const outputPath = path.join(projectRoot, 'public', 'images', 'laos', 'pakse-airmail-envelope-stamped.webp');
+const outputPath = path.join(projectRoot, 'public', 'images', 'laos', 'pakse-airmail-envelope-stamped-v2.webp');
 
 const projectRequire = createRequire(import.meta.url);
 const astroPackagePath = projectRequire.resolve('astro/package.json');
