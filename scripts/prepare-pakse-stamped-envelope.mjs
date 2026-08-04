@@ -6,8 +6,18 @@ import { fileURLToPath } from 'node:url';
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, '..');
 const envelopePath = path.join(projectRoot, 'public', 'images', 'laos', 'pakse-airmail-envelope.webp');
-const stampPath = path.join(projectRoot, 'public', 'images', 'timbre-laos', 'timbre-pakse.webp');
-const outputPath = path.join(projectRoot, 'public', 'images', 'laos', 'pakse-airmail-envelope-stamped-v3.webp');
+const stampedEnvelopeConfigs = [
+  {
+    cityName: 'Pakse',
+    stampPath: path.join(projectRoot, 'public', 'images', 'timbre-laos', 'timbre-pakse.webp'),
+    outputPath: path.join(projectRoot, 'public', 'images', 'laos', 'pakse-airmail-envelope-stamped-v3.webp')
+  },
+  {
+    cityName: 'Tad Lo',
+    stampPath: path.join(projectRoot, 'public', 'images', 'timbre-laos', 'timbre-tad-lo.webp'),
+    outputPath: path.join(projectRoot, 'public', 'images', 'laos', 'tad-lo-airmail-envelope-stamped-v1.webp')
+  }
+];
 
 const projectRequire = createRequire(import.meta.url);
 const astroPackagePath = projectRequire.resolve('astro/package.json');
@@ -141,61 +151,64 @@ const detectStampBox = async () => {
   };
 };
 
-const prepareStampedEnvelope = async () => {
+const prepareStampedEnvelopes = async () => {
   await fs.access(envelopePath);
-  await fs.access(stampPath);
-
   const box = await detectStampBox();
-  const padding = Math.max(3, Math.round(Math.min(box.width, box.height) * 0.055));
-  const availableWidth = Math.max(1, box.width - padding * 2);
-  const availableHeight = Math.max(1, box.height - padding * 2);
 
-  const { data: trimmedStamp, info: trimmedInfo } = await sharp(stampPath)
-    .ensureAlpha()
-    .trim({ background: { r: 0, g: 0, b: 0, alpha: 0 }, threshold: 8 })
-    .toBuffer({ resolveWithObject: true });
+  for (const config of stampedEnvelopeConfigs) {
+    await fs.access(config.stampPath);
 
-  const fittedScale = Math.min(
-    availableWidth / trimmedInfo.width,
-    availableHeight / trimmedInfo.height
-  );
-  const maximumScale = Math.min(
-    box.width / trimmedInfo.width,
-    box.height / trimmedInfo.height
-  );
-  const baseScale = Math.min(fittedScale * 1.11, maximumScale);
-  const scale = baseScale * 1.015;
-  const renderedWidth = Math.max(1, Math.round(trimmedInfo.width * scale));
-  const renderedHeight = Math.max(1, Math.round(trimmedInfo.height * scale));
+    const padding = Math.max(3, Math.round(Math.min(box.width, box.height) * 0.055));
+    const availableWidth = Math.max(1, box.width - padding * 2);
+    const availableHeight = Math.max(1, box.height - padding * 2);
 
-  const fittedStamp = await sharp(trimmedStamp)
-    .resize(renderedWidth, renderedHeight, { fit: 'fill' })
-    .webp({ lossless: true, alphaQuality: 100 })
-    .toBuffer();
+    const { data: trimmedStamp, info: trimmedInfo } = await sharp(config.stampPath)
+      .ensureAlpha()
+      .trim({ background: { r: 0, g: 0, b: 0, alpha: 0 }, threshold: 8 })
+      .toBuffer({ resolveWithObject: true });
 
-  const left = Math.round(box.left + (box.width - renderedWidth) / 2);
-  const centeredTop = Math.round(box.top + (box.height - renderedHeight) / 2);
-  const verticalOffset = Math.round(box.height * 0.04);
-  const fittedTop = Math.min(
-    centeredTop + verticalOffset,
-    box.top + box.height - renderedHeight
-  );
-  const top = fittedTop + 23;
+    const fittedScale = Math.min(
+      availableWidth / trimmedInfo.width,
+      availableHeight / trimmedInfo.height
+    );
+    const maximumScale = Math.min(
+      box.width / trimmedInfo.width,
+      box.height / trimmedInfo.height
+    );
+    const baseScale = Math.min(fittedScale * 1.11, maximumScale);
+    const scale = baseScale * 1.015;
+    const renderedWidth = Math.max(1, Math.round(trimmedInfo.width * scale));
+    const renderedHeight = Math.max(1, Math.round(trimmedInfo.height * scale));
 
-  await sharp(envelopePath)
-    .composite([{ input: fittedStamp, left, top }])
-    .webp({ lossless: true, alphaQuality: 100 })
-    .toFile(outputPath);
+    const fittedStamp = await sharp(trimmedStamp)
+      .resize(renderedWidth, renderedHeight, { fit: 'fill' })
+      .webp({ lossless: true, alphaQuality: 100 })
+      .toBuffer();
 
-  console.log(
-    `Prepared Pakse stamped envelope (${box.canvasWidth}×${box.canvasHeight}); ` +
-    `${box.detected ? 'detected' : 'fallback'} box ${box.left},${box.top} ${box.width}×${box.height}; ` +
-    `stamp ${renderedWidth}×${renderedHeight} at ${left},${top}.`
-  );
+    const left = Math.round(box.left + (box.width - renderedWidth) / 2);
+    const centeredTop = Math.round(box.top + (box.height - renderedHeight) / 2);
+    const verticalOffset = Math.round(box.height * 0.04);
+    const fittedTop = Math.min(
+      centeredTop + verticalOffset,
+      box.top + box.height - renderedHeight
+    );
+    const top = fittedTop + 23;
+
+    await sharp(envelopePath)
+      .composite([{ input: fittedStamp, left, top }])
+      .webp({ lossless: true, alphaQuality: 100 })
+      .toFile(config.outputPath);
+
+    console.log(
+      `Prepared ${config.cityName} stamped envelope (${box.canvasWidth}×${box.canvasHeight}); ` +
+      `${box.detected ? 'detected' : 'fallback'} box ${box.left},${box.top} ${box.width}×${box.height}; ` +
+      `stamp ${renderedWidth}×${renderedHeight} at ${left},${top}.`
+    );
+  }
 };
 
-prepareStampedEnvelope().catch((error) => {
-  console.error('Unable to prepare the stamped Pakse envelope.');
+prepareStampedEnvelopes().catch((error) => {
+  console.error('Unable to prepare the stamped city envelopes.');
   console.error(error);
   process.exitCode = 1;
 });
