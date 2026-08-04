@@ -4,7 +4,7 @@
   position: absolute;
   inset: 0;
   z-index: 4;
-  background: transparent url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDU2MyIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPHBhdGggZD0iTTEyIDEwQzE4MCA2IDM0MiAxMiA1MDMgOUM2NzMgNiA4MzcgMTIgOTg5IDlDOTk0IDE0NSA5OTAgMjgyIDk5MyA0MjFDOTk0IDQ2OCA5OTIgNTE1IDk4OSA1NTJDNzMzIDU1OCA1MTMgNTUwIDI1NCA1NTRDMTY1IDU1NiA4MiA1NTIgMTEgNTUzQzggNDA2IDEzIDI3NCA5IDEzOUM4IDkyIDEwIDQ4IDEyIDEwWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNWU0OTMxIiBzdHJva2Utb3BhY2l0eT0iLjYyIiBzdHJva2Utd2lkdGg9IjIuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPHBhdGggZD0iTTE3IDE1QzE4MSAxMiAzNDQgMTcgNTA0IDE0QzY3MiAxMSA4MzMgMTcgOTg0IDE0Qzk4OCAxNDcgOTg1IDI4MSA5ODcgNDE5Qzk4OCA0NjYgOTg3IDUxMSA5ODQgNTQ3QzczMSA1NTEgNTEzIDU0NSAyNTYgNTQ5QzE2NiA1NTAgODcgNTQ3IDE3IDU0OEMxNCA0MDQgMTggMjc0IDE0IDE0MUMxMyA5NCAxNSA1MiAxNyAxNVoiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzVlNDkzMSIgc3Ryb2tlLW9wY2l0eT0iLjI0IiBzdHJva2Utd2lkdGg9IjEuMSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPg==") center / 100% 100% no-repeat;
+  background: transparent url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDU2MyIgcHJlc2VydmVBc3RSYXRpbz0ibm9uZSI+CiAgPHBhdGggZD0iTTEyIDEwQzE4MCA2IDM0MiAxMiA1MDMgOUM2NzMgNiA4MzcgMTIgOTg5IDlDOTk0IDE0NSA5OTAgMjgyIDk5MyA0MjFDOTk0IDQ2OCA5OTIgNTE1IDk4OSA1NTJDNzMzIDU1OCA1MTMgNTUwIDI1NCA1NTRDMTY1IDU1NiA4MiA1NTIgMTEgNTUzQzggNDA2IDEzIDI3NCA5IDEzOUM4IDkyIDEwIDQ4IDEyIDEwWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNWU0OTMxIiBzdHJva2Utb3BhY2l0eT0iLjYyIiBzdHJva2Utd2lkdGg9IjIuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPHBhdGggZD0iTTE3IDE1QzE4MSAxMiAzNDQgMTcgNTA0IDE0QzY3MiAxMSA4MzMgMTcgOTg0IDE0Qzk4OCAxNDcgOTg1IDI4MSA5ODcgNDE5Qzk4OCA0NjYgOTg3IDUxMSA5ODQgNTQ3QzczMSA1NTEgNTEzIDU0NSAyNTYgNTQ5QzE2NiA1NTAgODcgNTQ3IDE3IDU0OEMxNCA0MDQgMTggMjc0IDE0IDE0MUMxMyA5NCAxNSA1MiAxNyAxNVoiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzVlNDkzMSIgc3Ryb2tlLW9wY2l0eT0iLjI0IiBzdHJva2Utd2lkdGg9IjEuMSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPg==") center / 100% 100% no-repeat;
   pointer-events: none;
 }
 
@@ -97,6 +97,22 @@
 }
 
 #main-content :is(.pakse-page, .tad-lo-page) .city-postcard::after {
+  display: none;
+}
+
+/* Pakse: replace the generic CSS stamp inside the envelope's existing
+   postage square with the dedicated transparent vintage stamp asset. */
+#main-content .pakse-page .city-postcard__stamp {
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  background: transparent url('/images/timbre-laos/timbre-pakse.webp') center / auto 112% no-repeat;
+  color: transparent;
+  transform: rotate(1.5deg);
+}
+
+#main-content .pakse-page .city-postcard__stamp::before,
+#main-content .pakse-page .city-postcard__stamp > * {
   display: none;
 }
 
