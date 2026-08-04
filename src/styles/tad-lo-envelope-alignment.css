@@ -1,7 +1,0 @@
-/* Tad Lo shares the Pakse airmail envelope but starts its handwritten copy
-   slightly farther left so the title and body begin at the visible rule edge.
-   This file stays separate because pakse-envelope-metrics.css is regenerated
-   during every Cloudflare build. */
-#main-content .tad-lo-page .city-postcard {
-  --pakse-envelope-rule-start: 51.5%;
-}
