@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 168" role="img" aria-labelledby="title desc">
+  <title id="title">Pakse airmail postal stamp</title>
+  <desc id="desc">A vintage blue PAR AVION and AIR MAIL rubber stamp with a small airplane and Pakse Laos lettering.</desc>
+  <g fill="none" stroke="#31577b" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="9" y="10" width="342" height="148" rx="13" stroke-width="7" opacity=".82"/>
+    <rect x="20" y="21" width="320" height="126" rx="8" stroke-width="2.7" stroke-dasharray="14 5 4 6" opacity=".7"/>
+    <path d="M41 84h58m162 0h58" stroke-width="3.2" opacity=".72"/>
+    <path d="m115 88 41-13 33-40 10 2-17 39 39 13c6 2 11 7 13 13l-5 3-52-8-26 28-8-2 13-31-36 4Z" stroke-width="4.2" opacity=".84"/>
+    <path d="m116 91 39-8m27 3 43 10" stroke-width="2" opacity=".52"/>
+    <path d="M33 38c32-6 62-6 94-1m108 92c26 4 51 3 83-2" stroke-width="2.2" stroke-dasharray="8 9" opacity=".36"/>
+    <path d="M54 135h36m179-102h38" stroke-width="2.4" opacity=".42"/>
+  </g>
+  <g fill="#31577b" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+    <text x="180" y="55" font-size="29" font-weight="800" letter-spacing="5" opacity=".84">PAR AVION</text>
+    <text x="180" y="139" font-size="24" font-weight="800" letter-spacing="6" opacity=".82">AIR MAIL</text>
+    <text x="62" y="103" font-size="12" font-weight="700" letter-spacing="2.2" opacity=".7">PAKSE</text>
+    <text x="299" y="103" font-size="12" font-weight="700" letter-spacing="2.2" opacity=".7">LAOS</text>
+  </g>
+  <g fill="#31577b" opacity=".2">
+    <circle cx="29" cy="72" r="3.5"/><circle cx="72" cy="25" r="2.5"/><circle cx="326" cy="59" r="3"/>
+    <circle cx="245" cy="149" r="2.5"/><circle cx="109" cy="144" r="2"/><circle cx="339" cy="116" r="2.2"/>
+  </g>
+</svg>
