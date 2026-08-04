@@ -1,13 +1,6 @@
 @import './pakse-envelope-metrics.css';
 
-/* Fixed airmail-envelope hero shared by Pakse and Tad Lo. */
-#main-content :is(.pakse-page, .tad-lo-page) .city-postcard__template,
-#main-content :is(.pakse-page, .tad-lo-page) .city-postcard__postage,
-#main-content :is(.pakse-page, .tad-lo-page) .city-postcard__eyebrow,
-#main-content :is(.pakse-page, .tad-lo-page) .city-postcard__field-note {
-  display: none !important;
-}
-
+/* Fixed airmail envelope shared by Pakse and Tad Lo. */
 #main-content :is(.pakse-page, .tad-lo-page) .city-postcard::before {
   content: '';
   position: absolute;
@@ -22,21 +15,12 @@
   background-image: url('/images/laos/pakse-airmail-envelope-stamped-v3.webp');
 }
 
-/* Remove the generic postcard outline. Pakse replaces it with the permanent
-   English airmail rubber stamp; Tad Lo keeps the envelope clean. */
-#main-content :is(.pakse-page, .tad-lo-page) .city-postcard::after {
-  display: none;
-}
-
 #main-content .pakse-page .city-postcard::after {
   content: '';
   position: absolute;
   top: calc(27.5% - 28px);
   right: 27%;
-  bottom: auto;
-  left: auto;
   z-index: 4;
-  display: block;
   width: 19%;
   aspect-ratio: 360 / 168;
   background: transparent url('/images/timbre-laos/airmail-laos-par-avion.webp') center / contain no-repeat;
@@ -45,19 +29,14 @@
   mix-blend-mode: multiply;
   filter: contrast(1.32) brightness(1.08) saturate(1.05);
   transform: rotate(-6deg);
-  transform-origin: center;
 }
 
-/* Pakse only: keep the map return link aligned with the finished composition. */
 #main-content .pakse-page .city-postcard-hero__back {
   top: calc(clamp(4.45rem, 5.7vw, 5.35rem) + 25px);
   right: 10px;
 }
 
 @media (min-width: 761px) {
-  /* The message is positioned against the complete envelope, not against the
-     right-hand grid column. Its x coordinate therefore matches the asset at
-     every supported desktop and tablet width. */
   #main-content :is(.pakse-page, .tad-lo-page) .city-postcard__message {
     --envelope-line-gap: 3.15rem;
     position: absolute;
@@ -90,29 +69,17 @@
     left: var(--pakse-envelope-rule-start);
     width: calc(96% - var(--pakse-envelope-rule-start));
     margin: 0;
-    color: transparent;
-    font-size: 0;
-    line-height: 0;
-  }
-
-  #main-content :is(.pakse-page, .tad-lo-page) .city-postcard__description::before {
-    display: block;
     color: #3f4943;
     font-family: 'Segoe Print', 'Bradley Hand', cursive;
     font-size: 1.04rem;
     font-weight: 500;
     letter-spacing: 0;
     line-height: var(--envelope-line-gap);
-    white-space: pre;
     transform: translateY(-.22rem) rotate(-.25deg);
   }
 
-  #main-content .pakse-page .city-postcard__description::before {
-    content: 'The gateway to Southern Laos. More than a list of city sights,\A Pakse is a relaxed riverside base for the Bolaven Plateau,\A Wat Phou and the roads that continue south.';
-  }
-
-  #main-content .tad-lo-page .city-postcard__description::before {
-    content: 'Waterfalls, coffee, village life and forest roads with enough time\A to notice where you are. Tad Lo is a small, walkable base for a\A slower chapter on the Bolaven Plateau.';
+  #main-content :is(.pakse-page, .tad-lo-page) .city-postcard__description span {
+    white-space: nowrap;
   }
 }
 
