@@ -1,4 +1,4 @@
-/* The three finished envelope heroes use a clean photograph, not a Polaroid.
+/* The finished envelope heroes use a clean photograph, not a Polaroid.
    Loaded after every city-specific envelope stylesheet so the shared component
    padding, white paper background and drop shadow cannot reappear. */
 #main-content :is(.pakse-page, .tad-lo-page, .thakhek-page) .city-postcard__photo {
@@ -7,49 +7,4 @@
   outline: 0;
   background: transparent;
   box-shadow: none;
-}
-
-/* Pakse uses the build-generated envelope with the trimmed WebP stamp already
-   fitted into the detected postage box. This replaces every former CSS overlay. */
-#main-content .pakse-page .city-postcard::before {
-  background-image: url('/images/laos/pakse-airmail-envelope-stamped-v3.webp');
-}
-
-/* Vintage English airmail rubber stamp placed in the free area between the
-   photograph and the postage stamp, just above the handwritten city name. */
-#main-content .pakse-page .city-postcard::after {
-  content: '';
-  position: absolute;
-  top: calc(27.5% - 28px);
-  right: 27%;
-  bottom: auto;
-  left: auto;
-  z-index: 4;
-  display: block;
-  width: 19%;
-  aspect-ratio: 360 / 168;
-  background-color: transparent;
-  background-image: url('/images/laos/pakse-airmail-postmark.svg');
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
-  opacity: .76;
-  pointer-events: none;
-  mix-blend-mode: multiply;
-  transform: rotate(-6deg);
-  transform-origin: center;
-}
-
-/* Pakse only: lower the back link by 25px and move it 10px to the left. */
-#main-content .pakse-page .city-postcard-hero__back {
-  top: calc(clamp(4.45rem, 5.7vw, 5.35rem) + 25px);
-  right: 10px;
-}
-
-@media (max-width: 760px) {
-  #main-content .pakse-page .city-postcard::after {
-    top: calc(26% - 28px);
-    right: 23%;
-    width: 22%;
-  }
 }
