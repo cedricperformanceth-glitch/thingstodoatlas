@@ -16,7 +16,7 @@
         link.href = 'https://laoevisa.gov.la/apply';
         link.target = '_blank';
         link.rel = 'noreferrer';
-        link.setAttribute('aria-label', 'Apply for the official Lao eVisa');
+        link.setAttribute('aria-label', 'Apply for the official Lao eVisa in a new window');
         link.setAttribute('data-laos-evisa-link', '');
 
         evisaCard.appendChild(link);
@@ -47,6 +47,27 @@
     inset: 0;
     display: block;
     cursor: pointer;
+  }
+
+  .editorial-guide__fact-link::after {
+    content: '↗';
+    position: absolute;
+    top: .42rem;
+    right: .5rem;
+    display: grid;
+    place-items: center;
+    width: 1.2rem;
+    height: 1.2rem;
+    color: rgba(183, 102, 69, .72);
+    font: 700 .9rem/1 'DM Sans', sans-serif;
+    transform: translate(0, 0);
+    transition: color .18s ease, transform .18s ease;
+  }
+
+  .editorial-guide__fact--link:hover .editorial-guide__fact-link::after,
+  .editorial-guide__fact--link:focus-within .editorial-guide__fact-link::after {
+    color: #b76645;
+    transform: translate(.12rem, -.12rem);
   }
 
   .editorial-guide__fact-link:focus-visible {
