@@ -32,17 +32,16 @@ const categoryTabs = [
   <main class="thakhek-page">
     <CityPostcardHero
       cityName="Thakhek"
-      eyebrow="LAOS · CHAPTER 03"
-      description="A Mekong town that becomes a starting line for limestone roads, cave country and the long arc of the Thakhek Loop. Stay for the old streets, then let the road carry the chapter east."
+      description={[
+        'A Mekong town that becomes a starting line for limestone roads,',
+        'cave country and the long arc of the Thakhek Loop. Stay for the',
+        'old streets, then let the road carry the chapter east.'
+      ]}
       photoSrc="/images/places/thakhek-01.webp"
       photoAlt="Historic streets of Thakhek in central Laos"
       facts={thakhekPostcardFacts}
-      fieldNote="FIELD NOTE — Old streets · limestone roads beginning east"
       backHref="/laos"
       backLabel="Back to the Laos map"
-      postmarkDate="07 · 2026"
-      stampLabel="LAOS"
-      stampMotif="mountain"
       drawingSrc="/images/places/thakhek-02.webp"
       drawingAlt="Limestone landscape near Thakhek in central Laos"
       drawingCaption="Karst roads · the loop turns east"
