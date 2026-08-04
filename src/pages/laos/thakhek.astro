@@ -9,6 +9,7 @@ import LandmarkModalSet from '../../components/LandmarkModalSet.astro';
 import MapAddressCard from '../../components/MapAddressCard.astro';
 import { thakhekLandmarks } from '../../data/thakhekLandmarks';
 import { thakhekGuesthouses, thakhekRestaurants } from '../../data/thakhekPlaces';
+import thakhekDrawingUrl from '../../../calque SVG/laos-northern-road-tuk-tuk.webp?url';
 
 const thakhekPostcardFacts = [
   { label: 'July 2026', icon: 'calendar' as const },
@@ -42,9 +43,9 @@ const categoryTabs = [
       facts={thakhekPostcardFacts}
       backHref="/laos"
       backLabel="Back to the Laos map"
-      drawingSrc="/images/places/thakhek-02.webp"
-      drawingAlt="Limestone landscape near Thakhek in central Laos"
-      drawingCaption="Karst roads · the loop turns east"
+      drawingSrc={thakhekDrawingUrl}
+      drawingAlt="Hand-drawn Lao tuk-tuk travelling along an open road"
+      drawingCaption="Road notes · the loop turns east"
     />
     <ThakhekEditorialGuide />
 
