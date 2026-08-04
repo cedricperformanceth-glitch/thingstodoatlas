@@ -1,49 +1,62 @@
 @import './pakse-envelope-metrics.css';
 
-/* Measured airmail-envelope hero used by Pakse and Tad Lo. */
-
-/* Keep only the postal details already drawn on the envelope asset. */
+/* Fixed airmail-envelope hero shared by Pakse and Tad Lo. */
+#main-content :is(.pakse-page, .tad-lo-page) .city-postcard__template,
 #main-content :is(.pakse-page, .tad-lo-page) .city-postcard__postage,
 #main-content :is(.pakse-page, .tad-lo-page) .city-postcard__eyebrow,
 #main-content :is(.pakse-page, .tad-lo-page) .city-postcard__field-note {
   display: none !important;
 }
 
-/* The generated asset keeps the original 1536×1024 canvas and makes only
-   the exterior white pixels transparent. No crop, zoom or changed inset. */
 #main-content :is(.pakse-page, .tad-lo-page) .city-postcard::before {
+  content: '';
+  position: absolute;
   inset: 0;
-  background-image: url('/images/laos/pakse-airmail-envelope.webp');
-  background-position: center;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  z-index: -1;
+  background: transparent url('/images/laos/pakse-airmail-envelope.webp') center / 100% 100% no-repeat;
+  pointer-events: none;
 }
 
-/* Pakse only: fit the original transparent WebP stamp inside the postage
-   square already drawn on the envelope. The image keeps its full height;
-   only the transparent side margins of its 1536×1024 canvas sit outside. */
+/* Pakse uses the build-generated envelope with its city stamp already fitted. */
+#main-content .pakse-page .city-postcard::before {
+  background-image: url('/images/laos/pakse-airmail-envelope-stamped-v3.webp');
+}
+
+/* Remove the generic postcard outline. Pakse replaces it with the permanent
+   English airmail rubber stamp; Tad Lo keeps the envelope clean. */
+#main-content :is(.pakse-page, .tad-lo-page) .city-postcard::after {
+  display: none;
+}
+
 #main-content .pakse-page .city-postcard::after {
   content: '';
   position: absolute;
-  top: 7.15%;
-  right: 3.8%;
+  top: calc(27.5% - 28px);
+  right: 27%;
+  bottom: auto;
+  left: auto;
   z-index: 4;
   display: block;
-  width: 4.95%;
-  aspect-ratio: 180 / 220;
-  background-color: transparent;
-  background-image: url('/images/timbre-laos/timbre-pakse.webp');
-  background-position: center;
-  background-size: auto 100%;
-  background-repeat: no-repeat;
+  width: 19%;
+  aspect-ratio: 360 / 168;
+  background: transparent url('/images/laos/pakse-airmail-postmark.svg') center / contain no-repeat;
+  opacity: .76;
   pointer-events: none;
-  transform: none;
+  mix-blend-mode: multiply;
+  transform: rotate(-6deg);
+  transform-origin: center;
+}
+
+/* Pakse only: keep the map return link aligned with the finished composition. */
+#main-content .pakse-page .city-postcard-hero__back {
+  top: calc(clamp(4.45rem, 5.7vw, 5.35rem) + 25px);
+  right: 10px;
 }
 
 @media (min-width: 761px) {
   /* The message is positioned against the complete envelope, not against the
-     right-hand grid column. Its x coordinate therefore matches the WebP at
-     every displayed width. */
+     right-hand grid column. Its x coordinate therefore matches the asset at
+     every supported desktop and tablet width. */
   #main-content :is(.pakse-page, .tad-lo-page) .city-postcard__message {
     --envelope-line-gap: 3.15rem;
     position: absolute;
@@ -108,8 +121,6 @@
     max-width: none;
   }
 
-  /* The previous envelope track was 34–43.375rem. Every value is now
-     multiplied by 1.2, so the whole envelope grows by exactly 20%. */
   #main-content :is(.pakse-page, .tad-lo-page) .city-postcard-hero__layout {
     grid-template-columns: clamp(40.8rem, calc(120vw - 37.2rem), 52.05rem) minmax(22rem, 1fr);
     gap: 2rem;
@@ -120,8 +131,6 @@
     aspect-ratio: 2.15 / 1;
   }
 
-  /* Enlarge the complete photo/facts block slightly while keeping its edges
-     safely inside the red and blue airmail border. */
   #main-content :is(.pakse-page, .tad-lo-page) .city-postcard__media {
     width: 103%;
     max-width: none;
@@ -129,7 +138,6 @@
     transform-origin: top left;
   }
 
-  /* Drawing and partner button stay aligned and move 40px back to the left. */
   #main-content :is(.pakse-page, .tad-lo-page) .city-postcard-hero__aside {
     width: 22rem;
     align-items: flex-start;
@@ -168,7 +176,6 @@
 }
 
 @media (max-width: 980px) and (min-width: 761px) {
-  /* The component used 80% here; 96% is the same envelope enlarged by 20%. */
   #main-content :is(.pakse-page, .tad-lo-page) .city-postcard-shell {
     width: 96%;
     justify-self: start;
@@ -231,10 +238,17 @@
 
   #main-content :is(.pakse-page, .tad-lo-page) .city-postcard-hero__partner {
     align-self: center;
+    width: min(100%, 20rem);
     margin-top: .8rem;
   }
 
   #main-content :is(.pakse-page, .tad-lo-page) .city-postcard__facts {
     font-size: .72rem;
+  }
+
+  #main-content .pakse-page .city-postcard::after {
+    top: calc(26% - 28px);
+    right: 23%;
+    width: 22%;
   }
 }
