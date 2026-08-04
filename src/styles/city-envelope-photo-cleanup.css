@@ -20,7 +20,7 @@
 #main-content .pakse-page .city-postcard::after {
   content: '';
   position: absolute;
-  top: 27.5%;
+  top: calc(27.5% - 28px);
   right: 27%;
   bottom: auto;
   left: auto;
@@ -48,7 +48,7 @@
 
 @media (max-width: 760px) {
   #main-content .pakse-page .city-postcard::after {
-    top: 26%;
+    top: calc(26% - 28px);
     right: 23%;
     width: 22%;
   }
