@@ -21,11 +21,54 @@ const {
 
 const sectionId = `explore-board-${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 const thumbnailSrc = (src?: string) => src ? src.replace(/([?&])width=\d+/i, '$1width=720') : '';
+const isPakse = cityName.trim().toLowerCase() === 'pakse';
 ---
 
 <section class="explore-board-section" aria-labelledby={sectionId}>
   <div class="explore-board-frame">
     <div class="explore-board">
+      {isPakse && (
+        <div class="explore-board__decorations" aria-hidden="true">
+          <svg class="explore-board-decoration explore-board-decoration--compass" viewBox="0 0 120 120">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M61 19c22 0 40 17 40 40 0 23-17 42-40 43-23 1-42-17-42-41 0-23 18-42 42-42Z" stroke-width="1.8" opacity=".72" />
+              <path d="M59 23c20 1 36 16 37 35M23 64c2 18 15 31 32 34" stroke-width="1.05" opacity=".42" />
+              <path d="M60 31c1 11 1 19 0 28m0 4c-1 10-1 18 0 27M31 60c11-1 19-1 28 0m4 0c10 1 18 1 27 0" stroke-width="1.3" opacity=".64" />
+              <path d="m60 39 8 20-9 24-7-22Z" stroke-width="1.55" />
+              <path d="M60 40 65 60l-6 20-3-20Z" fill="currentColor" opacity=".18" />
+              <path d="M43 30c-4 2-8 6-11 10m46-10c5 3 9 7 11 11M40 90c4 4 8 7 13 9m30-10c4-3 8-7 10-12" stroke-width="1" opacity=".5" />
+            </g>
+            <g fill="currentColor" font-family="'Segoe Print', 'Bradley Hand', cursive" font-size="11" text-anchor="middle">
+              <text x="60" y="15">N</text>
+              <text x="106" y="64">E</text>
+              <text x="14" y="64">W</text>
+              <text class="explore-board-decoration__accent" x="60" y="116">S</text>
+            </g>
+          </svg>
+
+          <svg class="explore-board-decoration explore-board-decoration--route" viewBox="0 0 900 100" preserveAspectRatio="none">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 67C145 13 258 88 389 48c137-42 251-25 358 7 46 14 88 7 139-24" stroke-width="2" stroke-dasharray="5 12" />
+              <circle cx="14" cy="67" r="4.5" stroke-width="1.7" />
+              <path d="m207 36 14 14m0-14-14 14M474 39l14 14m0-14-14 14M715 50l14 14m0-14-14 14" stroke-width="2.1" />
+              <path d="m876 25 11 6-10 8" stroke-width="2" />
+            </g>
+          </svg>
+
+          <svg class="explore-board-decoration explore-board-decoration--boat" viewBox="0 0 180 92">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 58c35 5 76 5 122-2-8 13-31 20-71 20-25 0-42-6-51-18Z" stroke-width="1.9" />
+              <path d="M45 58 63 38h47l20 19M67 38l4-13m36 13-5-13M69 25h35" stroke-width="1.45" />
+              <path d="M55 51c13 2 38 2 61-1M31 65c22 8 77 10 104-1" stroke-width="1" opacity=".55" />
+              <path d="M8 83c17-5 30-5 48 0 17 5 35 5 53 0 17-5 32-5 50 0" stroke-width="1.25" opacity=".62" />
+              <path d="M126 24c17-7 31-7 45 0" stroke-width="1.25" stroke-dasharray="3 5" />
+              <path d="m163 18 9 6-9 5" stroke-width="1.35" />
+            </g>
+            <text x="128" y="15" fill="currentColor" font-family="'Segoe Print', 'Bradley Hand', cursive" font-size="10" transform="rotate(-3 128 15)">south</text>
+          </svg>
+        </div>
+      )}
+
       <header class="explore-board__header">
         <p class="explore-board__question">{eyebrow}</p>
         <h2 id={sectionId}>{title}</h2>
@@ -145,6 +188,51 @@ const thumbnailSrc = (src?: string) => src ? src.replace(/([?&])width=\d+/i, '$1
     background-position: 0 0, 4px 3px;
     background-size: 9px 9px, 13px 13px;
     mix-blend-mode: screen;
+  }
+
+  .explore-board__decorations {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .explore-board-decoration {
+    position: absolute;
+    display: block;
+    overflow: visible;
+    color: rgba(238, 232, 210, .72);
+    filter: drop-shadow(.5px .5px 0 rgba(255,255,255,.08));
+  }
+
+  .explore-board-decoration--compass {
+    top: clamp(1.25rem, 2.3vw, 2rem);
+    right: clamp(7.5rem, 13vw, 11rem);
+    width: clamp(4.6rem, 7.1vw, 6.4rem);
+    opacity: .62;
+    transform: rotate(5deg);
+  }
+
+  .explore-board-decoration__accent {
+    fill: #d5b681;
+  }
+
+  .explore-board-decoration--route {
+    left: 10%;
+    bottom: clamp(4.9rem, 7vw, 6.1rem);
+    width: 72%;
+    height: clamp(3.4rem, 5vw, 4.7rem);
+    opacity: .27;
+    transform: rotate(-.7deg);
+  }
+
+  .explore-board-decoration--boat {
+    right: clamp(5.6rem, 8vw, 7.2rem);
+    bottom: clamp(3.2rem, 5vw, 4.15rem);
+    width: clamp(5.4rem, 8vw, 7.2rem);
+    opacity: .68;
+    transform: rotate(-2deg);
   }
 
   .explore-board__header,
@@ -417,6 +505,10 @@ const thumbnailSrc = (src?: string) => src ? src.replace(/([?&])width=\d+/i, '$1
 
     .explore-board {
       padding: 1.45rem .9rem 1.25rem;
+    }
+
+    .explore-board__decorations {
+      display: none;
     }
 
     .explore-board__header {
