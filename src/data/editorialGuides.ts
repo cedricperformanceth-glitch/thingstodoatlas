@@ -67,16 +67,16 @@ export const laosEditorialGuide: EditorialGuideData = {
     {
       id: 'entry',
       eyebrow: '02 · Before arrival',
-      title: 'Entering Laos without guessing',
+      title: 'Choose the entry that fits your route',
       paragraphs: [
-        'Visa rules depend on your passport, the purpose of the trip and the checkpoint you use. The official Lao eVisa is designed for eligible tourist passports, but it is accepted only at designated entry points.',
-        'Keep a printed approval letter when travelling with an eVisa, check that your passport has sufficient validity and blank pages, and verify whether your arrival point uses a digital arrival form. Do not rely on an old border report or a screenshot from another traveller.'
+        'Laos can be entered through its international airports or across an overland border. For eligible passports, a visa on arrival remains a simple option at many checkpoints, so applying for an eVisa before the trip is useful but not always necessary. Check the exact border you plan to use, as visa services are not identical everywhere.',
+        'A tourist stay normally begins with 30 days. Extensions are arranged inside Laos in additional 30-day blocks, with travellers often planning around as much as three months before leaving the country and entering again. Bring your passport, an identity photo and cash; a 30-day extension is commonly charged at 600,000 kip plus 25,000 kip in processing fees. Confirm the number of extensions and the current price with immigration when you apply, as local procedures can change.'
       ],
       facts: [
-        { label: 'eVisa format', value: 'Tourist visa, single entry, with a 30-day stay for eligible travellers.' },
-        { label: 'Processing', value: 'The official service advises allowing at least three working days; delays remain possible.' },
-        { label: 'Entry point', value: 'Use one of the checkpoints currently designated for eVisa entry.' },
-        { label: 'Passport', value: 'Check for at least six months of validity and enough blank space before departure.' }
+        { label: 'eVisa', value: 'Optional for eligible passports. Apply through the official Lao eVisa website and enter at a designated checkpoint.' },
+        { label: 'Visa on arrival', value: 'Available at many international airports and land borders, and generally straightforward to obtain.' },
+        { label: 'Extension', value: 'Plan for 600,000 kip plus 25,000 kip in processing fees, and bring a passport photo.' },
+        { label: 'Longer stay', value: 'Two 30-day extensions are commonly used; after about 90 days in total, leave Laos before entering again.' }
       ]
     },
     {
