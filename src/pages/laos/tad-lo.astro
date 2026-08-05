@@ -8,8 +8,11 @@ import CityCategoryPanel from '../../components/CityCategoryPanel.astro';
 import PartnerPlaceCard from '../../components/PartnerPlaceCard.astro';
 import SelectionPlaceCard from '../../components/SelectionPlaceCard.astro';
 import { tadLoExperiences, tadLoLocalAddresses } from '../../data/tadLoPlaces';
-import { tadLoTreasureHunt } from '../../data/tadLoTreasureHunt';
-import { fandeeIslandSelection } from '../../data/tadLoSelections';
+import {
+  fandeeIslandSelection,
+  tadLoTreasureHuntSelection,
+  vatPaaForestSelection
+} from '../../data/tadLoSelections';
 
 const tadLoPostcardFacts = [
   { label: 'July 2026', icon: 'calendar' as const },
@@ -55,7 +58,9 @@ const tadLoExploreLandmarks = tadLoBoardSelections.map((selection) => {
     : [{ src: place.image, alt: place.imageAlt }];
 
   return {
-    modalId: `partner-place-${place.slug}`,
+    modalId: selection.slug === 'vat-paa-ancient-forest'
+      ? `selection-place-${place.slug}`
+      : `partner-place-${place.slug}`,
     name: selection.name,
     gallery,
     cityContext: {
@@ -67,13 +72,14 @@ const tadLoExploreLandmarks = tadLoBoardSelections.map((selection) => {
   };
 });
 
-const tadLoAllExperiences = [tadLoTreasureHunt, ...tadLoExperiences];
+const tadLoPartnerExperiences = tadLoExperiences.filter((place) => place.slug !== 'vat-paa-ancient-forest');
+const tadLoExperienceCount = tadLoPartnerExperiences.length + 2;
 const tadLoGuesthouses = tadLoLocalAddresses.filter((place) => place.category === 'accommodation' && place.slug !== 'fandee-island');
 const tadLoRestaurants = tadLoLocalAddresses.filter((place) => place.category === 'restaurants');
 const tadLoEssentials = tadLoLocalAddresses.filter((place) => place.category === 'essential-information');
 
 const categoryTabs = [
-  { slug: 'things-to-do', title: 'Things to do', kicker: 'WALK · SEE · EXPLORE', icon: 'explore' as const, count: tadLoAllExperiences.length },
+  { slug: 'things-to-do', title: 'Things to do', kicker: 'WALK · SEE · EXPLORE', icon: 'explore' as const, count: tadLoExperienceCount },
   { slug: 'accommodation', title: 'Guesthouses', kicker: 'SLEEP · NATURE · VILLAGE', icon: 'guesthouses' as const, count: tadLoGuesthouses.length + 1 },
   { slug: 'restaurants', title: 'Restaurants', kicker: 'EAT · LOCAL · SLOW', icon: 'restaurants' as const, count: tadLoRestaurants.length },
   { slug: 'essential-information', title: 'Essential Information', kicker: 'GUIDES · ROADS · BASICS', icon: 'essential' as const, count: tadLoEssentials.length }
@@ -126,8 +132,12 @@ const categoryTabs = [
       title="Plan your stay in Tad Lo"
       intro="The buttons keep the whole Tad Lo guide on one page. Opening Guesthouses closes Things to do; opening Restaurants closes Guesthouses."
     >
-      <CityCategoryPanel slug="things-to-do" cityName="Tad Lo" title="Things to do" count={tadLoAllExperiences.length} noun="experiences" intro="A free village treasure hunt, waterfalls, workshops, coffee and local outings gathered with Visit Tad Lo." fieldNote="04" active>
-        <div class="city-panel-list">{tadLoAllExperiences.map((place, index) => <PartnerPlaceCard place={place} index={index} />)}</div>
+      <CityCategoryPanel slug="things-to-do" cityName="Tad Lo" title="Things to do" count={tadLoExperienceCount} noun="experiences" intro="Tad Lo Treasure Hunt and Vat Paa Forest lead the list as My Selection, followed by waterfalls, workshops, coffee and locally documented outings." fieldNote="04" active>
+        <div class="city-panel-list">
+          <SelectionPlaceCard place={tadLoTreasureHuntSelection} index={0} />
+          <SelectionPlaceCard place={vatPaaForestSelection} index={1} />
+          {tadLoPartnerExperiences.map((place, index) => <PartnerPlaceCard place={place} index={index + 2} />)}
+        </div>
       </CityCategoryPanel>
 
       <CityCategoryPanel slug="accommodation" cityName="Tad Lo" title="Guesthouses" count={tadLoGuesthouses.length + 1} noun="stays" intro="The golden card marks an Atlas selection. The other stays remain locally documented addresses from Visit Tad Lo." fieldNote="05">
@@ -195,7 +205,10 @@ const categoryTabs = [
           const dialog = document.getElementById(button.dataset.openLandmark || '');
           if (!(dialog instanceof HTMLDialogElement) || dialog.open) return;
           dialog.showModal();
-          document.documentElement.classList.add('partner-dialog-open');
+          const dialogOpenClass = dialog.classList.contains('selection-dialog')
+            ? 'selection-dialog-open'
+            : 'partner-dialog-open';
+          document.documentElement.classList.add(dialogOpenClass);
         });
       });
     });
