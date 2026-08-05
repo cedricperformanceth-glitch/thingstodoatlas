@@ -13,6 +13,7 @@ import {
   thakhekCafes,
   thakhekEssentialInformation,
   thakhekGuesthouses,
+  thakhekMarkets,
   thakhekRestaurants,
   thakhekScooterRentals,
   thakhekThingsToDo
@@ -62,6 +63,15 @@ const mapCategories = [
     noun: 'rental addresses',
     intro: 'Central rental addresses to compare before starting the loop. Always inspect the bike and rental terms before leaving.',
     places: thakhekScooterRentals
+  },
+  {
+    slug: 'markets-shopping',
+    title: 'Markets',
+    kicker: 'NIGHT · FOOD · LOCAL',
+    icon: 'markets' as const,
+    noun: 'markets',
+    intro: 'Local market addresses for an evening walk, simple food and a look at everyday Thakhek after sunset.',
+    places: thakhekMarkets
   },
   {
     slug: 'essential-information',
@@ -125,7 +135,7 @@ const categoryTabs = [
       categories={categoryTabs}
       defaultSlug="restaurants"
       title="Plan your stay in Thakhek"
-      intro="Choose the useful section you need: food, coffee, accommodation, motorbike rental, practical information or places to explore."
+      intro="Choose the useful section you need: food, coffee, accommodation, motorbike rental, markets, practical information or places to explore."
     >
       {mapCategories.map((category, categoryIndex) => (
         <CityCategoryPanel
