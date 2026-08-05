@@ -11,9 +11,7 @@ interface Props {
 const { landmarks = [] } = Astro.props;
 const bolavenPartner = {
   name: 'Visit Tad Lo',
-  domain: 'visit-tadlo.com',
-  url: 'https://visit-tadlo.com/en',
-  label: 'Explore Tad Lo and the Bolaven Plateau'
+  domain: 'visit-tadlo.com'
 };
 ---
 
@@ -43,8 +41,6 @@ const bolavenPartner = {
           data-parent-landmark-modal={landmark.modalId}
           data-partner-name={partner.name}
           data-partner-domain={partner.domain}
-          data-partner-url={partner.url}
-          data-partner-label={partner.label}
         ></span>
       )}
 
@@ -85,8 +81,7 @@ const bolavenPartner = {
   .landmark-partner-note span { display: grid; gap: .22rem; }
   .landmark-partner-note small { color: #b76645; font: 700 .46rem/1 'DM Sans', sans-serif; letter-spacing: .15em; }
   .landmark-partner-note strong { font: 600 .76rem/1.2 'DM Sans', sans-serif; }
-  .landmark-partner-note b { color: #b76645; font: 600 .78rem/1 Fraunces, serif; }
-  .landmark-action--partner { border: 1px solid #315545 !important; background: rgba(247, 242, 230, .88) !important; color: #315545 !important; }
+  .landmark-partner-note b { color: #b76645; font: 600 .72rem/1 Fraunces, serif; }
   .city-note__partner {
     display: inline-block;
     margin: 2px 0 7px;
@@ -105,11 +100,51 @@ const bolavenPartner = {
 </style>
 
 <script>
+  let landmarkScrollY = 0;
+
+  const hasOpenLandmarkDialog = () => Boolean(
+    document.querySelector('.landmark-modal[open], [data-landmark-guide-dialog][open]')
+  );
+
+  const lockLandmarkPage = () => {
+    const root = document.documentElement;
+    if (root.dataset.landmarkScrollLocked === 'true') return;
+
+    landmarkScrollY = window.scrollY;
+    root.dataset.landmarkScrollLocked = 'true';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${landmarkScrollY}px`;
+    document.body.style.right = '0';
+    document.body.style.left = '0';
+    document.body.style.width = '100%';
+  };
+
+  const unlockLandmarkPage = () => {
+    const root = document.documentElement;
+    if (root.dataset.landmarkScrollLocked !== 'true') return;
+
+    delete root.dataset.landmarkScrollLocked;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.right = '';
+    document.body.style.left = '';
+    document.body.style.width = '';
+    window.scrollTo({ top: landmarkScrollY, left: 0, behavior: 'auto' });
+  };
+
+  const scheduleLandmarkPageUnlock = () => {
+    requestAnimationFrame(() => {
+      if (!hasOpenLandmarkDialog()) unlockLandmarkPage();
+    });
+  };
+
   const bindLandmarkModals = () => {
     const openLandmark = (trigger: HTMLElement) => {
       const id = trigger.dataset.openLandmark;
       const dialog = id ? document.getElementById(id) : null;
-      if (dialog instanceof HTMLDialogElement && !dialog.open) dialog.showModal();
+      if (!(dialog instanceof HTMLDialogElement) || dialog.open) return;
+      lockLandmarkPage();
+      dialog.showModal();
     };
 
     document.querySelectorAll<HTMLElement>('[data-open-landmark]').forEach((trigger) => {
@@ -129,6 +164,7 @@ const bolavenPartner = {
       dialog.dataset.landmarkDialogBound = 'true';
       dialog.querySelector<HTMLElement>('[data-close-landmark]')?.addEventListener('click', () => dialog.close());
       dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+      dialog.addEventListener('close', scheduleLandmarkPageUnlock);
     });
   };
 
@@ -151,26 +187,14 @@ const bolavenPartner = {
       if (!(dialog instanceof HTMLDialogElement)) return;
       const actions = dialog.querySelector<HTMLElement>('.landmark-modal__actions');
       const visual = dialog.querySelector<HTMLElement>('.landmark-modal__visual');
-      if (!actions || !visual || actions.querySelector('[data-landmark-partner-link]')) return;
+      if (!actions || !visual || visual.querySelector('[data-landmark-partner-note]')) return;
 
-      const note = document.createElement('a');
+      const note = document.createElement('div');
       note.className = 'landmark-partner-note';
-      note.href = config.dataset.partnerUrl || '#';
-      note.target = '_blank';
-      note.rel = 'noreferrer';
-      note.innerHTML = `<span><small>LOCAL PARTNER</small><strong>In partnership with ${config.dataset.partnerName}</strong></span><b>${config.dataset.partnerDomain} ↗</b>`;
+      note.dataset.landmarkPartnerNote = '';
+      note.setAttribute('role', 'note');
+      note.innerHTML = `<span><small>LOCAL PARTNER</small><strong>In partnership with ${config.dataset.partnerName}</strong></span><b>${config.dataset.partnerDomain}</b>`;
       visual.insertBefore(note, actions);
-
-      const link = document.createElement('a');
-      link.className = 'landmark-action landmark-action--partner';
-      link.href = config.dataset.partnerUrl || '#';
-      link.target = '_blank';
-      link.rel = 'noreferrer';
-      link.dataset.landmarkPartnerLink = '';
-      link.innerHTML = `<span aria-hidden="true">↗</span> ${config.dataset.partnerLabel || 'Open local partner guide'}`;
-      const mapsLink = actions.querySelector('.landmark-action--maps');
-      if (mapsLink) mapsLink.insertAdjacentElement('afterend', link);
-      else actions.prepend(link);
     });
   };
 
@@ -195,6 +219,7 @@ const bolavenPartner = {
       actions.insertBefore(button, saveButton);
       actions.classList.add('has-guide-action');
       button.addEventListener('click', () => {
+        lockLandmarkPage();
         if (parentDialog.open) parentDialog.close();
         if (!guideDialog.open) guideDialog.showModal();
       });
@@ -209,10 +234,12 @@ const bolavenPartner = {
       dialog.querySelector<HTMLElement>('[data-back-to-landmark]')?.addEventListener('click', () => {
         const parentId = dialog.dataset.parentLandmarkModal;
         const parentDialog = parentId ? document.getElementById(parentId) : null;
+        lockLandmarkPage();
         dialog.close();
         if (parentDialog instanceof HTMLDialogElement && !parentDialog.open) parentDialog.showModal();
       });
       dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+      dialog.addEventListener('close', scheduleLandmarkPageUnlock);
     });
   };
 
