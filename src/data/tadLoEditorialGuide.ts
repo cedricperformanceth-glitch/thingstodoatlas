@@ -5,134 +5,137 @@ export const tadLoEditorialGuide: EditorialGuideData = {
   destination: 'Tad Lo',
   typeLabel: 'Village notes',
   title: 'Tad Lo, before you slow down',
-  subtitle: 'A practical introduction to arriving, choosing a waterfall and understanding the rhythm of the village.',
+  subtitle: 'A practical introduction to reaching the village, choosing the right pace and understanding what changes with the season.',
   intro:
-    'Tad Lo is not a destination that needs a long checklist. It works because the village, the river, the waterfalls and the surrounding plateau can all be explored without rushing from one attraction to the next.',
+    'Tad Lo is easy to enjoy once the essentials are settled. Arrive with enough cash, understand where local transport leaves you, and give the village more than a few rushed hours between two waterfalls.',
   triggerEyebrow: 'Before you explore Tad Lo',
   triggerTitle: 'Read the village notes',
-  edition: 'Starter edition · August 2026',
+  edition: 'Practical edition · August 2026',
   warning:
-    'Water levels, access paths, transport arrangements and activity schedules can change with the season. Confirm current conditions locally before setting out.',
+    'Bus times, fares, road conditions, water levels and local availability can change. Use these notes to prepare, then confirm the details that matter on the day.',
   sections: [
     {
       id: 'why-tad-lo',
       eyebrow: '01 · The rhythm',
-      title: 'Tad Lo is a place to stay, not only a waterfall stop',
+      title: 'Stay long enough for the village to become part of the trip',
       paragraphs: [
-        'Many travellers arrive with the three waterfalls in mind, but the village makes more sense when you allow time for ordinary moments between them: a meal, a riverside walk, coffee, a workshop or an afternoon without a plan.',
-        'The strongest part of Tad Lo is its scale. Several useful addresses and the closest natural sites are easy to combine without turning the day into a transport exercise.'
+        'Tad Lo works best as a base rather than a quick waterfall stop. The village, Tad Hang, Tad Lo Waterfall, restaurants, guesthouses and several small activities can all be explored without building the day around transport.',
+        'Two nights are a good starting point. Add more time for a guided trek, a workshop, a coffee experience or a slower day when the weather changes the plan.'
       ],
-      note: {
-        label: 'Village note',
-        text: 'Do less on the first afternoon. Walk the village, understand the paths and choose the next day from there.'
-      }
+      facts: [
+        { label: 'One night', value: 'Enough to arrive and leave, but with very little space for the village itself.' },
+        { label: 'Two nights', value: 'A practical minimum for the village and the closest waterfalls.' },
+        { label: 'Longer stay', value: 'Useful for treks, workshops, coffee experiences or a wider Salavan outing.' },
+        { label: 'Best approach', value: 'Treat Tad Lo as a pause in the journey, not another pin to collect.' }
+      ]
     },
     {
       id: 'arriving',
-      eyebrow: '02 · First arrival',
-      title: 'Arrive with daylight and confirm the final drop-off',
+      eyebrow: '02 · From Pakse',
+      title: 'Know where the bus leaves you before you board',
       paragraphs: [
-        'Tad Lo is reached by road through the Bolaven Plateau and Salavan Province. Public transport, shared vehicles and private transfers do not always finish at the exact guesthouse or activity you have in mind.',
-        'Save the property name, a map pin and a local contact before leaving Pakse or another larger town. A daylight arrival makes it easier to understand the village layout and organise the next morning.'
+        'Tad Lo is about 84 kilometres from Pakse and can be reached by motorbike, private vehicle or local transport. Buses normally run in both directions at around 09:00, 11:00, 13:00 and 16:00, with a reported fare of approximately 175,000 kip per person. Confirm both the timetable and the price on the day.',
+        'From Pakse, local buses leave from the Southern Bus Station at Km 8. At Tad Lo, they use the junction near the market rather than the village centre, which is about 1.5 kilometres away. Walk the final distance or look for a tuk-tuk when one is available.'
       ],
       facts: [
-        { label: 'Getting there', value: 'Road transport is the practical way to reach Tad Lo.' },
-        { label: 'Final distance', value: 'Confirm whether the vehicle stops in the village or on the main road.' },
-        { label: 'Arrival habit', value: 'Keep the accommodation name and contact details offline.' },
-        { label: 'Best timing', value: 'Daylight gives you time to walk, eat and organise transport.' }
+        { label: 'Distance', value: 'Approximately 84 kilometres from Pakse.' },
+        { label: 'Pakse departure', value: 'Southern Bus Station at Km 8.' },
+        { label: 'Tad Lo stop', value: 'The junction near the market, around 1.5 kilometres from the centre.' },
+        { label: 'Confirm locally', value: 'Times and fares are useful planning references, not guaranteed departures.' }
+      ]
+    },
+    {
+      id: 'without-motorbike',
+      eyebrow: '03 · Moving around',
+      title: 'A motorbike helps, but it is not required',
+      paragraphs: [
+        'Tad Lo village, Tad Hang, Tad Lo Waterfall, restaurants, accommodation and several activities are within walking distance. Staying in the village as a fixed base is often simpler than renting a motorbike only because the destination appears rural.',
+        'For places farther away, organise a driver, a minivan or transport through the activity provider. Official guided treks may include their own arrangements, so ask what is covered before creating a separate transport plan.'
+      ],
+      facts: [
+        { label: 'Walkable', value: 'The village, main waterfalls, food and several activities.' },
+        { label: 'Driver', value: 'Useful for distant waterfalls, rural experiences and wider plateau routes.' },
+        { label: 'Guided trek', value: 'Transport may be included depending on the organiser and route.' },
+        { label: 'Planning rule', value: 'Rent wheels for the places that need them, not for the entire stay by default.' }
       ]
     },
     {
       id: 'waterfalls',
-      eyebrow: '03 · Three different outings',
-      title: 'Choose the waterfall by time and distance',
+      eyebrow: '04 · Water and seasons',
+      title: 'The same waterfalls become a different trip after the rain',
       paragraphs: [
-        'Tad Hang is the easiest first stop and combines naturally with the village. Tad Lo Waterfall belongs to the same slow, walkable chapter. Tad Soung is a wider countryside outing that deserves more daylight and a transport plan.',
-        'Water flow, swimming conditions and access can change after rain. Treat local advice as part of the visit rather than assuming that every pool or path is safe in every season.'
+        'Dry and rainy seasons create two very different versions of Tad Lo. Drier months usually make roads, trails and calmer swimming areas easier, although Tad Soung can carry very little water or even appear dry. The rainy season brings stronger waterfalls, greener surroundings and much more powerful currents.',
+        'Swimming depends on recent rain, water level and the exact pool. Never assume that calm-looking water is safe, avoid the immediate base of powerful falls and ask residents about current conditions after heavy rain.'
       ],
       facts: [
-        { label: 'Tad Hang', value: 'The simplest first waterfall from the village.' },
-        { label: 'Tad Lo', value: 'Best combined with a slow walk and time beside the river.' },
-        { label: 'Tad Soung', value: 'Keep a half-day and confirm the current access route.' },
-        { label: 'Water conditions', value: 'Check flow, slippery surfaces and swimming advice locally.' }
+        { label: 'Dry season', value: 'Easier roads and calmer access, but some waterfalls may carry much less water.' },
+        { label: 'Rainy season', value: 'More powerful waterfalls, stronger currents and more difficult surfaces.' },
+        { label: 'Swimming', value: 'Possible in some areas only when flow and recent weather allow it.' },
+        { label: 'Local advice', value: 'After heavy rain, ask before entering the water or following a slippery path.' }
       ]
     },
     {
-      id: 'moving-around',
-      eyebrow: '04 · Inside and beyond the village',
-      title: 'Walk the centre, arrange wheels for the plateau',
+      id: 'roads',
+      eyebrow: '05 · Roads and riding',
+      title: 'Let the weather decide how ambitious the road should be',
       paragraphs: [
-        'The village itself is manageable on foot, including several guesthouses, restaurants and the closest waterfall routes. Longer coffee visits, rural sites and Tad Soung usually make more sense with a scooter, driver or arranged transport.',
-        'Do not leave a distant outing until late afternoon. Roads, weather and informal arrangements can add time, and returning after dark removes much of the pleasure of the route.'
+        'Rain, potholes and mountain sections can turn an easy-looking route into a much slower ride. Check the tyres and brakes, wear a helmet and leave enough daylight for the return journey.',
+        'Avoid committing to the Thateng mini-loop during an active storm. Temporary road alerts and local warnings matter more than a route that looked manageable when it was planned earlier.'
       ],
       facts: [
-        { label: 'Village centre', value: 'Walking is enough for many everyday stops.' },
-        { label: 'Outside Tad Lo', value: 'A scooter or driver opens the wider plateau.' },
-        { label: 'Navigation', value: 'Save pins before leaving reliable reception.' },
-        { label: 'Daylight', value: 'Begin longer outings early enough to return comfortably.' }
-      ]
-    },
-    {
-      id: 'where-to-stay',
-      eyebrow: '05 · Choosing a base',
-      title: 'Choose between convenience, river atmosphere and something unusual',
-      paragraphs: [
-        'A central guesthouse keeps meals, walks and the closest waterfalls simple. A riverside or garden stay gives the village a quieter rhythm, while places such as Fandee Island turn the accommodation itself into part of the experience.',
-        'Check the real walking distance, road access, restaurant hours and whether transport can collect you from the property. In a small destination, a beautiful stay can still feel inconvenient when every meal requires another journey.'
-      ],
-      facts: [
-        { label: 'Short stay', value: 'Prioritise an easy walk to food and the village paths.' },
-        { label: 'Slow stay', value: 'Choose shade, outdoor space and somewhere pleasant between outings.' },
-        { label: 'Transport', value: 'Confirm pickup access before booking a distant property.' },
-        { label: 'Evening', value: 'Know where you will eat before assuming every kitchen stays open late.' }
+        { label: 'Before leaving', value: 'Check tyres, brakes, fuel and the latest road conditions.' },
+        { label: 'During rain', value: 'Reduce the route rather than trying to preserve the original itinerary.' },
+        { label: 'Thateng loop', value: 'Avoid the mini-loop during an active storm.' },
+        { label: 'Daylight', value: 'Begin mountain or countryside sections early enough to return comfortably.' }
       ]
     },
     {
       id: 'daily-basics',
-      eyebrow: '06 · Food, money and connection',
-      title: 'Keep the simple essentials sorted before leaving town',
+      eyebrow: '06 · Cash and connection',
+      title: 'Bring the essentials before the village makes the decision for you',
       paragraphs: [
-        'Tad Lo has useful local restaurants and guesthouse kitchens, but choice and opening times remain smaller than in Pakse. Carry enough cash for meals, transport, activities and an unexpected extra night.',
-        'Mobile reception and Wi-Fi may be sufficient around accommodation but less dependable on rural outings. Download maps, save partner pages and keep important addresses available offline.'
+        'Arrive with enough Lao kip for accommodation, meals, transport and activities. ATM availability in Tad Lo can change, and the nearest reliable options may be in Laongam or Thateng. Some establishments accept QR payments, but fees, limits and application compatibility should be checked before relying on them.',
+        'Mobile coverage is available in and around the village, although quality varies by operator and exact location. Download important addresses, maps and booking details before leaving a larger town.'
       ],
       facts: [
-        { label: 'Cash', value: 'Bring enough kip rather than depending on one payment option.' },
-        { label: 'Meals', value: 'Ask about kitchen hours before returning late.' },
-        { label: 'Phone', value: 'Download maps and booking details before a countryside route.' },
-        { label: 'Backup', value: 'Keep water and a small snack for longer outings.' }
+        { label: 'Cash', value: 'Carry enough kip for the stay rather than depending on one ATM or QR code.' },
+        { label: 'Nearest ATMs', value: 'Laongam or Thateng may be more reliable than Tad Lo itself.' },
+        { label: 'QR payments', value: 'Accepted in some places, but not a universal replacement for cash.' },
+        { label: 'Mobile signal', value: 'Available around the village, with quality changing by operator and location.' }
       ]
     },
     {
-      id: 'respect',
-      eyebrow: '07 · Waterfalls and village life',
-      title: 'The landscape is also someone’s everyday home',
+      id: 'booking',
+      eyebrow: '07 · Activities and high season',
+      title: 'A flexible village can still require advance notice',
       paragraphs: [
-        'Paths pass near homes, farms, temples and places used by local families. Ask before photographing people, avoid entering private land and keep noise low around the village and natural sites.',
-        'Use established paths, carry rubbish back and do not approach strong water only because another visitor has done so. Respect for the place includes accepting that weather or local advice may change the plan.'
+        'Accommodation can often remain flexible, but the experiences that depend on a particular person may not. Cooking, weaving, massage, drivers and guided treks can require notice, especially when the host or guide is also working elsewhere.',
+        'Reserve accommodation during busy periods. In low season, rooms may be easier to find while fewer guides, workshop hosts or drivers are available at short notice.'
+      ],
+      facts: [
+        { label: 'High season', value: 'Reserve accommodation when the village is busy.' },
+        { label: 'By arrangement', value: 'Cooking, weaving, massage, drivers and treks may need advance notice.' },
+        { label: 'Low season', value: 'More room availability does not always mean more activity availability.' },
+        { label: 'Treks', value: 'Half-day, full-day and multi-day routes depend on local availability and conditions.' }
+      ]
+    },
+    {
+      id: 'travel-well',
+      eyebrow: '08 · Travel with the village',
+      title: 'Use local information as part of the experience',
+      paragraphs: [
+        'Some short walks can be explored independently, while longer forest routes, remote villages and poorly marked trails are better approached with a local guide. Bring closed shoes, drinking water, sun protection and light rain protection, then confirm any additional equipment for the chosen route.',
+        'Tad Lo changes with rain, water flow, road repairs and the availability of local people. A good plan leaves enough space to listen, adjust and choose a different day rather than forcing an activity that no longer fits the conditions.'
       ],
       note: {
-        label: 'Remember',
-        text: 'Tad Lo feels peaceful because it is lived in at a human scale. Travel in a way that protects that feeling.'
+        label: 'Village note',
+        text: 'The most useful information in Tad Lo is often the answer you receive that morning, not the timetable you saved weeks earlier.'
       }
-    },
-    {
-      id: 'how-long',
-      eyebrow: '08 · Setting the pace',
-      title: 'Two nights work; three nights change the experience',
-      paragraphs: [
-        'One night gives you little more than an arrival and a departure. Two nights allow a proper waterfall day. Three nights create space for a workshop, coffee experience, rural excursion or simply a slower day around the village.',
-        'Stay longer when Tad Lo is meant to be a pause in the journey rather than another checkpoint. Leave one flexible block for rain, changing water conditions or an activity that needs advance organisation.'
-      ],
-      facts: [
-        { label: 'One night', value: 'A brief stop with very little margin.' },
-        { label: 'Two nights', value: 'Enough for the village and the closest waterfalls.' },
-        { label: 'Three nights', value: 'Room for a wider outing or locally arranged activity.' },
-        { label: 'Extra time', value: 'Useful during the rainy season or for bookings by arrangement.' }
-      ]
     }
   ],
   links: [
-    { label: 'Open the Visit Tad Lo guide', href: 'https://visit-tadlo.com/en' },
-    { label: 'Open the Visit Tad Lo map', href: 'https://visit-tadlo.com/en/map' }
+    { label: 'Open the Visit Tad Lo practical guide', href: 'https://visit-tadlo.com/en/practical-guide' },
+    { label: 'Open the Visit Tad Lo map', href: 'https://visit-tadlo.com/en/map' },
+    { label: 'Explore Tad Lo activities', href: 'https://visit-tadlo.com/en/things-to-do' }
   ]
 };
