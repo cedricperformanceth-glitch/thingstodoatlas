@@ -25,6 +25,7 @@ const CATEGORY_TERMS = {
   restaurants: ['restaurant', 'food', 'dining'],
   cafes: ['cafe', 'coffee shop', 'bakery'],
   accommodation: ['hotel', 'guesthouse', 'hostel', 'accommodation'],
+  guesthouses: ['guesthouse', 'hostel', 'hotel', 'accommodation'],
   'scooter-rental': ['scooter rental', 'motorbike rental', 'bike rental'],
   'bolaven-loop': ['travel route', 'road trip', 'Bolaven Plateau'],
   waterfalls: ['waterfall', 'natural attraction'],
@@ -38,6 +39,7 @@ const CATEGORY_FALLBACKS = {
   restaurants: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=84',
   cafes: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=84',
   accommodation: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=84',
+  guesthouses: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=84',
   'scooter-rental': 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1200&q=84',
   'bolaven-loop': 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=84',
   waterfalls: 'https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=1200&q=84',
@@ -257,7 +259,8 @@ const confidenceForSource = (sourceType) => ({
   'restaurant-guru': 0.72,
   'public-directory': 0.66,
   'atlas-fallback': 0.35,
-  'category-fallback': 0.2
+  'category-fallback': 0.2,
+  none: 0
 }[sourceType] || 0.6);
 
 const findWikimedia = async (place) => {
@@ -345,7 +348,7 @@ const searchesForPlace = (place) => {
     [exact + ' site:tripadvisor.com', 'tripadvisor']
   ];
 
-  if (place.category === 'accommodation') {
+  if (place.category === 'accommodation' || place.category === 'guesthouses') {
     searches.push([exact + ' site:booking.com', 'booking']);
     searches.push([exact + ' site:hostelworld.com', 'booking']);
   }
