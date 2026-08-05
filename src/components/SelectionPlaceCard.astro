@@ -99,7 +99,7 @@ const tripPlace = JSON.stringify({
         </div>
         <div class="selection-dialog__actions">
           <a class="selection-dialog__official" href={place.officialUrl} target="_blank" rel="noreferrer">Official website <span aria-hidden="true">↗</span></a>
-          <a class="selection-dialog__map" href={place.mapsUrl} target="_blank" rel="noreferrer">Google Maps <span aria-hidden="true">↗</span></a>
+          <a class="selection-dialog__map" href={place.mapsUrl} target="_blank" rel="noreferrer">{place.mapLabel || 'Google Maps'} <span aria-hidden="true">↗</span></a>
           <button type="button" data-trip-add data-trip-id={place.slug} data-trip-place={tripPlace} aria-pressed="false">Add to My Trip</button>
         </div>
       </div>
