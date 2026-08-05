@@ -152,6 +152,39 @@ const categoryTabs = [
     background: #f2eee3;
     color: #1f2924;
   }
+
+  .tad-lo-page :global(.explore-board) {
+    isolation: isolate;
+  }
+
+  .tad-lo-page :global(.explore-board)::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image:
+      url('/images/laos/tad-lo/explore-waterfall-chalk.svg'),
+      url('/images/laos/tad-lo/explore-coffee-branch-chalk.svg'),
+      url('/images/laos/tad-lo/explore-wood-bridge-chalk.svg');
+    background-repeat: no-repeat;
+    background-position:
+      left clamp(.7rem, 1.5vw, 1.35rem) top clamp(5.2rem, 8vw, 7.2rem),
+      right clamp(.9rem, 1.9vw, 1.75rem) top clamp(1rem, 1.9vw, 1.7rem),
+      right clamp(10.5rem, 15vw, 14rem) bottom clamp(.7rem, 1.2vw, 1.15rem);
+    background-size:
+      clamp(5.9rem, 7.9vw, 7.5rem) auto,
+      clamp(8.8rem, 11.8vw, 11.3rem) auto,
+      clamp(8.8rem, 11.8vw, 11.3rem) auto;
+    opacity: .8;
+    mix-blend-mode: screen;
+  }
+
+  @media (max-width: 900px) {
+    .tad-lo-page :global(.explore-board)::before {
+      display: none;
+    }
+  }
 </style>
 
 <script>
