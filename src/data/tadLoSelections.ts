@@ -1,4 +1,5 @@
-import type { TadLoPartnerPlace } from './tadLoPlaces';
+import { tadLoExperiences, type TadLoPartnerPlace } from './tadLoPlaces';
+import { tadLoTreasureHunt } from './tadLoTreasureHunt';
 
 export type TadLoSelectionPlace = TadLoPartnerPlace & {
   cardStyle: 'selection';
@@ -9,6 +10,12 @@ export type TadLoSelectionPlace = TadLoPartnerPlace & {
     src: string;
     alt: string;
   }>;
+};
+
+const requireTadLoExperience = (slug: string): TadLoPartnerPlace => {
+  const place = tadLoExperiences.find((item) => item.slug === slug);
+  if (!place) throw new Error(`Missing Tad Lo experience: ${slug}`);
+  return place;
 };
 
 const fandeeGallery = [
@@ -56,4 +63,26 @@ export const fandeeIslandSelection: TadLoSelectionPlace = {
   price: 'Stays from 350,000 Kip per night · confirm current availability',
   address: 'Tad Lo Village · Ban Khuaset · Salavan Province',
   bestFor: 'An unusual nature stay close to Tad Lo village'
+};
+
+export const tadLoTreasureHuntSelection: TadLoSelectionPlace = {
+  ...tadLoTreasureHunt,
+  cardStyle: 'selection',
+  selectionLabel: 'My selection',
+  officialUrl: tadLoTreasureHunt.partnerUrl,
+  sourceUrl: tadLoTreasureHunt.partnerUrl,
+  whyWeRecommend: 'The hunt turns the whole village into the experience. It encourages travellers to walk slowly, notice details and discover thirteen local places and stories without needing a guide, vehicle or app download.'
+};
+
+const vatPaaForest = requireTadLoExperience('vat-paa-ancient-forest');
+
+export const vatPaaForestSelection: TadLoSelectionPlace = {
+  ...vatPaaForest,
+  name: 'Vat Paa Forest',
+  subcategory: 'Ancient forest · Buddha · Cave',
+  cardStyle: 'selection',
+  selectionLabel: 'My selection',
+  officialUrl: vatPaaForest.partnerUrl,
+  sourceUrl: vatPaaForest.partnerUrl,
+  whyWeRecommend: 'Vat Paa is in My Selection because it offers a quiet contrast to the waterfalls and workshops. The old trees, Buddha and forest atmosphere reward a slow surface visit without turning the unassessed cave into a casual attraction.'
 };
