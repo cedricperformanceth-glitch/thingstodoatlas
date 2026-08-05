@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CityPostcardHero from '../../components/CityPostcardHero.astro';
 import TadLoEditorialGuide from '../../components/TadLoEditorialGuide.astro';
-import CitySpotlightSection from '../../components/CitySpotlightSection.astro';
+import ExploreBoard from '../../components/ExploreBoard.astro';
 import CityCategorySPA from '../../components/CityCategorySPA.astro';
 import CityCategoryPanel from '../../components/CityCategoryPanel.astro';
 import PartnerPlaceCard from '../../components/PartnerPlaceCard.astro';
@@ -17,33 +17,54 @@ const tadLoPostcardFacts = [
   { label: 'Salavan Province', icon: 'location' as const }
 ];
 
-const waterfallSpotlights = tadLoExperiences.slice(0, 3).map((place) => ({
-  slug: place.slug,
-  name: place.name,
-  image: place.image,
-  imageAlt: place.imageAlt,
-  kicker: place.subcategory.toUpperCase(),
-  summary: place.shortDescription,
-  duration: place.bestFor,
-  route: place.address,
-  dialogId: `partner-place-${place.slug}`
-}));
+const requireTadLoExperience = (slug: string) => {
+  const place = tadLoExperiences.find((item) => item.slug === slug);
+  if (!place) throw new Error(`Missing Tad Lo experience: ${slug}`);
+  return place;
+};
 
-const tadLoSpotlights = [
-  ...waterfallSpotlights,
+const tadLoBoardSelections = [
   {
-    slug: 'fandee-island-treasure-hunt',
-    name: 'Fandee Island Treasure Hunt',
-    image: '/images/tad-lo/iFandeeisland 01.webp',
-    imageAlt: 'Fandee Island nature setting in Tad Lo, southern Laos',
-    kicker: 'TREASURE HUNT · WALKABLE',
-    summary: 'A small adventure through Tad Lo built around thirteen quests to solve along the way.',
-    duration: '13 quests around Tad Lo',
-    route: 'Fandee Island · Tad Lo',
-    href: 'https://treasure-hunt.fandee-island.com/',
-    external: true
+    slug: 'tad-lo-waterfall',
+    name: 'Tad Lo Waterfall',
+    kicker: 'WATERFALL · WALKABLE · VILLAGE',
+    duration: '2–3 hours',
+    route: 'Walkable from Tad Lo'
+  },
+  {
+    slug: 'cooking-class-nyay',
+    name: 'Cooking with Nyay',
+    kicker: 'COOKING · LOCAL · HALF DAY',
+    duration: 'Half day',
+    route: 'Walkable · booking required'
+  },
+  {
+    slug: 'vat-paa-ancient-forest',
+    name: 'Vat Paa Forest',
+    kicker: 'FOREST · BUDDHA · QUIET',
+    duration: 'Less than 3 hours',
+    route: 'Transport useful'
   }
 ];
+
+const tadLoExploreLandmarks = tadLoBoardSelections.map((selection) => {
+  const place = requireTadLoExperience(selection.slug);
+  const gallery = place.galleryImages?.length
+    ? place.galleryImages
+    : [{ src: place.image, alt: place.imageAlt }];
+
+  return {
+    modalId: `partner-place-${place.slug}`,
+    name: selection.name,
+    gallery,
+    cityContext: {
+      kicker: selection.kicker,
+      summary: place.shortDescription,
+      duration: selection.duration,
+      route: selection.route
+    }
+  };
+});
 
 const tadLoGuesthouses = tadLoLocalAddresses.filter((place) => place.category === 'accommodation' && place.slug !== 'fandee-island');
 const tadLoRestaurants = tadLoLocalAddresses.filter((place) => place.category === 'restaurants');
@@ -59,7 +80,7 @@ const categoryTabs = [
 
 <BaseLayout
   title="Tad Lo travel guide"
-  description="Explore Tad Lo through waterfall field notes, a thirteen-quest treasure hunt and a single-page guide to activities, guesthouses, restaurants and practical information."
+  description="Explore Tad Lo through waterfall field notes, local activities and a single-page guide to guesthouses, restaurants and practical information."
   canonical="https://thingstodoatlas.com/laos/tad-lo"
 >
   <main class="tad-lo-page">
@@ -86,19 +107,14 @@ const categoryTabs = [
     />
     <TadLoEditorialGuide />
 
-    <CitySpotlightSection
+    <ExploreBoard
       cityName="Tad Lo"
-      eyebrow="TAD LO · FOUR FIELD NOTES"
-      title="Begin with the water"
-      items={tadLoSpotlights}
-      panelSlug="things-to-do"
-      maxItems={4}
-      asideTitle="Three waterfalls, then a different kind of trail"
-      asideParagraphs={[
-        'Tad Hang, Tad Lo and Tad Soung give the village its natural rhythm. Each one asks for a different amount of time, transport and attention.',
-        'After the waterfalls, Fandee Island turns the village into a small playground with thirteen quests to solve around Tad Lo.'
-      ]}
-      asideNote="Open a waterfall field note or begin the treasure hunt in a new tab."
+      landmarks={tadLoExploreLandmarks}
+      eyebrow="What can I actually do in Tad Lo?"
+      title="Explore from Tad Lo"
+      intro="Begin with the waterfall, share a local cooking experience, or slow the day down beneath the trees at Vat Paa Forest."
+      note="Three different rhythms, all starting from the same small village."
+      wide
     />
 
     <CityCategorySPA
@@ -136,14 +152,28 @@ const categoryTabs = [
     background: #f2eee3;
     color: #1f2924;
   }
-
-  .tad-lo-page > :global(.city-spotlights) {
-    padding-top: clamp(1.25rem, 2.2vw, 1.9rem);
-  }
-
-  @media (max-width: 820px) {
-    .tad-lo-page > :global(.city-spotlights) {
-      padding-top: 1rem;
-    }
-  }
 </style>
+
+<script>
+  const setupTadLoExploreBoard = () => {
+    document.querySelectorAll<HTMLButtonElement>('.tad-lo-page .explore-board-section [data-open-landmark]').forEach((button) => {
+      if (button.dataset.tadLoExploreReady === 'true') return;
+      button.dataset.tadLoExploreReady = 'true';
+
+      button.addEventListener('click', () => {
+        const thingsToDoTab = document.querySelector<HTMLButtonElement>('[data-city-category-button="things-to-do"]');
+        thingsToDoTab?.click();
+
+        requestAnimationFrame(() => {
+          const dialog = document.getElementById(button.dataset.openLandmark || '');
+          if (!(dialog instanceof HTMLDialogElement) || dialog.open) return;
+          dialog.showModal();
+          document.documentElement.classList.add('partner-dialog-open');
+        });
+      });
+    });
+  };
+
+  setupTadLoExploreBoard();
+  document.addEventListener('astro:page-load', setupTadLoExploreBoard);
+</script>
