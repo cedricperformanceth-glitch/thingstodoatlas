@@ -3,7 +3,7 @@ import { resolvePlaceImages } from './placeImageResolver';
 export type ThakhekMapPlace = {
   slug: string;
   name: string;
-  category: 'restaurants' | 'cafes' | 'guesthouses' | 'scooter-rental' | 'essential-information' | 'things-to-do';
+  category: 'restaurants' | 'cafes' | 'guesthouses' | 'scooter-rental' | 'markets-shopping' | 'essential-information' | 'things-to-do';
   city: 'Thakhek';
   country: 'Laos';
   subcategory: string;
@@ -29,6 +29,48 @@ const rawThakhekMapPlaces: ThakhekMapPlace[] = [
     mapsUrl: 'https://www.google.com/maps/place/Naga+Hostel+%26+Caf%C3%A9/@17.3969407,104.7968431,15z/data=!4m9!3m8!1s0x313c097f41f3dc3d:0xf90061d986c62544!5m2!4m1!1i2!8m2!3d17.3969384!4d104.805503!16s%2Fg%2F11hzjwt9dm?entry=ttu&g_ep=EgoyMDI2MDgwMi4wIKXMDSoASAFQAw%3D%3D',
     address: 'No. 08, Unit 4, Thanunnokeo Road, Ban Nabo, Thakhek 12000, Laos',
     statusNote: 'Google Maps address checked · August 2026'
+  },
+  {
+    slug: 'center-point-thakhek',
+    name: 'Center Point Thakhek',
+    category: 'markets-shopping',
+    city: 'Thakhek',
+    country: 'Laos',
+    subcategory: 'Night market',
+    image: '/images/places/center-point-thakhek.webp',
+    imageAlt: 'Center Point night market in Thakhek, Laos',
+    shortDescription: 'A central evening market for local food, drinks and a casual walk after sunset in Thakhek.',
+    mapsUrl: 'https://www.google.com/maps/place/Center+Point+Thakhek/@17.3981014,104.7995241,17z/data=!3m1!4b1!4m6!3m5!1s0x313c08d44906cc07:0x9f6367c74a5deb9f!8m2!3d17.3981014!4d104.802099!16s%2Fg%2F11f2b6vw_b?entry=ttu&g_ep=EgoyMDI2MDgwMi4wIKXMDSoASAFQAw%3D%3D',
+    address: 'Center Point Thakhek, Thakhek, Khammouane Province, Laos',
+    statusNote: 'Google Maps listing supplied · August 2026'
+  },
+  {
+    slug: 'inthira-thakhek',
+    name: 'Inthira Thakhek',
+    category: 'guesthouses',
+    city: 'Thakhek',
+    country: 'Laos',
+    subcategory: 'Hotel & guesthouse',
+    image: '/images/places/inthira-thakhek.webp',
+    imageAlt: 'Inthira Thakhek hotel in Thakhek, Laos',
+    shortDescription: 'A central stay in the old-town area, convenient for the Mekong riverfront and the first or final night of the Thakhek Loop.',
+    mapsUrl: 'https://www.google.com/maps/place/Inthira+Thakhek/@17.3981014,104.7995241,17z/data=!4m9!3m8!1s0x313c08d49ec885c3:0x7351ec7805686d20!5m2!4m1!1i2!8m2!3d17.3953072!4d104.8044084!16s%2Fg%2F1w2ywxy6?entry=ttu&g_ep=EgoyMDI2MDgwMi4wIKXMDSoASAFQAw%3D%3D',
+    address: 'Inthira Thakhek, Thakhek, Khammouane Province, Laos',
+    statusNote: 'Google Maps listing supplied · August 2026'
+  },
+  {
+    slug: 'soukjai-cafe-thakhek',
+    name: 'Soukjai Cafe',
+    category: 'cafes',
+    city: 'Thakhek',
+    country: 'Laos',
+    subcategory: 'Café',
+    image: '/images/places/soukjai-cafe-thakhek.webp',
+    imageAlt: 'Soukjai Cafe in Thakhek, Laos',
+    shortDescription: 'A café in central Thakhek for coffee, a light break and an easy stop near the old-town streets.',
+    mapsUrl: 'https://www.google.com/maps/place/Soukjai+Cafe/@17.3941851,104.8012394,17z/data=!4m10!1m2!2m1!1sSoukjai+Bar+%26+Restaurant!3m6!1s0x313c08d485c5ba09:0x7670fac489b98be5!8m2!3d17.3953046!4d104.8041147!15sChhTb3VramFpIEJhciAmIFJlc3RhdXJhbnRaGiIYc291a2phaSBiYXIgJiByZXN0YXVyYW50kgEEY2FmZeABAA!16s%2Fg%2F11gbzcs9nq?entry=ttu&g_ep=EgoyMDI2MDgwMi4wIKXMDSoASAFQAw%3D%3D',
+    address: 'Soukjai Cafe, Thakhek, Khammouane Province, Laos',
+    statusNote: 'Google Maps listing supplied · August 2026'
   },
   {
     slug: 'room-cafe-thakhek',
@@ -207,5 +249,6 @@ export const thakhekRestaurants = thakhekMapPlaces.filter((place) => place.categ
 export const thakhekCafes = thakhekMapPlaces.filter((place) => place.category === 'cafes');
 export const thakhekGuesthouses = thakhekMapPlaces.filter((place) => place.category === 'guesthouses');
 export const thakhekScooterRentals = thakhekMapPlaces.filter((place) => place.category === 'scooter-rental');
+export const thakhekMarkets = thakhekMapPlaces.filter((place) => place.category === 'markets-shopping');
 export const thakhekEssentialInformation = thakhekMapPlaces.filter((place) => place.category === 'essential-information');
 export const thakhekThingsToDo = thakhekMapPlaces.filter((place) => place.category === 'things-to-do');
