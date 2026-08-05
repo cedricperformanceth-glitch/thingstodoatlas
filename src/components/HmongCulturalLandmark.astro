@@ -1,6 +1,7 @@
 ---
 import EditorialGuide from './EditorialGuide.astro';
 import LaosEvisaFactLink from './LaosEvisaFactLink.astro';
+import LaosMoneyFactLinks from './LaosMoneyFactLinks.astro';
 import LandmarkModal from './LandmarkModal.astro';
 import { laosEditorialGuide } from '../data/editorialGuides';
 
@@ -31,6 +32,7 @@ const hmongGallery = [
 
 <EditorialGuide guide={laosEditorialGuide} mountSelector=".map-layers" />
 <LaosEvisaFactLink />
+<LaosMoneyFactLinks />
 
 <LandmarkModal
   id="hmong-cultural-modal"
