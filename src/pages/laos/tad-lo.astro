@@ -152,6 +152,31 @@ const categoryTabs = [
     background: #f2eee3;
     color: #1f2924;
   }
+
+  .tad-lo-page :global(.explore-board) {
+    isolation: isolate;
+  }
+
+  .tad-lo-page :global(.explore-board)::before {
+    content: '';
+    position: absolute;
+    top: clamp(1.55rem, 2.5vw, 2.15rem);
+    right: clamp(1.25rem, 2.4vw, 2.2rem);
+    z-index: 1;
+    width: clamp(8.8rem, 12vw, 11.8rem);
+    aspect-ratio: 360 / 230;
+    pointer-events: none;
+    background: url('/images/laos/tad-lo/explore-three-coffee-beans.svg') center / contain no-repeat;
+    opacity: .72;
+    filter: drop-shadow(.5px .5px 0 rgba(255, 255, 255, .08));
+    transform: rotate(-7deg);
+  }
+
+  @media (max-width: 940px) {
+    .tad-lo-page :global(.explore-board)::before {
+      display: none;
+    }
+  }
 </style>
 
 <script>
