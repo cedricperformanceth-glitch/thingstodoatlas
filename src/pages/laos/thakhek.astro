@@ -5,7 +5,7 @@ import ThakhekEditorialGuide from '../../components/ThakhekEditorialGuide.astro'
 import ExploreBoard from '../../components/ExploreBoard.astro';
 import CityCategorySPA from '../../components/CityCategorySPA.astro';
 import CityCategoryPanel from '../../components/CityCategoryPanel.astro';
-import CityLandmarkSection from '../../components/CityLandmarkSection.astro';
+import LandmarkCategoryCard from '../../components/LandmarkCategoryCard.astro';
 import LandmarkModalSet from '../../components/LandmarkModalSet.astro';
 import MapAddressCard from '../../components/MapAddressCard.astro';
 import { thakhekLandmarks } from '../../data/thakhekLandmarks';
@@ -156,26 +156,16 @@ const categoryTabs = [
         title="Things to do"
         count={thakhekLandmarks.length + thakhekThingsToDo.length}
         noun="places and field notes"
-        intro="Quick local stops sit beside three complete cave field notes for planning the wider Khammouane roads."
+        intro="Caves, river stops and shorter local explorations gathered in one section."
       >
-        {thakhekThingsToDo.length > 0 && (
-          <div class="city-panel-list thakhek-quick-stops">
-            {thakhekThingsToDo.map((place, index) => <MapAddressCard place={place} cityName="Thakhek" index={index} />)}
-          </div>
-        )}
-
-        <CityLandmarkSection
-          cityName="Thakhek"
-          eyebrow="THAKHEK · THREE DETAILED CAVE FIELD NOTES"
-          title="Begin where the road enters the limestone"
-          landmarks={thakhekLandmarks}
-          asideTitle="A town designed around the journey beyond it"
-          asideParagraphs={[
-            'Thakhek is the practical base. The real scale of Khammouane appears after the road leaves the Mekong and begins moving through karst mountains, villages and cave systems.',
-            'Tham Nang Aen is the easy first stop, Kong Lor anchors the classic loop, and Xe Bang Fai belongs to a more remote expedition with local planning.'
-          ]}
-          asideNote="Choose the cave by distance and difficulty, not only by the photograph."
-        />
+        <div class="city-panel-list">
+          {thakhekLandmarks.map((landmark, index) => (
+            <LandmarkCategoryCard landmark={landmark} index={index} />
+          ))}
+          {thakhekThingsToDo.map((place, index) => (
+            <MapAddressCard place={place} cityName="Thakhek" index={index + thakhekLandmarks.length} />
+          ))}
+        </div>
       </CityCategoryPanel>
     </CityCategorySPA>
   </main>
@@ -187,16 +177,5 @@ const categoryTabs = [
     min-height: 100vh;
     background: #f2eee3;
     color: #1f2924;
-  }
-
-  .thakhek-quick-stops {
-    margin-bottom: clamp(38px, 6vw, 72px);
-  }
-
-  .thakhek-page :global(.city-category-panel__content .city-landmarks) {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    border-top: 0;
   }
 </style>
