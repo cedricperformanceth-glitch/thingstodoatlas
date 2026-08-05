@@ -9,7 +9,14 @@ import CityLandmarkSection from '../../components/CityLandmarkSection.astro';
 import LandmarkModalSet from '../../components/LandmarkModalSet.astro';
 import MapAddressCard from '../../components/MapAddressCard.astro';
 import { thakhekLandmarks } from '../../data/thakhekLandmarks';
-import { thakhekGuesthouses, thakhekRestaurants } from '../../data/thakhekPlaces';
+import {
+  thakhekCafes,
+  thakhekEssentialInformation,
+  thakhekGuesthouses,
+  thakhekRestaurants,
+  thakhekScooterRentals,
+  thakhekThingsToDo
+} from '../../data/thakhekPlaces';
 import thakhekDrawingUrl from '../../../calque SVG/laos-northern-road-tuk-tuk.webp?url';
 
 const thakhekPostcardFacts = [
@@ -19,16 +26,69 @@ const thakhekPostcardFacts = [
   { label: 'Khammouane Province', icon: 'location' as const }
 ];
 
+const mapCategories = [
+  {
+    slug: 'restaurants',
+    title: 'Restaurants',
+    kicker: 'EAT · LOCAL · RIVERSIDE',
+    icon: 'restaurants' as const,
+    noun: 'restaurants',
+    intro: 'A small working list of confirmed restaurants around central Thakhek and the Mekong side of town.',
+    places: thakhekRestaurants
+  },
+  {
+    slug: 'cafes',
+    title: 'Cafés',
+    kicker: 'COFFEE · PAUSE · SHADE',
+    icon: 'cafes' as const,
+    noun: 'cafés',
+    intro: 'Coffee stops for a slow morning, a planning session or a break before returning to the road.',
+    places: thakhekCafes
+  },
+  {
+    slug: 'guesthouses',
+    title: 'Guesthouses',
+    kicker: 'SLEEP · LOOP · OLD TOWN',
+    icon: 'guesthouses' as const,
+    noun: 'stays',
+    intro: 'Hostels, bungalows and resort-style bases for the first or final night of the Thakhek Loop.',
+    places: thakhekGuesthouses
+  },
+  {
+    slug: 'scooter-rental',
+    title: 'Motorbike Rental',
+    kicker: 'KEYS · HELMET · LOOP',
+    icon: 'scooter' as const,
+    noun: 'rental addresses',
+    intro: 'Central rental addresses to compare before starting the loop. Always inspect the bike and rental terms before leaving.',
+    places: thakhekScooterRentals
+  },
+  {
+    slug: 'essential-information',
+    title: 'Essential Information',
+    kicker: 'HEALTH · HELP · BASICS',
+    icon: 'essential' as const,
+    noun: 'useful addresses',
+    intro: 'Practical addresses worth saving before they are needed, beginning with the provincial hospital.',
+    places: thakhekEssentialInformation
+  }
+];
+
 const categoryTabs = [
-  { slug: 'restaurants', title: 'Restaurants', kicker: 'EAT · LOCAL · RIVERSIDE', icon: 'restaurants' as const, count: thakhekRestaurants.length },
-  { slug: 'guesthouses', title: 'Guesthouses', kicker: 'SLEEP · LOOP · OLD TOWN', icon: 'guesthouses' as const, count: thakhekGuesthouses.length },
-  { slug: 'things-to-do', title: 'Things to do', kicker: 'CAVES · LOOP · EXPLORE', icon: 'explore' as const, count: thakhekLandmarks.length }
+  ...mapCategories.map(({ slug, title, kicker, icon, places }) => ({ slug, title, kicker, icon, count: places.length })),
+  {
+    slug: 'things-to-do',
+    title: 'Things to do',
+    kicker: 'CAVES · WATER · EXPLORE',
+    icon: 'explore' as const,
+    count: thakhekLandmarks.length + thakhekThingsToDo.length
+  }
 ];
 ---
 
 <BaseLayout
   title="Things to do in Thakhek, Laos"
-  description="Use Thakhek as a base for Kong Lor Cave, Xe Bang Fai Cave and Tham Nang Aen Cave, with field notes for planning the cave roads of Khammouane."
+  description="Use Thakhek as a base for the Thakhek Loop, caves, river stops, restaurants, cafés, guesthouses, motorbike rentals and practical local addresses."
   canonical="https://thingstodoatlas.com/laos/thakhek"
 >
   <main class="thakhek-page">
@@ -65,54 +125,48 @@ const categoryTabs = [
       categories={categoryTabs}
       defaultSlug="restaurants"
       title="Plan your stay in Thakhek"
-      intro="Start with three useful sections only: places to eat, places to sleep and the cave roads worth exploring from town."
+      intro="Choose the useful section you need: food, coffee, accommodation, motorbike rental, practical information or places to explore."
     >
-      <CityCategoryPanel
-        slug="restaurants"
-        cityName="Thakhek"
-        title="Restaurants"
-        count={thakhekRestaurants.length}
-        noun="restaurants"
-        intro="Only confirmed restaurant addresses will appear here as the Thakhek collection grows."
-        active
-      >
-        {thakhekRestaurants.length ? (
-          <div class="city-panel-list">
-            {thakhekRestaurants.map((place, index) => <MapAddressCard place={place} cityName="Thakhek" index={index} />)}
-          </div>
-        ) : (
-          <div class="city-panel-empty"><h4>Restaurant notes are being checked.</h4><p>The section is ready for the first verified addresses.</p></div>
-        )}
-      </CityCategoryPanel>
-
-      <CityCategoryPanel
-        slug="guesthouses"
-        cityName="Thakhek"
-        title="Guesthouses"
-        count={thakhekGuesthouses.length}
-        noun="guesthouses"
-        intro="Simple bases for the old town, luggage storage and the first or final night of the loop."
-      >
-        {thakhekGuesthouses.length ? (
-          <div class="city-panel-list">
-            {thakhekGuesthouses.map((place, index) => <MapAddressCard place={place} cityName="Thakhek" index={index} />)}
-          </div>
-        ) : (
-          <div class="city-panel-empty"><h4>Guesthouse notes are being checked.</h4><p>The tab is ready and will fill as addresses are confirmed.</p></div>
-        )}
-      </CityCategoryPanel>
+      {mapCategories.map((category, categoryIndex) => (
+        <CityCategoryPanel
+          slug={category.slug}
+          cityName="Thakhek"
+          title={category.title}
+          count={category.places.length}
+          noun={category.noun}
+          intro={category.intro}
+          active={categoryIndex === 0}
+        >
+          {category.places.length ? (
+            <div class="city-panel-list">
+              {category.places.map((place, index) => <MapAddressCard place={place} cityName="Thakhek" index={index} />)}
+            </div>
+          ) : (
+            <div class="city-panel-empty">
+              <h4>The useful stops are being documented.</h4>
+              <p>This section will fill as soon as its addresses have been checked.</p>
+            </div>
+          )}
+        </CityCategoryPanel>
+      ))}
 
       <CityCategoryPanel
         slug="things-to-do"
         cityName="Thakhek"
         title="Things to do"
-        count={thakhekLandmarks.length}
-        noun="field notes"
-        intro="Three cave journeys already documented, from the easiest stop near town to the remote expedition east."
+        count={thakhekLandmarks.length + thakhekThingsToDo.length}
+        noun="places and field notes"
+        intro="Quick local stops sit beside three complete cave field notes for planning the wider Khammouane roads."
       >
+        {thakhekThingsToDo.length > 0 && (
+          <div class="city-panel-list thakhek-quick-stops">
+            {thakhekThingsToDo.map((place, index) => <MapAddressCard place={place} cityName="Thakhek" index={index} />)}
+          </div>
+        )}
+
         <CityLandmarkSection
           cityName="Thakhek"
-          eyebrow="THAKHEK · THREE CAVE FIELD NOTES"
+          eyebrow="THAKHEK · THREE DETAILED CAVE FIELD NOTES"
           title="Begin where the road enters the limestone"
           landmarks={thakhekLandmarks}
           asideTitle="A town designed around the journey beyond it"
@@ -133,6 +187,10 @@ const categoryTabs = [
     min-height: 100vh;
     background: #f2eee3;
     color: #1f2924;
+  }
+
+  .thakhek-quick-stops {
+    margin-bottom: clamp(38px, 6vw, 72px);
   }
 
   .thakhek-page :global(.city-category-panel__content .city-landmarks) {
