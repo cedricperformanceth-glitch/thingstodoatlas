@@ -8,7 +8,7 @@ export const tadLoTreasureHunt: TadLoPartnerPlace = {
   cuisine: 'Village discovery',
   city: 'Tad Lo',
   country: 'Laos',
-  image: '/images/laos/tad-lo.webp',
+  image: '/images/places/tad-lo-treasure-hunt.webp',
   imageAlt: 'Tad Lo village explored through a self-guided treasure hunt',
   cardNote: '13 places · 13 stories',
   shortDescription: 'A free treasure hunt with thirteen quests that turns a walk through Tad Lo into a playful way to discover the village.',
