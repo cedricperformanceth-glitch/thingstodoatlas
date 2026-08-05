@@ -1,37 +1,74 @@
 <script>
   const setupLaosMoneyFactLinks = () => {
-    const links = [
+    const paragraphs = [
+      'The Lao kip is the currency for everyday payments inside the country. Some businesses may still quote prices or offer to accept US dollars, but you are not required to pay that way. Keep enough kip and some cash with you, because cards and QR payments are not available everywhere, especially away from the main towns.',
+      'ATM withdrawals are often limited per transaction, which can quickly multiply fees. When you need a larger amount, ask inside a bank whether a cash advance can be processed against your card; the amount depends on the bank and on your own card limits. Bringing some US dollars or Thai baht and exchanging them gradually can also be useful. Avoid changing too much at once, because unused kip is difficult and often expensive to exchange back, particularly after leaving Laos.'
+    ];
+
+    const facts = [
       {
+        label: 'LOCA Pay',
+        value: 'Link an international card or supported wallet, then scan participating LAO QR codes without loading a prepaid balance.',
         href: 'https://loca.la/locapay/',
-        label: 'Open the official LOCA Pay website in a new window'
+        ariaLabel: 'Open the official LOCA Pay website in a new window'
       },
       {
+        label: 'EzyKip',
+        value: 'Top up the travel wallet with an international card, then use it to scan local Lao QR codes through the BCEL network.',
         href: 'https://ezykip.la/',
-        label: 'Open the official EzyKip website in a new window'
+        ariaLabel: 'Open the official EzyKip website in a new window'
+      },
+      {
+        label: 'ATM & bank counter',
+        value: 'ATMs often cap each withdrawal. For a larger amount, ask a bank branch about a card cash advance, subject to bank and card limits.'
+      },
+      {
+        label: 'Exchange gradually',
+        value: 'Bring dollars or Thai baht if useful, change them in stages, and avoid leaving Laos with a large balance of kip.'
       }
     ];
 
     document
       .querySelectorAll<HTMLElement>('[data-guide-hash="#laos-field-guide"]')
       .forEach((guideRoot) => {
+        const moneyPanel = guideRoot.querySelector<HTMLElement>(
+          '[data-editorial-guide-view-panel="money"]'
+        );
+        if (!moneyPanel) return;
+
+        const title = moneyPanel.querySelector<HTMLElement>('.editorial-guide__section-heading h3');
+        if (title) title.textContent = 'Use kip, but keep more than one way to pay';
+
+        const prose = Array.from(
+          moneyPanel.querySelectorAll<HTMLElement>('.editorial-guide__prose p')
+        );
+        paragraphs.forEach((paragraph, index) => {
+          if (prose[index]) prose[index].textContent = paragraph;
+        });
+
         const cards = Array.from(
-          guideRoot.querySelectorAll<HTMLElement>(
-            '[data-editorial-guide-view-panel="money"] .editorial-guide__facts > div'
-          )
+          moneyPanel.querySelectorAll<HTMLElement>('.editorial-guide__facts > div')
         );
 
-        links.forEach((item, index) => {
+        facts.forEach((fact, index) => {
           const card = cards[index];
-          if (!card || card.querySelector('[data-laos-money-link]')) return;
+          if (!card) return;
+
+          const term = card.querySelector<HTMLElement>('dt');
+          const description = card.querySelector<HTMLElement>('dd');
+          if (term) term.textContent = fact.label;
+          if (description) description.textContent = fact.value;
+
+          if (!fact.href || card.querySelector('[data-laos-money-link]')) return;
 
           card.classList.add('editorial-guide__fact--link');
 
           const link = document.createElement('a');
           link.className = 'editorial-guide__fact-link';
-          link.href = item.href;
+          link.href = fact.href;
           link.target = '_blank';
           link.rel = 'noreferrer';
-          link.setAttribute('aria-label', item.label);
+          link.setAttribute('aria-label', fact.ariaLabel || fact.label);
           link.setAttribute('data-laos-money-link', '');
 
           card.appendChild(link);
