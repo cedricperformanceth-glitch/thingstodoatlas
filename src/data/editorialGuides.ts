@@ -97,29 +97,39 @@ export const laosEditorialGuide: EditorialGuideData = {
     {
       id: 'transport',
       eyebrow: '04 · Moving around',
-      title: 'Choose transport by region, not by habit',
+      title: 'Match the transport to the part of Laos',
       paragraphs: [
-        'The railway has changed travel through the northern corridor, but it does not replace the rest of the transport network. Buses, minivans, shared local vehicles, domestic flights and private transfers still connect most routes outside the line.',
-        'Journey times on the road are often longer than the distance suggests. Build in daylight, weather, road conditions and waiting time instead of planning every transfer as if it were a fixed urban timetable.'
+        'The fast railway belongs to the north. It runs from Vientiane through Vang Vieng and Luang Prabang to Boten, with international trains continuing to Kunming in China. Several European passports currently qualify for short visa-free visits to China, which can turn the railway into a real onward route rather than a border curiosity; check the policy for your passport and travel date before booking. A future high-speed connection toward Thailand is planned, but it is not yet a journey you can rely on.',
+        'Outside that corridor, buses and minivans still do most of the work. Published journey times are often optimistic: delays, mechanical problems, roadside repairs and occasional vehicle changes are part of the reality, so never build an essential same-day connection around the advertised arrival time. Between Pakse and Vientiane, compare the bus with the domestic flight; the airfare can be several times higher, but it may still be a sensible trade for the time saved.'
       ],
       facts: [
-        { label: 'North', value: 'Rail for the main corridor, then local transport for the final distance.' },
-        { label: 'Central Laos', value: 'Road travel and scooter loops shape many itineraries.' },
-        { label: 'South', value: 'Pakse is the practical hub for the plateau, Champasak and the islands.' },
-        { label: 'Planning rule', value: 'Avoid tight same-day connections when the next leg is essential.' }
-      ]
+        { label: 'Northern railway', value: 'The fast line serves the Vientiane–Vang Vieng–Luang Prabang–Boten corridor, not the centre or south.' },
+        { label: 'China connection', value: 'International trains continue to Kunming. Check Chinese entry rules for your passport and date before buying the ticket.' },
+        { label: 'Bus reality', value: 'Allow time for late departures, roadside repairs, breakdowns and occasional changes of vehicle.' },
+        { label: 'Pakse ↔ Vientiane', value: 'Domestic flights operate on this route. Compare the current fare and schedule with the long bus journey.' }
+      ],
+      note: {
+        label: 'On the horizon',
+        text: 'Thailand’s planned high-speed railway is intended to connect with the Laos–China corridor through Nong Khai, but the practical through-service date remains uncertain.'
+      }
     },
     {
       id: 'scooter',
       eyebrow: '05 · Renting a scooter',
-      title: 'The keys are easy; the responsibility is yours',
+      title: 'Easy to rent does not mean easy to replace',
       paragraphs: [
-        'Scooters and motorbikes unlock some of the strongest routes in Laos, especially around Thakhek and the Bolaven Plateau. Rental standards, deposits, insurance and maintenance vary widely between shops.',
-        'Before leaving, photograph the bike, test the brakes and lights, inspect the tyres, clarify what happens after damage or a breakdown, and check the licence and international permit rules that apply to you. A helmet and suitable insurance matter more than the cheapest daily rate.'
+        'Scooter rental is informal in practice. A shop may hand over the keys without asking for an international permit, but that does not remove the legal requirement, insurance conditions or the possibility of a police check. Checks are more noticeable in towns; outside them, the larger risks are road surfaces, animals, weather, darkness and being far from help. Wear a helmet even where enforcement feels relaxed.',
+        'The bike remains your responsibility from handover to return. Theft, damage and breakdowns do happen, and many shops ask to hold the original passport, especially for multi-day loops. That request is common, but it carries real risk: use a reputable operator, photograph the bike, read the contract, obtain a written receipt and ask for an alternative deposit whenever possible. For remote travel, a semi-automatic is often the practical choice because local mechanics and parts are easier to find than for some automatic scooters.'
+      ],
+      facts: [
+        { label: 'Licence & checks', value: 'The rental desk may not ask for documents, but local law, police checks and insurance conditions still apply.' },
+        { label: 'Passport deposit', value: 'A common request for loop rentals, but a risky one. Prefer an alternative deposit or use a reputable shop with a written receipt.' },
+        { label: 'Bike choice', value: 'A semi-automatic is often easier to repair outside the cities, where mechanics and simple parts are more widely available.' },
+        { label: 'Theft & damage', value: 'Lock the bike, park carefully and understand who pays for theft, recovery, damage or a breakdown before leaving.' }
       ],
       note: {
-        label: 'Do not skip',
-        text: 'Rain, gravel, animals, roadworks and darkness can turn an easy-looking road into a very different ride.'
+        label: 'Do not improvise',
+        text: 'Guided motocross and off-road trips are available. Use a local operator for difficult tracks and do not venture alone onto remote routes where phone coverage, rescue and mechanical help may be limited.'
       }
     },
     {
