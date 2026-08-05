@@ -1,0 +1,44 @@
+<script>
+  const setupLaosMoneyFactLinks = () => {
+    const links = [
+      {
+        href: 'https://loca.la/locapay/',
+        label: 'Open the official LOCA Pay website in a new window'
+      },
+      {
+        href: 'https://ezykip.la/',
+        label: 'Open the official EzyKip website in a new window'
+      }
+    ];
+
+    document
+      .querySelectorAll<HTMLElement>('[data-guide-hash="#laos-field-guide"]')
+      .forEach((guideRoot) => {
+        const cards = Array.from(
+          guideRoot.querySelectorAll<HTMLElement>(
+            '[data-editorial-guide-view-panel="money"] .editorial-guide__facts > div'
+          )
+        );
+
+        links.forEach((item, index) => {
+          const card = cards[index];
+          if (!card || card.querySelector('[data-laos-money-link]')) return;
+
+          card.classList.add('editorial-guide__fact--link');
+
+          const link = document.createElement('a');
+          link.className = 'editorial-guide__fact-link';
+          link.href = item.href;
+          link.target = '_blank';
+          link.rel = 'noreferrer';
+          link.setAttribute('aria-label', item.label);
+          link.setAttribute('data-laos-money-link', '');
+
+          card.appendChild(link);
+        });
+      });
+  };
+
+  setupLaosMoneyFactLinks();
+  document.addEventListener('astro:page-load', setupLaosMoneyFactLinks);
+</script>
