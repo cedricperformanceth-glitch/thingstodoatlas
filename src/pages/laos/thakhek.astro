@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CityPostcardHero from '../../components/CityPostcardHero.astro';
 import ThakhekEditorialGuide from '../../components/ThakhekEditorialGuide.astro';
+import ExploreBoard from '../../components/ExploreBoard.astro';
 import CityCategorySPA from '../../components/CityCategorySPA.astro';
 import CityCategoryPanel from '../../components/CityCategoryPanel.astro';
 import CityLandmarkSection from '../../components/CityLandmarkSection.astro';
@@ -48,6 +49,16 @@ const categoryTabs = [
       drawingCaption="Road notes · the loop turns east"
     />
     <ThakhekEditorialGuide />
+
+    <ExploreBoard
+      cityName="Thakhek"
+      landmarks={thakhekLandmarks}
+      eyebrow="What can I actually do from Thakhek?"
+      title="Explore from Thakhek"
+      intro="Thakhek is the starting point for the limestone roads of Khammouane. Choose a cave journey to open its complete field note, practical details and route information."
+      note="The town is the base. The loop begins when the road turns east."
+      wide
+    />
 
     <CityCategorySPA
       cityName="Thakhek"
