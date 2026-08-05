@@ -11,7 +11,8 @@ interface Props {
 const { landmarks = [] } = Astro.props;
 const bolavenPartner = {
   name: 'Visit Tad Lo',
-  domain: 'visit-tadlo.com'
+  domain: 'visit-tadlo.com',
+  url: 'https://visit-tadlo.com'
 };
 ---
 
@@ -41,6 +42,7 @@ const bolavenPartner = {
           data-parent-landmark-modal={landmark.modalId}
           data-partner-name={partner.name}
           data-partner-domain={partner.domain}
+          data-partner-url={partner.url}
         ></span>
       )}
 
@@ -77,6 +79,17 @@ const bolavenPartner = {
     border: 1px solid rgba(49, 85, 69, .28);
     background: rgba(49, 85, 69, .065);
     color: #315545;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  }
+  .landmark-partner-note:hover,
+  .landmark-partner-note:focus-visible {
+    border-color: rgba(49, 85, 69, .5);
+    background: rgba(49, 85, 69, .12);
+    box-shadow: 2px 3px 0 rgba(49, 85, 69, .1);
+    transform: translateY(-1px);
+    outline: none;
   }
   .landmark-partner-note span { display: grid; gap: .22rem; }
   .landmark-partner-note small { color: #b76645; font: 700 .46rem/1 'DM Sans', sans-serif; letter-spacing: .15em; }
@@ -97,6 +110,7 @@ const bolavenPartner = {
     transform: rotate(-1deg);
   }
   @media (max-width: 650px) { .landmark-partner-note { align-items: flex-start; flex-direction: column; } }
+  @media (prefers-reduced-motion: reduce) { .landmark-partner-note { transition: none; } }
 </style>
 
 <script>
@@ -183,17 +197,22 @@ const bolavenPartner = {
       if (config.dataset.partnerConfigBound === 'true') return;
       config.dataset.partnerConfigBound = 'true';
       const parentId = config.dataset.parentLandmarkModal;
+      const partnerUrl = config.dataset.partnerUrl;
+      const partnerName = config.dataset.partnerName || 'local partner';
       const dialog = parentId ? document.getElementById(parentId) : null;
-      if (!(dialog instanceof HTMLDialogElement)) return;
+      if (!(dialog instanceof HTMLDialogElement) || !partnerUrl) return;
       const actions = dialog.querySelector<HTMLElement>('.landmark-modal__actions');
       const visual = dialog.querySelector<HTMLElement>('.landmark-modal__visual');
       if (!actions || !visual || visual.querySelector('[data-landmark-partner-note]')) return;
 
-      const note = document.createElement('div');
+      const note = document.createElement('a');
       note.className = 'landmark-partner-note';
       note.dataset.landmarkPartnerNote = '';
-      note.setAttribute('role', 'note');
-      note.innerHTML = `<span><small>LOCAL PARTNER</small><strong>In partnership with ${config.dataset.partnerName}</strong></span><b>${config.dataset.partnerDomain}</b>`;
+      note.href = partnerUrl;
+      note.target = '_blank';
+      note.rel = 'noreferrer';
+      note.setAttribute('aria-label', `Visit the ${partnerName} website`);
+      note.innerHTML = `<span><small>LOCAL PARTNER</small><strong>In partnership with ${partnerName}</strong></span><b>${config.dataset.partnerDomain} ↗</b>`;
       visual.insertBefore(note, actions);
     });
   };
