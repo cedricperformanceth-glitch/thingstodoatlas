@@ -189,27 +189,6 @@
     "note": null
   },
   {
-    "slug": "center-point-thakhek",
-    "placeName": "Center Point Thakhek",
-    "category": "markets-shopping",
-    "city": "Thakhek",
-    "country": "Laos",
-    "selectedImage": "https://media.evendo.com/locations-resized/LandmarkImages/1200x886/31c86e0a-5f88-4bce-a424-22bf38c69b0f",
-    "sourcePage": "https://evendo.com/locations/laos/khammouane-province/landmark/center-point-thakhek",
-    "sourceType": "official-site",
-    "sourceName": "Center Point Thakhek",
-    "author": null,
-    "license": null,
-    "confidence": 0.92,
-    "status": "approved",
-    "imageSourceUrl": "https://media.evendo.com/locations-resized/LandmarkImages/1200x886/31c86e0a-5f88-4bce-a424-22bf38c69b0f",
-    "imageSourceType": "official-site",
-    "imageAuthor": null,
-    "imageLicense": null,
-    "imageIsGeneric": false,
-    "note": "Public image matched to Center Point Thakhek; source page retained for editorial review."
-  },
-  {
     "slug": "champa-coffee-pakse",
     "placeName": "Champa Coffee",
     "category": "cafes",
