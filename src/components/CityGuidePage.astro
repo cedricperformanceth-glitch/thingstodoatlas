@@ -1,8 +1,8 @@
 ---
 import type { CityGuideDefinition } from '../data/contentModel';
 import { getCategoriesForCity } from '../data/contentModel';
-import CityCategorySPA from './CityCategorySPA.astro';
-import CityCategoryPanel from './CityCategoryPanel.astro';
+import CityCategorySPA from './TravelDeskCategorySPA.astro';
+import CityCategoryPanel from './TravelDeskCategoryPanel.astro';
 
 interface Props {
   city: CityGuideDefinition;
@@ -15,7 +15,8 @@ const tabs = categories.map((category) => ({
   title: category.title,
   kicker: category.kicker,
   icon: category.icon,
-  count: 0
+  count: 0,
+  countLabel: 'notes soon'
 }));
 const categoryNouns: Record<string, string> = {
   restaurants: 'restaurants',
@@ -50,9 +51,11 @@ const categoryNouns: Record<string, string> = {
     cityName={city.name}
     categories={tabs}
     defaultSlug={categories[0]?.slug}
-    eyebrow={`${city.name.toUpperCase()} DIRECTORY`}
+    eyebrow="THE PRACTICAL NOTEBOOK"
     title={`Plan your stay in ${city.name}`}
-    intro="Every city now uses the same one-page notebook. Choose a category and the previous list closes without leaving the city guide."
+    intro="Choose one notebook index to open the practical chapter you need."
+    transitionTitle="Now for the practical side."
+    transitionText="Eat · sleep · explore · prepare the road ahead"
   >
     {categories.map((category, index) => (
       <CityCategoryPanel
@@ -61,13 +64,14 @@ const categoryNouns: Record<string, string> = {
         title={category.title}
         count={0}
         noun={categoryNouns[category.slug] || 'addresses'}
-        intro={category.text}
-        fieldNote={String(index + 4).padStart(2, '0')}
+        summary={`${category.title} in ${city.name}`}
+        intro=""
+        fieldNote={String(index + 1).padStart(2, '0')}
         active={index === 0}
       >
         <div class="city-panel-empty">
           <h4>This notebook tab is ready.</h4>
-          <p>The shared city system is active. Carefully checked local addresses will appear here without changing the page or the way My Trip works.</p>
+          <p>Carefully checked local addresses will appear here without changing the page or the way My Trip works.</p>
         </div>
       </CityCategoryPanel>
     ))}
