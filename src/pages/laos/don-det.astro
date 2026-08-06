@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CityPostcardHero from '../../components/CityPostcardHero.astro';
+import ExploreBoard from '../../components/ExploreBoard.astro';
+import LandmarkModalSet from '../../components/LandmarkModalSet.astro';
+import CityCategorySPA from '../../components/TravelDeskCategorySPA.astro';
+import CityCategoryPanel from '../../components/TravelDeskCategoryPanel.astro';
+import { donDetLandmarks } from '../../data/donDetLandmarks';
+import donDetDrawingUrl from '../../../calque SVG/laos-mekong-fisherman.webp?url';
+
+const donDetPostcardFacts = [
+  { label: 'August 2026', icon: 'calendar' as const },
+  { label: 'Bicycle island base', icon: 'road' as const },
+  { label: 'Tropical Mekong', icon: 'climate' as const },
+  { label: 'Si Phan Don', icon: 'location' as const }
+];
+
+const practicalCategories = [
+  { slug: 'restaurants', title: 'Restaurants', kicker: 'EAT · RIVER · SLOW', icon: 'restaurants' as const, noun: 'restaurants', fieldNote: '01' },
+  { slug: 'cafes', title: 'Cafés', kicker: 'COFFEE · SHADE · PAUSE', icon: 'cafes' as const, noun: 'cafés', fieldNote: '02' },
+  { slug: 'accommodation', title: 'Guesthouses', kicker: 'SLEEP · ISLAND · SIMPLE', icon: 'guesthouses' as const, noun: 'stays', fieldNote: '03' },
+  { slug: 'things-to-do', title: 'Things to do', kicker: 'CYCLE · BOAT · EXPLORE', icon: 'explore' as const, noun: 'local experiences', fieldNote: '04' },
+  { slug: 'essential-information', title: 'Essential Information', kicker: 'BOATS · MONEY · BORDER', icon: 'essential' as const, noun: 'useful addresses', fieldNote: '05' }
+];
+
+const categoryTabs = practicalCategories.map(({ slug, title, kicker, icon }) => ({
+  slug,
+  title,
+  kicker,
+  icon,
+  count: 0,
+  countLabel: 'notes soon'
+}));
+---
+
+<BaseLayout
+  title="Things to do in Don Det, Laos"
+  description="Prepare a stay on Don Det with island routes to Don Khon, Tad Somphamit, Khone Phapheng Falls and the onward border journey to Cambodia."
+  canonical="https://thingstodoatlas.com/laos/don-det"
+>
+  <main class="don-det-page">
+    <CityPostcardHero
+      cityName="Don Det"
+      description={[
+        'A small Mekong island where bicycles, hammocks and river paths',
+        'replace the road. Don Det is a base for Don Khon, the southern',
+        'waterfalls and the onward journey toward Cambodia.'
+      ]}
+      photoSrc="/images/laos/don-det.webp"
+      photoAlt="Riverside scenery on Don Det in the Four Thousand Islands of southern Laos"
+      facts={donDetPostcardFacts}
+      backHref="/laos"
+      backLabel="Back to the Laos map"
+      drawingSrc={donDetDrawingUrl}
+      drawingAlt="Hand-drawn Mekong fisherman beside a small river boat"
+      drawingCaption="Mekong islands · the road becomes a river"
+    />
+
+    <ExploreBoard
+      cityName="Don Det"
+      landmarks={donDetLandmarks}
+      eyebrow="What can I actually do from Don Det?"
+      title="Explore from Don Det"
+      intro="Cross into Don Khon, follow the old railway route, stand above the southern Mekong falls, or use the island as the final Lao stop before Cambodia."
+      note="Here, the road narrows into island paths — and eventually reaches a border."
+      wide
+    />
+
+    <CityCategorySPA
+      cityName="Don Det"
+      categories={categoryTabs}
+      defaultSlug="restaurants"
+      title="Plan your stay in Don Det"
+      intro="The practical notebook is ready. Verified island addresses will be added here without changing the structure of the city guide."
+      transitionTitle="Now for the practical side."
+      transitionText="Eat · sleep · explore · prepare the river ahead"
+    >
+      {practicalCategories.map((category, index) => (
+        <CityCategoryPanel
+          slug={category.slug}
+          cityName="Don Det"
+          title={category.title}
+          count={0}
+          noun={category.noun}
+          intro=""
+          fieldNote={category.fieldNote}
+          active={index === 0}
+        >
+          <div class="city-panel-empty">
+            <h4>This notebook tab is ready.</h4>
+            <p>Checked Don Det addresses will appear here as the island guide is documented.</p>
+          </div>
+        </CityCategoryPanel>
+      ))}
+    </CityCategorySPA>
+  </main>
+  <LandmarkModalSet landmarks={donDetLandmarks} />
+</BaseLayout>
+
+<style>
+  .don-det-page {
+    min-height: 100vh;
+    background: #f2eee3;
+    color: #1f2924;
+  }
+
+  .don-det-page :global(.city-postcard__message)::before {
+    content: '';
+    position: absolute;
+    top: .85rem;
+    right: .8rem;
+    z-index: 0;
+    width: clamp(5.6rem, 7vw, 7.25rem);
+    aspect-ratio: 1;
+    pointer-events: none;
+    background: url('/images/timbre-laos/timbre-don-det.webp') center / contain no-repeat;
+    filter: drop-shadow(2px 3px 2px rgba(31, 41, 36, .12));
+    transform: rotate(4.5deg);
+  }
+
+  .don-det-page :global(.city-postcard__message > *) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .don-det-page :global(.city-postcard-hero__drawing) {
+    transform: rotate(-3deg);
+  }
+
+  @media (max-width: 760px) {
+    .don-det-page :global(.city-postcard__message) {
+      padding-top: 4.8rem;
+    }
+
+    .don-det-page :global(.city-postcard__message)::before {
+      top: .25rem;
+      right: .35rem;
+      width: 5rem;
+    }
+  }
+</style>
