@@ -3,8 +3,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import CityPostcardHero from '../../components/CityPostcardHero.astro';
 import ThakhekEditorialGuide from '../../components/ThakhekEditorialGuide.astro';
 import ExploreBoard from '../../components/ExploreBoard.astro';
-import CityCategorySPA from '../../components/CityCategorySPA.astro';
-import CityCategoryPanel from '../../components/CityCategoryPanel.astro';
+import CityCategorySPA from '../../components/TravelDeskCategorySPA.astro';
+import CityCategoryPanel from '../../components/TravelDeskCategoryPanel.astro';
 import LandmarkCategoryCard from '../../components/LandmarkCategoryCard.astro';
 import LandmarkModalSet from '../../components/LandmarkModalSet.astro';
 import MapAddressCard from '../../components/MapAddressCard.astro';
@@ -34,7 +34,7 @@ const mapCategories = [
     kicker: 'EAT · LOCAL · RIVERSIDE',
     icon: 'restaurants' as const,
     noun: 'restaurants',
-    intro: 'A small working list of confirmed restaurants around central Thakhek and the Mekong side of town.',
+    fieldNote: '01',
     places: thakhekRestaurants
   },
   {
@@ -43,7 +43,7 @@ const mapCategories = [
     kicker: 'COFFEE · PAUSE · SHADE',
     icon: 'cafes' as const,
     noun: 'cafés',
-    intro: 'Coffee stops for a slow morning, a planning session or a break before returning to the road.',
+    fieldNote: '02',
     places: thakhekCafes
   },
   {
@@ -52,7 +52,7 @@ const mapCategories = [
     kicker: 'SLEEP · LOOP · OLD TOWN',
     icon: 'guesthouses' as const,
     noun: 'stays',
-    intro: 'Hostels, bungalows and resort-style bases for the first or final night of the Thakhek Loop.',
+    fieldNote: '03',
     places: thakhekGuesthouses
   },
   {
@@ -61,7 +61,7 @@ const mapCategories = [
     kicker: 'KEYS · HELMET · LOOP',
     icon: 'scooter' as const,
     noun: 'rental addresses',
-    intro: 'Central rental addresses to compare before starting the loop. Always inspect the bike and rental terms before leaving.',
+    fieldNote: '04',
     places: thakhekScooterRentals
   },
   {
@@ -70,7 +70,7 @@ const mapCategories = [
     kicker: 'NIGHT · FOOD · LOCAL',
     icon: 'markets' as const,
     noun: 'markets',
-    intro: 'Local market addresses for an evening walk, simple food and a look at everyday Thakhek after sunset.',
+    fieldNote: '05',
     places: thakhekMarkets
   },
   {
@@ -79,7 +79,7 @@ const mapCategories = [
     kicker: 'HEALTH · HELP · BASICS',
     icon: 'essential' as const,
     noun: 'useful addresses',
-    intro: 'Practical addresses worth saving before they are needed, beginning with the provincial hospital.',
+    fieldNote: '06',
     places: thakhekEssentialInformation
   }
 ];
@@ -135,7 +135,9 @@ const categoryTabs = [
       categories={categoryTabs}
       defaultSlug="restaurants"
       title="Plan your stay in Thakhek"
-      intro="Choose the useful section you need: food, coffee, accommodation, motorbike rental, markets, practical information or places to explore."
+      intro="Choose one notebook index to open the practical addresses for your stay. Every saved place remains together in My Trip."
+      transitionTitle="Now for the practical side."
+      transitionText="Eat · sleep · explore · prepare the road ahead"
     >
       {mapCategories.map((category, categoryIndex) => (
         <CityCategoryPanel
@@ -144,7 +146,8 @@ const categoryTabs = [
           title={category.title}
           count={category.places.length}
           noun={category.noun}
-          intro={category.intro}
+          intro=""
+          fieldNote={category.fieldNote}
           active={categoryIndex === 0}
         >
           {category.places.length ? (
@@ -166,7 +169,8 @@ const categoryTabs = [
         title="Things to do"
         count={thakhekLandmarks.length + thakhekThingsToDo.length}
         noun="places and field notes"
-        intro="Caves, river stops and shorter local explorations gathered in one section."
+        intro=""
+        fieldNote="07"
       >
         <div class="city-panel-list">
           {thakhekLandmarks.map((landmark, index) => (
