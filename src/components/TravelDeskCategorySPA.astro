@@ -29,7 +29,7 @@ const {
   defaultSlug = categories[0]?.slug || '',
   eyebrow = 'THE PRACTICAL NOTEBOOK',
   title = `Plan your stay in ${cityName}`,
-  intro = 'Choose a notebook index to open one practical chapter at a time.',
+  intro = '',
   transitionTitle = 'Now for the practical side.',
   transitionText = 'Places to eat, sleep and prepare the road ahead.'
 } = Astro.props;
@@ -45,12 +45,12 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   </div>
 
   <div class="travel-desk__inner">
-    <header class="travel-desk__heading">
+    <header class:list={['travel-desk__heading', { 'has-intro': Boolean(intro) }]}>
       <div>
         <p>{eyebrow}</p>
         <h2 id={`${cityId}-travel-desk-title`}>{title}</h2>
       </div>
-      <span>{intro}</span>
+      {intro && <span>{intro}</span>}
     </header>
 
     <div class="travel-desk__board">
@@ -174,11 +174,15 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
   .travel-desk__heading {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(260px, .48fr);
+    grid-template-columns: minmax(0, 1fr);
     gap: 1rem 3rem;
     align-items: end;
     width: min(1180px, 100%);
     margin: 0 auto clamp(1.55rem, 2.8vw, 2.35rem);
+  }
+
+  .travel-desk__heading.has-intro {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, .48fr);
   }
 
   .travel-desk__heading p {
@@ -379,7 +383,8 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   .travel-desk__panels { position: relative; z-index: 1; }
 
   @media (max-width: 940px) {
-    .travel-desk__heading { grid-template-columns: 1fr; }
+    .travel-desk__heading,
+    .travel-desk__heading.has-intro { grid-template-columns: 1fr; }
     .travel-desk__heading > span { max-width: 38rem; }
     .travel-desk__board { grid-template-columns: 1fr; }
     .travel-desk__index {
