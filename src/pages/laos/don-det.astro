@@ -5,7 +5,6 @@ import ExploreBoard from '../../components/ExploreBoard.astro';
 import LandmarkModalSet from '../../components/LandmarkModalSet.astro';
 import CityCategorySPA from '../../components/TravelDeskCategorySPA.astro';
 import CityCategoryPanel from '../../components/TravelDeskCategoryPanel.astro';
-import MapAddressCard from '../../components/MapAddressCard.astro';
 import PlaceCard from '../../components/PlaceCard.astro';
 import type { Place } from '../../data/atlas';
 import { donDetLandmarks } from '../../data/donDetLandmarks';
@@ -86,11 +85,44 @@ const donDetThingsToDo: Place[] = donDetLandmarks.map((landmark) => {
   };
 });
 
-const emptyPlaces: typeof donDetStays = [];
+const getStaySide = (address: string) => {
+  const normalizedAddress = address.toLowerCase();
+  if (normalizedAddress.includes('sunset')) return 'Sunset side';
+  if (normalizedAddress.includes('sunrise')) return 'Sunrise side';
+  if (normalizedAddress.includes('northern') || normalizedAddress.includes('main pier')) return 'Near the arrival area';
+  return 'Don Det island base';
+};
+
+const donDetGuesthouses: Place[] = donDetStays.map((stay) => ({
+  slug: stay.slug,
+  name: stay.name,
+  category: stay.category,
+  subcategory: stay.subcategory,
+  cuisine: 'Accommodation',
+  city: stay.city,
+  country: stay.country,
+  image: stay.image,
+  imageAlt: stay.imageAlt,
+  cardNote: stay.subcategory.toLowerCase(),
+  shortDescription: stay.shortDescription,
+  description: stay.shortDescription,
+  whyWeRecommend: `Keep ${stay.name} in the notebook as a practical ${stay.subcategory.toLowerCase()} option on Don Det. Open the saved address to compare its location with the pier, the sunrise side and the sunset side before booking directly.`,
+  highlights: [stay.subcategory, getStaySide(stay.address), 'Google Maps address saved', 'Independent island shortlist'],
+  mapsUrl: stay.mapsUrl,
+  status: 'needs-review',
+  lastChecked: 'August 2026',
+  hours: 'Confirm check-in and reception hours directly',
+  price: 'Check current room rates directly',
+  address: stay.address,
+  bestFor: stay.subcategory,
+  imageIsGeneric: !stay.imageSourceLabel.startsWith('PROPERTY PHOTO')
+}));
+
+const emptyPlaces: Place[] = [];
 const addressCategories = [
   { slug: 'restaurants', title: 'Restaurants', kicker: 'EAT · RIVER · SLOW', icon: 'restaurants' as const, noun: 'restaurants', fieldNote: '01', places: emptyPlaces },
   { slug: 'cafes', title: 'Cafés', kicker: 'COFFEE · SHADE · PAUSE', icon: 'cafes' as const, noun: 'cafés', fieldNote: '02', places: emptyPlaces },
-  { slug: 'accommodation', title: 'Guesthouses', kicker: 'SLEEP · ISLAND · SIMPLE', icon: 'guesthouses' as const, noun: 'stays', fieldNote: '03', places: donDetStays },
+  { slug: 'accommodation', title: 'Guesthouses', kicker: 'SLEEP · ISLAND · SIMPLE', icon: 'guesthouses' as const, noun: 'stays', fieldNote: '03', places: donDetGuesthouses },
   { slug: 'essential-information', title: 'Essential Information', kicker: 'BOATS · MONEY · BORDER', icon: 'essential' as const, noun: 'useful addresses', fieldNote: '05', places: emptyPlaces }
 ];
 
@@ -182,7 +214,7 @@ const categoryTabs = [
           {category.places.length ? (
             <div class="city-panel-list">
               {category.places.map((place, index) => (
-                <MapAddressCard place={place} cityName="Don Det" index={index} />
+                <PlaceCard place={place} index={index} />
               ))}
             </div>
           ) : (
