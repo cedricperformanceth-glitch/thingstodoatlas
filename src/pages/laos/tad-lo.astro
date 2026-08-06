@@ -72,15 +72,21 @@ const tadLoExploreLandmarks = tadLoBoardSelections.map((selection) => {
   };
 });
 
+const tadLoSelections = [
+  fandeeIslandSelection,
+  tadLoTreasureHuntSelection,
+  vatPaaForestSelection
+];
 const tadLoPartnerExperiences = tadLoExperiences.filter((place) => place.slug !== 'vat-paa-ancient-forest');
-const tadLoExperienceCount = tadLoPartnerExperiences.length + 2;
+const tadLoExperienceCount = tadLoPartnerExperiences.length;
 const tadLoGuesthouses = tadLoLocalAddresses.filter((place) => place.category === 'accommodation' && place.slug !== 'fandee-island');
 const tadLoRestaurants = tadLoLocalAddresses.filter((place) => place.category === 'restaurants');
 const tadLoEssentials = tadLoLocalAddresses.filter((place) => place.category === 'essential-information');
 
 const categoryTabs = [
+  { slug: 'my-selection', title: 'My Selection', kicker: 'ATLAS · CHOSEN · SPECIAL', icon: 'selection' as const, count: tadLoSelections.length, countLabel: `${tadLoSelections.length} picks` },
   { slug: 'things-to-do', title: 'Things to do', kicker: 'WALK · SEE · EXPLORE', icon: 'explore' as const, count: tadLoExperienceCount },
-  { slug: 'accommodation', title: 'Guesthouses', kicker: 'SLEEP · NATURE · VILLAGE', icon: 'guesthouses' as const, count: tadLoGuesthouses.length + 1 },
+  { slug: 'accommodation', title: 'Guesthouses', kicker: 'SLEEP · NATURE · VILLAGE', icon: 'guesthouses' as const, count: tadLoGuesthouses.length },
   { slug: 'restaurants', title: 'Restaurants', kicker: 'EAT · LOCAL · SLOW', icon: 'restaurants' as const, count: tadLoRestaurants.length },
   { slug: 'essential-information', title: 'Essential Information', kicker: 'GUIDES · ROADS · BASICS', icon: 'essential' as const, count: tadLoEssentials.length }
 ];
@@ -128,32 +134,37 @@ const categoryTabs = [
     <CityCategorySPA
       cityName="Tad Lo"
       categories={categoryTabs}
-      defaultSlug="things-to-do"
+      defaultSlug="my-selection"
       title="Plan your stay in Tad Lo"
       intro="Choose one notebook index to open the practical addresses for your stay. Every saved place remains together in My Trip."
       transitionTitle="Now for the practical side."
       transitionText="Eat · sleep · explore · prepare the road ahead"
     >
-      <CityCategoryPanel slug="things-to-do" cityName="Tad Lo" title="Things to do" count={tadLoExperienceCount} noun="experiences" intro="Tad Lo Treasure Hunt and Vat Paa Forest lead the list as My Selection, followed by waterfalls, workshops, coffee and locally documented outings." fieldNote="04" active>
-        <div class="city-panel-list">
-          <SelectionPlaceCard place={tadLoTreasureHuntSelection} index={0} />
-          <SelectionPlaceCard place={vatPaaForestSelection} index={1} />
-          {tadLoPartnerExperiences.map((place, index) => <PartnerPlaceCard place={place} index={index + 2} />)}
-        </div>
-      </CityCategoryPanel>
-
-      <CityCategoryPanel slug="accommodation" cityName="Tad Lo" title="Guesthouses" count={tadLoGuesthouses.length + 1} noun="stays" intro="The golden card marks an Atlas selection. The other stays remain locally documented addresses from Visit Tad Lo." fieldNote="05">
-        <div class="city-panel-list">
+      <CityCategoryPanel slug="my-selection" cityName="Tad Lo" title="My Selection" count={tadLoSelections.length} noun="Atlas selections" intro="" fieldNote="01" active>
+        <div class="city-panel-list city-panel-list--selection">
           <SelectionPlaceCard place={fandeeIslandSelection} index={0} />
-          {tadLoGuesthouses.map((place, index) => <PartnerPlaceCard place={place} index={index + 1} />)}
+          <SelectionPlaceCard place={tadLoTreasureHuntSelection} index={1} />
+          <SelectionPlaceCard place={vatPaaForestSelection} index={2} />
         </div>
       </CityCategoryPanel>
 
-      <CityCategoryPanel slug="restaurants" cityName="Tad Lo" title="Restaurants" count={tadLoRestaurants.length} noun="restaurants" intro="Simple village food and useful places to eat without leaving the Tad Lo chapter." fieldNote="06">
+      <CityCategoryPanel slug="things-to-do" cityName="Tad Lo" title="Things to do" count={tadLoExperienceCount} noun="experiences" intro="" fieldNote="02">
+        <div class="city-panel-list">
+          {tadLoPartnerExperiences.map((place, index) => <PartnerPlaceCard place={place} index={index} />)}
+        </div>
+      </CityCategoryPanel>
+
+      <CityCategoryPanel slug="accommodation" cityName="Tad Lo" title="Guesthouses" count={tadLoGuesthouses.length} noun="stays" intro="" fieldNote="03">
+        <div class="city-panel-list">
+          {tadLoGuesthouses.map((place, index) => <PartnerPlaceCard place={place} index={index} />)}
+        </div>
+      </CityCategoryPanel>
+
+      <CityCategoryPanel slug="restaurants" cityName="Tad Lo" title="Restaurants" count={tadLoRestaurants.length} noun="restaurants" intro="" fieldNote="04">
         {tadLoRestaurants.length ? <div class="city-panel-list">{tadLoRestaurants.map((place, index) => <PartnerPlaceCard place={place} index={index} />)}</div> : <div class="city-panel-empty"><h4>Restaurant notes are being checked.</h4><p>The tab is ready and will fill as local addresses are confirmed.</p></div>}
       </CityCategoryPanel>
 
-      <CityCategoryPanel slug="essential-information" cityName="Tad Lo" title="Essential Information" count={tadLoEssentials.length} noun="useful addresses" intro="Guides, transport checks and practical local information before leaving the village." fieldNote="07">
+      <CityCategoryPanel slug="essential-information" cityName="Tad Lo" title="Essential Information" count={tadLoEssentials.length} noun="useful addresses" intro="" fieldNote="05">
         {tadLoEssentials.length ? <div class="city-panel-list">{tadLoEssentials.map((place, index) => <PartnerPlaceCard place={place} index={index} />)}</div> : <div class="city-panel-empty"><h4>Practical notes are being checked.</h4><p>The tab is ready for the next locally verified information.</p></div>}
       </CityCategoryPanel>
     </CityCategorySPA>
@@ -200,11 +211,13 @@ const categoryTabs = [
       button.dataset.tadLoExploreReady = 'true';
 
       button.addEventListener('click', () => {
-        const thingsToDoTab = document.querySelector<HTMLButtonElement>('[data-city-category-button="things-to-do"]');
-        thingsToDoTab?.click();
+        const targetDialogId = button.dataset.openLandmark || '';
+        const targetCategory = targetDialogId.startsWith('selection-place-') ? 'my-selection' : 'things-to-do';
+        const categoryTab = document.querySelector<HTMLButtonElement>(`[data-city-category-button="${targetCategory}"]`);
+        categoryTab?.click();
 
         requestAnimationFrame(() => {
-          const dialog = document.getElementById(button.dataset.openLandmark || '');
+          const dialog = document.getElementById(targetDialogId);
           if (!(dialog instanceof HTMLDialogElement) || dialog.open) return;
           dialog.showModal();
           const dialogOpenClass = dialog.classList.contains('selection-dialog')
