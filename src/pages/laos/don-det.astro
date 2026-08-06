@@ -3,10 +3,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import CityPostcardHero from '../../components/CityPostcardHero.astro';
 import ExploreBoard from '../../components/ExploreBoard.astro';
 import LandmarkModalSet from '../../components/LandmarkModalSet.astro';
-import LandmarkCategoryCard from '../../components/LandmarkCategoryCard.astro';
 import CityCategorySPA from '../../components/TravelDeskCategorySPA.astro';
 import CityCategoryPanel from '../../components/TravelDeskCategoryPanel.astro';
 import MapAddressCard from '../../components/MapAddressCard.astro';
+import PlaceCard from '../../components/PlaceCard.astro';
+import type { Place } from '../../data/atlas';
 import { donDetLandmarks } from '../../data/donDetLandmarks';
 import { donDetStays } from '../../data/donDetPlaces';
 import donDetDrawingUrl from '../../../calque SVG/laos-mekong-fisherman.webp?url';
@@ -17,6 +18,73 @@ const donDetPostcardFacts = [
   { label: 'Tropical Mekong', icon: 'climate' as const },
   { label: 'Si Phan Don', icon: 'location' as const }
 ];
+
+const getLandmarkFact = (landmark: (typeof donDetLandmarks)[number], label: string) =>
+  landmark.facts.find((fact) => fact.label === label)?.value || 'Check the latest local information before leaving Don Det.';
+
+const activityDetails: Record<string, {
+  subcategory: string;
+  cardNote: string;
+  whyWeRecommend: string;
+  highlights: string[];
+  bestFor: string;
+}> = {
+  'don-khon-railway-bridge': {
+    subcategory: 'Island bicycle route',
+    cardNote: 'cross into Don Khon',
+    whyWeRecommend: 'This is the easiest way to turn a stay on Don Det into a real island journey. The bridge, village paths and old railway traces make a natural half-day route without needing a complicated excursion.',
+    highlights: ['Old railway bridge', 'Bicycle-friendly route', 'Don Khon village paths', 'Half-day island loop'],
+    bestFor: 'Cycling, walking and an easy island day'
+  },
+  'khone-phapheng-falls': {
+    subcategory: 'Mekong waterfall excursion',
+    cardNote: 'see the river at full scale',
+    whyWeRecommend: 'Khone Phapheng shows the southern Mekong at a completely different scale from the calm water around Don Det. It works best as a dedicated half-day trip rather than a quick roadside stop.',
+    highlights: ['Major Mekong cataracts', 'Multiple viewpoints', 'Half-day excursion', 'Near the Cambodian border'],
+    bestFor: 'A dramatic Mekong landscape beyond the islands'
+  },
+  'cambodia-from-don-det': {
+    subcategory: 'International onward route',
+    cardNote: 'prepare the border day',
+    whyWeRecommend: 'Don Det is often the final Lao stop before Cambodia. Saving this route as a proper address card keeps the border, transport and timing notes together before the transfer day.',
+    highlights: ['Nakasang connection', 'International land border', 'Route toward Stung Treng', 'Full transfer day'],
+    bestFor: 'Planning the onward journey from Laos to Cambodia'
+  }
+};
+
+const donDetThingsToDo: Place[] = donDetLandmarks.map((landmark) => {
+  const image = landmark.gallery[0];
+  const details = activityDetails[landmark.slug];
+
+  return {
+    slug: landmark.slug,
+    name: landmark.name,
+    category: 'things-to-do',
+    subcategory: details.subcategory,
+    cuisine: 'Experience',
+    city: 'Don Det',
+    country: landmark.country,
+    image: image?.src || '/images/laos/don-det.webp',
+    imageAlt: image?.alt || `${landmark.name} near Don Det`,
+    cardNote: details.cardNote,
+    shortDescription: landmark.cityContext.summary,
+    description: landmark.description,
+    whyWeRecommend: details.whyWeRecommend,
+    highlights: details.highlights,
+    mapsUrl: landmark.mapsUrl,
+    status: 'needs-review',
+    lastChecked: 'August 2026',
+    hours: getLandmarkFact(landmark, 'Best time'),
+    price: getLandmarkFact(landmark, 'Price'),
+    address: landmark.region,
+    bestFor: details.bestFor,
+    imageSourceUrl: image?.sourcePage || null,
+    imageSourceType: image?.sourcePage ? 'wikimedia' : undefined,
+    imageAuthor: image?.author || null,
+    imageLicense: image?.license || null,
+    imageIsGeneric: false
+  };
+});
 
 const emptyPlaces: typeof donDetStays = [];
 const addressCategories = [
@@ -43,7 +111,7 @@ const categoryTabs = [
     title: 'Things to do',
     kicker: 'CYCLE · BOAT · EXPLORE',
     icon: 'explore' as const,
-    count: donDetLandmarks.length
+    count: donDetThingsToDo.length
   },
   {
     slug: essentialCategory.slug,
@@ -96,7 +164,7 @@ const categoryTabs = [
       categories={categoryTabs}
       defaultSlug="accommodation"
       title="Plan your stay in Don Det"
-      intro="The practical notebook is ready. Ten highly rated island stays and the first three island journeys form its opening chapters."
+      intro=""
       transitionTitle="Now for the practical side."
       transitionText="Eat · sleep · explore · prepare the river ahead"
     >
@@ -130,14 +198,14 @@ const categoryTabs = [
         slug="things-to-do"
         cityName="Don Det"
         title="Things to do"
-        count={donDetLandmarks.length}
-        noun="places and field notes"
+        count={donDetThingsToDo.length}
+        noun="addresses"
         intro=""
         fieldNote="04"
       >
         <div class="city-panel-list">
-          {donDetLandmarks.map((landmark, index) => (
-            <LandmarkCategoryCard landmark={landmark} index={index} />
+          {donDetThingsToDo.map((place, index) => (
+            <PlaceCard place={place} index={index} />
           ))}
         </div>
       </CityCategoryPanel>
