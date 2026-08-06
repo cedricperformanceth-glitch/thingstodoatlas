@@ -3,8 +3,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import CityPostcardHero from '../../components/CityPostcardHero.astro';
 import TadLoEditorialGuide from '../../components/TadLoEditorialGuide.astro';
 import ExploreBoard from '../../components/ExploreBoard.astro';
-import CityCategorySPA from '../../components/CityCategorySPA.astro';
-import CityCategoryPanel from '../../components/CityCategoryPanel.astro';
+import CityCategorySPA from '../../components/TravelDeskCategorySPA.astro';
+import CityCategoryPanel from '../../components/TravelDeskCategoryPanel.astro';
 import PartnerPlaceCard from '../../components/PartnerPlaceCard.astro';
 import SelectionPlaceCard from '../../components/SelectionPlaceCard.astro';
 import { tadLoExperiences, tadLoLocalAddresses } from '../../data/tadLoPlaces';
@@ -130,7 +130,9 @@ const categoryTabs = [
       categories={categoryTabs}
       defaultSlug="things-to-do"
       title="Plan your stay in Tad Lo"
-      intro="The buttons keep the whole Tad Lo guide on one page. Opening Guesthouses closes Things to do; opening Restaurants closes Guesthouses."
+      intro="Choose one notebook index to open the practical addresses for your stay. Every saved place remains together in My Trip."
+      transitionTitle="Now for the practical side."
+      transitionText="Eat · sleep · explore · prepare the road ahead"
     >
       <CityCategoryPanel slug="things-to-do" cityName="Tad Lo" title="Things to do" count={tadLoExperienceCount} noun="experiences" intro="Tad Lo Treasure Hunt and Vat Paa Forest lead the list as My Selection, followed by waterfalls, workshops, coffee and locally documented outings." fieldNote="04" active>
         <div class="city-panel-list">
