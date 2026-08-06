@@ -7,6 +7,7 @@ import CityCategorySPA from '../../components/TravelDeskCategorySPA.astro';
 import CityCategoryPanel from '../../components/TravelDeskCategoryPanel.astro';
 import PlaceCard from '../../components/PlaceCard.astro';
 import type { Place } from '../../data/atlas';
+import { donDetCafes } from '../../data/donDetCafes';
 import { donDetLandmarks } from '../../data/donDetLandmarks';
 import { donDetStays } from '../../data/donDetPlaces';
 import donDetDrawingUrl from '../../../calque SVG/laos-mekong-fisherman.webp?url';
@@ -121,7 +122,7 @@ const donDetGuesthouses: Place[] = donDetStays.map((stay) => ({
 const emptyPlaces: Place[] = [];
 const addressCategories = [
   { slug: 'restaurants', title: 'Restaurants', kicker: 'EAT · RIVER · SLOW', icon: 'restaurants' as const, noun: 'restaurants', fieldNote: '01', places: emptyPlaces },
-  { slug: 'cafes', title: 'Cafés', kicker: 'COFFEE · SHADE · PAUSE', icon: 'cafes' as const, noun: 'cafés', fieldNote: '02', places: emptyPlaces },
+  { slug: 'cafes', title: 'Cafés', kicker: 'COFFEE · SHADE · PAUSE', icon: 'cafes' as const, noun: 'cafés', fieldNote: '02', places: donDetCafes },
   { slug: 'accommodation', title: 'Guesthouses', kicker: 'SLEEP · ISLAND · SIMPLE', icon: 'guesthouses' as const, noun: 'stays', fieldNote: '03', places: donDetGuesthouses },
   { slug: 'essential-information', title: 'Essential Information', kicker: 'BOATS · MONEY · BORDER', icon: 'essential' as const, noun: 'useful addresses', fieldNote: '05', places: emptyPlaces }
 ];
@@ -158,7 +159,7 @@ const categoryTabs = [
 
 <BaseLayout
   title="Things to do in Don Det, Laos"
-  description="Prepare a stay on Don Det with island routes to Don Khon, Khone Phapheng Falls, Cambodia and a shortlist of highly rated island guesthouses."
+  description="Prepare a stay on Don Det with island routes to Don Khon, Khone Phapheng Falls, Cambodia, highly rated cafés and a shortlist of island guesthouses."
   canonical="https://thingstodoatlas.com/laos/don-det"
 >
   <main class="don-det-page">
