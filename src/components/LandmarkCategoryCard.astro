@@ -12,12 +12,7 @@ const image = landmark.gallery[0];
 ---
 
 <article class="landmark-category-card" id={`category-${landmark.slug}`}>
-  <button
-    class="landmark-category-card__visual"
-    type="button"
-    data-open-landmark={landmark.modalId}
-    aria-label={`Open the ${landmark.name} field note`}
-  >
+  <div class="landmark-category-card__visual">
     {image && (
       <img
         src={image.src}
@@ -30,7 +25,7 @@ const image = landmark.gallery[0];
     )}
     <span class="landmark-category-card__number" aria-hidden="true">{cardNumber}</span>
     <span class="landmark-category-card__source">FIELD NOTE</span>
-  </button>
+  </div>
 
   <div class="landmark-category-card__copy">
     <p>{landmark.cityContext.kicker}</p>
@@ -48,15 +43,37 @@ const image = landmark.gallery[0];
       <a href={landmark.mapsUrl} target="_blank" rel="noreferrer">Google Maps</a>
     </div>
   </div>
+
+  <button
+    class="landmark-category-card__open"
+    type="button"
+    data-open-landmark={landmark.modalId}
+    aria-haspopup="dialog"
+    aria-controls={landmark.modalId}
+    aria-label={`Open the ${landmark.name} field note`}
+  ></button>
 </article>
 
 <style>
   .landmark-category-card {
+    position: relative;
     min-width: 0;
     overflow: hidden;
     border: 1px solid rgba(75, 81, 70, .22);
     background: #eee8dc;
     box-shadow: 5px 7px 0 rgba(49, 85, 69, .07);
+    transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease;
+  }
+
+  .landmark-category-card:hover {
+    border-color: rgba(49, 85, 69, .38);
+    box-shadow: 8px 11px 0 rgba(49, 85, 69, .09);
+    transform: translateY(-4px);
+  }
+
+  .landmark-category-card:has(.landmark-category-card__open:focus-visible) {
+    outline: 2px solid var(--terracotta);
+    outline-offset: 4px;
   }
 
   .landmark-category-card__visual {
@@ -68,7 +85,6 @@ const image = landmark.gallery[0];
     padding: 0;
     border: 0;
     background: var(--paper-deep);
-    cursor: pointer;
   }
 
   .landmark-category-card__visual::after {
@@ -177,6 +193,8 @@ const image = landmark.gallery[0];
   }
 
   .landmark-category-card__actions {
+    position: relative;
+    z-index: 4;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -206,6 +224,17 @@ const image = landmark.gallery[0];
     color: var(--green);
   }
 
+  .landmark-category-card__open {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
   @media (max-width: 700px) {
     .landmark-category-card__visual { height: 220px; }
     .landmark-category-card__copy { min-height: 0; }
@@ -213,6 +242,7 @@ const image = landmark.gallery[0];
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .landmark-category-card,
     .landmark-category-card__visual img { transition: none; }
   }
 </style>
