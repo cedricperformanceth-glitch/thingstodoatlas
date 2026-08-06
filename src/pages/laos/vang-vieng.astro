@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CityPostcardHero from '../../components/CityPostcardHero.astro';
+import ExploreBoard from '../../components/ExploreBoard.astro';
+import CityCategorySPA from '../../components/TravelDeskCategorySPA.astro';
+import CityCategoryPanel from '../../components/TravelDeskCategoryPanel.astro';
+import vangViengDrawingUrl from '../../../calque SVG/ChatGPT Image 26 juil. 2026, 01_20_52_result.webp?url';
+
+const vangViengPostcardFacts = [
+  { label: 'August 2026', icon: 'calendar' as const },
+  { label: 'River & karst base', icon: 'road' as const },
+  { label: 'Tropical monsoon', icon: 'climate' as const },
+  { label: 'Vientiane Province', icon: 'location' as const }
+];
+
+const emptyLandmarks = [];
+const categoryTabs = [
+  { slug: 'restaurants', title: 'Restaurants', kicker: 'EAT · LOCAL · SLOW', icon: 'restaurants' as const, noun: 'restaurants', fieldNote: '01', count: 0, countLabel: 'notes soon' },
+  { slug: 'cafes', title: 'Cafés', kicker: 'COFFEE · PAUSE · SHADE', icon: 'cafes' as const, noun: 'cafés', fieldNote: '02', count: 0, countLabel: 'notes soon' },
+  { slug: 'accommodation', title: 'Guesthouses', kicker: 'SLEEP · SIMPLE · CENTRAL', icon: 'guesthouses' as const, noun: 'stays', fieldNote: '03', count: 0, countLabel: 'notes soon' },
+  { slug: 'scooter-rental', title: 'Scooter Rental', kicker: 'KEYS · HELMET · ROAD', icon: 'scooter' as const, noun: 'rental addresses', fieldNote: '04', count: 0, countLabel: 'notes soon' },
+  { slug: 'things-to-do', title: 'Things to do', kicker: 'CAVES · WATER · EXPLORE', icon: 'explore' as const, noun: 'experiences', fieldNote: '05', count: 0, countLabel: 'notes soon' },
+  { slug: 'gyms-fitness', title: 'Gyms & Fitness', kicker: 'TRAIN · MOVE · SWEAT', icon: 'gyms' as const, noun: 'places to train', fieldNote: '06', count: 0, countLabel: 'notes soon' },
+  { slug: 'markets-shopping', title: 'Markets & Shopping', kicker: 'MARKETS · GOODS · FINDS', icon: 'markets' as const, noun: 'markets and shops', fieldNote: '07', count: 0, countLabel: 'notes soon' },
+  { slug: 'essential-information', title: 'Essential Information', kicker: 'HEALTH · MONEY · BASICS', icon: 'essential' as const, noun: 'useful addresses', fieldNote: '08', count: 0, countLabel: 'notes soon' }
+];
+---
+
+<BaseLayout
+  title="Things to do in Vang Vieng, Laos"
+  description="Prepare a stay in Vang Vieng, a Nam Song river town surrounded by limestone karsts, caves, lagoons, viewpoints and countryside roads."
+  canonical="https://thingstodoatlas.com/laos/vang-vieng"
+>
+  <main class="vang-vieng-page">
+    <div class="pakse-page vang-vieng-envelope-host">
+      <CityPostcardHero
+        cityName="Vang Vieng"
+        description={[
+          'Karst cliffs rise beyond rice fields and the Nam Song, while caves,',
+          'lagoons and viewpoints spread along the roads outside town.',
+          'Vang Vieng is a compact base shaped by water and limestone.'
+        ]}
+        photoSrc="https://commons.wikimedia.org/wiki/Special:Redirect/file/Nam_song_river_vang_vieng.jpg?width=1600"
+        photoAlt="The Nam Song River and limestone mountains at Vang Vieng, Laos"
+        facts={vangViengPostcardFacts}
+        backHref="/laos"
+        backLabel="Back to the Laos map"
+        drawingSrc={vangViengDrawingUrl}
+        drawingAlt="Unused hand-drawn Laos travel illustration"
+        drawingCaption="River roads · limestone beyond town"
+      />
+    </div>
+
+    <ExploreBoard
+      cityName="Vang Vieng"
+      landmarks={emptyLandmarks}
+      eyebrow=""
+      title="Explore from Vang Vieng"
+      intro=""
+      note=""
+      wide
+    />
+
+    <CityCategorySPA
+      cityName="Vang Vieng"
+      categories={categoryTabs}
+      defaultSlug="restaurants"
+      title="Plan your stay in Vang Vieng"
+      intro=""
+      transitionTitle="Now for the practical side."
+      transitionText="Eat · sleep · explore · prepare the road ahead"
+    >
+      {categoryTabs.map((category, index) => (
+        <CityCategoryPanel
+          slug={category.slug}
+          cityName="Vang Vieng"
+          title={category.title}
+          count={0}
+          noun={category.noun}
+          intro=""
+          fieldNote={category.fieldNote}
+          active={index === 0}
+        >
+          <div class="city-panel-empty">
+            <h4>This notebook tab is ready.</h4>
+            <p>Checked Vang Vieng addresses will appear here as the city guide is documented.</p>
+          </div>
+        </CityCategoryPanel>
+      ))}
+    </CityCategorySPA>
+  </main>
+</BaseLayout>
+
+<style>
+  .vang-vieng-page {
+    min-height: 100vh;
+    background: #f2eee3;
+    color: #1f2924;
+  }
+</style>
+
+<style is:global>
+  #main-content .pakse-page.vang-vieng-envelope-host .city-postcard::before {
+    background-image: url('/images/laos/vang-vieng-airmail-envelope-stamped-v1.webp');
+  }
+
+  #main-content .vang-vieng-page .explore-board__question,
+  #main-content .vang-vieng-page .explore-board__chalk-line,
+  #main-content .vang-vieng-page .explore-board__intro,
+  #main-content .vang-vieng-page .explore-board__content,
+  #main-content .vang-vieng-page .explore-board__footer {
+    display: none;
+  }
+
+  #main-content .vang-vieng-page .explore-board__header {
+    margin-bottom: 0;
+  }
+</style>
