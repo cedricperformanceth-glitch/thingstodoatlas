@@ -4,8 +4,8 @@ import CityPostcardHero from '../../components/CityPostcardHero.astro';
 import PakseEditorialGuide from '../../components/PakseEditorialGuide.astro';
 import ExploreBoard from '../../components/ExploreBoard.astro';
 import LandmarkModalSet from '../../components/LandmarkModalSet.astro';
-import CityCategorySPA from '../../components/CityCategorySPA.astro';
-import CityCategoryPanel from '../../components/CityCategoryPanel.astro';
+import CityCategorySPA from '../../components/TravelDeskCategorySPA.astro';
+import CityCategoryPanel from '../../components/TravelDeskCategoryPanel.astro';
 import PlaceCard from '../../components/PlaceCard.astro';
 import { getLandmarksForCity } from '../../data/laosLandmarks';
 import { getPlacesForCategory } from '../../data/atlas';
@@ -20,13 +20,13 @@ const paksePostcardFacts = [
 ];
 
 const categoryTabs = [
-  { slug: 'restaurants', title: 'Restaurants', kicker: 'EAT · LOCAL · SLOW', icon: 'restaurants' as const, fieldNote: '04', noun: 'restaurants', intro: 'From local Lao kitchens to European tables and late-night bars, these are the addresses worth keeping in your notebook.' },
-  { slug: 'cafes', title: 'Cafés', kicker: 'COFFEE · PAUSE · SHADE', icon: 'cafes' as const, fieldNote: '05', noun: 'cafés', intro: 'Good coffee, calm corners and easy places to slow down for an hour in Pakse.' },
-  { slug: 'accommodation', title: 'Guesthouses', kicker: 'SLEEP · SIMPLE · CENTRAL', icon: 'guesthouses' as const, fieldNote: '06', noun: 'stays', intro: 'Simple guesthouses, comfortable hotels and practical bases for exploring Pakse and the south.' },
-  { slug: 'scooter-rental', title: 'Scooter Rental', kicker: 'KEYS · HELMET · ROAD', icon: 'scooter' as const, fieldNote: '07', noun: 'rental addresses', intro: 'Trusted places to find a scooter, check the basics and prepare for the roads beyond town.' },
-  { slug: 'gyms-fitness', title: 'Gyms & Fitness', kicker: 'TRAIN · MOVE · SWEAT', icon: 'gyms' as const, fieldNote: '08', noun: 'places to train', intro: 'Muay Lao camps, weight rooms and useful places to keep moving while you are in Pakse.' },
-  { slug: 'markets-shopping', title: 'Markets & Shopping', kicker: 'MARKETS · GOODS · FINDS', icon: 'markets' as const, fieldNote: '09', noun: 'markets and shops', intro: 'Fresh markets, evening stalls and practical shops worth knowing around Pakse.' },
-  { slug: 'essential-information', title: 'Essential Information', kicker: 'VISA · HEALTH · BASICS', icon: 'essential' as const, fieldNote: '10', noun: 'useful addresses', intro: 'Visa services, healthcare and practical locations to keep close before you need them.' }
+  { slug: 'restaurants', title: 'Restaurants', kicker: 'EAT · LOCAL · SLOW', icon: 'restaurants' as const, fieldNote: '01', noun: 'restaurants', intro: 'From local Lao kitchens to European tables and late-night bars, these are the addresses worth keeping in your notebook.' },
+  { slug: 'cafes', title: 'Cafés', kicker: 'COFFEE · PAUSE · SHADE', icon: 'cafes' as const, fieldNote: '02', noun: 'cafés', intro: 'Good coffee, calm corners and easy places to slow down for an hour in Pakse.' },
+  { slug: 'accommodation', title: 'Guesthouses', kicker: 'SLEEP · SIMPLE · CENTRAL', icon: 'guesthouses' as const, fieldNote: '03', noun: 'stays', intro: 'Simple guesthouses, comfortable hotels and practical bases for exploring Pakse and the south.' },
+  { slug: 'scooter-rental', title: 'Scooter Rental', kicker: 'KEYS · HELMET · ROAD', icon: 'scooter' as const, fieldNote: '04', noun: 'rental addresses', intro: 'Trusted places to find a scooter, check the basics and prepare for the roads beyond town.' },
+  { slug: 'gyms-fitness', title: 'Gyms & Fitness', kicker: 'TRAIN · MOVE · SWEAT', icon: 'gyms' as const, fieldNote: '05', noun: 'places to train', intro: 'Muay Lao camps, weight rooms and useful places to keep moving while you are in Pakse.' },
+  { slug: 'markets-shopping', title: 'Markets & Shopping', kicker: 'MARKETS · GOODS · FINDS', icon: 'markets' as const, fieldNote: '06', noun: 'markets and shops', intro: 'Fresh markets, evening stalls and practical shops worth knowing around Pakse.' },
+  { slug: 'essential-information', title: 'Essential Information', kicker: 'VISA · HEALTH · BASICS', icon: 'essential' as const, fieldNote: '07', noun: 'useful addresses', intro: 'Visa services, healthcare and practical locations to keep close before you need them.' }
 ].map((category) => ({ ...category, places: getPlacesForCategory(category.slug) }));
 
 const spaTabs = categoryTabs.map(({ slug, title, kicker, icon, places }) => ({ slug, title, kicker, icon, count: places.length }));
@@ -93,7 +93,9 @@ const getRestaurantFilterTags = (place: (typeof categoryTabs)[number]['places'][
       categories={spaTabs}
       defaultSlug="restaurants"
       title="Plan your stay in Pakse"
-      intro="Choose one small notebook tab. The current list closes when another opens, while every saved address remains in My Trip."
+      intro="Choose one notebook index to open the practical addresses for your stay. Every saved place remains together in My Trip."
+      transitionTitle="Now for the practical side."
+      transitionText="Eat · sleep · explore · prepare the road ahead"
     >
       {categoryTabs.map((category, categoryIndex) => (
         <CityCategoryPanel
@@ -102,7 +104,7 @@ const getRestaurantFilterTags = (place: (typeof categoryTabs)[number]['places'][
           title={category.title}
           count={category.places.length}
           noun={category.noun}
-          intro={category.intro}
+          intro=""
           fieldNote={category.fieldNote}
           active={categoryIndex === 0}
         >
@@ -155,19 +157,24 @@ const getRestaurantFilterTags = (place: (typeof categoryTabs)[number]['places'][
     color: #1f2924;
   }
 
+  .pakse-restaurant-filters {
+    text-align: center;
+  }
+
   .pakse-restaurant-filters nav {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 8px;
   }
 
   .pakse-filter {
     min-width: 57px;
-    padding: 9px 14px;
+    padding: 8px 13px;
     border: 1px solid rgba(49, 85, 69, .25);
     background: transparent;
     color: var(--green);
-    font: 700 .61rem/1 'DM Sans', sans-serif;
+    font: 700 .58rem/1 'DM Sans', sans-serif;
     cursor: pointer;
   }
 
@@ -178,9 +185,9 @@ const getRestaurantFilterTags = (place: (typeof categoryTabs)[number]['places'][
   }
 
   .pakse-restaurant-filters p {
-    margin: 10px 0 0;
+    margin: 8px 0 0;
     color: var(--muted);
-    font-size: .62rem;
+    font-size: .58rem;
   }
 </style>
 
@@ -191,7 +198,7 @@ const getRestaurantFilterTags = (place: (typeof categoryTabs)[number]['places'][
 
     root.dataset.filterReady = 'true';
     const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-pakse-filter]')];
-    const panel = root.closest('[data-city-category-panel]');
+    const panel = root.closest('[data-travel-desk-panel]');
     const cards = [...(panel?.querySelectorAll<HTMLElement>('[data-pakse-restaurant-card]') || [])];
     const status = root.querySelector<HTMLElement>('[data-pakse-filter-status]');
 
