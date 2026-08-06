@@ -1,0 +1,50 @@
+// Discovery-only registry for the automatic place-image finder.
+// Restaurants are intentionally excluded because their images are curated manually.
+export const places = [
+  { slug: 'naked-espresso-vang-vieng', name: 'Naked Espresso Vang Vieng', category: 'cafes', city: 'Vang Vieng', country: 'Laos', subcategory: 'Specialty coffee shop', cuisine: 'Coffee and light café food' },
+  { slug: 'vela-cafe-and-restaurant', name: 'Vela cafe and restaurant', category: 'cafes', city: 'Vang Vieng', country: 'Laos', subcategory: 'Café & restaurant', cuisine: 'Coffee, breakfast and Asian food' },
+  { slug: 'kiwi-kitchen-laos-cafe', name: 'Kiwi Kitchen Laos', category: 'cafes', city: 'Vang Vieng', country: 'Laos', subcategory: 'Café & casual kitchen', cuisine: 'Coffee, breakfast and European-style food' },
+  { slug: 'parisien-cafe-vang-vieng', name: 'Parisien Cafe', category: 'cafes', city: 'Vang Vieng', country: 'Laos', subcategory: 'Modern café', cuisine: 'Coffee, cold drinks and café snacks' },
+  { slug: 'luang-prabang-bakery-restaurant-vang-vieng', name: 'Luang Prabang Bakery & Restaurant', category: 'cafes', city: 'Vang Vieng', country: 'Laos', subcategory: 'Bakery & café', cuisine: 'Coffee, pastries and casual meals' },
+  { slug: 'organic-mulberry-farm-cafe', name: 'Organic Mulberry Farm & Café', category: 'cafes', city: 'Vang Vieng', country: 'Laos', subcategory: 'Farm café', cuisine: 'Mulberry drinks, tea and farm food' },
+  { slug: 'cafe-de-vang-vieng', name: 'Café de Vang Vieng', category: 'cafes', city: 'Vang Vieng', country: 'Laos', subcategory: 'Central café', cuisine: 'Coffee, drinks and casual food' },
+  { slug: 'coffee-inn-vang-vieng', name: 'Coffee Inn', category: 'cafes', city: 'Vang Vieng', country: 'Laos', subcategory: 'Coffee shop', cuisine: 'Coffee and light snacks' },
+  { slug: 'cafe-eh-eh-vang-vieng', name: 'Cafe Eh Eh', category: 'cafes', city: 'Vang Vieng', country: 'Laos', subcategory: 'Small local café', cuisine: 'Coffee, drinks and light food' },
+
+  { slug: 'local-guesthouse-vang-vieng', name: 'Local Guesthouse', category: 'accommodation', city: 'Vang Vieng', country: 'Laos', subcategory: 'Central guesthouse', cuisine: 'Guesthouse accommodation' },
+  { slug: 'vang-vieng-guesthouse', name: 'Vang vieng guesthouse', category: 'accommodation', city: 'Vang Vieng', country: 'Laos', subcategory: 'Guesthouse with pool', cuisine: 'Guesthouse accommodation' },
+  { slug: 'vang-vieng-global-hostel', name: 'Vang Vieng Global Hostel', category: 'accommodation', city: 'Vang Vieng', country: 'Laos', subcategory: 'Hostel & private rooms', cuisine: 'Hostel accommodation' },
+  { slug: 'vang-vieng-victory-guesthouse', name: 'Vang Vieng Victory Guesthouse', category: 'accommodation', city: 'Vang Vieng', country: 'Laos', subcategory: 'Town guesthouse', cuisine: 'Guesthouse accommodation' },
+  { slug: 'vang-vieng-sck-guesthouse', name: 'VANG VIENG SCK guesthouse', category: 'accommodation', city: 'Vang Vieng', country: 'Laos', subcategory: 'Guesthouse outside the busiest centre', cuisine: 'Guesthouse accommodation' },
+  { slug: 'dd-guesthouse-vang-vieng', name: 'DD guesthouse', category: 'accommodation', city: 'Vang Vieng', country: 'Laos', subcategory: 'Countryside guesthouse', cuisine: 'Guesthouse accommodation' },
+  { slug: 'vang-vieng-nature-guest-house', name: 'Vang Vieng Nature Guest House', category: 'accommodation', city: 'Vang Vieng', country: 'Laos', subcategory: 'Nature-oriented guesthouse', cuisine: 'Guesthouse accommodation' },
+  { slug: 'ban-laos-guesthouse', name: 'Ban Laos Guesthouse', category: 'accommodation', city: 'Vang Vieng', country: 'Laos', subcategory: 'Garden guesthouse', cuisine: 'Guesthouse accommodation' },
+  { slug: 'inthavong-hotel-guest-house', name: 'Inthavong Hotel/Guest House', category: 'accommodation', city: 'Vang Vieng', country: 'Laos', subcategory: 'Hotel & guesthouse', cuisine: 'Guesthouse accommodation' },
+
+  { slug: 'mr-kham-motorbike-rental', name: 'Mr. Kham Motorbike Rental', category: 'scooter-rental', city: 'Vang Vieng', country: 'Laos', subcategory: 'Motorbike rental', cuisine: 'Vehicle rental' },
+  { slug: 'ln-motorbike-rental', name: 'LN Motorbike Rental', category: 'scooter-rental', city: 'Vang Vieng', country: 'Laos', subcategory: 'Motorbike rental', cuisine: 'Vehicle rental' },
+  { slug: 'mr-ta-motorbike-rental', name: 'Mr. Ta Motorbike Rental', category: 'scooter-rental', city: 'Vang Vieng', country: 'Laos', subcategory: 'Motorbike rental', cuisine: 'Vehicle rental' },
+  { slug: 'mr-thavyxai-motorbike-rental', name: 'Mr. Thavyxai Motorbike Rental', category: 'scooter-rental', city: 'Vang Vieng', country: 'Laos', subcategory: 'Motorbike rental', cuisine: 'Vehicle rental' },
+
+  { slug: 'vang-vieng-gym', name: 'Vang Vieng Gym', category: 'gyms-fitness', city: 'Vang Vieng', country: 'Laos', subcategory: 'Local gym', cuisine: 'Training & fitness' },
+  { slug: 'yoga-in-vang-vieng', name: 'Yoga in Vang Vieng', category: 'gyms-fitness', city: 'Vang Vieng', country: 'Laos', subcategory: 'Yoga studio & classes', cuisine: 'Training & fitness' },
+  { slug: 'kickboxing-vang-vieng', name: 'Kickboxing Vang Vieng', category: 'gyms-fitness', city: 'Vang Vieng', country: 'Laos', subcategory: 'Kickboxing training', cuisine: 'Training & fitness' },
+
+  { slug: 'hot-air-balloon-paramotor-vang-vieng', name: 'Hot Air Balloon & Paramotor', category: 'things-to-do', city: 'Vang Vieng', country: 'Laos', subcategory: 'Aerial experience', cuisine: 'Experience' },
+  { slug: 'num-bor-keo-cave', name: 'Num Bor Keo Cave', category: 'things-to-do', city: 'Vang Vieng', country: 'Laos', subcategory: 'Wild cave & natural pool', cuisine: 'Experience' },
+  { slug: 'blue-lagoon-1-vang-vieng', name: 'Blue Lagoon 1 · Vang Vieng', category: 'things-to-do', city: 'Vang Vieng', country: 'Laos', subcategory: 'Lagoon & cave stop', cuisine: 'Experience' },
+  { slug: 'blue-lagoon-2-vang-vieng', name: 'Blue Lagoon 2', category: 'things-to-do', city: 'Vang Vieng', country: 'Laos', subcategory: 'Swimming lagoon', cuisine: 'Experience' },
+  { slug: 'vang-vieng-inter-park-lagoon-9', name: 'Vang Vieng Inter Park · Blue Lagoon 9', category: 'things-to-do', city: 'Vang Vieng', country: 'Laos', subcategory: 'Nature park & lagoon', cuisine: 'Experience' },
+  { slug: 'pha-ngern-silver-cliff-viewpoint', name: 'Pha Ngern Silver Cliff Viewpoint', category: 'things-to-do', city: 'Vang Vieng', country: 'Laos', subcategory: 'Karst viewpoint hike', cuisine: 'Experience' },
+  { slug: 'blue-lagoon-3-vang-vieng', name: 'Blue Lagoon 3', category: 'things-to-do', city: 'Vang Vieng', country: 'Laos', subcategory: 'Swimming lagoon', cuisine: 'Experience' },
+  { slug: 'nam-xay-viewpoint', name: 'Nam Xay Viewpoint', category: 'things-to-do', city: 'Vang Vieng', country: 'Laos', subcategory: 'Iconic viewpoint hike', cuisine: 'Experience' },
+  { slug: 'phapoungkham-cave-viewpoint', name: 'Phapoungkham Cave & Viewpoint', category: 'things-to-do', city: 'Vang Vieng', country: 'Laos', subcategory: 'Cave & viewpoint hike', cuisine: 'Experience' },
+  { slug: 'phamone-waterfall', name: 'Phamone Waterfall', category: 'things-to-do', city: 'Vang Vieng', country: 'Laos', subcategory: 'Local waterfall route', cuisine: 'Experience' },
+  { slug: 'adams-climbing-school', name: "Adam's Climbing School", category: 'things-to-do', city: 'Vang Vieng', country: 'Laos', subcategory: 'Rock-climbing school', cuisine: 'Experience' },
+  { slug: 'zipline-seven-travel', name: 'Zipline · Seven Travel', category: 'things-to-do', city: 'Vang Vieng', country: 'Laos', subcategory: 'Zipline operator', cuisine: 'Experience' },
+  { slug: 'tham-khan-cave', name: 'Tham Khan Cave', category: 'things-to-do', city: 'Vang Vieng', country: 'Laos', subcategory: 'Cave excursion', cuisine: 'Experience' },
+  { slug: 'tham-none-cave', name: 'Tham None Cave', category: 'things-to-do', city: 'Vang Vieng', country: 'Laos', subcategory: 'Water cave experience', cuisine: 'Experience' },
+  { slug: 'tham-chang-cave', name: 'Tham Chang Cave', category: 'things-to-do', city: 'Vang Vieng', country: 'Laos', subcategory: 'Developed cave & viewpoint', cuisine: 'Experience' },
+  { slug: 'tham-nam-water-cave', name: 'Tham Nam Water Cave', category: 'things-to-do', city: 'Vang Vieng', country: 'Laos', subcategory: 'Cave tubing experience', cuisine: 'Experience' },
+  { slug: 'phou-bia-from-vang-vieng', name: 'Phou Bia', category: 'things-to-do', city: 'Vang Vieng', country: 'Laos', subcategory: 'Remote mountain expedition', cuisine: 'Experience' }
+];
