@@ -1,8 +1,20 @@
 ---
-import type { ThakhekMapPlace } from '../data/thakhekPlaces';
+type MapAddressPlace = {
+  slug: string;
+  name: string;
+  category: string;
+  subcategory: string;
+  image: string;
+  imageAlt: string;
+  imageSourceLabel?: string;
+  shortDescription: string;
+  mapsUrl: string;
+  address: string;
+  statusNote: string;
+};
 
 interface Props {
-  place: ThakhekMapPlace;
+  place: MapAddressPlace;
   cityName: string;
   index?: number;
 }
@@ -24,7 +36,7 @@ const tripPlace = JSON.stringify({
   <div class="map-address-card__image">
     <img src={place.image} alt={place.imageAlt} width="720" height="520" loading="lazy" decoding="async" />
     <span class="map-address-card__number" aria-hidden="true">{cardNumber}</span>
-    <span class="map-address-card__source">MAP ADDRESS</span>
+    <span class="map-address-card__source">{place.imageSourceLabel || 'MAP ADDRESS'}</span>
   </div>
 
   <div class="map-address-card__copy">
@@ -46,7 +58,7 @@ const tripPlace = JSON.stringify({
   .map-address-card__image::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 42%,rgba(24,31,26,.48));pointer-events:none}
   .map-address-card__image img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.76) contrast(.96)}
   .map-address-card__number{position:absolute;z-index:2;top:14px;left:14px;display:grid;place-items:center;width:42px;height:42px;border:1px solid rgba(255,253,248,.8);border-radius:50%;background:rgba(32,60,49,.82);color:#fffdf8;font:500 .95rem/1 Fraunces,serif}
-  .map-address-card__source{position:absolute;z-index:2;right:13px;bottom:12px;padding:6px 8px;border:1px solid rgba(255,253,248,.72);background:rgba(32,60,49,.74);color:#fffdf8;font:700 .48rem/1 'DM Sans',sans-serif;letter-spacing:.12em}
+  .map-address-card__source{position:absolute;z-index:2;right:13px;bottom:12px;max-width:calc(100% - 26px);padding:6px 8px;border:1px solid rgba(255,253,248,.72);background:rgba(32,60,49,.74);color:#fffdf8;font:700 .48rem/1 'DM Sans',sans-serif;letter-spacing:.12em;text-align:right}
   .map-address-card__copy{display:flex;min-height:250px;flex-direction:column;padding:24px 23px 22px}
   .map-address-card__copy>p{margin:0 0 10px;color:var(--terracotta);font-size:.57rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
   .map-address-card__copy h3{margin:0 0 11px;color:var(--green);font:500 clamp(1.55rem,2.2vw,2.05rem)/1.06 Fraunces,serif}
