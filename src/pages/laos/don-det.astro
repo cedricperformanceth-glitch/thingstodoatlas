@@ -42,22 +42,24 @@ const categoryTabs = practicalCategories.map(({ slug, title, kicker, icon, place
   canonical="https://thingstodoatlas.com/laos/don-det"
 >
   <main class="don-det-page">
-    <CityPostcardHero
-      cityName="Don Det"
-      description={[
-        'A small Mekong island where bicycles, hammocks and river paths',
-        'replace the road. Don Det is a base for Don Khon, the southern',
-        'waterfalls and the onward journey toward Cambodia.'
-      ]}
-      photoSrc="/images/laos/don-det.webp"
-      photoAlt="Riverside scenery on Don Det in the Four Thousand Islands of southern Laos"
-      facts={donDetPostcardFacts}
-      backHref="/laos"
-      backLabel="Back to the Laos map"
-      drawingSrc={donDetDrawingUrl}
-      drawingAlt="Hand-drawn Mekong fisherman beside a small river boat"
-      drawingCaption="Mekong islands · the road becomes a river"
-    />
+    <div class="pakse-page don-det-envelope-host">
+      <CityPostcardHero
+        cityName="Don Det"
+        description={[
+          'A small Mekong island where bicycles, hammocks and river paths',
+          'replace the road. Don Det is a base for Don Khon, the southern',
+          'waterfalls and the onward journey toward Cambodia.'
+        ]}
+        photoSrc="/images/laos/don-det.webp"
+        photoAlt="Riverside scenery on Don Det in the Four Thousand Islands of southern Laos"
+        facts={donDetPostcardFacts}
+        backHref="/laos"
+        backLabel="Back to the Laos map"
+        drawingSrc={donDetDrawingUrl}
+        drawingAlt="Hand-drawn Mekong fisherman beside a small river boat"
+        drawingCaption="Mekong islands · the road becomes a river"
+      />
+    </div>
 
     <ExploreBoard
       cityName="Don Det"
@@ -113,5 +115,11 @@ const categoryTabs = practicalCategories.map(({ slug, title, kicker, icon, place
     min-height: 100vh;
     background: #f2eee3;
     color: #1f2924;
+  }
+</style>
+
+<style is:global>
+  #main-content .don-det-envelope-host .city-postcard::before {
+    background-image: url('/images/laos/don-det-airmail-envelope-stamped-v1.webp');
   }
 </style>
