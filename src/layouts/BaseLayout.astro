@@ -15,6 +15,7 @@ import TripPageContext from '../components/TripPageContext.astro';
 import TripManager from '../components/TripManager.astro';
 import TripSummaryModal from '../components/TripSummaryModal.astro';
 import JourneyUxEnhancements from '../components/JourneyUxEnhancements.astro';
+import VangViengMapActivation from '../components/VangViengMapActivation.astro';
 
 const {
   title,
@@ -46,6 +47,7 @@ const isHomepage = normalizedPath === '/';
     <div id="main-content" role="main">
       <slot />
       <JourneyUxEnhancements />
+      <VangViengMapActivation />
     </div>
 
     <TripDrawer />
