@@ -184,8 +184,23 @@ const vangViengImages = [
   }
 ];
 
+const vangViengRestaurantImages: Partial<Record<RestaurantSeed['slug'], { src: string; alt: string }>> = {
+  'happy-mango-thai-restaurants': { src: '/images/places/happy-mango-thai-restaurants.webp', alt: 'Happy Mango Thai Restaurants in Vang Vieng, Laos' },
+  'restaurant-du-crabe-dor': { src: '/images/places/restaurant-du-crabe-dor.webp', alt: 'Restaurant du Crabe d’Or in Vang Vieng, Laos' },
+  'garys-irish-bar': { src: '/images/places/garys-irish-bar.webp', alt: "Gary's Irish Bar in Vang Vieng, Laos" },
+  'mittaphap-restaurant': { src: '/images/places/mittaphap-restaurant.webp', alt: 'Mittaphap Restaurant in Vang Vieng, Laos' },
+  'green-restaurant-vang-vieng': { src: '/images/places/green-restaurant-vang-vieng.webp', alt: 'Green Restaurant in Vang Vieng, Laos' },
+  'amd-restaurant-vang-vieng': { src: '/images/places/amd-restaurant-vang-vieng.webp', alt: 'A.M.D Restaurant in Vang Vieng, Laos' },
+  'beats-bites-vangvieng': { src: '/images/places/beats-bites-vangvieng.webp', alt: 'Beats & Bites Vangvieng in Vang Vieng, Laos' },
+  'pizza-luka-vang-vieng': { src: '/images/places/pizza-luka-vang-vieng.webp', alt: 'Pizza Luka in Vang Vieng, Laos' },
+  'kiwi-kitchen-laos': { src: '/images/places/kiwi-kitchen-laos.webp', alt: 'Kiwi Kitchen Laos in Vang Vieng, Laos' },
+  'lao-valhalla-restaurant': { src: '/images/places/lao-valhalla-restaurant.webp', alt: 'Lao Valhalla Restaurant in Vang Vieng, Laos' },
+  'vela-cafe-and-restaurant': { src: '/images/places/vela-cafe-and-restaurant.webp', alt: 'Vela cafe and restaurant in Vang Vieng, Laos' }
+};
+
 export const vangViengRestaurants: Place[] = restaurantSeeds.map((restaurant, index) => {
-  const image = vangViengImages[index % vangViengImages.length];
+  const listingImage = vangViengRestaurantImages[restaurant.slug];
+  const image = listingImage ?? vangViengImages[index % vangViengImages.length];
 
   return {
     ...restaurant,
@@ -201,6 +216,6 @@ export const vangViengRestaurants: Place[] = restaurantSeeds.map((restaurant, in
     hours: 'Confirm current opening hours on Google Maps',
     price: 'Prices vary by order',
     address: 'Vang Vieng, Vientiane Province, Laos',
-    imageIsGeneric: true
+    imageIsGeneric: !listingImage
   };
 });
