@@ -11,6 +11,10 @@ import { donDetCafes } from '../../data/donDetCafes';
 import { donDetRestaurants } from '../../data/donDetRestaurants';
 import { donDetLandmarks } from '../../data/donDetLandmarks';
 import { donDetStays } from '../../data/donDetPlaces';
+import {
+  donDetAdditionalThingsToDo,
+  donDetEssentialInformation
+} from '../../data/donDetPractical';
 import donDetDrawingUrl from '../../../calque SVG/laos-mekong-fisherman.webp?url';
 
 const donDetPostcardFacts = [
@@ -53,7 +57,7 @@ const activityDetails: Record<string, {
   }
 };
 
-const donDetThingsToDo: Place[] = donDetLandmarks.map((landmark) => {
+const landmarkThingsToDo: Place[] = donDetLandmarks.map((landmark) => {
   const image = landmark.gallery[0];
   const details = activityDetails[landmark.slug];
 
@@ -86,6 +90,11 @@ const donDetThingsToDo: Place[] = donDetLandmarks.map((landmark) => {
     imageIsGeneric: false
   };
 });
+
+const donDetThingsToDo: Place[] = [
+  ...landmarkThingsToDo,
+  ...donDetAdditionalThingsToDo
+];
 
 const getStaySide = (address: string) => {
   const normalizedAddress = address.toLowerCase();
@@ -120,12 +129,11 @@ const donDetGuesthouses: Place[] = donDetStays.map((stay) => ({
   imageIsGeneric: !stay.imageSourceLabel.startsWith('PROPERTY PHOTO')
 }));
 
-const emptyPlaces: Place[] = [];
 const addressCategories = [
   { slug: 'restaurants', title: 'Restaurants', kicker: 'EAT · RIVER · SLOW', icon: 'restaurants' as const, noun: 'restaurants', fieldNote: '01', places: donDetRestaurants },
   { slug: 'cafes', title: 'Cafés', kicker: 'COFFEE · SHADE · PAUSE', icon: 'cafes' as const, noun: 'cafés', fieldNote: '02', places: donDetCafes },
   { slug: 'accommodation', title: 'Guesthouses', kicker: 'SLEEP · ISLAND · SIMPLE', icon: 'guesthouses' as const, noun: 'stays', fieldNote: '03', places: donDetGuesthouses },
-  { slug: 'essential-information', title: 'Essential Information', kicker: 'BOATS · MONEY · BORDER', icon: 'essential' as const, noun: 'useful addresses', fieldNote: '05', places: emptyPlaces }
+  { slug: 'essential-information', title: 'Essential Information', kicker: 'HEALTH · FERRY · BASICS', icon: 'essential' as const, noun: 'useful addresses', fieldNote: '05', places: donDetEssentialInformation }
 ];
 
 const firstAddressCategories = addressCategories.slice(0, 3);
@@ -137,8 +145,7 @@ const categoryTabs = [
     title,
     kicker,
     icon,
-    count: places.length,
-    ...(places.length === 0 ? { countLabel: 'notes soon' } : {})
+    count: places.length
   })),
   {
     slug: 'things-to-do',
@@ -152,15 +159,14 @@ const categoryTabs = [
     title: essentialCategory.title,
     kicker: essentialCategory.kicker,
     icon: essentialCategory.icon,
-    count: essentialCategory.places.length,
-    countLabel: 'notes soon'
+    count: essentialCategory.places.length
   }
 ];
 ---
 
 <BaseLayout
   title="Things to do in Don Det, Laos"
-  description="Prepare a stay on Don Det with island routes to Don Khon, Khone Phapheng Falls, Cambodia, restaurant and café shortlists, and practical island guesthouses."
+  description="Prepare a stay on Don Det with waterfalls, islands, beaches, zipline routes, restaurant and café shortlists, guesthouses, ferry information and the nearest health center."
   canonical="https://thingstodoatlas.com/laos/don-det"
 >
   <main class="don-det-page">
@@ -213,18 +219,11 @@ const categoryTabs = [
           fieldNote={category.fieldNote}
           active={category.slug === 'accommodation'}
         >
-          {category.places.length ? (
-            <div class="city-panel-list">
-              {category.places.map((place, index) => (
-                <PlaceCard place={place} index={index} />
-              ))}
-            </div>
-          ) : (
-            <div class="city-panel-empty">
-              <h4>This notebook tab is ready.</h4>
-              <p>Checked Don Det addresses will appear here as the island guide is documented.</p>
-            </div>
-          )}
+          <div class="city-panel-list">
+            {category.places.map((place, index) => (
+              <PlaceCard place={place} index={index} />
+            ))}
+          </div>
         </CityCategoryPanel>
       ))}
 
@@ -253,9 +252,10 @@ const categoryTabs = [
         intro=""
         fieldNote={essentialCategory.fieldNote}
       >
-        <div class="city-panel-empty">
-          <h4>This notebook tab is ready.</h4>
-          <p>Checked Don Det addresses will appear here as the island guide is documented.</p>
+        <div class="city-panel-list">
+          {essentialCategory.places.map((place, index) => (
+            <PlaceCard place={place} index={index} />
+          ))}
         </div>
       </CityCategoryPanel>
     </CityCategorySPA>
