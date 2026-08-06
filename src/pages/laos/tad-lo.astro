@@ -72,21 +72,30 @@ const tadLoExploreLandmarks = tadLoBoardSelections.map((selection) => {
   };
 });
 
+const duplicateSelection = <T extends { slug: string }>(place: T, suffix: string) => ({
+  ...place,
+  slug: `${place.slug}-${suffix}`
+});
+
 const tadLoSelections = [
   fandeeIslandSelection,
   tadLoTreasureHuntSelection,
   vatPaaForestSelection
 ];
+const tadLoTreasureHuntCategorySelection = duplicateSelection(tadLoTreasureHuntSelection, 'things-to-do');
+const vatPaaForestCategorySelection = duplicateSelection(vatPaaForestSelection, 'things-to-do');
+const fandeeIslandGuesthouseSelection = duplicateSelection(fandeeIslandSelection, 'guesthouses');
 const tadLoPartnerExperiences = tadLoExperiences.filter((place) => place.slug !== 'vat-paa-ancient-forest');
-const tadLoExperienceCount = tadLoPartnerExperiences.length;
+const tadLoExperienceCount = tadLoPartnerExperiences.length + 2;
 const tadLoGuesthouses = tadLoLocalAddresses.filter((place) => place.category === 'accommodation' && place.slug !== 'fandee-island');
+const tadLoGuesthouseCount = tadLoGuesthouses.length + 1;
 const tadLoRestaurants = tadLoLocalAddresses.filter((place) => place.category === 'restaurants');
 const tadLoEssentials = tadLoLocalAddresses.filter((place) => place.category === 'essential-information');
 
 const categoryTabs = [
   { slug: 'my-selection', title: 'My Selection', kicker: 'ATLAS · CHOSEN · SPECIAL', icon: 'selection' as const, count: tadLoSelections.length, countLabel: `${tadLoSelections.length} picks` },
   { slug: 'things-to-do', title: 'Things to do', kicker: 'WALK · SEE · EXPLORE', icon: 'explore' as const, count: tadLoExperienceCount },
-  { slug: 'accommodation', title: 'Guesthouses', kicker: 'SLEEP · NATURE · VILLAGE', icon: 'guesthouses' as const, count: tadLoGuesthouses.length },
+  { slug: 'accommodation', title: 'Guesthouses', kicker: 'SLEEP · NATURE · VILLAGE', icon: 'guesthouses' as const, count: tadLoGuesthouseCount },
   { slug: 'restaurants', title: 'Restaurants', kicker: 'EAT · LOCAL · SLOW', icon: 'restaurants' as const, count: tadLoRestaurants.length },
   { slug: 'essential-information', title: 'Essential Information', kicker: 'GUIDES · ROADS · BASICS', icon: 'essential' as const, count: tadLoEssentials.length }
 ];
@@ -150,13 +159,22 @@ const categoryTabs = [
 
       <CityCategoryPanel slug="things-to-do" cityName="Tad Lo" title="Things to do" count={tadLoExperienceCount} noun="experiences" intro="" fieldNote="02">
         <div class="city-panel-list">
-          {tadLoPartnerExperiences.map((place, index) => <PartnerPlaceCard place={place} index={index} />)}
+          <div data-selection-alias={tadLoTreasureHuntSelection.slug}>
+            <SelectionPlaceCard place={tadLoTreasureHuntCategorySelection} index={0} />
+          </div>
+          <div data-selection-alias={vatPaaForestSelection.slug}>
+            <SelectionPlaceCard place={vatPaaForestCategorySelection} index={1} />
+          </div>
+          {tadLoPartnerExperiences.map((place, index) => <PartnerPlaceCard place={place} index={index + 2} />)}
         </div>
       </CityCategoryPanel>
 
-      <CityCategoryPanel slug="accommodation" cityName="Tad Lo" title="Guesthouses" count={tadLoGuesthouses.length} noun="stays" intro="" fieldNote="03">
+      <CityCategoryPanel slug="accommodation" cityName="Tad Lo" title="Guesthouses" count={tadLoGuesthouseCount} noun="stays" intro="" fieldNote="03">
         <div class="city-panel-list">
-          {tadLoGuesthouses.map((place, index) => <PartnerPlaceCard place={place} index={index} />)}
+          <div data-selection-alias={fandeeIslandSelection.slug}>
+            <SelectionPlaceCard place={fandeeIslandGuesthouseSelection} index={0} />
+          </div>
+          {tadLoGuesthouses.map((place, index) => <PartnerPlaceCard place={place} index={index + 1} />)}
         </div>
       </CityCategoryPanel>
 
@@ -205,6 +223,27 @@ const categoryTabs = [
 </style>
 
 <script>
+  const setupTadLoSelectionAliases = () => {
+    document.querySelectorAll<HTMLElement>('[data-selection-alias]').forEach((root) => {
+      if (root.dataset.selectionAliasReady === 'true') return;
+      root.dataset.selectionAliasReady = 'true';
+
+      const canonicalId = root.dataset.selectionAlias;
+      const saveButton = root.querySelector<HTMLButtonElement>('[data-trip-add]');
+      if (!canonicalId || !saveButton) return;
+
+      saveButton.dataset.tripId = canonicalId;
+      try {
+        const tripPlace = JSON.parse(saveButton.dataset.tripPlace || '{}');
+        tripPlace.id = canonicalId;
+        tripPlace.url = `${location.pathname}#${canonicalId}`;
+        saveButton.dataset.tripPlace = JSON.stringify(tripPlace);
+      } catch {
+        // Keep the card usable even if an old payload cannot be parsed.
+      }
+    });
+  };
+
   const setupTadLoExploreBoard = () => {
     document.querySelectorAll<HTMLButtonElement>('.tad-lo-page .explore-board-section [data-open-landmark]').forEach((button) => {
       if (button.dataset.tadLoExploreReady === 'true') return;
@@ -229,6 +268,11 @@ const categoryTabs = [
     });
   };
 
-  setupTadLoExploreBoard();
-  document.addEventListener('astro:page-load', setupTadLoExploreBoard);
+  const setupTadLoPage = () => {
+    setupTadLoSelectionAliases();
+    setupTadLoExploreBoard();
+  };
+
+  setupTadLoPage();
+  document.addEventListener('astro:page-load', setupTadLoPage);
 </script>
