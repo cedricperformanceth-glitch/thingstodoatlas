@@ -1,12 +1,15 @@
 ---
 import CityCategoryIcon from './CityCategoryIcon.astro';
 
+type StandardCategoryIcon = 'restaurants' | 'cafes' | 'guesthouses' | 'scooter' | 'explore' | 'gyms' | 'markets' | 'essential';
+
 export type TravelDeskCategoryTab = {
   slug: string;
   title: string;
   kicker: string;
-  icon: 'restaurants' | 'cafes' | 'guesthouses' | 'scooter' | 'explore' | 'gyms' | 'markets' | 'essential';
+  icon: StandardCategoryIcon | 'selection';
   count?: number;
+  countLabel?: string;
 };
 
 interface Props {
@@ -57,10 +60,11 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
           {categories.map((category, index) => {
             const selected = category.slug === defaultSlug;
             const number = String(index + 1).padStart(2, '0');
+            const countLabel = category.countLabel || `${category.count ?? 0} ${category.count === 1 ? 'place' : 'places'}`;
 
             return (
               <button
-                class:list={['travel-desk-tab', { 'is-active': selected }]}
+                class:list={['travel-desk-tab', { 'is-active': selected, 'is-selection': category.icon === 'selection' }]}
                 type="button"
                 role="tab"
                 aria-selected={selected ? 'true' : 'false'}
@@ -68,10 +72,20 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
                 data-city-category-button={category.slug}
               >
                 <span class="travel-desk-tab__number" aria-hidden="true">{number}</span>
-                <span class="travel-desk-tab__drawing" aria-hidden="true"><CityCategoryIcon icon={category.icon} /></span>
+                <span class="travel-desk-tab__drawing" aria-hidden="true">
+                  {category.icon === 'selection' ? (
+                    <svg viewBox="0 0 84 84" fill="none" aria-hidden="true">
+                      <path d="M42 9.5 49.5 31l22.6.5-18 13.6 6.5 21.8L42 54.1 23.4 66.9l6.5-21.8-18-13.6 22.6-.5L42 9.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" />
+                      <path d="m34.5 43.2 5 5.1 10.8-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M18 73.5c13.7-3 34-2.8 48 .2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".65" />
+                    </svg>
+                  ) : (
+                    <CityCategoryIcon icon={category.icon as StandardCategoryIcon} />
+                  )}
+                </span>
                 <span class="travel-desk-tab__copy">
                   <strong>{category.title}</strong>
-                  <small>{category.count ?? 0} {category.count === 1 ? 'place' : 'places'}</small>
+                  <small>{countLabel}</small>
                 </span>
                 <span class="travel-desk-tab__arrow" aria-hidden="true">→</span>
               </button>
@@ -96,7 +110,7 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    padding: clamp(1.8rem, 4vw, 3.4rem) 0 clamp(5.5rem, 9vw, 9rem);
+    padding: clamp(1.5rem, 3vw, 2.5rem) 0 clamp(5rem, 8vw, 8rem);
     background:
       radial-gradient(circle at 12% 18%, rgba(255,255,255,.055), transparent 25%),
       radial-gradient(circle at 88% 72%, rgba(183,102,69,.09), transparent 28%),
@@ -118,42 +132,45 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
   .travel-desk__transition {
     display: grid;
-    grid-template-columns:minmax(42px, 1fr) auto auto minmax(42px, 1fr);
-    gap: .9rem;
+    grid-template-columns: minmax(42px, 1fr) auto minmax(42px, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 1rem;
+    row-gap: .38rem;
     align-items: center;
     width: min(1180px, calc(100% - 2.5rem));
-    margin: 0 auto clamp(3.2rem, 6vw, 5.8rem);
+    margin: 0 auto clamp(1.9rem, 3.5vw, 3rem);
     color: rgba(247,242,231,.82);
+    text-align: center;
   }
 
   .travel-desk__transition::after,
   .travel-desk__transition > span {
     content: '';
+    grid-row: 1 / 3;
     height: 1px;
     background: rgba(247,242,231,.22);
   }
 
+  .travel-desk__transition::after { grid-column: 3; }
+  .travel-desk__transition > span { grid-column: 1; }
   .travel-desk__transition p,
-  .travel-desk__transition small {
-    margin: 0;
-  }
+  .travel-desk__transition small { grid-column: 2; margin: 0; }
 
   .travel-desk__transition p {
+    grid-row: 1;
     color: #fffaf0;
-    font: 400 clamp(1.1rem, 1.7vw, 1.45rem)/1.2 Fraunces, Georgia, serif;
+    font: 400 clamp(1.15rem, 1.8vw, 1.5rem)/1.15 Fraunces, Georgia, serif;
   }
 
   .travel-desk__transition small {
+    grid-row: 2;
     color: rgba(247,242,231,.58);
-    font: 600 .58rem/1.3 'DM Sans', sans-serif;
-    letter-spacing: .11em;
+    font: 600 .56rem/1.3 'DM Sans', sans-serif;
+    letter-spacing: .12em;
     text-transform: uppercase;
   }
 
-  .travel-desk__inner {
-    width: min(1280px, calc(100% - 2.5rem));
-    margin: 0 auto;
-  }
+  .travel-desk__inner { width: min(1280px, calc(100% - 2.5rem)); margin: 0 auto; }
 
   .travel-desk__heading {
     display: grid;
@@ -161,13 +178,13 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     gap: 1rem 3rem;
     align-items: end;
     width: min(1180px, 100%);
-    margin: 0 auto clamp(2rem, 4vw, 3.4rem);
+    margin: 0 auto clamp(1.55rem, 2.8vw, 2.35rem);
   }
 
   .travel-desk__heading p {
-    margin: 0 0 .55rem;
+    margin: 0 0 .45rem;
     color: rgba(247,242,231,.55);
-    font-size: .66rem;
+    font-size: .64rem;
     font-weight: 700;
     letter-spacing: .21em;
   }
@@ -175,56 +192,53 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   .travel-desk__heading h2 {
     margin: 0;
     color: #fffaf0;
-    font: 400 clamp(2.25rem, 4.6vw, 4.35rem)/.98 Fraunces, Georgia, serif;
+    font: 400 clamp(2.15rem, 4.2vw, 4rem)/.98 Fraunces, Georgia, serif;
     letter-spacing: -.04em;
   }
 
   .travel-desk__heading > span {
     color: rgba(247,242,231,.68);
-    font: 400 .9rem/1.62 Georgia, 'Times New Roman', serif;
+    font: 400 .86rem/1.58 Georgia, 'Times New Roman', serif;
   }
 
   .travel-desk__board {
     display: grid;
-    grid-template-columns: clamp(230px, 22vw, 286px) minmax(0, 1fr);
+    grid-template-columns: clamp(218px, 20vw, 268px) minmax(0, 1fr);
     align-items: start;
-    filter: drop-shadow(0 24px 30px rgba(7,16,12,.23));
+    filter: drop-shadow(0 22px 28px rgba(7,16,12,.22));
   }
 
   .travel-desk__index {
     position: sticky;
     top: 1.25rem;
     z-index: 3;
-    margin-top: clamp(1.3rem, 3vw, 2.8rem);
-    padding: 1.25rem 0 1.35rem 1rem;
+    margin-top: clamp(1.1rem, 2.4vw, 2.1rem);
+    padding: 1.05rem 0 1.15rem .8rem;
     border: 1px solid rgba(226,218,197,.16);
     border-right: 0;
     background: rgba(22,36,30,.93);
-    box-shadow: inset 0 1px rgba(255,255,255,.035), -10px 12px 0 rgba(8,18,14,.1);
+    box-shadow: inset 0 1px rgba(255,255,255,.035), -9px 11px 0 rgba(8,18,14,.1);
   }
 
   .travel-desk__index-label {
-    margin: 0 1rem 1rem .35rem;
+    margin: 0 1rem .8rem .35rem;
     color: rgba(247,242,231,.42);
-    font-size: .54rem;
+    font-size: .52rem;
     font-weight: 700;
     letter-spacing: .2em;
   }
 
-  .travel-desk__index-list {
-    display: grid;
-    gap: .55rem;
-  }
+  .travel-desk__index-list { display: grid; gap: .42rem; }
 
   .travel-desk-tab {
     position: relative;
     display: grid;
-    grid-template-columns: 1.65rem 3.5rem minmax(0, 1fr) 1rem;
-    gap: .55rem;
+    grid-template-columns: 1.35rem 3rem minmax(0, 1fr) .8rem;
+    gap: .45rem;
     align-items: center;
     width: 100%;
-    min-height: 5.15rem;
-    padding: .55rem .85rem .55rem .55rem;
+    min-height: 4.35rem;
+    padding: .42rem .7rem .42rem .45rem;
     overflow: visible;
     border: 1px solid rgba(226,218,197,.13);
     border-right: 0;
@@ -244,80 +258,61 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     transform: translateX(4px);
   }
 
-  .travel-desk-tab:focus-visible {
-    box-shadow: inset 0 0 0 2px rgba(183,102,69,.65);
-  }
+  .travel-desk-tab:focus-visible { box-shadow: inset 0 0 0 2px rgba(183,102,69,.65); }
 
   .travel-desk-tab.is-active {
     z-index: 2;
-    width: calc(100% + 1rem);
+    width: calc(100% + .85rem);
     color: #21352c;
     border-color: rgba(82,91,76,.22);
     background: #f3ede0;
     box-shadow: -5px 7px 0 rgba(7,16,12,.11);
-    transform: translateX(5px);
+    transform: translateX(4px);
   }
 
   .travel-desk-tab.is-active::after {
     content: '';
     position: absolute;
     top: 0;
-    right: -.75rem;
+    right: -.65rem;
     bottom: 0;
-    width: .85rem;
+    width: .75rem;
     background: #f3ede0;
   }
 
+  .travel-desk-tab.is-selection:not(.is-active) { color: #d8bf7c; }
   .travel-desk-tab__number {
     align-self: start;
-    padding-top: .25rem;
+    padding-top: .2rem;
     color: rgba(247,242,231,.34);
-    font: 600 .52rem/1 'DM Sans', sans-serif;
+    font: 600 .49rem/1 'DM Sans', sans-serif;
     letter-spacing: .08em;
   }
-
-  .travel-desk-tab.is-active .travel-desk-tab__number {
-    color: rgba(33,53,44,.43);
-  }
+  .travel-desk-tab.is-active .travel-desk-tab__number { color: rgba(33,53,44,.43); }
 
   .travel-desk-tab__drawing {
     display: grid;
     place-items: center;
-    width: 3.5rem;
-    height: 3.65rem;
+    width: 3rem;
+    height: 3.1rem;
     color: currentColor;
   }
-
   .travel-desk-tab__drawing :global(svg),
-  .travel-desk-tab__drawing :global(img) {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
+  .travel-desk-tab__drawing :global(img) { display: block; width: 100%; height: 100%; object-fit: contain; }
 
-  .travel-desk-tab__copy {
-    display: grid;
-    gap: .35rem;
-    min-width: 0;
-  }
-
+  .travel-desk-tab__copy { display: grid; gap: .28rem; min-width: 0; }
   .travel-desk-tab__copy strong {
     overflow: hidden;
-    font: 500 clamp(.9rem, 1.2vw, 1.05rem)/1.05 Fraunces, Georgia, serif;
+    font: 500 clamp(.82rem, 1.05vw, .96rem)/1.05 Fraunces, Georgia, serif;
     text-overflow: ellipsis;
   }
-
   .travel-desk-tab__copy small {
     color: rgba(247,242,231,.42);
-    font: 700 .5rem/1 'DM Sans', sans-serif;
-    letter-spacing: .11em;
+    font: 700 .47rem/1 'DM Sans', sans-serif;
+    letter-spacing: .1em;
     text-transform: uppercase;
   }
-
-  .travel-desk-tab.is-active .travel-desk-tab__copy small {
-    color: #b76645;
-  }
+  .travel-desk-tab.is-active .travel-desk-tab__copy small { color: #b76645; }
 
   .travel-desk-tab__arrow {
     color: #b76645;
@@ -325,30 +320,26 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     transform: translateX(-4px);
     transition: opacity 180ms ease, transform 180ms ease;
   }
-
-  .travel-desk-tab.is-active .travel-desk-tab__arrow {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  .travel-desk-tab.is-active .travel-desk-tab__arrow { opacity: 1; transform: translateX(0); }
 
   .travel-desk__index-note {
-    margin: 1.1rem 1.1rem 0 .35rem;
+    margin: .9rem 1rem 0 .35rem;
     color: rgba(247,242,231,.4);
-    font: 400 .62rem/1.5 Georgia, 'Times New Roman', serif;
+    font: 400 .59rem/1.45 Georgia, 'Times New Roman', serif;
   }
 
   .travel-desk__paper {
     position: relative;
     min-width: 0;
-    min-height: 38rem;
-    padding: clamp(2.4rem, 5vw, 5.2rem) clamp(1.5rem, 4.8vw, 4.8rem) clamp(3.5rem, 6vw, 6rem);
+    min-height: 32rem;
+    padding: clamp(3.8rem, 5vw, 4.65rem) clamp(1.35rem, 3.8vw, 3.7rem) clamp(3rem, 5vw, 4.8rem);
     border: 1px solid rgba(82,91,76,.24);
     background:
-      linear-gradient(90deg, transparent 0 4.35rem, rgba(183,102,69,.16) 4.35rem 4.42rem, transparent 4.42rem),
-      repeating-linear-gradient(0deg, transparent 0 31px, rgba(49,85,69,.055) 31px 32px),
+      linear-gradient(90deg, transparent 0 3.8rem, rgba(183,102,69,.14) 3.8rem 3.87rem, transparent 3.87rem),
+      repeating-linear-gradient(0deg, transparent 0 31px, rgba(49,85,69,.05) 31px 32px),
       #f3ede0;
     color: #1f2924;
-    box-shadow: 12px 17px 0 rgba(7,16,12,.14), inset 0 1px rgba(255,255,255,.72);
+    box-shadow: 11px 15px 0 rgba(7,16,12,.14), inset 0 1px rgba(255,255,255,.72);
   }
 
   .travel-desk__paper::before,
@@ -359,177 +350,112 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     background: #e7dfd0;
     border: 1px solid rgba(82,91,76,.16);
   }
-
-  .travel-desk__paper::before {
-    inset: 10px -10px -10px 12px;
-    transform: rotate(.18deg);
-  }
-
-  .travel-desk__paper::after {
-    inset: 18px -17px -17px 20px;
-    opacity: .58;
-    transform: rotate(-.14deg);
-  }
+  .travel-desk__paper::before { inset: 9px -9px -9px 11px; transform: rotate(.18deg); }
+  .travel-desk__paper::after { inset: 16px -15px -15px 18px; opacity: .58; transform: rotate(-.14deg); }
 
   .travel-desk__clip {
     position: absolute;
     z-index: 2;
-    left: clamp(1.25rem, 2.6vw, 2.8rem);
-    width: 1rem;
-    height: 3.2rem;
+    left: clamp(1.15rem, 2.3vw, 2.5rem);
+    width: .9rem;
+    height: 2.8rem;
     border: 2px solid rgba(74,78,69,.35);
     border-bottom: 0;
-    border-radius: .55rem .55rem 0 0;
+    border-radius: .5rem .5rem 0 0;
     transform: rotate(-5deg);
   }
-
-  .travel-desk__clip--top { top: -1rem; }
-  .travel-desk__clip--bottom { top: 1.2rem; left: clamp(2.4rem, 4vw, 4.2rem); transform: rotate(4deg); }
+  .travel-desk__clip--top { top: -.85rem; }
+  .travel-desk__clip--bottom { top: 1rem; left: clamp(2.15rem, 3.6vw, 3.8rem); transform: rotate(4deg); }
 
   .travel-desk__paper-rule {
     position: absolute;
     top: 0;
     right: 0;
     left: 0;
-    height: .42rem;
+    height: .38rem;
     background: linear-gradient(90deg, #315545 0 68%, #b76645 68% 78%, transparent 78%);
     opacity: .78;
   }
-
-  .travel-desk__panels {
-    position: relative;
-    z-index: 1;
-  }
+  .travel-desk__panels { position: relative; z-index: 1; }
 
   @media (max-width: 940px) {
-    .travel-desk__heading {
-      grid-template-columns: 1fr;
-    }
-
-    .travel-desk__heading > span {
-      max-width: 38rem;
-    }
-
-    .travel-desk__board {
-      grid-template-columns: 1fr;
-    }
-
+    .travel-desk__heading { grid-template-columns: 1fr; }
+    .travel-desk__heading > span { max-width: 38rem; }
+    .travel-desk__board { grid-template-columns: 1fr; }
     .travel-desk__index {
       position: relative;
       top: auto;
       margin: 0;
-      padding: .95rem .9rem 0;
+      padding: .8rem .8rem 0;
       border-right: 1px solid rgba(226,218,197,.16);
       border-bottom: 0;
     }
-
     .travel-desk__index-label,
-    .travel-desk__index-note {
-      display: none;
-    }
-
+    .travel-desk__index-note { display: none; }
     .travel-desk__index-list {
       display: flex;
-      gap: .55rem;
+      gap: .45rem;
       overflow-x: auto;
-      padding: 0 0 .95rem;
+      padding: 0 0 .8rem;
       scroll-snap-type: x proximity;
       scrollbar-width: thin;
     }
-
     .travel-desk-tab,
     .travel-desk-tab.is-active {
-      flex: 0 0 12.25rem;
-      width: 12.25rem;
-      min-height: 4.8rem;
+      flex: 0 0 11.25rem;
+      width: 11.25rem;
+      min-height: 4.25rem;
       border: 1px solid rgba(226,218,197,.15);
       transform: none;
       scroll-snap-align: start;
     }
-
-    .travel-desk-tab.is-active {
-      color: #21352c;
-      border-color: rgba(82,91,76,.22);
-      background: #f3ede0;
-    }
-
-    .travel-desk-tab.is-active::after {
-      display: none;
-    }
-
+    .travel-desk-tab.is-active { color: #21352c; border-color: rgba(82,91,76,.22); background: #f3ede0; }
+    .travel-desk-tab.is-active::after { display: none; }
     .travel-desk__paper {
-      min-height: 34rem;
-      background:
-        repeating-linear-gradient(0deg, transparent 0 31px, rgba(49,85,69,.05) 31px 32px),
-        #f3ede0;
+      min-height: 30rem;
+      background: repeating-linear-gradient(0deg, transparent 0 31px, rgba(49,85,69,.05) 31px 32px), #f3ede0;
     }
   }
 
   @media (max-width: 640px) {
-    .travel-desk {
-      padding-top: 1.4rem;
-    }
-
+    .travel-desk { padding-top: 1.2rem; }
     .travel-desk__transition {
       grid-template-columns: 1fr;
-      gap: .45rem;
+      grid-template-rows: auto auto;
+      gap: .38rem;
       width: min(100% - 2rem, 1180px);
       text-align: center;
     }
-
     .travel-desk__transition > span,
-    .travel-desk__transition::after {
-      display: none;
-    }
-
-    .travel-desk__inner {
-      width: min(100% - 1.25rem, 1280px);
-    }
-
-    .travel-desk__heading {
-      padding: 0 .4rem;
-    }
-
-    .travel-desk__heading h2 {
-      font-size: clamp(2.35rem, 12vw, 3.35rem);
-    }
-
+    .travel-desk__transition::after { display: none; }
+    .travel-desk__transition p,
+    .travel-desk__transition small { grid-column: 1; }
+    .travel-desk__inner { width: min(100% - 1.25rem, 1280px); }
+    .travel-desk__heading { padding: 0 .4rem; }
+    .travel-desk__heading h2 { font-size: clamp(2.25rem, 11vw, 3.2rem); }
     .travel-desk__paper {
-      padding: 2.8rem 1.05rem 3.2rem;
+      padding: 3.7rem 1rem 2.8rem;
       box-shadow: 7px 10px 0 rgba(7,16,12,.13);
     }
-
     .travel-desk__paper::before,
     .travel-desk__paper::after,
-    .travel-desk__clip {
-      display: none;
-    }
-
+    .travel-desk__clip { display: none; }
     .travel-desk-tab,
     .travel-desk-tab.is-active {
-      flex-basis: 10.9rem;
-      width: 10.9rem;
-      grid-template-columns: 2.9rem minmax(0, 1fr);
-      gap: .5rem;
-      padding: .48rem .65rem;
+      flex-basis: 10.25rem;
+      width: 10.25rem;
+      grid-template-columns: 2.7rem minmax(0, 1fr);
+      gap: .45rem;
+      padding: .4rem .55rem;
     }
-
     .travel-desk-tab__number,
-    .travel-desk-tab__arrow {
-      display: none;
-    }
-
-    .travel-desk-tab__drawing {
-      width: 2.9rem;
-      height: 3rem;
-    }
+    .travel-desk-tab__arrow { display: none; }
+    .travel-desk-tab__drawing { width: 2.7rem; height: 2.8rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .travel-desk-tab,
-    .travel-desk-tab__arrow {
-      transition: none;
-    }
+    .travel-desk-tab__arrow { transition: none; }
   }
 </style>
 
@@ -546,41 +472,30 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
       const activate = (slug: string, updateUrl = true) => {
         const nextSlug = available.has(slug) ? slug : defaultSlug;
-
         buttons.forEach((button) => {
           const active = button.dataset.cityCategoryButton === nextSlug;
           button.classList.toggle('is-active', active);
           button.setAttribute('aria-selected', String(active));
           button.tabIndex = active ? 0 : -1;
         });
-
         panels.forEach((panel) => {
           const active = panel.dataset.travelDeskPanel === nextSlug;
           panel.hidden = !active;
           panel.classList.toggle('is-active', active);
         });
-
-        if (updateUrl && nextSlug) {
-          history.replaceState(null, '', `${location.pathname}${location.search}#${nextSlug}`);
-        }
-
-        desk.dispatchEvent(new CustomEvent('atlas:city-category-changed', {
-          bubbles: true,
-          detail: { slug: nextSlug }
-        }));
+        if (updateUrl && nextSlug) history.replaceState(null, '', `${location.pathname}${location.search}#${nextSlug}`);
+        desk.dispatchEvent(new CustomEvent('atlas:city-category-changed', { bubbles: true, detail: { slug: nextSlug } }));
       };
 
       const activateFromHash = () => {
         const hash = decodeURIComponent(location.hash.replace(/^#/, ''));
         if (available.has(hash)) return activate(hash, false);
-
         const target = hash ? document.getElementById(hash) : null;
         const containingPanel = target?.closest('[data-travel-desk-panel]') as HTMLElement | null;
         if (!containingPanel || !desk.contains(containingPanel)) return activate(defaultSlug, false);
-
         activate(containingPanel.dataset.travelDeskPanel || defaultSlug, false);
-        const specialTrigger = target?.querySelector<HTMLButtonElement>('[data-partner-card-open], [data-selection-card-open], [data-place-open]');
-        if (specialTrigger) requestAnimationFrame(() => specialTrigger.click());
+        const trigger = target?.querySelector<HTMLButtonElement>('[data-partner-card-open], [data-selection-card-open], [data-place-open]');
+        if (trigger) requestAnimationFrame(() => trigger.click());
       };
 
       buttons.forEach((button, index) => {
@@ -588,13 +503,11 @@ const cityId = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
         button.addEventListener('keydown', (event) => {
           if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
           event.preventDefault();
-
           let targetIndex = index;
           if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') targetIndex = (index - 1 + buttons.length) % buttons.length;
           if (event.key === 'ArrowDown' || event.key === 'ArrowRight') targetIndex = (index + 1) % buttons.length;
           if (event.key === 'Home') targetIndex = 0;
           if (event.key === 'End') targetIndex = buttons.length - 1;
-
           buttons[targetIndex]?.focus();
           activate(buttons[targetIndex]?.dataset.cityCategoryButton || '');
         });
