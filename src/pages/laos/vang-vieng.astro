@@ -5,6 +5,9 @@ import VangViengEditorialGuide from '../../components/VangViengEditorialGuide.as
 import ExploreBoard from '../../components/ExploreBoard.astro';
 import CityCategorySPA from '../../components/TravelDeskCategorySPA.astro';
 import CityCategoryPanel from '../../components/TravelDeskCategoryPanel.astro';
+import PlaceCard from '../../components/PlaceCard.astro';
+import type { Place } from '../../data/atlas';
+import { vangViengRestaurants } from '../../data/vangViengRestaurants';
 import vangViengDrawingUrl from '../../../calque SVG/laos-bolaven-coffee-waterfall.webp?url';
 
 const vangViengPostcardFacts = [
@@ -15,16 +18,26 @@ const vangViengPostcardFacts = [
 ];
 
 const emptyLandmarks = [];
+const emptyPlaces: Place[] = [];
 const categoryTabs = [
-  { slug: 'restaurants', title: 'Restaurants', kicker: 'EAT · LOCAL · SLOW', icon: 'restaurants' as const, noun: 'restaurants', fieldNote: '01', count: 0, countLabel: 'notes soon' },
-  { slug: 'cafes', title: 'Cafés', kicker: 'COFFEE · PAUSE · SHADE', icon: 'cafes' as const, noun: 'cafés', fieldNote: '02', count: 0, countLabel: 'notes soon' },
-  { slug: 'accommodation', title: 'Guesthouses', kicker: 'SLEEP · SIMPLE · CENTRAL', icon: 'guesthouses' as const, noun: 'stays', fieldNote: '03', count: 0, countLabel: 'notes soon' },
-  { slug: 'scooter-rental', title: 'Scooter Rental', kicker: 'KEYS · HELMET · ROAD', icon: 'scooter' as const, noun: 'rental addresses', fieldNote: '04', count: 0, countLabel: 'notes soon' },
-  { slug: 'things-to-do', title: 'Things to do', kicker: 'CAVES · WATER · EXPLORE', icon: 'explore' as const, noun: 'experiences', fieldNote: '05', count: 0, countLabel: 'notes soon' },
-  { slug: 'gyms-fitness', title: 'Gyms & Fitness', kicker: 'TRAIN · MOVE · SWEAT', icon: 'gyms' as const, noun: 'places to train', fieldNote: '06', count: 0, countLabel: 'notes soon' },
-  { slug: 'markets-shopping', title: 'Markets & Shopping', kicker: 'MARKETS · GOODS · FINDS', icon: 'markets' as const, noun: 'markets and shops', fieldNote: '07', count: 0, countLabel: 'notes soon' },
-  { slug: 'essential-information', title: 'Essential Information', kicker: 'HEALTH · MONEY · BASICS', icon: 'essential' as const, noun: 'useful addresses', fieldNote: '08', count: 0, countLabel: 'notes soon' }
+  { slug: 'restaurants', title: 'Restaurants', kicker: 'EAT · LOCAL · SLOW', icon: 'restaurants' as const, noun: 'restaurants', fieldNote: '01', places: vangViengRestaurants },
+  { slug: 'cafes', title: 'Cafés', kicker: 'COFFEE · PAUSE · SHADE', icon: 'cafes' as const, noun: 'cafés', fieldNote: '02', places: emptyPlaces },
+  { slug: 'accommodation', title: 'Guesthouses', kicker: 'SLEEP · SIMPLE · CENTRAL', icon: 'guesthouses' as const, noun: 'stays', fieldNote: '03', places: emptyPlaces },
+  { slug: 'scooter-rental', title: 'Scooter Rental', kicker: 'KEYS · HELMET · ROAD', icon: 'scooter' as const, noun: 'rental addresses', fieldNote: '04', places: emptyPlaces },
+  { slug: 'things-to-do', title: 'Things to do', kicker: 'CAVES · WATER · EXPLORE', icon: 'explore' as const, noun: 'experiences', fieldNote: '05', places: emptyPlaces },
+  { slug: 'gyms-fitness', title: 'Gyms & Fitness', kicker: 'TRAIN · MOVE · SWEAT', icon: 'gyms' as const, noun: 'places to train', fieldNote: '06', places: emptyPlaces },
+  { slug: 'markets-shopping', title: 'Markets & Shopping', kicker: 'MARKETS · GOODS · FINDS', icon: 'markets' as const, noun: 'markets and shops', fieldNote: '07', places: emptyPlaces },
+  { slug: 'essential-information', title: 'Essential Information', kicker: 'HEALTH · MONEY · BASICS', icon: 'essential' as const, noun: 'useful addresses', fieldNote: '08', places: emptyPlaces }
 ];
+
+const spaTabs = categoryTabs.map(({ slug, title, kicker, icon, places }) => ({
+  slug,
+  title,
+  kicker,
+  icon,
+  count: places.length,
+  ...(places.length === 0 ? { countLabel: 'notes soon' } : {})
+}));
 ---
 
 <BaseLayout
@@ -65,7 +78,7 @@ const categoryTabs = [
 
     <CityCategorySPA
       cityName="Vang Vieng"
-      categories={categoryTabs}
+      categories={spaTabs}
       defaultSlug="restaurants"
       title="Plan your stay in Vang Vieng"
       intro=""
@@ -77,16 +90,24 @@ const categoryTabs = [
           slug={category.slug}
           cityName="Vang Vieng"
           title={category.title}
-          count={0}
+          count={category.places.length}
           noun={category.noun}
           intro=""
           fieldNote={category.fieldNote}
           active={index === 0}
         >
-          <div class="city-panel-empty">
-            <h4>This notebook tab is ready.</h4>
-            <p>Checked Vang Vieng addresses will appear here as the city guide is documented.</p>
-          </div>
+          {category.places.length ? (
+            <div class="city-panel-list">
+              {category.places.map((place, placeIndex) => (
+                <PlaceCard place={place} index={placeIndex} />
+              ))}
+            </div>
+          ) : (
+            <div class="city-panel-empty">
+              <h4>This notebook tab is ready.</h4>
+              <p>Checked Vang Vieng addresses will appear here as the city guide is documented.</p>
+            </div>
+          )}
         </CityCategoryPanel>
       ))}
     </CityCategorySPA>
