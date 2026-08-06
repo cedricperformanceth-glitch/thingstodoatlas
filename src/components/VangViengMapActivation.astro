@@ -1,0 +1,51 @@
+<script>
+  const activateVangViengMarker = () => {
+    const inactiveMarker = document.querySelector<SVGGElement>(
+      '.laos-map-page .city-marker--inactive[aria-label="Vang Vieng guide coming soon"]'
+    );
+
+    if (!inactiveMarker) return;
+
+    const svgNamespace = 'http://www.w3.org/2000/svg';
+    const activeMarker = document.createElementNS(svgNamespace, 'a');
+    activeMarker.setAttribute('class', 'city-marker city-marker--city city-marker--active');
+    activeMarker.setAttribute('href', '/laos/vang-vieng');
+    activeMarker.setAttribute('aria-label', 'Explore Vang Vieng');
+
+    while (inactiveMarker.firstChild) {
+      activeMarker.appendChild(inactiveMarker.firstChild);
+    }
+
+    const preview = document.createElementNS(svgNamespace, 'foreignObject');
+    preview.setAttribute('class', 'city-preview');
+    preview.setAttribute('x', '34');
+    preview.setAttribute('y', '830');
+    preview.setAttribute('width', '470');
+    preview.setAttribute('height', '430');
+    preview.innerHTML = `
+      <div class="city-note city-note--active city-note--vang-vieng" xmlns="http://www.w3.org/1999/xhtml">
+        <span class="city-note__tape" aria-hidden="true"></span>
+        <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Nam_song_river_vang_vieng.jpg?width=900" alt="Nam Song River and limestone mountains at Vang Vieng" />
+        <div class="city-note__body">
+          <span class="city-note__badge">Nam Song &amp; karst base</span>
+          <strong>Vang Vieng</strong>
+          <p>A compact river town opening onto caves, lagoons, viewpoints and limestone countryside roads.</p>
+          <span class="city-note__tags">Nam Song · caves · lagoons</span>
+          <small>Open the city chapter and explore beyond town.</small>
+        </div>
+      </div>
+    `;
+    activeMarker.appendChild(preview);
+    inactiveMarker.replaceWith(activeMarker);
+
+    const mapDescription = document.querySelector<SVGDescElement>('#map-description');
+    if (mapDescription) {
+      mapDescription.textContent = mapDescription.textContent
+        ?.replace('Pakse, Tad Lo, Thakhek and Don Det open city guides.', 'Pakse, Tad Lo, Thakhek, Vang Vieng and Don Det open city guides.')
+        .replace('Vientiane, Vang Vieng and Luang Prabang are being documented.', 'Vientiane and Luang Prabang are being documented.') || '';
+    }
+  };
+
+  activateVangViengMarker();
+  document.addEventListener('astro:page-load', activateVangViengMarker);
+</script>
