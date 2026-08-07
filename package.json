@@ -15,6 +15,7 @@
     "images:refresh-all": "node scripts/sync-place-images.mjs --refresh-generic",
     "images:pakse": "node scripts/sync-place-images.mjs --city=Pakse --country=Laos --refresh-generic",
     "images:vang-vieng": "node scripts/sync-place-images.mjs --city=\"Vang Vieng\" --country=Laos --category=cafes --refresh-generic && node scripts/sync-place-images.mjs --city=\"Vang Vieng\" --country=Laos --category=accommodation --refresh-generic && node scripts/sync-place-images.mjs --city=\"Vang Vieng\" --country=Laos --category=scooter-rental --refresh-generic && node scripts/sync-place-images.mjs --city=\"Vang Vieng\" --country=Laos --category=things-to-do --refresh-generic && node scripts/sync-place-images.mjs --city=\"Vang Vieng\" --country=Laos --category=gyms-fitness --refresh-generic && node scripts/sync-place-images.mjs --city=\"Vang Vieng\" --country=Laos --category=markets-shopping --refresh-generic && node scripts/sync-place-images.mjs --city=\"Vang Vieng\" --country=Laos --category=essential-information --refresh-generic",
+    "images:vientiane": "node scripts/sync-place-images.mjs --city=Vientiane --country=Laos --category=restaurants --refresh-generic && node scripts/sync-place-images.mjs --city=Vientiane --country=Laos --category=cafes --refresh-generic && node scripts/sync-place-images.mjs --city=Vientiane --country=Laos --category=accommodation --refresh-generic",
     "images:audit": "node scripts/audit-place-image-system.mjs",
     "images:places": "node scripts/sync-place-images.mjs",
     "images:city": "node scripts/sync-place-images.mjs",
