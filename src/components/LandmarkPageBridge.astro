@@ -1,0 +1,341 @@
+---
+import { laosLandmarkPages } from '../data/laosLandmarkPageRegistry';
+
+const bridgeConfig = laosLandmarkPages.map((entry) => {
+  const getFact = (label: string) => entry.landmark.facts.find((fact) => fact.label.toLowerCase() === label.toLowerCase())?.value || '';
+  return {
+    slug: entry.slug,
+    modalId: entry.landmark.modalId,
+    route: entry.route,
+    duration: entry.landmark.cityContext.duration || getFact('Duration'),
+    difficulty: getFact('Difficulty') || 'Check the field guide',
+    bestTime: getFact('Best time') || 'Check current conditions'
+  };
+});
+---
+
+<script id="atlas-landmark-page-config" type="application/json" set:html={JSON.stringify(bridgeConfig)}></script>
+
+<style is:global>
+  .landmark-modal[data-guide-page-ready='true'] {
+    width: min(860px, calc(100vw - 48px));
+    height: auto;
+    max-height: min(500px, calc(100vh - 48px));
+    overflow: auto;
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__grid {
+    grid-template-columns: minmax(260px, .84fr) minmax(360px, 1.16fr);
+    align-items: start;
+    height: auto;
+    min-height: 0;
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__story {
+    display: flex;
+    min-height: 0;
+    align-self: start;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 22px 26px 18px 32px;
+    overflow: visible;
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__story h2 {
+    font-size: clamp(3rem, 4.7vw, 4.1rem);
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__region {
+    margin-top: 8px !important;
+    font-size: 1.02rem !important;
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-story__underline {
+    margin-top: 4px;
+    margin-bottom: 7px;
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-story__description {
+    max-width: 27rem;
+    font-size: .94rem;
+    line-height: 1.24;
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-story__annotations,
+  .landmark-modal[data-guide-page-ready='true'] .landmark-story__scribble,
+  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__facts,
+  .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__thumbnails,
+  .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__arrow,
+  .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__counter,
+  .landmark-modal[data-guide-page-ready='true'] .landmark-actions__annotation,
+  .landmark-modal[data-guide-page-ready='true'] .landmark-visual__closing,
+  .landmark-modal[data-guide-page-ready='true'] .landmark-partner-note {
+    display: none !important;
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__visual {
+    align-self: start;
+    justify-content: flex-start;
+    padding: 16px 20px 0;
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-visual__meta {
+    margin-bottom: 5px;
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__stage {
+    min-height: 198px;
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__stage > img {
+    height: 198px;
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__credit {
+    min-height: 0;
+    margin-top: 4px;
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__actions {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 7px;
+    margin-top: 7px;
+    margin-bottom: 0;
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-action {
+    min-height: 38px;
+    padding: 6px 7px;
+    font-size: .86rem;
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-preview-meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    margin-top: 9px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(49, 85, 69, .28);
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-preview-meta span {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+    color: #315545;
+    font: 650 .78rem/1.02 'Caveat', 'Segoe Print', cursive;
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-preview-meta small {
+    color: #a45d3a;
+    font: 700 .42rem/1.15 'DM Sans', sans-serif;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] [data-landmark-page-link] {
+    border: 1px solid #b8653e;
+    background: #f4e7d2;
+    color: #9a5134;
+    font-weight: 700;
+    box-shadow: 2px 3px 0 rgba(184, 101, 62, .14);
+  }
+
+  .landmark-return-target {
+    position: relative;
+    z-index: 6;
+    outline: 3px solid rgba(217, 119, 69, .88) !important;
+    outline-offset: 7px !important;
+    box-shadow: 0 0 0 12px rgba(217, 119, 69, .12), 0 16px 35px rgba(31, 57, 45, .16) !important;
+  }
+
+  @media (max-width: 850px) {
+    .landmark-modal[data-guide-page-ready='true'] {
+      width: min(730px, calc(100vw - 32px));
+      max-height: min(500px, calc(100vh - 32px));
+    }
+
+    .landmark-modal[data-guide-page-ready='true'] .landmark-modal__grid {
+      grid-template-columns: minmax(230px, .82fr) minmax(320px, 1.18fr);
+    }
+  }
+
+  @media (max-width: 650px) {
+    .landmark-modal[data-guide-page-ready='true'] .landmark-modal__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  type LandmarkBridgeConfig = {
+    slug: string;
+    modalId: string;
+    route: string;
+    duration: string;
+    difficulty: string;
+    bestTime: string;
+  };
+
+  type LandmarkReturnState = {
+    slug: string;
+    sourcePath: string;
+    sourceId: string;
+    categorySlug?: string;
+    scrollY: number;
+  };
+
+  const RETURN_KEY = 'atlas:landmark-return';
+
+  const readConfig = (): LandmarkBridgeConfig[] => {
+    const node = document.getElementById('atlas-landmark-page-config');
+    if (!node?.textContent) return [];
+    try { return JSON.parse(node.textContent) as LandmarkBridgeConfig[]; }
+    catch { return []; }
+  };
+
+  const currentScroll = () => {
+    const fixedTop = Number.parseFloat(document.body.style.top || '');
+    return Number.isFinite(fixedTop) && fixedTop < 0 ? Math.abs(fixedTop) : window.scrollY;
+  };
+
+  const activeCategory = () => (
+    document.querySelector<HTMLElement>('[data-city-category-button][aria-selected="true"]')?.dataset.cityCategoryButton || undefined
+  );
+
+  const sourceElementFor = (trigger: HTMLElement, slug: string) => (
+    trigger.closest<HTMLElement>(`.explore-board-card, .city-landmark-card, #category-${CSS.escape(slug)}, [data-place-card], article`) || trigger
+  );
+
+  const prepareSources = (configs: LandmarkBridgeConfig[]) => {
+    configs.forEach((config) => {
+      document.querySelectorAll<HTMLElement>(`[data-open-landmark="${config.modalId}"]`).forEach((trigger, index) => {
+        const source = sourceElementFor(trigger, config.slug);
+        if (!source.id) source.id = `landmark-source-${config.slug}-${index + 1}`;
+        trigger.dataset.landmarkPageSourceId = source.id;
+      });
+    });
+  };
+
+  const addMeta = (dialog: HTMLDialogElement, config: LandmarkBridgeConfig) => {
+    const story = dialog.querySelector<HTMLElement>('.landmark-modal__story');
+    if (!story || story.querySelector('.landmark-preview-meta')) return;
+    const meta = document.createElement('div');
+    meta.className = 'landmark-preview-meta';
+    meta.innerHTML = `
+      <span><small>Time</small>${config.duration}</span>
+      <span><small>Effort</small>${config.difficulty}</span>
+      <span><small>Best rhythm</small>${config.bestTime}</span>
+    `;
+    story.append(meta);
+  };
+
+  const installPageLink = (dialog: HTMLDialogElement, config: LandmarkBridgeConfig) => {
+    const actions = dialog.querySelector<HTMLElement>('.landmark-modal__actions');
+    if (!actions) return;
+
+    let link = actions.querySelector<HTMLAnchorElement>('[data-landmark-page-link]');
+    const legacyButton = actions.querySelector<HTMLElement>('[data-open-landmark-guide]');
+
+    if (!link) {
+      link = document.createElement('a');
+      link.className = legacyButton?.className || 'landmark-action landmark-action--guide';
+      link.dataset.landmarkPageLink = config.slug;
+      link.href = config.route;
+      link.innerHTML = '<span aria-hidden="true">✎</span> Plan my visit';
+      link.setAttribute('aria-label', `Open the complete ${dialog.querySelector('h2')?.textContent?.trim() || 'landmark'} guide`);
+      if (legacyButton) legacyButton.replaceWith(link);
+      else {
+        const saveButton = actions.querySelector('[data-add-landmark]');
+        actions.insertBefore(link, saveButton || null);
+      }
+    }
+
+    if (link.dataset.returnReady === 'true') return;
+    link.dataset.returnReady = 'true';
+    link.addEventListener('click', () => {
+      const sourceId = dialog.dataset.landmarkPageSourceId || '';
+      if (sourceId) {
+        const state: LandmarkReturnState = {
+          slug: config.slug,
+          sourcePath: `${location.pathname}${location.search}${location.hash}`,
+          sourceId,
+          categorySlug: activeCategory(),
+          scrollY: currentScroll()
+        };
+        sessionStorage.setItem(RETURN_KEY, JSON.stringify(state));
+        if (config.slug === 'wat-phou') sessionStorage.setItem('atlas:wat-phou-return', JSON.stringify(state));
+      }
+      if (dialog.open) dialog.close();
+    });
+  };
+
+  const configureDialogs = (configs: LandmarkBridgeConfig[]) => {
+    prepareSources(configs);
+    configs.forEach((config) => {
+      const dialog = document.getElementById(config.modalId);
+      if (!(dialog instanceof HTMLDialogElement)) return;
+      dialog.dataset.guidePageReady = 'true';
+      const eyebrow = dialog.querySelector<HTMLElement>('.landmark-modal__eyebrow');
+      if (eyebrow) eyebrow.textContent = 'LAOS · QUICK FIELD CARD';
+      addMeta(dialog, config);
+      installPageLink(dialog, config);
+    });
+  };
+
+  const bindSourceTracking = (configs: LandmarkBridgeConfig[]) => {
+    if (document.documentElement.dataset.landmarkPageTrackingReady === 'true') return;
+    document.documentElement.dataset.landmarkPageTrackingReady = 'true';
+    const byModal = new Map(configs.map((config) => [config.modalId, config]));
+    document.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const trigger = target.closest<HTMLElement>('[data-open-landmark]');
+      if (!trigger) return;
+      const config = byModal.get(trigger.dataset.openLandmark || '');
+      if (!config) return;
+      const sourceId = trigger.dataset.landmarkPageSourceId || '';
+      const dialog = document.getElementById(config.modalId);
+      if (dialog instanceof HTMLDialogElement) dialog.dataset.landmarkPageSourceId = sourceId;
+    }, true);
+  };
+
+  const restoreSource = () => {
+    const raw = sessionStorage.getItem(RETURN_KEY);
+    if (!raw) return;
+    let state: LandmarkReturnState | null = null;
+    try { state = JSON.parse(raw) as LandmarkReturnState; }
+    catch { sessionStorage.removeItem(RETURN_KEY); }
+    if (!state || location.pathname !== state.sourcePath.split(/[?#]/)[0]) return;
+
+    if (state.categorySlug) {
+      const tab = document.querySelector<HTMLButtonElement>(`[data-city-category-button="${CSS.escape(state.categorySlug)}"]`);
+      if (tab && tab.getAttribute('aria-selected') !== 'true') tab.click();
+    }
+
+    window.setTimeout(() => {
+      const source = document.getElementById(state!.sourceId);
+      if (source) {
+        source.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'auto' });
+        source.classList.add('landmark-return-target');
+        window.setTimeout(() => source.classList.remove('landmark-return-target'), 1600);
+      } else {
+        window.scrollTo({ top: state!.scrollY, left: 0, behavior: 'auto' });
+      }
+      sessionStorage.removeItem(RETURN_KEY);
+      if (state!.slug === 'wat-phou') sessionStorage.removeItem('atlas:wat-phou-return');
+    }, 80);
+  };
+
+  const setupLandmarkPageBridge = () => {
+    const configs = readConfig();
+    if (!configs.length) return;
+    bindSourceTracking(configs);
+    restoreSource();
+    [0, 40, 120, 300].forEach((delay) => window.setTimeout(() => configureDialogs(configs), delay));
+  };
+
+  setupLandmarkPageBridge();
+  document.addEventListener('astro:page-load', setupLandmarkPageBridge);
+  window.addEventListener('pageshow', setupLandmarkPageBridge);
+</script>
