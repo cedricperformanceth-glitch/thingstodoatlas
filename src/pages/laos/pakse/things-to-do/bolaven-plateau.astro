@@ -22,4 +22,20 @@ const entry = laosLandmarkPageBySlug['bolaven-plateau'];
       <LandmarkGuideFinalCta entry={entry} />
     </div>
   </div>
+
+  <script>
+    const wireBolavenRelatedLandmarks = () => {
+      const routes = new Map([
+        ['Wat Phou', '/laos/pakse/things-to-do/wat-phou'],
+        ['Khone Phapheng', '/laos/don-det/things-to-do/khone-phapheng-falls']
+      ]);
+      document.querySelectorAll<HTMLAnchorElement>('.field-guide-related-card').forEach((card) => {
+        const title = card.querySelector('strong')?.textContent?.trim() || '';
+        const route = routes.get(title);
+        if (route) card.href = route;
+      });
+    };
+    wireBolavenRelatedLandmarks();
+    document.addEventListener('astro:page-load', wireBolavenRelatedLandmarks);
+  </script>
 </BaseLayout>
