@@ -27,7 +27,8 @@
   margin-bottom: 0;
 }
 
-.landmark-guide-custom-page > .field-guide-page .field-guide-final-cta:not(.landmark-guide-final-cta) {
+.landmark-guide-custom-page > .field-guide-page .field-guide-final-cta:not(.landmark-guide-final-cta),
+.landmark-guide-custom-page > .field-guide-page .field-guide-sources {
   display: none !important;
 }
 
