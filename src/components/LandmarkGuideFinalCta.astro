@@ -1,12 +1,14 @@
 ---
+import type { LandmarkGalleryItem } from '../data/laosLandmarks';
 import type { LaosLandmarkPageEntry } from '../data/laosLandmarkPageRegistry';
 import LandmarkGuideSources from './LandmarkGuideSources.astro';
 
 interface Props {
   entry: LaosLandmarkPageEntry;
+  gallery?: LandmarkGalleryItem[];
 }
 
-const { entry } = Astro.props;
+const { entry, gallery } = Astro.props;
 const { landmark } = entry;
 
 const tripItem = {
@@ -25,7 +27,7 @@ const tripItem = {
 };
 ---
 
-<LandmarkGuideSources entry={entry} />
+<LandmarkGuideSources entry={entry} gallery={gallery} />
 
 <section class="field-guide-final-cta landmark-guide-final-cta" aria-labelledby={`landmark-final-cta-${entry.slug}`}>
   <div class="field-guide-final-cta__copy">
