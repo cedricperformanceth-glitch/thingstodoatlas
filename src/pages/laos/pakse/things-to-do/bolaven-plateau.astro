@@ -1,9 +1,14 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import BolavenPlateauFieldGuide from '../../../../components/BolavenPlateauFieldGuide.astro';
+import LandmarkGuideFinalCta from '../../../../components/LandmarkGuideFinalCta.astro';
+import { laosLandmarkPageBySlug } from '../../../../data/laosLandmarkPageRegistry';
 import '../../../../styles/wat-phou-field-guide.css';
 import '../../../../styles/wat-phou-refinements.css';
 import '../../../../styles/field-guide-position.css';
+import '../../../../styles/landmark-field-guide-shared.css';
+
+const entry = laosLandmarkPageBySlug['bolaven-plateau'];
 ---
 
 <BaseLayout
@@ -11,5 +16,10 @@ import '../../../../styles/field-guide-position.css';
   description="Plan the Bolaven Plateau from Pakse: one-day and multi-day routes, waterfalls, coffee country, weather, road rhythm and practical tips."
   canonical="https://thingstodoatlas.com/laos/pakse/things-to-do/bolaven-plateau"
 >
-  <BolavenPlateauFieldGuide />
+  <div class="landmark-guide-custom-page">
+    <BolavenPlateauFieldGuide />
+    <div class="landmark-guide-shared-cta">
+      <LandmarkGuideFinalCta entry={entry} />
+    </div>
+  </div>
 </BaseLayout>
