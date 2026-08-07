@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import LaosLandmarkFieldGuide from '../../../../components/LaosLandmarkFieldGuide.astro';
+import { laosLandmarkPages, type LaosLandmarkPageEntry } from '../../../../data/laosLandmarkPageRegistry';
+import '../../../../styles/wat-phou-field-guide.css';
+import '../../../../styles/wat-phou-refinements.css';
+import '../../../../styles/field-guide-position.css';
+import '../../../../styles/landmark-field-guide-shared.css';
+
+export function getStaticPaths() {
+  return laosLandmarkPages
+    .filter((entry) => !['wat-phou', 'bolaven-plateau'].includes(entry.slug))
+    .map((entry) => ({
+      params: { city: entry.citySlug, landmark: entry.slug },
+      props: { entry }
+    }));
+}
+
+interface Props {
+  entry: LaosLandmarkPageEntry;
+}
+
+const { entry } = Astro.props;
+const title = `${entry.landmark.name} from ${entry.cityName}`;
+const description = `${entry.landmark.description} Practical route, timing, conditions and field notes for planning the visit from ${entry.cityName}.`;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={`https://thingstodoatlas.com${entry.route}`}
+>
+  <LaosLandmarkFieldGuide entry={entry} />
+</BaseLayout>
