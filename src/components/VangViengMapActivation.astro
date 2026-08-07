@@ -1,51 +1,97 @@
 <script>
-  const activateVangViengMarker = () => {
-    const inactiveMarker = document.querySelector<SVGGElement>(
-      '.laos-map-page .city-marker--inactive[aria-label="Vang Vieng guide coming soon"]'
-    );
+  type CityActivation = {
+    inactiveLabel: string;
+    href: string;
+    ariaLabel: string;
+    noteClass: string;
+    image: string;
+    imageAlt: string;
+    badge: string;
+    name: string;
+    description: string;
+    tags: string;
+    footer: string;
+  };
 
-    if (!inactiveMarker) return;
-
-    const svgNamespace = 'http://www.w3.org/2000/svg';
-    const activeMarker = document.createElementNS(svgNamespace, 'a');
-    activeMarker.setAttribute('class', 'city-marker city-marker--city city-marker--active');
-    activeMarker.setAttribute('href', '/laos/vang-vieng');
-    activeMarker.setAttribute('aria-label', 'Explore Vang Vieng');
-
-    while (inactiveMarker.firstChild) {
-      activeMarker.appendChild(inactiveMarker.firstChild);
+  const cityActivations: CityActivation[] = [
+    {
+      inactiveLabel: 'Vang Vieng guide coming soon',
+      href: '/laos/vang-vieng',
+      ariaLabel: 'Explore Vang Vieng',
+      noteClass: 'city-note--vang-vieng',
+      image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Nam_song_river_vang_vieng.jpg?width=900',
+      imageAlt: 'Nam Song River and limestone mountains at Vang Vieng',
+      badge: 'Nam Song & karst base',
+      name: 'Vang Vieng',
+      description: 'A compact river town opening onto caves, lagoons, viewpoints and limestone countryside roads.',
+      tags: 'Nam Song · caves · lagoons',
+      footer: 'Open the city chapter and explore beyond town.'
+    },
+    {
+      inactiveLabel: 'Vientiane guide coming soon',
+      href: '/laos/vientiane',
+      ariaLabel: 'Explore Vientiane',
+      noteClass: 'city-note--vientiane',
+      image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Pha_That_Luang,_Vientiane,_Laos.jpg?width=900',
+      imageAlt: 'Pha That Luang in Vientiane, Laos',
+      badge: 'Capital & Mekong base',
+      name: 'Vientiane',
+      description: 'A low-rise capital of temples, markets, riverside evenings and practical connections across Laos.',
+      tags: 'Patuxay · That Luang · Mekong',
+      footer: 'Open the capital chapter and plan from here.'
     }
+  ];
 
-    const preview = document.createElementNS(svgNamespace, 'foreignObject');
-    preview.setAttribute('class', 'city-preview');
-    preview.setAttribute('x', '34');
-    preview.setAttribute('y', '830');
-    preview.setAttribute('width', '470');
-    preview.setAttribute('height', '430');
-    preview.innerHTML = `
-      <div class="city-note city-note--active city-note--vang-vieng" xmlns="http://www.w3.org/1999/xhtml">
-        <span class="city-note__tape" aria-hidden="true"></span>
-        <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Nam_song_river_vang_vieng.jpg?width=900" alt="Nam Song River and limestone mountains at Vang Vieng" />
-        <div class="city-note__body">
-          <span class="city-note__badge">Nam Song &amp; karst base</span>
-          <strong>Vang Vieng</strong>
-          <p>A compact river town opening onto caves, lagoons, viewpoints and limestone countryside roads.</p>
-          <span class="city-note__tags">Nam Song · caves · lagoons</span>
-          <small>Open the city chapter and explore beyond town.</small>
+  const activateLaosCityMarkers = () => {
+    const svgNamespace = 'http://www.w3.org/2000/svg';
+
+    for (const city of cityActivations) {
+      const inactiveMarker = document.querySelector<SVGGElement>(
+        `.laos-map-page .city-marker--inactive[aria-label="${city.inactiveLabel}"]`
+      );
+      if (!inactiveMarker) continue;
+
+      inactiveMarker.querySelector('.city-preview')?.remove();
+
+      const activeMarker = document.createElementNS(svgNamespace, 'a');
+      activeMarker.setAttribute('class', 'city-marker city-marker--city city-marker--active');
+      activeMarker.setAttribute('href', city.href);
+      activeMarker.setAttribute('aria-label', city.ariaLabel);
+
+      while (inactiveMarker.firstChild) {
+        activeMarker.appendChild(inactiveMarker.firstChild);
+      }
+
+      const preview = document.createElementNS(svgNamespace, 'foreignObject');
+      preview.setAttribute('class', 'city-preview');
+      preview.setAttribute('x', '34');
+      preview.setAttribute('y', '830');
+      preview.setAttribute('width', '470');
+      preview.setAttribute('height', '430');
+      preview.innerHTML = `
+        <div class="city-note city-note--active ${city.noteClass}" xmlns="http://www.w3.org/1999/xhtml">
+          <span class="city-note__tape" aria-hidden="true"></span>
+          <img src="${city.image}" alt="${city.imageAlt}" />
+          <div class="city-note__body">
+            <span class="city-note__badge">${city.badge}</span>
+            <strong>${city.name}</strong>
+            <p>${city.description}</p>
+            <span class="city-note__tags">${city.tags}</span>
+            <small>${city.footer}</small>
+          </div>
         </div>
-      </div>
-    `;
-    activeMarker.appendChild(preview);
-    inactiveMarker.replaceWith(activeMarker);
+      `;
+      activeMarker.appendChild(preview);
+      inactiveMarker.replaceWith(activeMarker);
+    }
 
     const mapDescription = document.querySelector<SVGDescElement>('#map-description');
     if (mapDescription) {
-      mapDescription.textContent = mapDescription.textContent
-        ?.replace('Pakse, Tad Lo, Thakhek and Don Det open city guides.', 'Pakse, Tad Lo, Thakhek, Vang Vieng and Don Det open city guides.')
-        .replace('Vientiane, Vang Vieng and Luang Prabang are being documented.', 'Vientiane and Luang Prabang are being documented.') || '';
+      mapDescription.textContent =
+        'Pakse, Tad Lo, Thakhek, Vang Vieng, Vientiane and Don Det open city guides. Bolaven Plateau, Wat Phou, Khone Phapheng Falls, Xe Bang Fai Cave, Tham Nang Aen Cave, Pha Pa Tou and Kong Lor Cave open landmark field cards. A Hmong culture note is marked symbolically in northern Laos. Luang Prabang is being documented.';
     }
   };
 
-  activateVangViengMarker();
-  document.addEventListener('astro:page-load', activateVangViengMarker);
+  activateLaosCityMarkers();
+  document.addEventListener('astro:page-load', activateLaosCityMarkers);
 </script>
