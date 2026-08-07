@@ -1,0 +1,140 @@
+---
+import type { LaosLandmarkPageEntry } from '../data/laosLandmarkPageRegistry';
+import { getLandmarkResearchSources } from '../data/laosLandmarkResearchSources';
+
+interface Props {
+  entry: LaosLandmarkPageEntry;
+}
+
+const { entry } = Astro.props;
+const sources = getLandmarkResearchSources(entry.slug);
+const sourceKindLabel = {
+  history: 'HISTORY',
+  official: 'OFFICIAL / LOCAL',
+  'field-report': 'FIELD REPORT',
+  image: 'IMAGES'
+};
+---
+
+<section class="field-guide-sources landmark-guide-sources" aria-label={`Editorial and image sources for ${entry.landmark.name}`}>
+  <p>
+    <strong>Field note method.</strong>
+    Wikipedia is used as a research starting point for history and geography when a relevant article exists. Facts are checked against official, local or specialist sources where possible. Independent travel blogs and field reports are used to identify practical questions, recurring observations and traveller perspective; their wording is not copied.
+  </p>
+
+  <details>
+    <summary>Sources & photo licences</summary>
+    {sources.length ? (
+      <ul>
+        {sources.map((source) => (
+          <li>
+            <span class="landmark-source-kind">{sourceKindLabel[source.kind]}</span>
+            <a href={source.href} target="_blank" rel="noreferrer">{source.label}</a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>Source links for this field note are being consolidated.</p>
+    )}
+    <p>Photo author, Wikimedia Commons attribution, licence and the exact file source are shown directly under each Commons image.</p>
+  </details>
+</section>
+
+<style>
+  .landmark-guide-sources {
+    margin-top: clamp(2.8rem, 5vw, 5rem);
+  }
+
+  .landmark-guide-sources details ul {
+    display: grid;
+    gap: .62rem;
+  }
+
+  .landmark-guide-sources details li {
+    display: grid;
+    grid-template-columns: 7.2rem minmax(0, 1fr);
+    gap: .75rem;
+    align-items: baseline;
+  }
+
+  .landmark-source-kind {
+    color: var(--terracotta, #b8653e);
+    font: 800 .47rem/1.2 'DM Sans', sans-serif;
+    letter-spacing: .11em;
+  }
+
+  @media (max-width: 620px) {
+    .landmark-guide-sources details li {
+      grid-template-columns: 1fr;
+      gap: .2rem;
+    }
+  }
+</style>
+
+<script>
+  const licenseUrl = (label: string) => {
+    const normalized = label.toUpperCase().replace(/\s+/g, ' ').trim();
+    const map: Record<string, string> = {
+      'CC0 1.0': 'https://creativecommons.org/publicdomain/zero/1.0/',
+      'CC BY 2.0': 'https://creativecommons.org/licenses/by/2.0/',
+      'CC BY 3.0': 'https://creativecommons.org/licenses/by/3.0/',
+      'CC BY 4.0': 'https://creativecommons.org/licenses/by/4.0/',
+      'CC BY-SA 2.0': 'https://creativecommons.org/licenses/by-sa/2.0/',
+      'CC BY-SA 3.0': 'https://creativecommons.org/licenses/by-sa/3.0/',
+      'CC BY-SA 4.0': 'https://creativecommons.org/licenses/by-sa/4.0/'
+    };
+    return map[normalized] || '';
+  };
+
+  const normalizeCommonsCredits = () => {
+    document.querySelectorAll<HTMLElement>('.field-guide-page figcaption').forEach((caption) => {
+      if (caption.dataset.commonsCreditReady === 'true') return;
+
+      const sourceLink = [...caption.querySelectorAll<HTMLAnchorElement>('a')]
+        .find((link) => link.href.includes('commons.wikimedia.org/wiki/File'));
+      if (!sourceLink) return;
+
+      const original = caption.textContent?.replace(/\s+/g, ' ').trim() || '';
+      const author = sourceLink.textContent?.trim().replace(/^Photo:\s*/i, '') || 'Wikimedia contributor';
+      const explicitLicenseLink = [...caption.querySelectorAll<HTMLAnchorElement>('a')]
+        .find((link) => link.href.includes('creativecommons.org/'));
+      const licenseMatch = original.match(/\b(CC0\s*1\.0|CC\s+BY(?:-SA)?\s+\d\.\d)\b/i);
+      const license = explicitLicenseLink?.textContent?.trim() || licenseMatch?.[1]?.toUpperCase().replace(/\s+/g, ' ') || '';
+      const mappedLicenseUrl = explicitLicenseLink?.href || licenseUrl(license);
+
+      caption.textContent = '';
+      caption.append('Photo: ');
+
+      const authorSpan = document.createElement('span');
+      authorSpan.textContent = author;
+      caption.append(authorSpan, ' · Wikimedia Commons');
+
+      if (license) {
+        caption.append(' · ');
+        if (mappedLicenseUrl) {
+          const licenceAnchor = document.createElement('a');
+          licenceAnchor.href = mappedLicenseUrl;
+          licenceAnchor.target = '_blank';
+          licenceAnchor.rel = 'noreferrer';
+          licenceAnchor.textContent = license;
+          caption.append(licenceAnchor);
+        } else {
+          caption.append(license);
+        }
+      }
+
+      caption.append(' · ');
+      const sourceAnchor = document.createElement('a');
+      sourceAnchor.href = sourceLink.href;
+      sourceAnchor.target = '_blank';
+      sourceAnchor.rel = 'noreferrer';
+      sourceAnchor.textContent = 'Source ↗';
+      caption.append(sourceAnchor);
+      caption.dataset.commonsCreditReady = 'true';
+    });
+  };
+
+  normalizeCommonsCredits();
+  document.addEventListener('astro:page-load', normalizeCommonsCredits);
+  window.addEventListener('pageshow', normalizeCommonsCredits);
+</script>
