@@ -1,0 +1,19 @@
+<script>
+  const setupLandmarkBackHistory = () => {
+    if (document.documentElement.dataset.landmarkBackHistoryReady === 'true') return;
+    document.documentElement.dataset.landmarkBackHistoryReady = 'true';
+
+    document.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const button = target.closest<HTMLElement>('[data-landmark-page-back], [data-wat-phou-page-back], [data-bolaven-page-back]');
+      if (!button || history.length <= 1) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      history.back();
+    }, true);
+  };
+
+  setupLandmarkBackHistory();
+  document.addEventListener('astro:page-load', setupLandmarkBackHistory);
+</script>
