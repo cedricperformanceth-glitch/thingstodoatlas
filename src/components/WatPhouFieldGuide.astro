@@ -22,6 +22,45 @@ const watPhouTripItem = {
   address: 'Champasak Province, Southern Laos',
   url: '/laos/pakse/things-to-do/wat-phou'
 };
+
+const watPhouRelatedLandmarks = [
+  {
+    title: 'Wat Phou Salao',
+    kicker: 'PAKSE · GOLDEN BUDDHA · VIEWPOINT',
+    note: 'A hilltop temple above Pakse with the Golden Buddha and a wide view across the Mekong plain.',
+    href: '/laos/pakse',
+    image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Golden_Buddha_of_Wat_Phou_Salao%2C_Pakse_20251228_%28II%29.jpg?width=1100',
+    alt: 'Golden Buddha at Wat Phou Salao above Pakse',
+    credit: 'Supanut Arunoprayote · CC BY 4.0',
+    creditHref: 'https://commons.wikimedia.org/wiki/File:Golden_Buddha_of_Wat_Phou_Salao,_Pakse_20251228_(II).jpg'
+  },
+  {
+    title: 'Bolaven Plateau',
+    kicker: 'ROAD TRIP · WATERFALLS · COFFEE',
+    note: 'Leave Pakse for a highland road of waterfalls, coffee farms and villages rather than one single stop.',
+    href: '/laos/pakse#explore-board-pakse',
+    image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Bolaven_Plateau.jpg?width=1100',
+    alt: 'Waterfall and forest landscape on the Bolaven Plateau',
+    credit: 'Dario Severi · CC BY-SA 3.0',
+    creditHref: 'https://commons.wikimedia.org/wiki/File:Bolaven_Plateau.jpg'
+  },
+  {
+    title: 'Tad Lo',
+    kicker: 'WATERFALLS · VILLAGE · SLOW DAYS',
+    note: 'A slower Bolaven stop for waterfalls, village life and a few days without treating the road like a checklist.',
+    href: '/laos/tad-lo',
+    image: '/images/laos/tad-lo.webp',
+    alt: 'Tad Lo in southern Laos'
+  },
+  {
+    title: 'Don Det',
+    kicker: 'MEKONG · ISLANDS · SOUTH',
+    note: 'Continue south into Si Phan Don for bicycles, river days and the final Lao stretch before Cambodia.',
+    href: '/laos/don-det',
+    image: '/images/laos/don-det.webp',
+    alt: 'Don Det island in Si Phan Don, southern Laos'
+  }
+];
 ---
 
 <main class="field-guide-page">
@@ -203,14 +242,54 @@ const watPhouTripItem = {
       ))}
     </section>
 
-    <footer class="field-guide-footer">
-      <div class="field-guide-footer__copy">
-        <p class="section-label">KEEP IT INSIDE THE JOURNEY</p>
-        <h2>Wat Phou belongs in the notebook.</h2>
-        <p>Save the landmark, then keep building the road around it: Pakse, Champasak, the Bolaven Plateau and the journey south toward Si Phan Don.</p>
+    <section class="field-guide-sources" aria-label="Editorial and image sources">
+      <p><strong>Field note method.</strong> Historical and heritage facts were cross-checked against UNESCO and official tourism information. Independent visitor reports were used only to identify recurring practical questions.</p>
+      <details>
+        <summary>Sources & photo licences</summary>
+        <ul>{watPhouSources.map((source) => <li><a href={source.href} target="_blank" rel="noreferrer">{source.label}</a></li>)}</ul>
+        <p>Wat Phou article photographs link to their Wikimedia Commons file page and Creative Commons licence.</p>
+      </details>
+    </section>
+
+    <section class="field-guide-related" aria-labelledby="wat-phou-related-title">
+      <header class="field-guide-related__heading">
+        <div>
+          <p class="section-label">KEEP EXPLORING SOUTHERN LAOS</p>
+          <h2 id="wat-phou-related-title">Where does the road go next?</h2>
+        </div>
+        <p>Four nearby chapters that make sense before or after Wat Phou. Pick the next card rather than jumping back into a menu.</p>
+      </header>
+
+      <div class="field-guide-related__grid">
+        {watPhouRelatedLandmarks.map((landmark) => (
+          <a class="field-guide-related-card" href={landmark.href}>
+            <span class="field-guide-related-card__image">
+              <img src={landmark.image} alt={landmark.alt} width="700" height="900" loading="lazy" decoding="async" />
+            </span>
+            {landmark.credit && (
+              <span class="field-guide-related-card__credit">
+                Photo: <a href={landmark.creditHref} target="_blank" rel="noreferrer" onclick="event.stopPropagation()">{landmark.credit}</a>
+              </span>
+            )}
+            <span class="field-guide-related-card__copy">
+              <small>{landmark.kicker}</small>
+              <strong>{landmark.title}</strong>
+              <p>{landmark.note}</p>
+              <span class="field-guide-related-card__arrow">Open the field note <b aria-hidden="true">↗</b></span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="field-guide-final-cta" aria-labelledby="wat-phou-final-cta-title">
+      <div class="field-guide-final-cta__copy">
+        <p class="section-label">KEEP IT IN THE NOTEBOOK</p>
+        <h2 id="wat-phou-final-cta-title">Save Wat Phou for the road.</h2>
+        <p>Add the landmark to your trip now, or open the map when you are ready to work out the route.</p>
       </div>
 
-      <div class="field-guide-footer__actions">
+      <div class="field-guide-final-cta__actions">
         <button
           type="button"
           class="field-guide-primary-action"
@@ -218,20 +297,8 @@ const watPhouTripItem = {
           data-trip-place={JSON.stringify(watPhouTripItem)}
           aria-label="Add Wat Phou to My Trip"
         >Add to My Trip</button>
-        <button type="button" class="field-guide-secondary-action" data-wat-phou-page-back>← Return to the landmark</button>
-        <a class="field-guide-secondary-action" href="/laos/pakse#explore-board-pakse">Explore from Pakse</a>
-        <a class="field-guide-secondary-action" href="/laos/don-det">Continue south → Don Det</a>
-        <a class="field-guide-secondary-action" href="https://www.google.com/maps/search/?api=1&query=Wat%20Phou%2C%20Champasak%2C%20Laos" target="_blank" rel="noreferrer">Open Google Maps ↗</a>
+        <a class="field-guide-secondary-action" href="https://www.google.com/maps/search/?api=1&query=Wat%20Phou%2C%20Champasak%2C%20Laos" target="_blank" rel="noreferrer">Google Maps ↗</a>
       </div>
-    </footer>
-
-    <section class="field-guide-sources" aria-label="Editorial and image sources">
-      <p><strong>Field note method.</strong> Historical and heritage facts were cross-checked against UNESCO and official tourism information. Independent visitor reports were used only to identify recurring practical questions.</p>
-      <details>
-        <summary>Sources & photo licences</summary>
-        <ul>{watPhouSources.map((source) => <li><a href={source.href} target="_blank" rel="noreferrer">{source.label}</a></li>)}</ul>
-        <p>All photographs link to their Wikimedia Commons file page and Creative Commons licence.</p>
-      </details>
     </section>
   </article>
 </main>
