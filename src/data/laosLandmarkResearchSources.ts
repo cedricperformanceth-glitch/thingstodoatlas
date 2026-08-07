@@ -18,6 +18,7 @@ export const laosLandmarkResearchSources: Record<string, LandmarkResearchSource[
 
   'bolaven-plateau': [
     { kind: 'history', label: 'Wikipedia · Bolaven Plateau · history and geography starting point', href: 'https://en.wikipedia.org/wiki/Bolaven_Plateau' },
+    { kind: 'official', label: 'Tourism Laos · Salavanh Province · Bolaven and coffee context', href: 'https://www.tourismlaos.org/southern-provinces/salavan-province/' },
     { kind: 'field-report', label: 'Wikivoyage · Bolaven Plateau · route context', href: 'https://en.wikivoyage.org/wiki/Bolaven_Plateau' },
     { kind: 'field-report', label: 'The Roaming Compass · Bolaven Plateau travel guide', href: 'https://theroamingcompass.com/laos/ultimate-travel-guide-to-the-bolaven-plateau-laos/' },
     { kind: 'image', label: 'Wikimedia Commons · Bolaven Plateau photography', href: 'https://commons.wikimedia.org/wiki/Category:Bolaven_Plateau' }
@@ -26,19 +27,19 @@ export const laosLandmarkResearchSources: Record<string, LandmarkResearchSource[
   'tad-lo-waterfall': [
     { kind: 'official', label: 'Visit Tad Lo · locally checked Tad Lo Waterfall guide', href: 'https://visit-tadlo.com/en/things-to-do/tad-lo-waterfall' },
     { kind: 'field-report', label: 'Visit Tad Lo · local waterfall and village field notes', href: 'https://visit-tadlo.com/en' },
-    { kind: 'official', label: 'Tourism Laos · Salavan Province context', href: 'https://www.tourismlaos.org/southern-provinces/salavan/' }
+    { kind: 'official', label: 'Tourism Laos · Salavanh Province context', href: 'https://www.tourismlaos.org/southern-provinces/salavan-province/' }
   ],
 
   'cooking-class-nyay': [
     { kind: 'official', label: 'Visit Tad Lo · Lao Cooking Class with Nyay', href: 'https://visit-tadlo.com/en/things-to-do/cooking-class-nyay' },
     { kind: 'field-report', label: 'Visit Tad Lo · locally checked Tad Lo experiences', href: 'https://visit-tadlo.com/en/things-to-do/' },
-    { kind: 'official', label: 'Tourism Laos · Salavan Province context', href: 'https://www.tourismlaos.org/southern-provinces/salavan/' }
+    { kind: 'official', label: 'Tourism Laos · Salavanh Province context', href: 'https://www.tourismlaos.org/southern-provinces/salavan-province/' }
   ],
 
   'vat-paa-ancient-forest': [
     { kind: 'official', label: 'Visit Tad Lo · Vat Paa Ancient Forest field note', href: 'https://visit-tadlo.com/en/things-to-do/vat-paa-ancient-forest' },
     { kind: 'field-report', label: 'Visit Tad Lo · locally checked Tad Lo experiences', href: 'https://visit-tadlo.com/en/things-to-do/' },
-    { kind: 'official', label: 'Tourism Laos · Salavan Province context', href: 'https://www.tourismlaos.org/southern-provinces/salavan/' }
+    { kind: 'official', label: 'Tourism Laos · Salavanh Province context', href: 'https://www.tourismlaos.org/southern-provinces/salavan-province/' }
   ],
 
   'don-khon-railway-bridge': [
@@ -49,6 +50,7 @@ export const laosLandmarkResearchSources: Record<string, LandmarkResearchSource[
 
   'khone-phapheng-falls': [
     { kind: 'history', label: 'Wikipedia · Khone Phapheng Falls · geography and navigation history', href: 'https://en.wikipedia.org/wiki/Khone_Phapheng_Falls' },
+    { kind: 'official', label: 'Tourism Laos · Waterfalls · Khone Phapheng context', href: 'https://www.tourismlaos.org/waterfalls/' },
     { kind: 'history', label: 'Wikipedia · Don Det · Si Phan Don historical context', href: 'https://en.wikipedia.org/wiki/Don_Det' },
     { kind: 'image', label: 'Wikimedia Commons · Khone Phapheng Falls photography', href: 'https://commons.wikimedia.org/wiki/Category:Khone_Phapheng_Falls' }
   ],
@@ -67,6 +69,7 @@ export const laosLandmarkResearchSources: Record<string, LandmarkResearchSource[
   ],
 
   'kuang-si-waterfall': [
+    { kind: 'official', label: 'Tourism Laos · Tad Kuang Si', href: 'https://www.tourismlaos.org/2642-2/' },
     { kind: 'history', label: 'Wikipedia · Kuang Si Falls · geography starting point', href: 'https://en.wikipedia.org/wiki/Kuang_Si_Falls' },
     { kind: 'image', label: 'Wikimedia Commons · Kuang Si Falls photography', href: 'https://commons.wikimedia.org/wiki/Category:Kuang_Si_Falls' },
     { kind: 'field-report', label: 'Condé Nast Traveler · Luang Prabang destination context', href: 'https://www.cntraveler.com/story/why-luang-prabang-is-the-ideal-southeast-asian-city' }
@@ -79,6 +82,7 @@ export const laosLandmarkResearchSources: Record<string, LandmarkResearchSource[
   ],
 
   'kong-lor-cave': [
+    { kind: 'official', label: 'Tourism Laos · Kong Lor Cave', href: 'https://www.tourismlaos.org/caves/' },
     { kind: 'official', label: 'Khammouane Tourism · Kong Lor Cave', href: 'https://www.khammouanetourism.org/en/places/Kong-lor-cave' },
     { kind: 'field-report', label: 'Asia Safari Laos · Kong Lor Cave · updated 2026', href: 'https://www.asiasafari-laos.com/en/travel-to-laos-with-asia-safari-laos/kong-lor-cave/' },
     { kind: 'field-report', label: 'Blog-trotting · Kong Lor traveller report', href: 'https://www.blog-trotting.fr/voyage/laos/9812-kong-lor-cave' },
@@ -88,12 +92,14 @@ export const laosLandmarkResearchSources: Record<string, LandmarkResearchSource[
 
   'xe-bang-fai-cave': [
     { kind: 'official', label: 'Hin Nam No · Xe Bang Fai Cave', href: 'https://hinnamno.org/xe-bang-fai-cave/' },
+    { kind: 'official', label: 'Tourism Laos · Khammouane Province context', href: 'https://www.tourismlaos.org/central-provinces/khammouane-province/' },
     { kind: 'field-report', label: 'Laos Insider · Xe Bang Fai Cave · 2026 experience-based guide', href: 'https://laosinsider.com/laos-travel-guide/xe-bang-fai-cave/' },
     { kind: 'field-report', label: 'Discover Laos · Xe Bang Fai Cave', href: 'https://discoverlaos.today/khammouane/thing-to-do/xe-bang-fai-cave' },
     { kind: 'image', label: 'Wikimedia Commons · Xe Ban Fai River photograph', href: 'https://commons.wikimedia.org/wiki/File:XeBanFai.jpg' }
   ],
 
   'tham-nang-aen-cave': [
+    { kind: 'official', label: 'Tourism Laos · Khammouane Province cave context', href: 'https://www.tourismlaos.org/central-provinces/khammouane-province/' },
     { kind: 'field-report', label: 'Love Laos · Tham Nang Aen Cave traveller guide', href: 'https://love-laos.com/tham-nang-aen-cave/' },
     { kind: 'field-report', label: 'Hello You Fried Egg · Thakhek Loop field report', href: 'https://www.helloyoufriedegg.com/motorbike-trips/thakhek-loop' },
     { kind: 'image', label: 'Wikimedia Commons · Khammouane Province · Nang Aen file listed in category', href: 'https://commons.wikimedia.org/wiki/Category:Khammouane_Province' }
@@ -101,13 +107,14 @@ export const laosLandmarkResearchSources: Record<string, LandmarkResearchSource[
 
   'hot-air-balloon-paramotor-vang-vieng': [
     { kind: 'history', label: 'Wikipedia · Vang Vieng · destination context', href: 'https://en.wikipedia.org/wiki/Vang_Vieng' },
-    { kind: 'field-report', label: 'Terra Lao · local Vang Vieng travel stories and current activity context', href: 'https://terralao.la/blog' },
+    { kind: 'field-report', label: 'Terra Lao · Hot Air Balloon Vang Vieng · 2026 experience guide', href: 'https://terralao.la/blog/hot-air-balloon-vang-vieng-experience-guide-2026' },
+    { kind: 'field-report', label: 'Terra Lao · Paramotor Vang Vieng · current activity note', href: 'https://terralao.la/blog/paramotor-vang-vieng-aerial-adventure-2025' },
     { kind: 'image', label: 'Wikimedia Commons · Vang Vieng hot-air-balloon photograph', href: 'https://commons.wikimedia.org/wiki/File:Vang_Vieng_-_Hot_Air_Balloon_(23871079683).jpg' }
   ],
 
   'phou-bia-from-vang-vieng': [
     { kind: 'history', label: 'Wikipedia · Phou Bia · historical and geographic starting point', href: 'https://en.wikipedia.org/wiki/Phou_Bia' },
-    { kind: 'field-report', label: 'Terra Lao · Xaysomboun & Phou Bia expedition context · 2026', href: 'https://terralao.la/blog' },
+    { kind: 'field-report', label: 'Terra Lao · Xaysomboun & Phou Bia expedition · June 2026', href: 'https://terralao.la/blog/6-day-xaysomboun-enduro-tour-laos' },
     { kind: 'image', label: 'Wikimedia Commons · Phou Bia photography', href: 'https://commons.wikimedia.org/wiki/Category:Phou_Bia' }
   ]
 };
