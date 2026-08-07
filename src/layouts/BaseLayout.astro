@@ -16,7 +16,7 @@ import TripManager from '../components/TripManager.astro';
 import TripSummaryModal from '../components/TripSummaryModal.astro';
 import JourneyUxEnhancements from '../components/JourneyUxEnhancements.astro';
 import VangViengMapActivation from '../components/VangViengMapActivation.astro';
-import WatPhouPrototypeBridge from '../components/WatPhouPrototypeBridge.astro';
+import LandmarkPageBridge from '../components/LandmarkPageBridge.astro';
 
 const {
   title,
@@ -26,7 +26,6 @@ const {
 
 const normalizedPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const isHomepage = normalizedPath === '/';
-const enablesWatPhouPrototype = normalizedPath === '/laos/pakse' || normalizedPath === '/laos/pakse/things-to-do';
 ---
 
 <!doctype html>
@@ -50,7 +49,7 @@ const enablesWatPhouPrototype = normalizedPath === '/laos/pakse' || normalizedPa
       <slot />
       <JourneyUxEnhancements />
       <VangViengMapActivation />
-      {enablesWatPhouPrototype && <WatPhouPrototypeBridge />}
+      <LandmarkPageBridge />
     </div>
 
     <TripDrawer />
