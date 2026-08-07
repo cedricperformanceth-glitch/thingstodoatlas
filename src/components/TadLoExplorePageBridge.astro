@@ -1,0 +1,224 @@
+---
+import { laosLandmarkPages } from '../data/laosLandmarkPageRegistry';
+
+const tadLoConfigs = laosLandmarkPages
+  .filter((entry) => entry.citySlug === 'tad-lo')
+  .map((entry) => ({
+    slug: entry.slug,
+    modalId: entry.landmark.modalId,
+    route: entry.route,
+    duration: entry.landmark.cityContext.duration,
+    difficulty: entry.landmark.facts.find((fact) => fact.label === 'Difficulty')?.value || '',
+    bestTime: entry.landmark.facts.find((fact) => fact.label === 'Best time')?.value || ''
+  }));
+---
+
+<script id="atlas-tad-lo-page-config" type="application/json" set:html={JSON.stringify(tadLoConfigs)}></script>
+
+<style is:global>
+  .partner-dialog[data-guide-page-ready='true'],
+  .selection-dialog[data-guide-page-ready='true'] {
+    width: min(840px, calc(100vw - 48px));
+    height: auto;
+    max-height: min(500px, calc(100vh - 48px));
+    overflow: auto;
+  }
+
+  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__shell,
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__shell {
+    grid-template-columns: minmax(250px, .78fr) minmax(390px, 1.22fr);
+    align-items: start;
+    height: auto;
+    min-height: 0;
+  }
+
+  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__visual,
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__visual {
+    align-self: stretch;
+    min-height: 320px;
+    max-height: 390px;
+  }
+
+  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__visual img,
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__visual img {
+    height: 100%;
+    min-height: 320px;
+    object-fit: cover;
+  }
+
+  .partner-dialog[data-guide-page-ready='true'] .partner-gallery__control,
+  .partner-dialog[data-guide-page-ready='true'] .partner-gallery__counter,
+  .selection-dialog[data-guide-page-ready='true'] .selection-gallery__control,
+  .selection-dialog[data-guide-page-ready='true'] .selection-gallery__counter,
+  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__partner,
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__stamp {
+    display: none !important;
+  }
+
+  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__content,
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__content {
+    min-height: 0;
+    padding: 30px 30px 24px;
+    overflow: visible;
+  }
+
+  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__content h2,
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__content h2 {
+    margin-bottom: 10px;
+    font-size: clamp(2.6rem, 4.2vw, 3.8rem);
+    line-height: .95;
+  }
+
+  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__description,
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__description {
+    margin-bottom: 12px;
+    font-size: 1rem;
+    line-height: 1.42;
+  }
+
+  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__recommend,
+  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__content > ul,
+  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__practical,
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__recommend,
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__content > ul,
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__practical {
+    display: none !important;
+  }
+
+  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__actions,
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    margin-top: 12px;
+  }
+
+  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__actions > *,
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__actions > * {
+    min-height: 39px;
+    padding: 8px 8px;
+    font-size: .57rem;
+    text-align: center;
+  }
+
+  .partner-dialog[data-guide-page-ready='true'] [data-tad-lo-page-link],
+  .selection-dialog[data-guide-page-ready='true'] [data-tad-lo-page-link] {
+    border: 1px solid #b8653e !important;
+    background: #f4e7d2 !important;
+    color: #9a5134 !important;
+  }
+
+  .tad-lo-preview-meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    margin-top: 11px;
+    padding-top: 9px;
+    border-top: 1px dashed rgba(49, 85, 69, .25);
+  }
+
+  .tad-lo-preview-meta span {
+    display: grid;
+    gap: 2px;
+    color: #315545;
+    font: 650 .75rem/1.05 'Caveat', 'Segoe Print', cursive;
+  }
+
+  .tad-lo-preview-meta small {
+    color: #a45d3a;
+    font: 700 .4rem/1.15 'DM Sans', sans-serif;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 700px) {
+    .partner-dialog[data-guide-page-ready='true'] .partner-dialog__shell,
+    .selection-dialog[data-guide-page-ready='true'] .selection-dialog__shell {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  type TadLoConfig = {
+    slug: string;
+    modalId: string;
+    route: string;
+    duration: string;
+    difficulty: string;
+    bestTime: string;
+  };
+
+  const readTadLoConfigs = (): TadLoConfig[] => {
+    const node = document.getElementById('atlas-tad-lo-page-config');
+    if (!node?.textContent) return [];
+    try { return JSON.parse(node.textContent) as TadLoConfig[]; }
+    catch { return []; }
+  };
+
+  const addTadLoMeta = (dialog: HTMLDialogElement, config: TadLoConfig) => {
+    const content = dialog.querySelector<HTMLElement>('.partner-dialog__content, .selection-dialog__content');
+    if (!content || content.querySelector('.tad-lo-preview-meta')) return;
+    const description = content.querySelector('.partner-dialog__description, .selection-dialog__description');
+    const meta = document.createElement('div');
+    meta.className = 'tad-lo-preview-meta';
+    meta.innerHTML = `
+      <span><small>Time</small>${config.duration}</span>
+      <span><small>Effort</small>${config.difficulty}</span>
+      <span><small>Best rhythm</small>${config.bestTime}</span>
+    `;
+    description?.insertAdjacentElement('afterend', meta);
+  };
+
+  const wireTadLoDialog = (dialog: HTMLDialogElement, config: TadLoConfig) => {
+    dialog.dataset.guidePageReady = 'true';
+    addTadLoMeta(dialog, config);
+
+    const actions = dialog.querySelector<HTMLElement>('.partner-dialog__actions, .selection-dialog__actions');
+    if (!actions) return;
+    let link = actions.querySelector<HTMLAnchorElement>('[data-tad-lo-page-link]');
+    if (!link) {
+      const firstLink = actions.querySelector<HTMLAnchorElement>('a');
+      link = document.createElement('a');
+      link.href = config.route;
+      link.dataset.tadLoPageLink = config.slug;
+      link.className = firstLink?.className || '';
+      link.removeAttribute('target');
+      link.removeAttribute('rel');
+      link.innerHTML = 'Plan my visit <span aria-hidden="true">↗</span>';
+      if (firstLink) firstLink.replaceWith(link);
+      else actions.prepend(link);
+    }
+
+    if (link.dataset.returnReady === 'true') return;
+    link.dataset.returnReady = 'true';
+    link.addEventListener('click', () => {
+      const sourceId = dialog.dataset.landmarkPageSourceId || '';
+      if (sourceId) {
+        const fixedTop = Number.parseFloat(document.body.style.top || '');
+        const scrollY = Number.isFinite(fixedTop) && fixedTop < 0 ? Math.abs(fixedTop) : window.scrollY;
+        const state = {
+          slug: config.slug,
+          sourcePath: `${location.pathname}${location.search}${location.hash}`,
+          sourceId,
+          categorySlug: document.querySelector<HTMLElement>('[data-city-category-button][aria-selected="true"]')?.dataset.cityCategoryButton,
+          scrollY
+        };
+        sessionStorage.setItem('atlas:landmark-return', JSON.stringify(state));
+      }
+      if (dialog.open) dialog.close();
+    });
+  };
+
+  const setupTadLoPageBridge = () => {
+    const configs = readTadLoConfigs();
+    configs.forEach((config) => {
+      const dialog = document.getElementById(config.modalId);
+      if (dialog instanceof HTMLDialogElement) wireTadLoDialog(dialog, config);
+    });
+  };
+
+  setupTadLoPageBridge();
+  document.addEventListener('astro:page-load', setupTadLoPageBridge);
+  [40, 120, 300].forEach((delay) => window.setTimeout(setupTadLoPageBridge, delay));
+</script>
