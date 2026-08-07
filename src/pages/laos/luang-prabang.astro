@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Luang Prabang guide in preparation"
+  description="The Luang Prabang city chapter is being documented for ThingsToDoAtlas."
+  canonical="https://thingstodoatlas.com/laos/luang-prabang"
+>
+  <main class="planned-city-page">
+    <a class="planned-city-page__back" href="/laos/vientiane">← Back to Vientiane</a>
+    <p class="planned-city-page__eyebrow">LAOS · CHAPTER IN PREPARATION</p>
+    <h1>Luang Prabang</h1>
+    <p class="planned-city-page__lead">
+      This city guide is still being documented. The route is ready so journeys from Vientiane can already keep Luang Prabang as the next chapter without opening an empty or broken page.
+    </p>
+    <a class="planned-city-page__map" href="/laos">Return to the Laos map</a>
+  </main>
+</BaseLayout>
+
+<style>
+  .planned-city-page {
+    display: grid;
+    place-content: center;
+    min-height: 72vh;
+    padding: clamp(2rem, 7vw, 6rem) 1.25rem;
+    background: #f2eee3;
+    color: #1f2924;
+    text-align: center;
+  }
+
+  .planned-city-page__back,
+  .planned-city-page__map {
+    color: #315943;
+    font-family: 'Segoe Print', 'Bradley Hand', cursive;
+    text-decoration: none;
+  }
+
+  .planned-city-page__eyebrow {
+    margin: 2rem 0 .5rem;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .16em;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: clamp(2.8rem, 9vw, 5.5rem);
+    font-weight: 500;
+  }
+
+  .planned-city-page__lead {
+    max-width: 42rem;
+    margin: 1.25rem auto 2rem;
+    line-height: 1.7;
+  }
+</style>
