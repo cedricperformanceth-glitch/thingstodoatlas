@@ -1,6 +1,7 @@
 ---
 import type { LaosLandmarkPageEntry } from '../data/laosLandmarkPageRegistry';
 import { getLandmarkResearchSources } from '../data/laosLandmarkResearchSources';
+import { getLicensedLandmarkGallery } from '../data/laosLandmarkLicensedMedia';
 
 interface Props {
   entry: LaosLandmarkPageEntry;
@@ -8,6 +9,14 @@ interface Props {
 
 const { entry } = Astro.props;
 const sources = getLandmarkResearchSources(entry.slug);
+const publishedGallery = getLicensedLandmarkGallery(entry.slug, entry.landmark.gallery);
+const listedHrefs = new Set(sources.map((source) => source.href));
+const photoSources = publishedGallery
+  .filter((image) => image.sourcePage && !listedHrefs.has(image.sourcePage))
+  .map((image) => ({
+    href: image.sourcePage!,
+    label: `${image.author || 'Wikimedia contributor'} · ${image.license || 'licence on file page'} · exact photo source`
+  }));
 const sourceKindLabel = {
   history: 'HISTORY',
   official: 'OFFICIAL / LOCAL',
@@ -24,7 +33,7 @@ const sourceKindLabel = {
 
   <details>
     <summary>Sources & photo licences</summary>
-    {sources.length ? (
+    {(sources.length || photoSources.length) ? (
       <ul>
         {sources.map((source) => (
           <li>
@@ -32,11 +41,17 @@ const sourceKindLabel = {
             <a href={source.href} target="_blank" rel="noreferrer">{source.label}</a>
           </li>
         ))}
+        {photoSources.map((source) => (
+          <li>
+            <span class="landmark-source-kind">PHOTO</span>
+            <a href={source.href} target="_blank" rel="noreferrer">{source.label}</a>
+          </li>
+        ))}
       </ul>
     ) : (
       <p>Source links for this field note are being consolidated.</p>
     )}
-    <p>Photo author, Wikimedia Commons attribution, licence and the exact file source are shown directly under each Commons image.</p>
+    <p>Photo author, Wikimedia Commons attribution, licence and the exact file source are also shown directly under each Commons image.</p>
   </details>
 </section>
 
