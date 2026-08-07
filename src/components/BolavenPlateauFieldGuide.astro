@@ -1,0 +1,192 @@
+---
+import { laosLandmarks } from '../data/laosLandmarks';
+import { laosLandmarkGuides } from '../data/laosLandmarkGuides';
+
+const bolaven = laosLandmarks.find((landmark) => landmark.slug === 'bolaven-plateau');
+const guide = laosLandmarkGuides['bolaven-plateau'];
+if (!bolaven || !guide) throw new Error('Bolaven Plateau guide data is missing');
+
+const hero = bolaven.gallery[0];
+const waterfall = bolaven.gallery[1] || bolaven.gallery[0];
+const fact = (label: string) => bolaven.facts.find((item) => item.label === label)?.value || '';
+
+const bolavenTripItem = {
+  id: 'laos:landmark:pakse:bolaven-plateau-modal',
+  originalId: 'bolaven-plateau-modal',
+  kind: 'landmark',
+  name: 'Bolaven Plateau',
+  countrySlug: 'laos',
+  countryName: 'Laos',
+  citySlug: 'pakse',
+  city: 'Pakse',
+  group: 'landmarks',
+  category: 'Road trip · Waterfalls · Coffee',
+  address: 'Champasak & Salavan, Southern Laos',
+  url: '/laos/pakse/things-to-do/bolaven-plateau'
+};
+
+const quickFacts = [
+  { label: 'Time', value: '1–3 days', note: 'One day is an introduction; two or three days gives the road space.' },
+  { label: 'Best base', value: 'Pakse', note: 'Start with fuel, cash and an offline map before climbing onto the plateau.' },
+  { label: 'Rhythm', value: 'Few good stops', note: 'The loop works better when you do not chase every waterfall pin.' },
+  { label: 'Weather', value: 'Changeable', note: 'Rain and mist can arrive quickly, especially in the wet season.' }
+];
+
+const faq = [
+  { question: 'Can I see the Bolaven Plateau in one day?', answer: 'Yes, but keep the route selective. A full day can introduce the plateau from Pakse, while two or three days is better for Tad Lo, coffee stops and a slower return.' },
+  { question: 'Do I need a scooter?', answer: 'No. Scooter or motorbike is common, but a private driver also works. The important point is to decide the route and return timing before leaving Pakse.' },
+  { question: 'What should I carry?', answer: 'Cash in small notes, water, a light rain layer, sun protection and shoes that can handle wet waterfall paths. Save important map points offline.' },
+  { question: 'Is the road difficult?', answer: 'The main roads are generally straightforward, but conditions vary with rain, construction and the side roads used for individual waterfalls. Avoid building a schedule that forces you to ride after dark.' },
+  { question: 'What is the point of the loop?', answer: 'The road itself. Waterfalls matter, but so do the cooler air, coffee country, villages and the change from Pakse into the highlands.' }
+];
+
+const related = [
+  { title: 'Wat Phou', kicker: 'TEMPLE · CHAMPASAK · SOUTH', href: '/laos/pakse/things-to-do/wat-phou', image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Main_path_lined_with_stone_pillars_to_the_ruined_Khmer_Hindu_temple_of_Wat_Phou%2C_Champasak%2C_Laos.jpg?width=1100', alt: 'Wat Phou causeway in Champasak', note: 'A cultural day south of Pakse, built around the temple, mountain and slower roads of Champasak.' },
+  { title: 'Tad Lo', kicker: 'WATERFALLS · VILLAGE · SLOW DAYS', href: '/laos/tad-lo', image: '/images/laos/tad-lo.webp', alt: 'Tad Lo in southern Laos', note: 'A natural overnight stop when you want the Bolaven journey to feel like more than a fast loop.' },
+  { title: 'Khone Phapheng', kicker: 'MEKONG · WATERFALL · SOUTH', href: '/laos/don-det', image: '/images/laos/don-det.webp', alt: 'Southern Laos around Si Phan Don', note: 'Continue south after Pakse for a completely different scale of water on the Mekong.' },
+  { title: 'Don Det', kicker: 'ISLANDS · BICYCLE · MEKONG', href: '/laos/don-det', image: '/images/laos/don-det.webp', alt: 'Don Det island in southern Laos', note: 'Swap the highland road for slow island days in Si Phan Don.' }
+];
+---
+
+<main class="field-guide-page">
+  <nav class="field-guide-return" aria-label="Bolaven Plateau guide navigation">
+    <button type="button" data-bolaven-page-back><span aria-hidden="true">←</span> Back to where you were</button>
+    <a href="/laos/pakse#explore-board-pakse">Pakse field guide</a>
+  </nav>
+
+  <article class="field-guide-article" aria-labelledby="bolaven-title">
+    <nav class="field-guide-breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Atlas</a><span aria-hidden="true">/</span>
+      <a href="/laos">Laos</a><span aria-hidden="true">/</span>
+      <a href="/laos/pakse">Pakse</a><span aria-hidden="true">/</span>
+      <span aria-current="page">Bolaven Plateau</span>
+    </nav>
+
+    <header class="field-guide-hero">
+      <div class="field-guide-hero__copy">
+        <p class="field-guide-kicker">ROAD TRIP · WATERFALLS · COFFEE · SOUTHERN LAOS</p>
+        <h1 id="bolaven-title">Bolaven Plateau</h1>
+        <p class="field-guide-deck">The plateau is not one attraction. It is the road out of Pakse: cooler air, coffee country, villages and waterfalls spread far enough apart that the journey becomes the point.</p>
+
+        <div class="field-guide-axis" aria-label="A simple Bolaven Plateau rhythm">
+          <span class="field-guide-axis__label">BUILD THE DAY AROUND THE ROAD</span>
+          <ol>
+            <li><span>01</span>Pakse</li>
+            <li><span>02</span>Waterfalls</li>
+            <li><span>03</span>Coffee</li>
+            <li><span>04</span>Tad Lo</li>
+            <li><span>05</span>Return</li>
+          </ol>
+          <p>fewer pins → better loop</p>
+        </div>
+
+        <div class="field-guide-stamp"><span>FIELD NOTE</span><strong>Plan the road</strong><small>Pakse · Laos</small></div>
+      </div>
+
+      <figure class="field-guide-hero__photo">
+        <span class="field-guide-tape" aria-hidden="true"></span>
+        <img src={hero.src} alt={hero.alt} width="1600" height="1100" fetchpriority="high" />
+        <figcaption>Photo: {hero.sourcePage ? <a href={hero.sourcePage} target="_blank" rel="noreferrer">{hero.author || 'Wikimedia Commons'}</a> : (hero.author || 'Wikimedia Commons')} {hero.license ? ` · ${hero.license}` : ''}</figcaption>
+        <span class="field-guide-photo-scribble" aria-hidden="true">the loop is the experience</span>
+      </figure>
+    </header>
+
+    <section class="field-guide-quick" aria-label="Bolaven Plateau overview">
+      {quickFacts.map((item) => <div><span>{item.label}</span><strong>{item.value}</strong><small>{item.note}</small></div>)}
+    </section>
+
+    <div class="field-guide-layout">
+      <div class="field-guide-story">
+        <section class="field-guide-section">
+          <p class="section-label">THE FEELING OF THE ROAD</p>
+          <h2>Leave Pakse before the loop becomes a checklist.</h2>
+          <p class="field-guide-lead">{guide.intro}</p>
+          <p>The first mistake is trying to make every waterfall equally important. Distances, weather, coffee stops and the roads between villages are what shape the day. A good loop leaves margin for a stop you did not plan.</p>
+        </section>
+        <section class="field-guide-section">
+          <p class="section-label">WHAT CHANGES ABOVE PAKSE</p>
+          <h2>Cooler air, wetter roads and a different rhythm.</h2>
+          <p>{bolaven.description}</p>
+          <p>{fact('Best time')}</p>
+        </section>
+      </div>
+
+      <aside class="field-guide-side-note">
+        <span class="field-guide-note-tape" aria-hidden="true"></span>
+        <p>BEFORE LEAVING PAKSE</p>
+        <ol><li>Fuel the bike</li><li>Carry cash</li><li>Save the route offline</li><li>Pack a rain layer</li><li>Choose the last stop before dark</li></ol>
+        <span>Do not let the final waterfall decide your night ride.</span>
+      </aside>
+    </div>
+
+    <section class="field-guide-photo-story">
+      <figure class="field-guide-photo field-guide-photo--portrait">
+        <span class="field-guide-tape" aria-hidden="true"></span>
+        <img src={waterfall.src} alt={waterfall.alt} width="1100" height="1500" loading="lazy" />
+        <figcaption>Photo: {waterfall.sourcePage ? <a href={waterfall.sourcePage} target="_blank" rel="noreferrer">{waterfall.author || 'Wikimedia Commons'}</a> : (waterfall.author || 'Wikimedia Commons')} {waterfall.license ? ` · ${waterfall.license}` : ''}</figcaption>
+      </figure>
+      <div class="field-guide-section field-guide-section--climb">
+        <p class="section-label">WATERFALL DAYS</p>
+        <h2>The waterfall is a stop. The plateau is the journey.</h2>
+        <p>Choose a small number of falls that fit the road you actually want to ride. Paths can become wet and slippery, and a stop that looks ten minutes long on the map can easily absorb an hour once you walk down, take photographs and wait out a shower.</p>
+        <p>{fact('What to wear')}</p>
+        <blockquote>{guide.fieldNote}</blockquote>
+      </div>
+    </section>
+
+    <section class="field-guide-practical" aria-labelledby="bolaven-plan-title">
+      <div class="field-guide-practical__heading">
+        <div><p class="section-label">PLAN THE LOOP</p><h2 id="bolaven-plan-title">One day, or sleep on the plateau?</h2></div>
+        <p>{guide.duration}. The longer version is less about adding more pins than removing the pressure to rush back to Pakse.</p>
+      </div>
+      <div class="field-guide-practical__cards">
+        {guide.sections.map((section) => <article><span>{section.label.slice(0, 2)}</span><h3>{section.title}</h3><p>{section.text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="field-guide-faq" aria-labelledby="bolaven-faq-title">
+      <p class="section-label">QUESTIONS BEFORE THE ROAD</p>
+      <h2 id="bolaven-faq-title">Bolaven Plateau, practically</h2>
+      <p class="field-guide-faq__intro">The useful decisions are simple: how long, how you travel, how late you ride and how many stops you are willing to skip.</p>
+      {faq.map((item, index) => <details open={index === 0}><summary>{item.question}</summary><p>{item.answer}</p></details>)}
+    </section>
+
+    <section class="field-guide-related" aria-labelledby="bolaven-related-title">
+      <header class="field-guide-related__heading">
+        <div><p class="section-label">KEEP EXPLORING SOUTHERN LAOS</p><h2 id="bolaven-related-title">After the highlands?</h2></div>
+        <p>Keep moving through the same southern Laos notebook without returning to a generic menu.</p>
+      </header>
+      <div class="field-guide-related__grid">
+        {related.map((landmark) => (
+          <a class="field-guide-related-card" href={landmark.href}>
+            <span class="field-guide-related-card__image"><img src={landmark.image} alt={landmark.alt} width="700" height="900" loading="lazy" decoding="async" /></span>
+            <span class="field-guide-related-card__copy"><small>{landmark.kicker}</small><strong>{landmark.title}</strong><p>{landmark.note}</p><span class="field-guide-related-card__arrow">Open the field note <b aria-hidden="true">↗</b></span></span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="field-guide-final-cta" aria-labelledby="bolaven-final-title">
+      <div class="field-guide-final-cta__copy"><p class="section-label">KEEP IT IN THE NOTEBOOK</p><h2 id="bolaven-final-title">Save the Bolaven Plateau for the road.</h2><p>Add the loop to My Trip now, or open the map when you are ready to build the route.</p></div>
+      <div class="field-guide-final-cta__actions">
+        <button type="button" class="field-guide-primary-action" data-trip-add data-trip-place={JSON.stringify(bolavenTripItem)} aria-label="Add Bolaven Plateau to My Trip">Add to My Trip</button>
+        <a class="field-guide-secondary-action" href={bolaven.mapsUrl} target="_blank" rel="noreferrer">Google Maps ↗</a>
+      </div>
+    </section>
+  </article>
+</main>
+
+<script>
+  const setupBolavenBack = () => {
+    document.querySelectorAll<HTMLButtonElement>('[data-bolaven-page-back]').forEach((button) => {
+      if (button.dataset.backReady === 'true') return;
+      button.dataset.backReady = 'true';
+      button.addEventListener('click', () => {
+        if (history.length > 1) history.back();
+        else location.href = '/laos/pakse#explore-board-pakse';
+      });
+    });
+  };
+  setupBolavenBack();
+  document.addEventListener('astro:page-load', setupBolavenBack);
+</script>
