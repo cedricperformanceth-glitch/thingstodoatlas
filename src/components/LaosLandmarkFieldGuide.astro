@@ -1,0 +1,266 @@
+---
+import LandmarkGuideFinalCta from './LandmarkGuideFinalCta.astro';
+import type { LaosLandmarkPageEntry } from '../data/laosLandmarkPageRegistry';
+import { getRelatedLandmarkPages } from '../data/laosLandmarkPageRegistry';
+
+interface Props {
+  entry: LaosLandmarkPageEntry;
+}
+
+const { entry } = Astro.props;
+const { landmark, guide } = entry;
+const images = landmark.gallery.length ? landmark.gallery : [{ src: '/images/laos/pakse.webp', alt: landmark.name }];
+const hero = images[0];
+const second = images[1] || images[0];
+const third = images[2] || images[1] || images[0];
+const related = getRelatedLandmarkPages(entry);
+const sections = guide.sections.slice(0, 4);
+const facts = landmark.facts.slice(0, 6);
+
+const sourceCaption = (image: (typeof images)[number]) => ({
+  author: image.author || 'Source photo',
+  source: image.sourcePage || '',
+  license: image.license || ''
+});
+
+const heroCredit = sourceCaption(hero);
+const secondCredit = sourceCaption(second);
+const thirdCredit = sourceCaption(third);
+
+const questions = landmark.facts.slice(0, 5).map((item) => ({
+  question: item.label.endsWith('?') ? item.label : `${item.label}?`,
+  answer: item.value
+}));
+---
+
+<main class="field-guide-page">
+  <nav class="field-guide-return" aria-label={`${landmark.name} guide navigation`}>
+    <button type="button" data-landmark-page-back><span aria-hidden="true">←</span> Back to where you were</button>
+    <a href={`${entry.sourceRoute}#explore-board-${entry.citySlug}`}>{entry.cityName} field guide</a>
+  </nav>
+
+  <article class="field-guide-article" aria-labelledby={`landmark-title-${entry.slug}`}>
+    <nav class="field-guide-breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Atlas</a><span aria-hidden="true">/</span>
+      <a href="/laos">Laos</a><span aria-hidden="true">/</span>
+      <a href={entry.sourceRoute}>{entry.cityName}</a><span aria-hidden="true">/</span>
+      <span aria-current="page">{landmark.name}</span>
+    </nav>
+
+    <header class="field-guide-hero">
+      <div class="field-guide-hero__copy">
+        <p class="field-guide-kicker">{guide.eyebrow}</p>
+        <h1 id={`landmark-title-${entry.slug}`}>{landmark.name}</h1>
+        <p class="field-guide-deck">{entry.editorialAngle}</p>
+
+        <div class="field-guide-axis" aria-label={`${landmark.name} visit rhythm`}>
+          <span class="field-guide-axis__label">READ THE VISIT</span>
+          <ol>
+            {sections.map((section, index) => (
+              <li><span>{String(index + 1).padStart(2, '0')}</span>{section.title}</li>
+            ))}
+          </ol>
+          <p>{entry.fieldNote}</p>
+        </div>
+
+        <div class="field-guide-stamp">
+          <span>FIELD NOTE</span><strong>Plan the visit</strong><small>{entry.cityName} · Laos</small>
+        </div>
+      </div>
+
+      <figure class="field-guide-hero__photo">
+        <span class="field-guide-tape" aria-hidden="true"></span>
+        <img src={hero.src} alt={hero.alt} width="1800" height="1120" fetchpriority="high" />
+        {(heroCredit.source || heroCredit.author) && (
+          <figcaption>
+            Photo: {heroCredit.source ? <a href={heroCredit.source} target="_blank" rel="noreferrer">{heroCredit.author}</a> : heroCredit.author}
+            {heroCredit.license && <> · {heroCredit.license}</>}
+          </figcaption>
+        )}
+        <span class="field-guide-photo-scribble" aria-hidden="true">{landmark.cityContext.route}</span>
+      </figure>
+    </header>
+
+    <section class="field-guide-quick" aria-label={`${landmark.name} overview`}>
+      <div><span>Time</span><strong>{guide.duration}</strong><small>{landmark.cityContext.duration}</small></div>
+      <div><span>Route</span><strong>{landmark.cityContext.route}</strong><small>{entry.cityName} is the guide base used here.</small></div>
+      <div><span>Budget</span><strong>{guide.budget}</strong><small>Reconfirm changing prices locally.</small></div>
+      <div><span>Best for</span><strong>{guide.bestFor}</strong><small>{landmark.region}</small></div>
+    </section>
+
+    <div class="field-guide-layout">
+      <div class="field-guide-story">
+        {sections.slice(0, 2).map((section, index) => (
+          <section class="field-guide-section">
+            <p class="section-label">{section.label}</p>
+            <h2>{section.title}</h2>
+            <p class:list={{ 'field-guide-lead': index === 0 }}>{section.text}</p>
+            {section.note && <blockquote>{section.note}</blockquote>}
+          </section>
+        ))}
+      </div>
+
+      <aside class="field-guide-side-note">
+        <span class="field-guide-note-tape" aria-hidden="true"></span>
+        <p>QUICK FIELD NOTES</p>
+        <ol>
+          {facts.slice(0, 5).map((item) => <li><strong>{item.label}:</strong> {item.value}</li>)}
+        </ol>
+        <span>{entry.fieldNote}</span>
+      </aside>
+    </div>
+
+    <div class="field-guide-ad-slot" data-ad-slot="landmark-01" aria-label="Advertisement placeholder">
+      <span>ADVERTISEMENT</span>
+    </div>
+
+    <section class="field-guide-photo-story">
+      <figure class="field-guide-photo field-guide-photo--portrait">
+        <span class="field-guide-tape" aria-hidden="true"></span>
+        <img src={second.src} alt={second.alt} width="1100" height="1500" loading="lazy" decoding="async" />
+        {(secondCredit.source || secondCredit.author) && (
+          <figcaption>
+            Photo: {secondCredit.source ? <a href={secondCredit.source} target="_blank" rel="noreferrer">{secondCredit.author}</a> : secondCredit.author}
+            {secondCredit.license && <> · {secondCredit.license}</>}
+          </figcaption>
+        )}
+      </figure>
+
+      <div class="field-guide-section field-guide-section--climb">
+        <p class="section-label">{sections[2]?.label || '03 · TIME'}</p>
+        <h2>{sections[2]?.title || 'Give the visit enough time'}</h2>
+        <p>{sections[2]?.text || landmark.cityContext.duration}</p>
+        <blockquote>{entry.fieldNote}</blockquote>
+      </div>
+    </section>
+
+    {images.length > 1 && (
+      <section class="field-guide-gallery" aria-label={`${landmark.name} photo notes`}>
+        {[second, third].map((image) => {
+          const credit = sourceCaption(image);
+          return (
+            <figure>
+              <img src={image.src} alt={image.alt} width="1100" height="760" loading="lazy" decoding="async" />
+              {(credit.source || credit.author) && (
+                <figcaption>
+                  {credit.source ? <a href={credit.source} target="_blank" rel="noreferrer">{credit.author}</a> : credit.author}
+                  {credit.license && <> · {credit.license}</>}
+                </figcaption>
+              )}
+            </figure>
+          );
+        })}
+        <p class="field-guide-gallery-note" aria-hidden="true">leave room between the pins</p>
+      </section>
+    )}
+
+    <div class="field-guide-ad-slot" data-ad-slot="landmark-02" aria-label="Advertisement placeholder">
+      <span>ADVERTISEMENT</span>
+    </div>
+
+    <div class="field-guide-layout field-guide-layout--reverse">
+      <div class="field-guide-story">
+        <section class="field-guide-section">
+          <p class="section-label">{sections[3]?.label || '04 · ON THE GROUND'}</p>
+          <h2>{sections[3]?.title || 'How to approach it'}</h2>
+          <p>{sections[3]?.text || landmark.description}</p>
+        </section>
+        <section class="field-guide-section">
+          <p class="section-label">FIELD NOTE · BEFORE YOU LEAVE</p>
+          <h2>What matters more than another pin</h2>
+          <p>{entry.editorialAngle}</p>
+          <p>{entry.fieldNote}</p>
+        </section>
+      </div>
+
+      <aside class="field-guide-paper-note">
+        <span class="field-guide-note-tape" aria-hidden="true"></span>
+        <span>KEEP CLOSE</span>
+        <ul>
+          {facts.slice(0, 5).map((item) => <li>{item.label}</li>)}
+        </ul>
+        <p>Conditions, access, opening arrangements and prices can change. Reconfirm time-sensitive details before departure.</p>
+      </aside>
+    </div>
+
+    <section class="field-guide-practical" aria-labelledby={`landmark-practical-${entry.slug}`}>
+      <div class="field-guide-practical__heading">
+        <div>
+          <p class="section-label">PLAN THE VISIT</p>
+          <h2 id={`landmark-practical-${entry.slug}`}>{landmark.name}, practically</h2>
+        </div>
+        <p>The useful details in one place before you leave {entry.cityName}.</p>
+      </div>
+      <div class="field-guide-practical__cards">
+        {facts.map((item, index) => (
+          <article>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <h3>{item.label}</h3>
+            <p>{item.value}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <div class="field-guide-ad-slot" data-ad-slot="landmark-03" aria-label="Advertisement placeholder">
+      <span>ADVERTISEMENT</span>
+    </div>
+
+    <section class="field-guide-faq" aria-labelledby={`landmark-faq-${entry.slug}`}>
+      <p class="section-label">QUESTIONS BEFORE GOING</p>
+      <h2 id={`landmark-faq-${entry.slug}`}>{landmark.name}, without the guesswork</h2>
+      <p class="field-guide-faq__intro">Short answers built from the practical field information already attached to this landmark.</p>
+      {questions.map((item, index) => (
+        <details open={index === 0}>
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </section>
+
+    <section class="field-guide-related" aria-labelledby={`landmark-related-${entry.slug}`}>
+      <header class="field-guide-related__heading">
+        <div>
+          <p class="section-label">KEEP EXPLORING LAOS</p>
+          <h2 id={`landmark-related-${entry.slug}`}>Where does the road go next?</h2>
+        </div>
+        <p>Four other field notes that connect naturally with this part of the trip.</p>
+      </header>
+      <div class="field-guide-related__grid">
+        {related.map((relatedEntry) => {
+          const image = relatedEntry.landmark.gallery[0];
+          return (
+            <a class="field-guide-related-card" href={relatedEntry.route}>
+              <span class="field-guide-related-card__image"><img src={image.src} alt={image.alt} width="700" height="900" loading="lazy" decoding="async" /></span>
+              {(image.author || image.license) && <span class="field-guide-related-card__credit">Photo: {[image.author, image.license].filter(Boolean).join(' · ')}</span>}
+              <span class="field-guide-related-card__copy">
+                <small>{relatedEntry.landmark.cityContext.kicker}</small>
+                <strong>{relatedEntry.landmark.name}</strong>
+                <p>{relatedEntry.landmark.cityContext.summary}</p>
+                <span class="field-guide-related-card__arrow">Open the field note <b aria-hidden="true">↗</b></span>
+              </span>
+            </a>
+          );
+        })}
+      </div>
+    </section>
+
+    <LandmarkGuideFinalCta entry={entry} />
+  </article>
+</main>
+
+<script>
+  const setupLandmarkPageBack = () => {
+    document.querySelectorAll<HTMLButtonElement>('[data-landmark-page-back]').forEach((button) => {
+      if (button.dataset.backReady === 'true') return;
+      button.dataset.backReady = 'true';
+      button.addEventListener('click', () => {
+        const stored = sessionStorage.getItem('atlas:landmark-return');
+        if (stored && history.length > 1) history.back();
+        else location.href = button.closest('main')?.querySelector<HTMLAnchorElement>('.field-guide-return a')?.href || '/laos';
+      });
+    });
+  };
+  setupLandmarkPageBack();
+  document.addEventListener('astro:page-load', setupLandmarkPageBack);
+</script>
