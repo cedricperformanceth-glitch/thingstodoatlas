@@ -1,15 +1,20 @@
 ---
 import LandmarkGuideFinalCta from './LandmarkGuideFinalCta.astro';
+import type { LandmarkGalleryItem } from '../data/laosLandmarks';
 import type { LaosLandmarkPageEntry } from '../data/laosLandmarkPageRegistry';
 import { getRelatedLandmarkPages } from '../data/laosLandmarkPageRegistry';
+import { laosLandmarkPageEditorial } from '../data/laosLandmarkPageEditorial';
 
 interface Props {
   entry: LaosLandmarkPageEntry;
 }
 
 const { entry } = Astro.props;
-const { landmark, guide } = entry;
-const images = landmark.gallery.length ? landmark.gallery : [{ src: '/images/laos/pakse.webp', alt: landmark.name }];
+const { landmark } = entry;
+const guide = laosLandmarkPageEditorial[entry.slug] || entry.guide;
+const images: LandmarkGalleryItem[] = landmark.gallery.length
+  ? landmark.gallery
+  : [{ src: '/images/laos/pakse.webp', alt: landmark.name }];
 const hero = images[0];
 const second = images[1] || images[0];
 const third = images[2] || images[1] || images[0];
@@ -17,7 +22,7 @@ const related = getRelatedLandmarkPages(entry);
 const sections = guide.sections.slice(0, 4);
 const facts = landmark.facts.slice(0, 6);
 
-const sourceCaption = (image: (typeof images)[number]) => ({
+const sourceCaption = (image: LandmarkGalleryItem) => ({
   author: image.author || 'Source photo',
   source: image.sourcePage || '',
   license: image.license || ''
@@ -53,7 +58,7 @@ const questions = landmark.facts.slice(0, 5).map((item) => ({
         <h1 id={`landmark-title-${entry.slug}`}>{landmark.name}</h1>
         <p class="field-guide-deck">{entry.editorialAngle}</p>
 
-        <div class="field-guide-axis" aria-label={`${landmark.name} visit rhythm`}>
+        <div class="field-guide-axis field-guide-axis--four" aria-label={`${landmark.name} visit rhythm`}>
           <span class="field-guide-axis__label">READ THE VISIT</span>
           <ol>
             {sections.map((section, index) => (
@@ -169,7 +174,7 @@ const questions = landmark.facts.slice(0, 5).map((item) => ({
           <p class="section-label">FIELD NOTE · BEFORE YOU LEAVE</p>
           <h2>What matters more than another pin</h2>
           <p>{entry.editorialAngle}</p>
-          <p>{entry.fieldNote}</p>
+          <p>{guide.fieldNote}</p>
         </section>
       </div>
 
