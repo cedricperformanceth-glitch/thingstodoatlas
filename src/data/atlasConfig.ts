@@ -39,7 +39,7 @@ export const atlasCountries: AtlasCountry[] = [
       { slug: 'vang-vieng', name: 'Vang Vieng', route: '/laos/vang-vieng', status: 'open', tripEnabled: true },
       { slug: 'vientiane', name: 'Vientiane', route: '/laos/vientiane', status: 'open', tripEnabled: true },
       { slug: 'don-det', name: 'Don Det', route: '/laos/don-det', status: 'open', tripEnabled: true },
-      { slug: 'luang-prabang', name: 'Luang Prabang', route: '/laos/luang-prabang', status: 'planned', tripEnabled: false }
+      { slug: 'luang-prabang', name: 'Luang Prabang', route: '/laos/luang-prabang', status: 'open', tripEnabled: true }
     ]
   },
   {
