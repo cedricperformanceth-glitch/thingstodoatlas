@@ -3,12 +3,14 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import BolavenPlateauFieldGuide from '../../../../components/BolavenPlateauFieldGuide.astro';
 import LandmarkGuideFinalCta from '../../../../components/LandmarkGuideFinalCta.astro';
 import { laosLandmarkPageBySlug } from '../../../../data/laosLandmarkPageRegistry';
+import { laosLandmarks } from '../../../../data/laosLandmarks';
 import '../../../../styles/wat-phou-field-guide.css';
 import '../../../../styles/wat-phou-refinements.css';
 import '../../../../styles/field-guide-position.css';
 import '../../../../styles/landmark-field-guide-shared.css';
 
 const entry = laosLandmarkPageBySlug['bolaven-plateau'];
+const publishedGallery = laosLandmarks.find((landmark) => landmark.slug === 'bolaven-plateau')?.gallery || entry.landmark.gallery;
 ---
 
 <BaseLayout
@@ -19,7 +21,7 @@ const entry = laosLandmarkPageBySlug['bolaven-plateau'];
   <div class="landmark-guide-custom-page">
     <BolavenPlateauFieldGuide />
     <div class="landmark-guide-shared-cta">
-      <LandmarkGuideFinalCta entry={entry} />
+      <LandmarkGuideFinalCta entry={entry} gallery={publishedGallery} />
     </div>
   </div>
 
