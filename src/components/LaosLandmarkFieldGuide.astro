@@ -4,6 +4,7 @@ import type { LandmarkGalleryItem } from '../data/laosLandmarks';
 import type { LaosLandmarkPageEntry } from '../data/laosLandmarkPageRegistry';
 import { getRelatedLandmarkPages } from '../data/laosLandmarkPageRegistry';
 import { laosLandmarkPageEditorial } from '../data/laosLandmarkPageEditorial';
+import { getLicensedLandmarkGallery } from '../data/laosLandmarkLicensedMedia';
 
 interface Props {
   entry: LaosLandmarkPageEntry;
@@ -12,8 +13,9 @@ interface Props {
 const { entry } = Astro.props;
 const { landmark } = entry;
 const guide = laosLandmarkPageEditorial[entry.slug] || entry.guide;
-const images: LandmarkGalleryItem[] = landmark.gallery.length
-  ? landmark.gallery
+const licensedGallery = getLicensedLandmarkGallery(entry.slug, landmark.gallery);
+const images: LandmarkGalleryItem[] = licensedGallery.length
+  ? licensedGallery
   : [{ src: '/images/laos/pakse.webp', alt: landmark.name }];
 const hero = images[0];
 const second = images[1] || images[0];
@@ -233,11 +235,19 @@ const questions = landmark.facts.slice(0, 5).map((item) => ({
       </header>
       <div class="field-guide-related__grid">
         {related.map((relatedEntry) => {
-          const image = relatedEntry.landmark.gallery[0];
+          const relatedGallery = getLicensedLandmarkGallery(relatedEntry.slug, relatedEntry.landmark.gallery);
+          const image = relatedGallery[0] || relatedEntry.landmark.gallery[0];
           return (
             <a class="field-guide-related-card" href={relatedEntry.route}>
               <span class="field-guide-related-card__image"><img src={image.src} alt={image.alt} width="700" height="900" loading="lazy" decoding="async" /></span>
-              {(image.author || image.license) && <span class="field-guide-related-card__credit">Photo: {[image.author, image.license].filter(Boolean).join(' · ')}</span>}
+              {(image.author || image.license || image.sourcePage) && (
+                <span class="field-guide-related-card__credit">
+                  Photo: {image.author || 'Wikimedia contributor'}
+                  {image.sourcePage?.includes('commons.wikimedia.org') && <> · Wikimedia Commons</>}
+                  {image.license && <> · {image.license}</>}
+                  {image.sourcePage && <> · <span class="field-guide-related-card__source">Source ↗</span></>}
+                </span>
+              )}
               <span class="field-guide-related-card__copy">
                 <small>{relatedEntry.landmark.cityContext.kicker}</small>
                 <strong>{relatedEntry.landmark.name}</strong>
