@@ -1,10 +1,15 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import WatPhouFieldGuide from '../../../../components/WatPhouFieldGuide.astro';
+import LandmarkGuideFinalCta from '../../../../components/LandmarkGuideFinalCta.astro';
+import { laosLandmarkPageBySlug } from '../../../../data/laosLandmarkPageRegistry';
 import { watPhouSchema } from '../../../../data/watPhouPrototype';
 import '../../../../styles/wat-phou-field-guide.css';
 import '../../../../styles/wat-phou-refinements.css';
 import '../../../../styles/field-guide-position.css';
+import '../../../../styles/landmark-field-guide-shared.css';
+
+const entry = laosLandmarkPageBySlug['wat-phou'];
 ---
 
 <BaseLayout
@@ -13,16 +18,25 @@ import '../../../../styles/field-guide-position.css';
   canonical="https://thingstodoatlas.com/laos/pakse/things-to-do/wat-phou"
 >
   <script type="application/ld+json" set:html={JSON.stringify(watPhouSchema)} />
-  <WatPhouFieldGuide />
+  <div class="landmark-guide-custom-page">
+    <WatPhouFieldGuide />
+    <div class="landmark-guide-shared-cta">
+      <LandmarkGuideFinalCta entry={entry} />
+    </div>
+  </div>
 
   <script>
-    const wireBolavenFieldCard = () => {
+    const wireLandmarkFieldCards = () => {
+      const routes = new Map([
+        ['Bolaven Plateau', '/laos/pakse/things-to-do/bolaven-plateau']
+      ]);
       document.querySelectorAll<HTMLAnchorElement>('.field-guide-related-card').forEach((card) => {
-        const title = card.querySelector('strong')?.textContent?.trim();
-        if (title === 'Bolaven Plateau') card.href = '/laos/pakse/things-to-do/bolaven-plateau';
+        const title = card.querySelector('strong')?.textContent?.trim() || '';
+        const route = routes.get(title);
+        if (route) card.href = route;
       });
     };
-    wireBolavenFieldCard();
-    document.addEventListener('astro:page-load', wireBolavenFieldCard);
+    wireLandmarkFieldCards();
+    document.addEventListener('astro:page-load', wireLandmarkFieldCards);
   </script>
 </BaseLayout>
