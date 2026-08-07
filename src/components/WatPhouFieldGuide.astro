@@ -1,0 +1,143 @@
+---
+import {
+  watPhouFaq,
+  watPhouImages as images,
+  watPhouPracticalCards,
+  watPhouQuickFacts,
+  watPhouSources,
+  watPhouStory
+} from '../data/watPhouPrototype';
+
+---
+
+<main class="field-guide-page">
+  <nav class="field-guide-return" aria-label="Return to the previous Wat Phou card">
+    <button type="button" data-wat-phou-page-back><span aria-hidden="true">←</span> Back to where you were</button>
+    <a href="/laos/pakse#explore-board-pakse">Pakse field guide</a>
+  </nav>
+
+  <article class="field-guide-article">
+    <header class="field-guide-hero">
+      <div class="field-guide-hero__copy">
+        <p class="field-guide-kicker">FIELD GUIDE · CHAMPASAK · SOUTHERN LAOS</p>
+        <h1>Wat Phou</h1>
+        <p class="field-guide-deck">A temple that only makes sense when you follow its line: water, causeway, stone, stairs and finally the mountain.</p>
+        <div class="field-guide-stamp" aria-label="Prototype field note information">
+          <span>FIELD NOTE 04</span><strong>Plan the visit</strong><small>Prototype · August 2026</small>
+        </div>
+      </div>
+      <figure class="field-guide-hero__photo">
+        <span class="field-guide-tape" aria-hidden="true"></span>
+        <img src={images.hero.src} alt={images.hero.alt} width="1800" height="1120" fetchpriority="high" />
+        <figcaption>Photo: <a href={images.hero.source} target="_blank" rel="noreferrer">{images.hero.credit}</a> · <a href={images.hero.licenseUrl} target="_blank" rel="noreferrer">{images.hero.license}</a></figcaption>
+      </figure>
+    </header>
+
+    <section class="field-guide-quick" aria-label="Wat Phou visit overview">
+      {watPhouQuickFacts.map((fact) => <div><span>{fact.label}</span><strong>{fact.value}</strong><small>{fact.note}</small></div>)}
+    </section>
+
+    <div class="field-guide-layout">
+      <div class="field-guide-story">
+        {[watPhouStory.opening, watPhouStory.history].map((section, index) => (
+          <section class="field-guide-section">
+            <p class="section-label">{section.label}</p><h2>{section.title}</h2>
+            {section.paragraphs.map((paragraph, paragraphIndex) => <p class:list={{ 'field-guide-lead': index === 0 && paragraphIndex === 0 }}>{paragraph}</p>)}
+          </section>
+        ))}
+      </div>
+      <aside class="field-guide-side-note">
+        <p>READ THE SITE IN THIS ORDER</p>
+        <ol><li>Visitor area and museum</li><li>Barays and the open axis</li><li>Stone causeway and lower buildings</li><li>Frangipani stairs</li><li>Upper sanctuary and spring</li><li>The view back toward the plain</li></ol>
+        <span>Do not save every photograph for the top.</span>
+      </aside>
+    </div>
+
+    <aside class="ad-placeholder" aria-label="Advertisement placeholder one">
+      <span>ADVERTISEMENT</span><strong>Future responsive ad position 01</strong><small>After substantial introductory and historical content.</small>
+    </aside>
+
+    <section class="field-guide-photo-story">
+      <figure class="field-guide-photo field-guide-photo--portrait">
+        <span class="field-guide-tape" aria-hidden="true"></span>
+        <img src={images.stairs.src} alt={images.stairs.alt} width="1100" height="1500" loading="lazy" />
+        <figcaption>Photo: <a href={images.stairs.source} target="_blank" rel="noreferrer">{images.stairs.credit}</a> · <a href={images.stairs.licenseUrl} target="_blank" rel="noreferrer">{images.stairs.license}</a></figcaption>
+      </figure>
+      <div class="field-guide-section">
+        <p class="section-label">{watPhouStory.climb.label}</p><h2>{watPhouStory.climb.title}</h2>
+        {watPhouStory.climb.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        <blockquote>{watPhouStory.climb.quote}</blockquote>
+      </div>
+    </section>
+
+    <section class="field-guide-gallery" aria-label="Wat Phou photo notes">
+      {[images.sanctuary, images.mountain].map((image) => (
+        <figure><img src={image.src} alt={image.alt} width="1100" height="760" loading="lazy" /><figcaption><a href={image.source} target="_blank" rel="noreferrer">{image.credit}</a> · <a href={image.licenseUrl} target="_blank" rel="noreferrer">{image.license}</a></figcaption></figure>
+      ))}
+    </section>
+
+    <div class="field-guide-layout field-guide-layout--reverse">
+      <div class="field-guide-story">
+        {[watPhouStory.sanctuary, watPhouStory.returnView].map((section) => (
+          <section class="field-guide-section"><p class="section-label">{section.label}</p><h2>{section.title}</h2>{section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}</section>
+        ))}
+      </div>
+      <aside class="field-guide-paper-note">
+        <span>WORTH CARRYING</span><ul><li>Water</li><li>Sun protection</li><li>Respectful light clothing</li><li>Shoes with grip</li><li>Time for the museum</li></ul>
+        <p>Current ticket prices and opening hours should be checked locally before departure.</p>
+      </aside>
+    </div>
+
+    <aside class="ad-placeholder ad-placeholder--wide" aria-label="Advertisement placeholder two">
+      <span>ADVERTISEMENT</span><strong>Future responsive ad position 02</strong><small>Between the cultural story and practical planning.</small>
+    </aside>
+
+    <section class="field-guide-practical">
+      <div class="field-guide-practical__heading"><p class="section-label">PLAN THE VISIT</p><h2>From Pakse or from Champasak?</h2><p>Both approaches work, but they produce different days.</p></div>
+      <div class="field-guide-practical__cards">
+        {watPhouPracticalCards.map((card) => <article><span>{card.number}</span><h3>{card.title}</h3><p>{card.text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="field-guide-photo-note">
+      <figure><span class="field-guide-tape" aria-hidden="true"></span><img src={images.detail.src} alt={images.detail.alt} width="1000" height="760" loading="lazy" /><figcaption>Photo: <a href={images.detail.source} target="_blank" rel="noreferrer">{images.detail.credit}</a> · <a href={images.detail.licenseUrl} target="_blank" rel="noreferrer">{images.detail.license}</a></figcaption></figure>
+      <div><p class="section-label">{watPhouStory.livingSite.label}</p><h2>{watPhouStory.livingSite.title}</h2>{watPhouStory.livingSite.paragraphs.map((paragraph) => <p>{paragraph}</p>)}</div>
+    </section>
+
+    <section class="field-guide-faq" aria-labelledby="wat-phou-faq-title">
+      <p class="section-label">QUESTIONS PEOPLE ASK BEFORE GOING</p><h2 id="wat-phou-faq-title">Wat Phou, practically</h2>
+      {watPhouFaq.map((item, index) => <details open={index === 0}><summary>{item.question}</summary><p>{item.answer}</p></details>)}
+    </section>
+
+    <aside class="ad-placeholder" aria-label="Advertisement placeholder three">
+      <span>ADVERTISEMENT</span><strong>Future responsive ad position 03</strong><small>After the complete guide, before trip actions.</small>
+    </aside>
+
+    <footer class="field-guide-footer">
+      <div><p class="section-label">CONTINUE THE SOUTHERN LAOS NOTEBOOK</p><h2>Keep Wat Phou inside the journey</h2><p>Add it to My Trip from its field card, or return to Pakse and compare it with the Bolaven Plateau and the road toward Si Phan Don.</p></div>
+      <nav aria-label="Wat Phou next actions"><button type="button" data-wat-phou-page-back>← Return to the landmark</button><a href="/laos/pakse#explore-board-pakse">Explore from Pakse</a><a href="https://www.google.com/maps/search/?api=1&query=Wat%20Phou%2C%20Champasak%2C%20Laos" target="_blank" rel="noreferrer">Open Google Maps ↗</a></nav>
+    </footer>
+
+    <section class="field-guide-sources" aria-label="Editorial and image sources">
+      <p><strong>Editorial method:</strong> facts were cross-checked against UNESCO and official tourism information. Wikipedia was used as a research index. Independent reports were consulted only to identify recurring practical questions; no review or blog passage has been copied.</p>
+      <ul>{watPhouSources.map((source) => <li><a href={source.href} target="_blank" rel="noreferrer">{source.label}</a></li>)}</ul>
+      <p><strong>Images:</strong> all five photographs link to their Wikimedia Commons file page and Creative Commons licence.</p>
+    </section>
+  </article>
+</main>
+
+<script>
+  const setupWatPhouPageBack = () => {
+    document.querySelectorAll<HTMLButtonElement>('[data-wat-phou-page-back]').forEach((button) => {
+      if (button.dataset.backReady === 'true') return;
+      button.dataset.backReady = 'true';
+      button.addEventListener('click', () => {
+        const hasStoredSource = Boolean(sessionStorage.getItem('atlas:wat-phou-return'));
+        if (hasStoredSource && history.length > 1) history.back();
+        else location.href = '/laos/pakse#explore-board-pakse';
+      });
+    });
+  };
+  setupWatPhouPageBack();
+  document.addEventListener('astro:page-load', setupWatPhouPageBack);
+</script>
