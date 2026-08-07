@@ -156,6 +156,38 @@ const tadLoConfigs = laosLandmarkPages
     catch { return []; }
   };
 
+  const configForDialogId = (configs: TadLoConfig[], dialogId: string) => (
+    configs.find((config) => dialogId === config.modalId || dialogId.startsWith(`${config.modalId}-`))
+  );
+
+  const prepareTadLoSources = (configs: TadLoConfig[]) => {
+    document.querySelectorAll<HTMLElement>('[data-partner-card-open], [data-selection-card-open]').forEach((trigger, index) => {
+      const dialogId = trigger.dataset.partnerCardOpen || trigger.dataset.selectionCardOpen || '';
+      const config = configForDialogId(configs, dialogId);
+      if (!config) return;
+      const source = trigger.closest<HTMLElement>('.partner-card, .selection-card, [data-selection-alias]') || trigger;
+      if (!source.id) source.id = `tad-lo-landmark-source-${config.slug}-${index + 1}`;
+      trigger.dataset.landmarkPageSourceId = source.id;
+    });
+  };
+
+  const bindTadLoSourceTracking = (configs: TadLoConfig[]) => {
+    if (document.documentElement.dataset.tadLoLandmarkTrackingReady === 'true') return;
+    document.documentElement.dataset.tadLoLandmarkTrackingReady = 'true';
+
+    document.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const trigger = target.closest<HTMLElement>('[data-partner-card-open], [data-selection-card-open]');
+      if (!trigger) return;
+      const dialogId = trigger.dataset.partnerCardOpen || trigger.dataset.selectionCardOpen || '';
+      const config = configForDialogId(configs, dialogId);
+      if (!config) return;
+      const dialog = document.getElementById(dialogId);
+      if (dialog instanceof HTMLDialogElement) dialog.dataset.landmarkPageSourceId = trigger.dataset.landmarkPageSourceId || '';
+    }, true);
+  };
+
   const addTadLoMeta = (dialog: HTMLDialogElement, config: TadLoConfig) => {
     const content = dialog.querySelector<HTMLElement>('.partner-dialog__content, .selection-dialog__content');
     if (!content || content.querySelector('.tad-lo-preview-meta')) return;
@@ -210,12 +242,19 @@ const tadLoConfigs = laosLandmarkPages
     });
   };
 
+  const configureTadLoDialogs = (configs: TadLoConfig[]) => {
+    document.querySelectorAll<HTMLDialogElement>('dialog.partner-dialog, dialog.selection-dialog').forEach((dialog) => {
+      const config = configForDialogId(configs, dialog.id);
+      if (config) wireTadLoDialog(dialog, config);
+    });
+  };
+
   const setupTadLoPageBridge = () => {
     const configs = readTadLoConfigs();
-    configs.forEach((config) => {
-      const dialog = document.getElementById(config.modalId);
-      if (dialog instanceof HTMLDialogElement) wireTadLoDialog(dialog, config);
-    });
+    if (!configs.length) return;
+    prepareTadLoSources(configs);
+    bindTadLoSourceTracking(configs);
+    configureTadLoDialogs(configs);
   };
 
   setupTadLoPageBridge();
