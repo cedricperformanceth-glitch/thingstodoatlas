@@ -3,13 +3,20 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import WatPhouFieldGuide from '../../../../components/WatPhouFieldGuide.astro';
 import LandmarkGuideFinalCta from '../../../../components/LandmarkGuideFinalCta.astro';
 import { laosLandmarkPageBySlug } from '../../../../data/laosLandmarkPageRegistry';
-import { watPhouSchema } from '../../../../data/watPhouPrototype';
+import { watPhouImages, watPhouSchema } from '../../../../data/watPhouPrototype';
 import '../../../../styles/wat-phou-field-guide.css';
 import '../../../../styles/wat-phou-refinements.css';
 import '../../../../styles/field-guide-position.css';
 import '../../../../styles/landmark-field-guide-shared.css';
 
 const entry = laosLandmarkPageBySlug['wat-phou'];
+const publishedGallery = Object.values(watPhouImages).map((image) => ({
+  src: image.src,
+  alt: image.alt,
+  sourcePage: image.source,
+  author: image.credit,
+  license: image.license
+}));
 ---
 
 <BaseLayout
@@ -21,7 +28,7 @@ const entry = laosLandmarkPageBySlug['wat-phou'];
   <div class="landmark-guide-custom-page">
     <WatPhouFieldGuide />
     <div class="landmark-guide-shared-cta">
-      <LandmarkGuideFinalCta entry={entry} />
+      <LandmarkGuideFinalCta entry={entry} gallery={publishedGallery} />
     </div>
   </div>
 
