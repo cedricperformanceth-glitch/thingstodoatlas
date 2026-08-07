@@ -21,10 +21,6 @@
     overflow: visible;
   }
 
-  #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__eyebrow {
-    margin-bottom: 12px;
-  }
-
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__story h2 {
     font-size: clamp(3.6rem, 6vw, 5.2rem);
   }
@@ -32,10 +28,6 @@
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__region {
     margin-top: 13px !important;
     font-size: 1.15rem !important;
-  }
-
-  #wat-phou-modal[data-wat-phou-compact='true'] .landmark-story__underline {
-    margin-bottom: 12px;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-story__description {
@@ -66,10 +58,6 @@
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-gallery__stage > img {
     height: 274px;
-  }
-
-  #wat-phou-modal[data-wat-phou-compact='true'] .landmark-gallery__credit {
-    margin-top: 8px;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__actions {
@@ -125,7 +113,6 @@
     outline: 3px solid rgba(217, 119, 69, .88) !important;
     outline-offset: 7px !important;
     box-shadow: 0 0 0 12px rgba(217, 119, 69, .12), 0 16px 35px rgba(31, 57, 45, .16) !important;
-    transition: outline-color 600ms ease, box-shadow 600ms ease !important;
   }
 
   @media (max-width: 850px) {
@@ -138,14 +125,6 @@
       grid-template-columns: minmax(240px, .85fr) minmax(330px, 1.15fr);
     }
 
-    #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__story {
-      padding: 38px 27px 28px 32px;
-    }
-
-    #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__visual {
-      padding: 25px 24px 23px;
-    }
-
     #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__actions {
       grid-template-columns: 1fr !important;
     }
@@ -155,10 +134,6 @@
     #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__grid {
       grid-template-columns: 1fr;
     }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .wat-phou-return-target { transition: none !important; }
   }
 </style>
 
@@ -170,40 +145,26 @@
   type WatPhouReturnState = {
     sourcePath: string;
     sourceId: string;
-    sourceKind: string;
     categorySlug?: string;
     scrollY: number;
-  };
-
-  const currentLockedScrollY = () => {
-    const fixedTop = Number.parseFloat(document.body.style.top || '');
-    return Number.isFinite(fixedTop) && fixedTop < 0 ? Math.abs(fixedTop) : window.scrollY;
-  };
-
-  const sourceKindFor = (element: HTMLElement) => {
-    if (element.matches('#category-wat-phou') || element.closest('#category-wat-phou')) return 'things-to-do';
-    if (element.matches('.explore-board-card') || element.closest('.explore-board-card')) return 'explore-board';
-    if (element.matches('.city-landmark-card') || element.closest('.city-landmark-card')) return 'landmark-list';
-    return 'landmark';
   };
 
   const sourceElementFor = (trigger: HTMLElement) => (
     trigger.closest<HTMLElement>('#category-wat-phou, .explore-board-card, .city-landmark-card') || trigger
   );
 
-  const ensureSourceIdentity = (trigger: HTMLElement, index: number) => {
-    const source = sourceElementFor(trigger);
-    if (source.id) return source;
-    const kind = sourceKindFor(source);
-    source.id = `wat-phou-source-${kind}-${index + 1}`;
-    return source;
+  const sourceKindFor = (source: HTMLElement) => {
+    if (source.matches('#category-wat-phou')) return 'things-to-do';
+    if (source.matches('.explore-board-card')) return 'explore-board';
+    if (source.matches('.city-landmark-card')) return 'landmark-list';
+    return 'landmark';
   };
 
-  const prepareWatPhouSources = () => {
+  const prepareSources = () => {
     document.querySelectorAll<HTMLElement>(`[data-open-landmark="${WAT_PHOU_MODAL_ID}"]`).forEach((trigger, index) => {
-      const source = ensureSourceIdentity(trigger, index);
+      const source = sourceElementFor(trigger);
+      if (!source.id) source.id = `wat-phou-source-${sourceKindFor(source)}-${index + 1}`;
       trigger.dataset.watPhouSourceId = source.id;
-      trigger.dataset.watPhouSourceKind = sourceKindFor(source);
     });
   };
 
@@ -211,16 +172,18 @@
     document.querySelector<HTMLElement>('[data-city-category-button][aria-selected="true"]')?.dataset.cityCategoryButton || undefined
   );
 
-  const recordSource = (trigger: HTMLElement) => {
-    const sourceId = trigger.dataset.watPhouSourceId;
-    const sourceKind = trigger.dataset.watPhouSourceKind;
-    const dialog = document.getElementById(WAT_PHOU_MODAL_ID);
-    if (!(dialog instanceof HTMLDialogElement) || !sourceId) return;
-    dialog.dataset.watPhouSourceId = sourceId;
-    dialog.dataset.watPhouSourceKind = sourceKind || 'landmark';
+  const currentPageScroll = () => {
+    const fixedTop = Number.parseFloat(document.body.style.top || '');
+    return Number.isFinite(fixedTop) && fixedTop < 0 ? Math.abs(fixedTop) : window.scrollY;
   };
 
-  const addCompactPreviewMeta = (dialog: HTMLDialogElement) => {
+  const rememberTrigger = (trigger: HTMLElement) => {
+    const dialog = document.getElementById(WAT_PHOU_MODAL_ID);
+    if (!(dialog instanceof HTMLDialogElement)) return;
+    dialog.dataset.watPhouSourceId = trigger.dataset.watPhouSourceId || '';
+  };
+
+  const addPreviewMeta = (dialog: HTMLDialogElement) => {
     const story = dialog.querySelector<HTMLElement>('.landmark-modal__story');
     if (!story || story.querySelector('.wat-phou-preview-meta')) return;
     const meta = document.createElement('div');
@@ -234,119 +197,105 @@
     story.append(meta);
   };
 
-  const installGuideLink = (dialog: HTMLDialogElement) => {
-    if (dialog.querySelector('[data-wat-phou-plan]')) return true;
-    const oldButton = dialog.querySelector<HTMLElement>('[data-open-landmark-guide]');
-    if (!oldButton) return false;
+  const installPageLink = (dialog: HTMLDialogElement) => {
+    const actions = dialog.querySelector<HTMLElement>('.landmark-modal__actions');
+    if (!actions) return false;
 
-    const link = document.createElement('a');
-    link.className = oldButton.className || 'landmark-action landmark-action--guide';
-    link.href = WAT_PHOU_GUIDE_URL;
-    link.dataset.watPhouPlan = '';
-    link.innerHTML = '<span aria-hidden="true">✎</span> Plan my visit';
-    link.setAttribute('aria-label', 'Open the complete Wat Phou visit guide');
-    oldButton.replaceWith(link);
+    let link = actions.querySelector<HTMLAnchorElement>('[data-wat-phou-plan]');
+    if (!link) {
+      const oldGuideButton = actions.querySelector<HTMLElement>('[data-open-landmark-guide]');
+      link = document.createElement('a');
+      link.className = oldGuideButton?.className || 'landmark-action landmark-action--guide';
+      link.href = WAT_PHOU_GUIDE_URL;
+      link.dataset.watPhouPlan = '';
+      // This attribute also prevents the legacy modal script from inserting a second guide button.
+      link.dataset.openLandmarkGuide = 'wat-phou-page';
+      link.innerHTML = '<span aria-hidden="true">✎</span> Plan my visit';
+      link.setAttribute('aria-label', 'Open the complete Wat Phou visit guide');
 
-    link.addEventListener('click', () => {
-      const sourceId = dialog.dataset.watPhouSourceId || '';
-      const sourceKind = dialog.dataset.watPhouSourceKind || 'landmark';
-      if (sourceId) {
+      if (oldGuideButton) oldGuideButton.replaceWith(link);
+      else {
+        const saveButton = actions.querySelector('[data-add-landmark]');
+        actions.insertBefore(link, saveButton || null);
+      }
+    }
+
+    if (link.dataset.returnReady !== 'true') {
+      link.dataset.returnReady = 'true';
+      link.addEventListener('click', () => {
+        const sourceId = dialog.dataset.watPhouSourceId || '';
+        if (!sourceId) return;
         const state: WatPhouReturnState = {
           sourcePath: `${location.pathname}${location.search}${location.hash}`,
           sourceId,
-          sourceKind,
           categorySlug: activeCategorySlug(),
-          scrollY: currentLockedScrollY()
+          scrollY: currentPageScroll()
         };
         sessionStorage.setItem(WAT_PHOU_RETURN_KEY, JSON.stringify(state));
-      }
-      if (dialog.open) dialog.close();
-    });
+        if (dialog.open) dialog.close();
+      });
+    }
+
     return true;
   };
 
-  const compactWatPhouModal = () => {
+  const configureWatPhou = () => {
+    prepareSources();
     const dialog = document.getElementById(WAT_PHOU_MODAL_ID);
-    if (!(dialog instanceof HTMLDialogElement)) return;
+    if (!(dialog instanceof HTMLDialogElement)) return false;
     dialog.dataset.watPhouCompact = 'true';
     const eyebrow = dialog.querySelector<HTMLElement>('.landmark-modal__eyebrow');
     if (eyebrow) eyebrow.textContent = 'LAOS · QUICK FIELD CARD';
-    addCompactPreviewMeta(dialog);
-    installGuideLink(dialog);
+    addPreviewMeta(dialog);
+    return installPageLink(dialog);
   };
 
-  const clearLandmarkScrollLock = () => {
-    const root = document.documentElement;
-    if (root.dataset.landmarkScrollLocked !== 'true') return;
-    delete root.dataset.landmarkScrollLocked;
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.right = '';
-    document.body.style.left = '';
-    document.body.style.width = '';
-  };
-
-  const restoreWatPhouSource = () => {
+  const restoreSource = () => {
     const raw = sessionStorage.getItem(WAT_PHOU_RETURN_KEY);
     if (!raw) return;
 
     let state: WatPhouReturnState | null = null;
-    try { state = JSON.parse(raw) as WatPhouReturnState; } catch { sessionStorage.removeItem(WAT_PHOU_RETURN_KEY); }
-    if (!state) return;
-    const currentPath = `${location.pathname}${location.search}${location.hash}`;
-    const sameDocument = currentPath === state.sourcePath || location.pathname === state.sourcePath.split(/[?#]/)[0];
-    if (!sameDocument) return;
-
-    clearLandmarkScrollLock();
-    document.querySelectorAll<HTMLDialogElement>('.landmark-modal[open], [data-landmark-guide-dialog][open]').forEach((dialog) => dialog.close());
+    try { state = JSON.parse(raw) as WatPhouReturnState; }
+    catch { sessionStorage.removeItem(WAT_PHOU_RETURN_KEY); }
+    if (!state || location.pathname !== state.sourcePath.split(/[?#]/)[0]) return;
 
     if (state.categorySlug) {
       const tab = document.querySelector<HTMLButtonElement>(`[data-city-category-button="${CSS.escape(state.categorySlug)}"]`);
       if (tab && tab.getAttribute('aria-selected') !== 'true') tab.click();
     }
 
-    requestAnimationFrame(() => requestAnimationFrame(() => {
+    window.setTimeout(() => {
       const source = document.getElementById(state!.sourceId);
       if (source) {
         source.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'auto' });
-        if (source instanceof HTMLElement) source.focus({ preventScroll: true });
         source.classList.add('wat-phou-return-target');
-        window.setTimeout(() => source.classList.remove('wat-phou-return-target'), 2200);
+        window.setTimeout(() => source.classList.remove('wat-phou-return-target'), 1800);
       } else {
         window.scrollTo({ top: state!.scrollY, left: 0, behavior: 'auto' });
       }
       sessionStorage.removeItem(WAT_PHOU_RETURN_KEY);
-    }));
+    }, 80);
   };
 
-  const bindWatPhouSourceTracking = () => {
-    const root = document.documentElement;
-    if (root.dataset.watPhouSourceTracking === 'true') return;
-    root.dataset.watPhouSourceTracking = 'true';
-
-    const capture = (event: Event) => {
+  const bindTracking = () => {
+    if (document.documentElement.dataset.watPhouTrackingReady === 'true') return;
+    document.documentElement.dataset.watPhouTrackingReady = 'true';
+    document.addEventListener('click', (event) => {
       const target = event.target;
       if (!(target instanceof Element)) return;
       const trigger = target.closest<HTMLElement>(`[data-open-landmark="${WAT_PHOU_MODAL_ID}"]`);
-      if (trigger) recordSource(trigger);
-    };
-
-    document.addEventListener('click', capture, true);
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') capture(event);
+      if (trigger) rememberTrigger(trigger);
     }, true);
   };
 
   const setupWatPhouPrototype = () => {
-    prepareWatPhouSources();
-    bindWatPhouSourceTracking();
-    compactWatPhouModal();
-    restoreWatPhouSource();
+    bindTracking();
+    restoreSource();
 
-    if (document.body.dataset.watPhouObserverReady === 'true') return;
-    document.body.dataset.watPhouObserverReady = 'true';
-    const observer = new MutationObserver(() => compactWatPhouModal());
-    observer.observe(document.body, { childList: true, subtree: true });
+    // Finite retries cover Astro script ordering without observing every DOM mutation.
+    [0, 40, 120, 300, 700].forEach((delay) => {
+      window.setTimeout(() => configureWatPhou(), delay);
+    });
   };
 
   setupWatPhouPrototype();
