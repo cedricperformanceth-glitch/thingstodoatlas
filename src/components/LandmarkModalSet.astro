@@ -1,6 +1,7 @@
 ---
 import LandmarkModal from './LandmarkModal.astro';
 import type { LaosLandmark } from '../data/laosLandmarks';
+import { getLicensedLandmarkGallery } from '../data/laosLandmarkLicensedMedia';
 
 interface Props {
   landmarks?: LaosLandmark[];
@@ -16,6 +17,7 @@ const bolavenPartner = {
 
 {landmarks.map((landmark) => {
   const partner = landmark.slug === 'bolaven-plateau' ? bolavenPartner : null;
+  const gallery = getLicensedLandmarkGallery(landmark.slug, landmark.gallery);
 
   return (
     <>
@@ -27,7 +29,7 @@ const bolavenPartner = {
         region={landmark.region}
         description={landmark.description}
         mapsUrl={landmark.mapsUrl}
-        gallery={landmark.gallery}
+        gallery={gallery}
         facts={landmark.facts}
       />
 
@@ -90,18 +92,26 @@ const bolavenPartner = {
     transform: rotate(-1deg);
   }
 
-  @media (max-width: 650px) { .landmark-partner-note { align-items: flex-start; flex-direction: column; } }
-  @media (prefers-reduced-motion: reduce) { .landmark-partner-note { transition: none; } }
+  @media (max-width: 650px) {
+    .landmark-partner-note { align-items: flex-start; flex-direction: column; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .landmark-partner-note { transition: none; }
+  }
 </style>
 
 <script>
   let landmarkScrollY = 0;
 
-  const hasOpenLandmarkDialog = () => Boolean(document.querySelector('.landmark-modal[open]'));
+  const hasOpenLandmarkDialog = () => Boolean(
+    document.querySelector('.landmark-modal[open], [data-landmark-guide-dialog][open]')
+  );
 
   const lockLandmarkPage = () => {
     const root = document.documentElement;
     if (root.dataset.landmarkScrollLocked === 'true') return;
+
     landmarkScrollY = window.scrollY;
     root.dataset.landmarkScrollLocked = 'true';
     document.body.style.position = 'fixed';
@@ -114,6 +124,7 @@ const bolavenPartner = {
   const unlockLandmarkPage = () => {
     const root = document.documentElement;
     if (root.dataset.landmarkScrollLocked !== 'true') return;
+
     delete root.dataset.landmarkScrollLocked;
     document.body.style.position = '';
     document.body.style.top = '';
