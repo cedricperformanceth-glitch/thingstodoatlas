@@ -1,15 +1,17 @@
 ---
+import type { LandmarkGalleryItem } from '../data/laosLandmarks';
 import type { LaosLandmarkPageEntry } from '../data/laosLandmarkPageRegistry';
 import { getLandmarkResearchSources } from '../data/laosLandmarkResearchSources';
 import { getLicensedLandmarkGallery } from '../data/laosLandmarkLicensedMedia';
 
 interface Props {
   entry: LaosLandmarkPageEntry;
+  gallery?: LandmarkGalleryItem[];
 }
 
-const { entry } = Astro.props;
+const { entry, gallery } = Astro.props;
 const sources = getLandmarkResearchSources(entry.slug);
-const publishedGallery = getLicensedLandmarkGallery(entry.slug, entry.landmark.gallery);
+const publishedGallery = gallery || getLicensedLandmarkGallery(entry.slug, entry.landmark.gallery);
 const listedHrefs = new Set(sources.map((source) => source.href));
 const photoSources = publishedGallery
   .filter((image) => image.sourcePage && !listedHrefs.has(image.sourcePage))
