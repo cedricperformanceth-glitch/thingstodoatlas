@@ -15,13 +15,45 @@ const commons = (
 });
 
 /**
- * Media used for publication when the original landmark gallery contains a source
- * whose reuse licence is unclear, incomplete or unsuitable for editorial reuse.
- *
- * Public-domain media should be preferred when a strong, relevant file exists.
- * Otherwise use a Wikimedia Commons file with a clearly documented reusable licence.
+ * Media approved for publication. Prefer a strong public-domain / CC0 file when one
+ * is genuinely relevant to the landmark. Otherwise use Wikimedia Commons media with
+ * a clearly documented reusable licence. Contextual photos are labelled as context.
  */
 export const laosLandmarkLicensedMedia: Record<string, LandmarkGalleryItem[]> = {
+  'wat-phou': [
+    commons(
+      'ViewFromWatPhu.JPG',
+      'View from the upper part of Wat Phou back toward the Mekong plain',
+      'Mattun0211',
+      'CC0 1.0',
+      1800
+    ),
+    commons(
+      'WatPhuCrocodile.JPG',
+      'Historic crocodile carving at Wat Phou in Champasak',
+      'Mattun0211',
+      'CC0 1.0',
+      1600
+    )
+  ],
+
+  'bolaven-plateau': [
+    commons(
+      'Tad Fane Waterfall.JPG',
+      'Tad Fane Waterfall on the Bolaven Plateau in southern Laos',
+      'Sebomann',
+      'Public domain',
+      1600
+    ),
+    commons(
+      'Bolaven Plateau.jpg',
+      'Waterfall and forest landscape on the Bolaven Plateau in southern Laos',
+      'Dario Severi',
+      'CC BY-SA 3.0',
+      1600
+    )
+  ],
+
   'pha-pa-tou': [
     commons(
       'Mountains clouds Mekong and dwellings from Mount Phou Si at sunrise in Luang Prabang Laos.jpg',
@@ -41,17 +73,24 @@ export const laosLandmarkLicensedMedia: Record<string, LandmarkGalleryItem[]> = 
 
   'kuang-si-waterfall': [
     commons(
-      'Kuang Si Waterfalls Luang Prabang Wikimedia Commons.jpg',
-      'Wide view of the forest and cascades at Kuang Si Waterfall near Luang Prabang',
-      'Benh LIEU SONG',
-      'CC BY-SA 3.0',
+      '20191212 Kuang Si Falls cascading falls-4.jpg',
+      'Cascading waterfalls at Kuang Si Falls near Luang Prabang',
+      'Balon Greyjoy',
+      'CC0 1.0',
       1800
     ),
     commons(
-      'Kuang Si waterfalls in Luang Prabang, Laos.jpg',
-      'Turquoise pools and limestone cascades at Kuang Si Waterfall',
-      'NruasPaoYPP',
-      'CC BY-SA 4.0',
+      '20191212 Kuang Si Falls top waterfall-11.jpg',
+      'The highest waterfall at Kuang Si Falls near Luang Prabang',
+      'Balon Greyjoy',
+      'CC0 1.0',
+      1600
+    ),
+    commons(
+      '20191212 Kuang Si Falls low shallow pools-7.jpg',
+      'Lower shallow pools at Kuang Si Falls near Luang Prabang',
+      'Balon Greyjoy',
+      'CC0 1.0',
       1600
     )
   ],
