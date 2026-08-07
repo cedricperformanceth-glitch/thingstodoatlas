@@ -2,12 +2,13 @@
   #wat-phou-modal[data-wat-phou-compact='true'] {
     width: min(840px, calc(100vw - 48px));
     height: auto;
-    max-height: min(520px, calc(100vh - 48px));
+    max-height: min(500px, calc(100vh - 48px));
     overflow: auto;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__grid {
     grid-template-columns: minmax(260px, .84fr) minmax(360px, 1.16fr);
+    align-items: start;
     height: auto;
     min-height: 0;
   }
@@ -15,30 +16,31 @@
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__story {
     display: flex;
     min-height: 0;
+    align-self: start;
     flex-direction: column;
-    justify-content: center;
-    padding: 28px 28px 24px 34px;
+    justify-content: flex-start;
+    padding: 22px 26px 18px 32px;
     overflow: visible;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__story h2 {
-    font-size: clamp(3.25rem, 5vw, 4.35rem);
+    font-size: clamp(3.1rem, 4.8vw, 4.15rem);
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__region {
-    margin-top: 10px !important;
-    font-size: 1.06rem !important;
+    margin-top: 8px !important;
+    font-size: 1.02rem !important;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-story__underline {
-    margin-top: 5px;
-    margin-bottom: 9px;
+    margin-top: 4px;
+    margin-bottom: 7px;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-story__description {
     max-width: 27rem;
-    font-size: .98rem;
-    line-height: 1.28;
+    font-size: .94rem;
+    line-height: 1.24;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-story__annotations,
@@ -53,59 +55,62 @@
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__visual {
+    align-self: start;
     justify-content: flex-start;
-    padding: 20px 22px 20px;
+    padding: 16px 20px 0;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-visual__meta {
-    margin-bottom: 6px;
+    margin-bottom: 5px;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-gallery__stage {
-    min-height: 205px;
+    min-height: 198px;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-gallery__stage > img {
-    height: 205px;
+    height: 198px;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-gallery__credit {
-    margin-top: 5px;
+    min-height: 0;
+    margin-top: 4px;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__actions {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     gap: 7px;
-    margin-top: 9px;
+    margin-top: 7px;
+    margin-bottom: 0;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-action {
-    min-height: 39px;
-    padding: 7px 7px;
-    font-size: .88rem;
+    min-height: 38px;
+    padding: 6px 7px;
+    font-size: .86rem;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .wat-phou-preview-meta {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 6px;
-    margin-top: 13px;
-    padding-top: 10px;
+    margin-top: 9px;
+    padding-top: 8px;
     border-top: 1px dashed rgba(49, 85, 69, .28);
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .wat-phou-preview-meta span {
     display: grid;
-    gap: 3px;
+    gap: 2px;
     min-width: 0;
     color: #315545;
-    font: 650 .82rem/1.02 'Caveat', 'Segoe Print', cursive;
+    font: 650 .78rem/1.02 'Caveat', 'Segoe Print', cursive;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .wat-phou-preview-meta small {
     color: #a45d3a;
-    font: 700 .43rem/1.15 'DM Sans', sans-serif;
-    letter-spacing: .1em;
+    font: 700 .42rem/1.15 'DM Sans', sans-serif;
+    letter-spacing: .09em;
     text-transform: uppercase;
   }
 
@@ -132,7 +137,7 @@
   @media (max-width: 850px) {
     #wat-phou-modal[data-wat-phou-compact='true'] {
       width: min(730px, calc(100vw - 32px));
-      max-height: min(500px, calc(100vh - 32px));
+      max-height: min(480px, calc(100vh - 32px));
     }
 
     #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__grid {
@@ -140,13 +145,13 @@
     }
 
     #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__story {
-      padding: 25px 22px 21px 28px;
+      padding: 20px 20px 16px 26px;
     }
 
     #wat-phou-modal[data-wat-phou-compact='true'] .landmark-gallery__stage,
     #wat-phou-modal[data-wat-phou-compact='true'] .landmark-gallery__stage > img {
-      min-height: 190px;
-      height: 190px;
+      min-height: 184px;
+      height: 184px;
     }
 
     #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__actions {
