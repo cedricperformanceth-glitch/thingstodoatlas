@@ -4,6 +4,7 @@ import WatPhouFieldGuide from '../../../../components/WatPhouFieldGuide.astro';
 import { watPhouSchema } from '../../../../data/watPhouPrototype';
 import '../../../../styles/wat-phou-field-guide.css';
 import '../../../../styles/wat-phou-refinements.css';
+import '../../../../styles/field-guide-position.css';
 ---
 
 <BaseLayout
@@ -13,4 +14,15 @@ import '../../../../styles/wat-phou-refinements.css';
 >
   <script type="application/ld+json" set:html={JSON.stringify(watPhouSchema)} />
   <WatPhouFieldGuide />
+
+  <script>
+    const wireBolavenFieldCard = () => {
+      document.querySelectorAll<HTMLAnchorElement>('.field-guide-related-card').forEach((card) => {
+        const title = card.querySelector('strong')?.textContent?.trim();
+        if (title === 'Bolaven Plateau') card.href = '/laos/pakse/things-to-do/bolaven-plateau';
+      });
+    };
+    wireBolavenFieldCard();
+    document.addEventListener('astro:page-load', wireBolavenFieldCard);
+  </script>
 </BaseLayout>
