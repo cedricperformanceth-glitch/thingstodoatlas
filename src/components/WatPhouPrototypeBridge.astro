@@ -1,13 +1,13 @@
 <style is:global>
   #wat-phou-modal[data-wat-phou-compact='true'] {
-    width: min(920px, calc(100vw - 48px));
+    width: min(840px, calc(100vw - 48px));
     height: auto;
-    max-height: min(650px, calc(100vh - 48px));
+    max-height: min(520px, calc(100vh - 48px));
     overflow: auto;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__grid {
-    grid-template-columns: minmax(280px, .86fr) minmax(390px, 1.14fr);
+    grid-template-columns: minmax(260px, .84fr) minmax(360px, 1.16fr);
     height: auto;
     min-height: 0;
   }
@@ -17,23 +17,28 @@
     min-height: 0;
     flex-direction: column;
     justify-content: center;
-    padding: 42px 36px 34px 42px;
+    padding: 28px 28px 24px 34px;
     overflow: visible;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__story h2 {
-    font-size: clamp(3.6rem, 6vw, 5.2rem);
+    font-size: clamp(3.25rem, 5vw, 4.35rem);
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__region {
-    margin-top: 13px !important;
-    font-size: 1.15rem !important;
+    margin-top: 10px !important;
+    font-size: 1.06rem !important;
+  }
+
+  #wat-phou-modal[data-wat-phou-compact='true'] .landmark-story__underline {
+    margin-top: 5px;
+    margin-bottom: 9px;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-story__description {
-    max-width: 30rem;
-    font-size: 1.08rem;
-    line-height: 1.34;
+    max-width: 27rem;
+    font-size: .98rem;
+    line-height: 1.28;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-story__annotations,
@@ -49,49 +54,58 @@
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__visual {
     justify-content: flex-start;
-    padding: 28px 30px 26px;
+    padding: 20px 22px 20px;
+  }
+
+  #wat-phou-modal[data-wat-phou-compact='true'] .landmark-visual__meta {
+    margin-bottom: 6px;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-gallery__stage {
-    min-height: 274px;
+    min-height: 205px;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-gallery__stage > img {
-    height: 274px;
+    height: 205px;
+  }
+
+  #wat-phou-modal[data-wat-phou-compact='true'] .landmark-gallery__credit {
+    margin-top: 5px;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__actions {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    margin-top: 15px;
+    gap: 7px;
+    margin-top: 9px;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .landmark-action {
-    min-height: 44px;
-    padding-inline: 8px;
-    font-size: .96rem;
+    min-height: 39px;
+    padding: 7px 7px;
+    font-size: .88rem;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .wat-phou-preview-meta {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 7px;
-    margin-top: 22px;
-    padding-top: 15px;
+    gap: 6px;
+    margin-top: 13px;
+    padding-top: 10px;
     border-top: 1px dashed rgba(49, 85, 69, .28);
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .wat-phou-preview-meta span {
     display: grid;
-    gap: 4px;
+    gap: 3px;
     min-width: 0;
     color: #315545;
-    font: 650 .92rem/1.05 'Caveat', 'Segoe Print', cursive;
+    font: 650 .82rem/1.02 'Caveat', 'Segoe Print', cursive;
   }
 
   #wat-phou-modal[data-wat-phou-compact='true'] .wat-phou-preview-meta small {
     color: #a45d3a;
-    font: 700 .48rem/1.2 'DM Sans', sans-serif;
-    letter-spacing: .11em;
+    font: 700 .43rem/1.15 'DM Sans', sans-serif;
+    letter-spacing: .1em;
     text-transform: uppercase;
   }
 
@@ -117,16 +131,26 @@
 
   @media (max-width: 850px) {
     #wat-phou-modal[data-wat-phou-compact='true'] {
-      width: min(760px, calc(100vw - 32px));
-      max-height: calc(100vh - 32px);
+      width: min(730px, calc(100vw - 32px));
+      max-height: min(500px, calc(100vh - 32px));
     }
 
     #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__grid {
-      grid-template-columns: minmax(240px, .85fr) minmax(330px, 1.15fr);
+      grid-template-columns: minmax(230px, .82fr) minmax(320px, 1.18fr);
+    }
+
+    #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__story {
+      padding: 25px 22px 21px 28px;
+    }
+
+    #wat-phou-modal[data-wat-phou-compact='true'] .landmark-gallery__stage,
+    #wat-phou-modal[data-wat-phou-compact='true'] .landmark-gallery__stage > img {
+      min-height: 190px;
+      height: 190px;
     }
 
     #wat-phou-modal[data-wat-phou-compact='true'] .landmark-modal__actions {
-      grid-template-columns: 1fr !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     }
   }
 
@@ -208,7 +232,6 @@
       link.className = oldGuideButton?.className || 'landmark-action landmark-action--guide';
       link.href = WAT_PHOU_GUIDE_URL;
       link.dataset.watPhouPlan = '';
-      // This attribute also prevents the legacy modal script from inserting a second guide button.
       link.dataset.openLandmarkGuide = 'wat-phou-page';
       link.innerHTML = '<span aria-hidden="true">✎</span> Plan my visit';
       link.setAttribute('aria-label', 'Open the complete Wat Phou visit guide');
@@ -291,8 +314,6 @@
   const setupWatPhouPrototype = () => {
     bindTracking();
     restoreSource();
-
-    // Finite retries cover Astro script ordering without observing every DOM mutation.
     [0, 40, 120, 300, 700].forEach((delay) => {
       window.setTimeout(() => configureWatPhou(), delay);
     });
