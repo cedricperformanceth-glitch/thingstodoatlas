@@ -1,5 +1,6 @@
 ---
 import type { LaosLandmarkPageEntry } from '../data/laosLandmarkPageRegistry';
+import LandmarkGuideSources from './LandmarkGuideSources.astro';
 
 interface Props {
   entry: LaosLandmarkPageEntry;
@@ -23,6 +24,8 @@ const tripItem = {
   url: entry.route
 };
 ---
+
+<LandmarkGuideSources entry={entry} />
 
 <section class="field-guide-final-cta landmark-guide-final-cta" aria-labelledby={`landmark-final-cta-${entry.slug}`}>
   <div class="field-guide-final-cta__copy">
