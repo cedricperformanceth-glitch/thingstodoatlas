@@ -1,0 +1,15 @@
+.field-guide-page {
+  padding-top: 92px;
+}
+
+@media (max-width: 820px) {
+  .field-guide-page {
+    padding-top: 84px;
+  }
+}
+
+@media (max-width: 620px) {
+  .field-guide-page {
+    padding-top: 74px;
+  }
+}
