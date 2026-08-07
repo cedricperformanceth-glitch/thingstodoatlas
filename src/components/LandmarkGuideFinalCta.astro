@@ -1,0 +1,44 @@
+---
+import type { LaosLandmarkPageEntry } from '../data/laosLandmarkPageRegistry';
+
+interface Props {
+  entry: LaosLandmarkPageEntry;
+}
+
+const { entry } = Astro.props;
+const { landmark } = entry;
+
+const tripItem = {
+  id: `laos:landmark:${entry.citySlug}:${landmark.modalId}`,
+  originalId: landmark.modalId,
+  kind: 'landmark',
+  name: landmark.name,
+  countrySlug: 'laos',
+  countryName: 'Laos',
+  citySlug: entry.citySlug,
+  city: entry.cityName,
+  group: 'landmarks',
+  category: landmark.cityContext.kicker,
+  address: landmark.region,
+  url: entry.route
+};
+---
+
+<section class="field-guide-final-cta landmark-guide-final-cta" aria-labelledby={`landmark-final-cta-${entry.slug}`}>
+  <div class="field-guide-final-cta__copy">
+    <p class="section-label">KEEP IT IN THE NOTEBOOK</p>
+    <h2 id={`landmark-final-cta-${entry.slug}`}>Save {landmark.name} for the road.</h2>
+    <p>Add this landmark to your trip now, or open the map when you are ready to work out the route.</p>
+  </div>
+
+  <div class="field-guide-final-cta__actions">
+    <button
+      type="button"
+      class="field-guide-primary-action"
+      data-trip-add
+      data-trip-place={JSON.stringify(tripItem)}
+      aria-label={`Add ${landmark.name} to My Trip`}
+    >Add to My Trip</button>
+    <a class="field-guide-secondary-action" href={landmark.mapsUrl} target="_blank" rel="noreferrer">Google Maps ↗</a>
+  </div>
+</section>
