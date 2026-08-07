@@ -1,8 +1,6 @@
 ---
 import LandmarkModal from './LandmarkModal.astro';
-import LandmarkGuideModal from './LandmarkGuideModal.astro';
 import type { LaosLandmark } from '../data/laosLandmarks';
-import { laosLandmarkGuides } from '../data/laosLandmarkGuides';
 
 interface Props {
   landmarks?: LaosLandmark[];
@@ -17,8 +15,6 @@ const bolavenPartner = {
 ---
 
 {landmarks.map((landmark) => {
-  const guide = laosLandmarkGuides[landmark.slug];
-  const guideModalId = `${landmark.slug}-visit-guide`;
   const partner = landmark.slug === 'bolaven-plateau' ? bolavenPartner : null;
 
   return (
@@ -45,25 +41,6 @@ const bolavenPartner = {
           data-partner-url={partner.url}
         ></span>
       )}
-
-      {guide && (
-        <>
-          <span
-            hidden
-            data-landmark-guide-config
-            data-parent-landmark-modal={landmark.modalId}
-            data-landmark-guide-modal={guideModalId}
-          ></span>
-          <LandmarkGuideModal
-            id={guideModalId}
-            parentModalId={landmark.modalId}
-            name={landmark.name}
-            region={landmark.region}
-            guide={guide}
-            image={landmark.gallery[0]}
-          />
-        </>
-      )}
     </>
   );
 })}
@@ -83,6 +60,7 @@ const bolavenPartner = {
     cursor: pointer;
     transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
   }
+
   .landmark-partner-note:hover,
   .landmark-partner-note:focus-visible {
     border-color: rgba(49, 85, 69, .5);
@@ -91,10 +69,12 @@ const bolavenPartner = {
     transform: translateY(-1px);
     outline: none;
   }
+
   .landmark-partner-note span { display: grid; gap: .22rem; }
   .landmark-partner-note small { color: #b76645; font: 700 .46rem/1 'DM Sans', sans-serif; letter-spacing: .15em; }
   .landmark-partner-note strong { font: 600 .76rem/1.2 'DM Sans', sans-serif; }
   .landmark-partner-note b { color: #b76645; font: 600 .72rem/1 Fraunces, serif; }
+
   .city-note__partner {
     display: inline-block;
     margin: 2px 0 7px;
@@ -109,6 +89,7 @@ const bolavenPartner = {
     text-transform: uppercase;
     transform: rotate(-1deg);
   }
+
   @media (max-width: 650px) { .landmark-partner-note { align-items: flex-start; flex-direction: column; } }
   @media (prefers-reduced-motion: reduce) { .landmark-partner-note { transition: none; } }
 </style>
@@ -116,14 +97,11 @@ const bolavenPartner = {
 <script>
   let landmarkScrollY = 0;
 
-  const hasOpenLandmarkDialog = () => Boolean(
-    document.querySelector('.landmark-modal[open], [data-landmark-guide-dialog][open]')
-  );
+  const hasOpenLandmarkDialog = () => Boolean(document.querySelector('.landmark-modal[open]'));
 
   const lockLandmarkPage = () => {
     const root = document.documentElement;
     if (root.dataset.landmarkScrollLocked === 'true') return;
-
     landmarkScrollY = window.scrollY;
     root.dataset.landmarkScrollLocked = 'true';
     document.body.style.position = 'fixed';
@@ -136,7 +114,6 @@ const bolavenPartner = {
   const unlockLandmarkPage = () => {
     const root = document.documentElement;
     if (root.dataset.landmarkScrollLocked !== 'true') return;
-
     delete root.dataset.landmarkScrollLocked;
     document.body.style.position = '';
     document.body.style.top = '';
@@ -217,57 +194,10 @@ const bolavenPartner = {
     });
   };
 
-  const bindLandmarkGuideButtons = () => {
-    document.querySelectorAll<HTMLElement>('[data-landmark-guide-config]').forEach((config) => {
-      if (config.dataset.guideConfigBound === 'true') return;
-      config.dataset.guideConfigBound = 'true';
-      const parentId = config.dataset.parentLandmarkModal;
-      const guideId = config.dataset.landmarkGuideModal;
-      const parentDialog = parentId ? document.getElementById(parentId) : null;
-      const guideDialog = guideId ? document.getElementById(guideId) : null;
-      if (!(parentDialog instanceof HTMLDialogElement) || !(guideDialog instanceof HTMLDialogElement)) return;
-      const actions = parentDialog.querySelector<HTMLElement>('.landmark-modal__actions');
-      if (!actions || actions.querySelector('[data-open-landmark-guide]')) return;
-      const button = document.createElement('button');
-      button.className = 'landmark-action landmark-action--guide';
-      button.type = 'button';
-      button.dataset.openLandmarkGuide = guideId;
-      button.setAttribute('aria-controls', guideId);
-      button.innerHTML = '<span aria-hidden="true">✎</span> Plan the visit';
-      const saveButton = actions.querySelector('[data-add-landmark]');
-      actions.insertBefore(button, saveButton);
-      actions.classList.add('has-guide-action');
-      button.addEventListener('click', () => {
-        lockLandmarkPage();
-        if (parentDialog.open) parentDialog.close();
-        if (!guideDialog.open) guideDialog.showModal();
-      });
-    });
-  };
-
-  const bindLandmarkGuideDialogs = () => {
-    document.querySelectorAll<HTMLDialogElement>('[data-landmark-guide-dialog]').forEach((dialog) => {
-      if (dialog.dataset.landmarkGuideBound === 'true') return;
-      dialog.dataset.landmarkGuideBound = 'true';
-      dialog.querySelector<HTMLElement>('[data-close-landmark-guide]')?.addEventListener('click', () => dialog.close());
-      dialog.querySelector<HTMLElement>('[data-back-to-landmark]')?.addEventListener('click', () => {
-        const parentId = dialog.dataset.parentLandmarkModal;
-        const parentDialog = parentId ? document.getElementById(parentId) : null;
-        lockLandmarkPage();
-        dialog.close();
-        if (parentDialog instanceof HTMLDialogElement && !parentDialog.open) parentDialog.showModal();
-      });
-      dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
-      dialog.addEventListener('close', scheduleLandmarkPageUnlock);
-    });
-  };
-
   const setupLandmarkExperience = () => {
     bindLandmarkModals();
     bindTadLoMapPartner();
     bindLandmarkPartners();
-    bindLandmarkGuideButtons();
-    bindLandmarkGuideDialogs();
   };
 
   setupLandmarkExperience();
