@@ -1,0 +1,43 @@
+.field-guide-ad-slot {
+  display: grid;
+  min-height: 110px;
+  place-items: center;
+  margin: 20px 0 86px;
+  border-top: 1px dashed rgba(49, 85, 69, .18);
+  border-bottom: 1px dashed rgba(49, 85, 69, .18);
+  background: rgba(248, 245, 236, .36);
+  color: rgba(49, 85, 69, .42);
+}
+
+.field-guide-ad-slot span {
+  font: 800 .48rem/1 'DM Sans', sans-serif;
+  letter-spacing: .16em;
+}
+
+.landmark-guide-shared-cta {
+  width: min(var(--atlas-content, 1180px), calc(100% - 48px));
+  margin: 0 auto 48px;
+}
+
+.landmark-guide-shared-cta > .field-guide-final-cta {
+  margin-bottom: 0;
+}
+
+.landmark-guide-custom-page > .field-guide-page .field-guide-final-cta:not(.landmark-guide-final-cta) {
+  display: none !important;
+}
+
+.landmark-guide-custom-page > .landmark-guide-shared-cta {
+  margin-top: -48px;
+}
+
+@media (max-width: 620px) {
+  .field-guide-ad-slot {
+    min-height: 88px;
+    margin-bottom: 68px;
+  }
+
+  .landmark-guide-shared-cta {
+    width: min(100% - 24px, 1180px);
+  }
+}
