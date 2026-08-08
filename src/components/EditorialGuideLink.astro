@@ -1,0 +1,59 @@
+---
+import type { EditorialGuideData } from '../data/editorialGuides';
+import '../styles/editorial-guide.css';
+
+interface Props {
+  guide: EditorialGuideData;
+  href: string;
+  mountSelector?: string;
+  inline?: boolean;
+}
+
+const { guide, href, mountSelector, inline = false } = Astro.props;
+---
+
+<div
+  class="editorial-guide-link-host"
+  data-editorial-guide-link-root
+  data-mount-selector={mountSelector}
+>
+  <a
+    class:list={['editorial-guide__trigger', 'editorial-guide__trigger--page-link', { 'editorial-guide__trigger--inline': inline }]}
+    href={href}
+  >
+    <span class="editorial-guide__trigger-tape" aria-hidden="true"></span>
+    <span class="editorial-guide__trigger-eyebrow">{guide.triggerEyebrow}</span>
+    <span class="editorial-guide__trigger-title">{guide.triggerTitle}</span>
+    <span class="editorial-guide__trigger-arrow" aria-hidden="true">↝</span>
+  </a>
+</div>
+
+<style>
+  .editorial-guide__trigger--page-link {
+    text-decoration: none;
+  }
+
+  .editorial-guide__trigger--inline {
+    position: relative;
+    inset: auto;
+    width: min(18rem, 100%);
+    margin-top: 1.1rem;
+  }
+</style>
+
+<script>
+  const mountEditorialGuideLinks = () => {
+    document.querySelectorAll<HTMLElement>('[data-editorial-guide-link-root]').forEach((root) => {
+      if (root.dataset.editorialLinkReady === 'true') return;
+      root.dataset.editorialLinkReady = 'true';
+      const selector = root.dataset.mountSelector;
+      const trigger = root.querySelector<HTMLAnchorElement>('.editorial-guide__trigger--page-link');
+      if (!selector || !trigger) return;
+      const mount = document.querySelector(selector);
+      if (mount && !mount.contains(trigger)) mount.appendChild(trigger);
+    });
+  };
+
+  mountEditorialGuideLinks();
+  document.addEventListener('astro:page-load', mountEditorialGuideLinks);
+</script>
