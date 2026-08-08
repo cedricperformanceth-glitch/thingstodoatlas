@@ -153,16 +153,6 @@ export const laosLandmarkLicensedMedia: Record<string, LandmarkGalleryItem[]> = 
     )
   ],
 
-  'tham-nang-aen-cave': [
-    commons(
-      '10 Nang Aen cane - panoramio.jpg',
-      'Nang Aen Cave in Khammouane Province near Thakhek',
-      'Adriaan Castermans',
-      'CC BY-SA 3.0',
-      1800
-    )
-  ],
-
   'khone-phapheng-falls': [
     commons(
       'Khone Phapheng Falls, Si Phan Don, Laos, widest waterfall in the world.jpg',
