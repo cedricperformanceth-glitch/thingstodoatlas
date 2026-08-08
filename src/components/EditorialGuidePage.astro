@@ -1,6 +1,7 @@
 ---
 import type { EditorialGuidePageMeta } from '../data/editorialGuidePageRegistry';
 import '../styles/editorial-guide-page.css';
+import '../styles/editorial-guide-gallery.css';
 
 interface Props {
   entry: EditorialGuidePageMeta;
@@ -16,6 +17,7 @@ const closingTitle = isCountry ? 'Choose your next chapter' : `Start exploring $
 const closingText = isCountry
   ? 'Use the country guide to understand the rhythm, then open a city chapter and build the route from there.'
   : `Keep these notes as context, then return to ${guide.destination} for landmarks, addresses and the practical side of the stay.`;
+const galleryImages = entry.galleryImages || [];
 
 const countryLinks = [
   { href: '/laos/pakse', label: 'Pakse', note: 'Southern base · Bolaven · Champasak' },
@@ -127,6 +129,25 @@ const nextLinks = isCountry ? countryLinks : cityLinks;
               )}
             </section>
 
+            {index === 2 && galleryImages.length > 0 && (
+              <section
+                class:list={['editorial-page__photo-spread', { 'editorial-page__photo-spread--single': galleryImages.length === 1 }]}
+                aria-label={`${guide.destination} field photographs`}
+              >
+                {galleryImages.map((image) => (
+                  <figure class="editorial-page__photo-card">
+                    <img src={image.src} alt={image.alt} width="1200" height="900" loading="lazy" />
+                    <figcaption>
+                      {image.caption}
+                      <small class="editorial-page__photo-credit">
+                        <a href={image.sourceHref} target="_blank" rel="noreferrer">Wikimedia Commons</a> · {image.license}
+                      </small>
+                    </figcaption>
+                  </figure>
+                ))}
+              </section>
+            )}
+
             {adIndexes.includes(index) && (
               <div class="editorial-page__ad" data-ad-slot={`editorial-${entry.slug}-${index + 1}`} aria-label="Advertisement placeholder">
                 <span>ADVERTISEMENT</span>
@@ -141,7 +162,7 @@ const nextLinks = isCountry ? countryLinks : cityLinks;
 
     {guide.links && guide.links.length > 0 && (
       <details class="editorial-page__sources">
-        <summary>Useful official links</summary>
+        <summary>Sources & further reading</summary>
         <ul>{guide.links.map((link) => <li><a href={link.href} target="_blank" rel="noreferrer">{link.label} ↗</a></li>)}</ul>
       </details>
     )}
