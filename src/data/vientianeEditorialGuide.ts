@@ -138,8 +138,8 @@ export const vientianeEditorialGuide: EditorialGuideData = {
   links: [
     { label: 'UNESCO · That Luang Tentative List record', href: 'https://whc.unesco.org/en/tentativelists/391/' },
     { label: 'Wikivoyage · Vientiane background and orientation', href: 'https://en.wikivoyage.org/wiki/Vientiane' },
-    { label: 'Scarlet Scribbles · Vientiane travel guide', href: 'https://scarletscribs.wordpress.com/' },
-    { label: 'My Viva Tour · Vientiane guide', href: 'https://myvivatour.com/' },
+    { label: 'Scarlet Scribbles · Vientiane beyond the obvious', href: 'https://scarletscribs.wordpress.com/2025/04/22/vientiane-beyond-the-obvious/' },
+    { label: 'My Viva Tour · Vientiane travel guide', href: 'https://myvivatour.com/vientiane-travel-guide/' },
     { label: 'Official Vientiane Capital tourism information', href: 'https://www.tourismlaos.org/central-provinces/vientiane-capital/' },
     { label: 'COPE Laos · visitor centre and UXO work', href: 'https://copelaos.org/' }
   ]
