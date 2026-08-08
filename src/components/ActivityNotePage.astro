@@ -18,80 +18,71 @@ const tripPlace = JSON.stringify({
 });
 ---
 
-<main class="activity-note">
-  <nav class="activity-note__return" aria-label={`${entry.title} navigation`}>
+<main class="activity-sheet">
+  <nav class="activity-sheet__return" aria-label={`${entry.title} navigation`}>
     <a href={entry.sourceRoute}>← Back to {entry.cityName}</a>
-    <a href={`${entry.sourceRoute}/field-guide`}>{entry.cityName} editorial guide</a>
+    <span>ACTIVITY NOTE · 01</span>
   </nav>
 
-  <article class="activity-note__article" aria-labelledby="activity-note-title">
-    <nav class="activity-note__breadcrumbs" aria-label="Breadcrumb">
-      <a href="/">Atlas</a><span aria-hidden="true">/</span>
-      <a href="/laos">Laos</a><span aria-hidden="true">/</span>
-      <a href={entry.sourceRoute}>{entry.cityName}</a><span aria-hidden="true">/</span>
-      <span aria-current="page">Activity</span>
+  <article class="activity-sheet__paper" aria-labelledby="activity-sheet-title">
+    <nav class="activity-sheet__breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Atlas</a><span>/</span><a href="/laos">Laos</a><span>/</span><a href={entry.sourceRoute}>{entry.cityName}</a><span>/</span><span aria-current="page">Activity</span>
     </nav>
 
-    <header class="activity-note__hero">
-      <div class="activity-note__hero-copy">
-        <p class="activity-note__eyebrow">{entry.eyebrow}</p>
-        <h1 id="activity-note-title">{entry.title}</h1>
-        <p class="activity-note__context">{entry.contextLine}</p>
-        <p class="activity-note__intro">{entry.intro}</p>
-
-        <div class="activity-note__partner-stamp">
-          <span>LOCAL PARTNER</span>
-          <strong>{entry.sourceLabel}</strong>
-          <small>Practical details checked from the local activity guide</small>
-        </div>
-      </div>
-
-      <figure class="activity-note__photo">
-        <img src={entry.image} alt={entry.imageAlt} width="1050" height="850" fetchpriority="high" />
+    <header class="activity-sheet__cover">
+      <figure class="activity-sheet__photo">
+        <img src={entry.image} alt={entry.imageAlt} width="1000" height="760" fetchpriority="high" />
         <figcaption>prepare it · understand it · share it</figcaption>
       </figure>
+
+      <div class="activity-sheet__card">
+        <p class="activity-sheet__eyebrow">{entry.eyebrow}</p>
+        <h1 id="activity-sheet-title">{entry.title}</h1>
+        <p class="activity-sheet__intro">{entry.intro}</p>
+
+        <dl class="activity-sheet__facts">
+          {entry.facts.map((fact) => (
+            <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>
+          ))}
+        </dl>
+
+        <div class="activity-sheet__partner">
+          <span>LOCAL PARTNER</span>
+          <strong>{entry.sourceLabel}</strong>
+          <small>Details marked “confirm” stay unguessed.</small>
+        </div>
+      </div>
     </header>
 
-    <section class="activity-note__facts" aria-label={`${entry.title} quick facts`}>
-      {entry.facts.map((fact) => (
-        <div><span>{fact.label}</span><strong>{fact.value}</strong></div>
-      ))}
-    </section>
-
-    <section class="activity-note__session">
-      <div class="activity-note__copy">
-        <p class="activity-note__section-label">HOW IT FITS THE DAY</p>
-        <h2>{entry.sessionTitle}</h2>
-        {entry.sessionParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+    <section class="activity-sheet__flow" aria-labelledby="activity-flow-title">
+      <div class="activity-sheet__flow-heading">
+        <p>THE CLASS, AT A GLANCE</p>
+        <h2 id="activity-flow-title">Half a day. Three simple moments.</h2>
       </div>
-
-      <aside class="activity-note__schedule" aria-label="Cooking class session options">
-        <span class="activity-note__schedule-tape" aria-hidden="true"></span>
-        <p>Choose your rhythm</p>
-        <div><b>Morning</b><span>cook together</span><strong>→ lunch</strong></div>
-        <div><b>Afternoon</b><span>cook together</span><strong>→ dinner</strong></div>
-        <small>The exact starting time is arranged locally.</small>
-      </aside>
+      <ol>
+        <li><b>01</b><strong>Choose</strong><span>Morning for lunch, or afternoon for dinner.</span></li>
+        <li><b>02</b><strong>Cook</strong><span>Prepare the local meal together with Nyay.</span></li>
+        <li><b>03</b><strong>Share</strong><span>Sit down and eat what you have prepared.</span></li>
+      </ol>
+      <p class="activity-sheet__flow-note">{entry.sessionParagraphs[1]}</p>
     </section>
 
     {entry.adSlots >= 1 && (
-      <div class="activity-note__ad" data-ad-slot={`activity-${entry.slug}-1`} aria-label="Advertisement placeholder">
+      <div class="activity-sheet__ad" data-ad-slot={`activity-${entry.slug}-1`} aria-label="Advertisement placeholder">
         <span>ADVERTISEMENT</span>
       </div>
     )}
 
-    <section class="activity-note__booking">
-      <div class="activity-note__copy">
-        <p class="activity-note__section-label">BEFORE YOU BOOK</p>
-        <h2>{entry.bookingTitle}</h2>
-        {entry.bookingParagraphs.map((paragraph) => <p>{paragraph}</p>)}
-        <aside class="activity-note__note">
-          <span>Field note</span>
-          <p>{entry.note}</p>
-        </aside>
+    <section class="activity-sheet__practical" aria-labelledby="activity-practical-title">
+      <div class="activity-sheet__practical-copy">
+        <p class="activity-sheet__mini-label">BEFORE YOU BOOK</p>
+        <h2 id="activity-practical-title">Confirm the few details that can change.</h2>
+        <p>{entry.bookingParagraphs[0]}</p>
+        <p>{entry.bookingParagraphs[1]}</p>
+        <aside class="activity-sheet__scribble"><span>field note</span>{entry.note}</aside>
       </div>
 
-      <dl class="activity-note__booking-facts">
+      <dl class="activity-sheet__checklist">
         {entry.bookingFacts.map((fact) => (
           <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>
         ))}
@@ -99,15 +90,15 @@ const tripPlace = JSON.stringify({
     </section>
 
     {entry.adSlots >= 2 && (
-      <div class="activity-note__ad" data-ad-slot={`activity-${entry.slug}-2`} aria-label="Advertisement placeholder">
-        <span>ADVERTISEMENT</span>
-      </div>
+      <div class="activity-sheet__ad" data-ad-slot={`activity-${entry.slug}-2`} aria-label="Advertisement placeholder"><span>ADVERTISEMENT</span></div>
     )}
 
-    <section class="activity-note__faq" aria-labelledby="activity-note-faq-title">
-      <p class="activity-note__section-label">QUICK ANSWERS</p>
-      <h2 id="activity-note-faq-title">Before you walk over</h2>
-      <div class="activity-note__faq-grid">
+    <section class="activity-sheet__faq" aria-labelledby="activity-faq-title">
+      <div class="activity-sheet__faq-heading">
+        <p class="activity-sheet__mini-label">QUICK ANSWERS</p>
+        <h2 id="activity-faq-title">What you may still want to know.</h2>
+      </div>
+      <div class="activity-sheet__faq-list">
         {entry.faq.map((item) => (
           <details>
             <summary>{item.question}</summary>
@@ -118,35 +109,20 @@ const tripPlace = JSON.stringify({
     </section>
 
     {entry.adSlots >= 3 && (
-      <div class="activity-note__ad" data-ad-slot={`activity-${entry.slug}-3`} aria-label="Advertisement placeholder">
-        <span>ADVERTISEMENT</span>
-      </div>
+      <div class="activity-sheet__ad" data-ad-slot={`activity-${entry.slug}-3`} aria-label="Advertisement placeholder"><span>ADVERTISEMENT</span></div>
     )}
 
-    <aside class="activity-note__source">
-      <div>
-        <span>LOCAL SOURCE</span>
+    <footer class="activity-sheet__footer">
+      <div class="activity-sheet__source">
+        <span>SOURCE</span>
         <strong>{entry.sourceLabel}</strong>
-        <p>This compact note follows the information published by our local partner. Details marked for confirmation are intentionally left unguessed.</p>
+        <a href={entry.sourceUrl} target="_blank" rel="noreferrer">Open the local activity page ↗</a>
       </div>
-      <a href={entry.sourceUrl} target="_blank" rel="noreferrer">Read the local activity guide ↗</a>
-    </aside>
 
-    {entry.adSlots >= 4 && (
-      <div class="activity-note__ad" data-ad-slot={`activity-${entry.slug}-4`} aria-label="Advertisement placeholder">
-        <span>ADVERTISEMENT</span>
-      </div>
-    )}
-
-    <section class="activity-note__closing">
-      <p class="activity-note__section-label">KEEP TAD LO SIMPLE</p>
-      <h2>One activity, then leave room for the village.</h2>
-      <p>The class fits naturally into a slow Tad Lo day. Save it to the trip, then keep the rest of the day flexible.</p>
-      <div class="activity-note__actions">
+      <div class="activity-sheet__actions">
         <button type="button" data-trip-add data-trip-id={entry.slug} data-trip-place={tripPlace} aria-pressed="false">Add to My Trip</button>
-        <a href={entry.sourceRoute}>Explore Tad Lo</a>
-        <a href={`${entry.sourceRoute}/field-guide`}>Read the Tad Lo editorial guide</a>
+        <a href={entry.sourceRoute}>More things to do in {entry.cityName}</a>
       </div>
-    </section>
+    </footer>
   </article>
 </main>
