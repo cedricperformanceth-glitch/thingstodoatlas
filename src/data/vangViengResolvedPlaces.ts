@@ -7,8 +7,7 @@ import {
 } from './vangViengMarketsEssential';
 import {
   vangViengFitness as rawVangViengFitness,
-  vangViengScooterRentals as rawVangViengScooterRentals,
-  vangViengThingsToDo as rawVangViengThingsToDo
+  vangViengScooterRentals as rawVangViengScooterRentals
 } from './vangViengPractical';
 
 // Restaurants are deliberately not routed through this resolver because their
@@ -16,7 +15,6 @@ import {
 export const vangViengCafes = resolvePlaceImages(rawVangViengCafes);
 export const vangViengGuesthouses = resolvePlaceImages(rawVangViengGuesthouses);
 export const vangViengScooterRentals = resolvePlaceImages(rawVangViengScooterRentals);
-export const vangViengThingsToDo = resolvePlaceImages(rawVangViengThingsToDo);
 export const vangViengFitness = resolvePlaceImages(rawVangViengFitness);
 export const vangViengMarkets = resolvePlaceImages(rawVangViengMarkets);
 export const vangViengEssentialInformation = resolvePlaceImages(rawVangViengEssentialInformation);
