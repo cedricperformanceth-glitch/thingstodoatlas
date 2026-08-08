@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EditorialGuidePage from '../../components/EditorialGuidePage.astro';
+import { laosCountryEditorialPage } from '../../data/editorialGuidePageRegistry';
+---
+
+<BaseLayout
+  title="Laos travel field guide"
+  description="Understand Laos before building the route: entry, money, transport, scooter travel, phone coverage, regional planning and respectful travel."
+  canonical="https://thingstodoatlas.com/laos/field-guide"
+>
+  <EditorialGuidePage entry={laosCountryEditorialPage} />
+</BaseLayout>
