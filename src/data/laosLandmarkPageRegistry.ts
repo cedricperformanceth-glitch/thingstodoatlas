@@ -7,6 +7,7 @@ import { vangViengLandmarks } from './vangViengLandmarks';
 import { tadLoExplorePageLandmarks } from './tadLoExploreLandmarks';
 import { laosLandmarkGuides, type LandmarkVisitGuide } from './laosLandmarkGuides';
 import { khonePhaphengLandmarkGuide } from './khonePhaphengLandmarkGuide';
+import { kongLorLandmarkGuide } from './kongLorLandmarkGuide';
 
 export type LaosLandmarkPageEntry = {
   slug: string;
@@ -61,6 +62,11 @@ const buildFallbackGuide = (landmark: CityLandmark, fieldNote: string): Landmark
   };
 };
 
+const researchedGuides: Record<string, LandmarkVisitGuide> = {
+  'khone-phapheng-falls': khonePhaphengLandmarkGuide,
+  'kong-lor-cave': kongLorLandmarkGuide
+};
+
 const page = (
   landmark: CityLandmark,
   citySlug: string,
@@ -75,9 +81,7 @@ const page = (
   route: `/laos/${citySlug}/things-to-do/${landmark.slug}`,
   sourceRoute: `/laos/${citySlug}`,
   landmark,
-  guide: landmark.slug === 'khone-phapheng-falls'
-    ? khonePhaphengLandmarkGuide
-    : laosLandmarkGuides[landmark.slug] || buildFallbackGuide(landmark, fieldNote),
+  guide: researchedGuides[landmark.slug] || laosLandmarkGuides[landmark.slug] || buildFallbackGuide(landmark, fieldNote),
   editorialAngle,
   fieldNote,
   relatedSlugs
@@ -133,8 +137,8 @@ export const laosLandmarkPages: LaosLandmarkPageEntry[] = [
     ['pha-pa-tou', 'kuang-si-waterfall', 'hot-air-balloon-paramotor-vang-vieng', 'phou-bia-from-vang-vieng']),
 
   page(requireCityLandmark(thakhekLandmarks, 'kong-lor-cave'), 'thakhek', 'Thakhek',
-    'Kong Lor is both a cave and a journey through the mountain. The boat, darkness, shallow sections and hidden valley beyond belong to one continuous experience.',
-    'The mountain opens into darkness. Keep time for the return journey.',
+    'Kong Lor is a river crossing through a limestone mountain: about seven kilometres of darkness, shallow water, huge chambers and a second valley on the far side make the boat journey one continuous piece of the Thakhek Loop rather than a normal in-and-out cave stop.',
+    'Follow the Hin Boun through the mountain. The darkness, the shallow water and the far valley are one journey.',
     ['xe-bang-fai-cave', 'tham-nang-aen-cave', 'bolaven-plateau', 'pha-pa-tou']),
   page(requireCityLandmark(thakhekLandmarks, 'xe-bang-fai-cave'), 'thakhek', 'Thakhek',
     'Xe Bang Fai is the remote end of the cave spectrum: rougher access, local coordination and river conditions matter as much as the underground chamber itself.',
