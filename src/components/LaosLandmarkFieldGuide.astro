@@ -15,6 +15,7 @@ const { entry } = Astro.props;
 const { landmark } = entry;
 const guide = laosLandmarkPageEditorial[entry.slug] || entry.guide;
 const pageFieldNote = laosLandmarkPageFieldNotes[entry.slug];
+const isXeBangFai = entry.slug === 'xe-bang-fai-cave';
 const licensedGallery = getLicensedLandmarkGallery(entry.slug, landmark.gallery);
 const images: LandmarkGalleryItem[] = licensedGallery.length
   ? licensedGallery
@@ -97,7 +98,7 @@ const questions = landmark.facts.slice(0, 5).map((item) => ({
       <div><span>Best for</span><strong>{guide.bestFor}</strong><small>{landmark.region}</small></div>
     </section>
 
-    <div class="field-guide-layout">
+    <div class:list={{ 'field-guide-layout': true, 'field-guide-layout--xe-intro': isXeBangFai }}>
       <div class="field-guide-story">
         {sections.slice(0, 2).map((section, index) => (
           <section class="field-guide-section">
@@ -109,41 +110,77 @@ const questions = landmark.facts.slice(0, 5).map((item) => ({
         ))}
       </div>
 
-      <aside class="field-guide-side-note">
-        <span class="field-guide-note-tape" aria-hidden="true"></span>
-        <p>QUICK FIELD NOTES</p>
-        <ol>
-          {facts.slice(0, 5).map((item) => <li><strong>{item.label}:</strong> {item.value}</li>)}
-        </ol>
-        <span>{entry.fieldNote}</span>
-      </aside>
+      {isXeBangFai ? (
+        <figure class="field-guide-photo field-guide-photo--xe-side">
+          <span class="field-guide-tape" aria-hidden="true"></span>
+          <img src={second.src} alt={second.alt} width="1100" height="900" loading="lazy" decoding="async" />
+          {(secondCredit.source || secondCredit.author) && (
+            <figcaption>
+              Photo: {secondCredit.source ? <a href={secondCredit.source} target="_blank" rel="noreferrer">{secondCredit.author}</a> : secondCredit.author}
+              {secondCredit.license && <> · {secondCredit.license}</>}
+            </figcaption>
+          )}
+        </figure>
+      ) : (
+        <aside class="field-guide-side-note">
+          <span class="field-guide-note-tape" aria-hidden="true"></span>
+          <p>QUICK FIELD NOTES</p>
+          <ol>
+            {facts.slice(0, 5).map((item) => <li><strong>{item.label}:</strong> {item.value}</li>)}
+          </ol>
+          <span>{entry.fieldNote}</span>
+        </aside>
+      )}
     </div>
 
     <div class="field-guide-ad-slot" data-ad-slot="landmark-01" aria-label="Advertisement placeholder">
       <span>ADVERTISEMENT</span>
     </div>
 
-    <section class="field-guide-photo-story">
-      <figure class="field-guide-photo field-guide-photo--portrait">
-        <span class="field-guide-tape" aria-hidden="true"></span>
-        <img src={second.src} alt={second.alt} width="1100" height="1500" loading="lazy" decoding="async" />
-        {(secondCredit.source || secondCredit.author) && (
-          <figcaption>
-            Photo: {secondCredit.source ? <a href={secondCredit.source} target="_blank" rel="noreferrer">{secondCredit.author}</a> : secondCredit.author}
-            {secondCredit.license && <> · {secondCredit.license}</>}
-          </figcaption>
-        )}
-      </figure>
+    {isXeBangFai ? (
+      <div class="field-guide-layout field-guide-layout--xe-time">
+        <div class="field-guide-story">
+          <section class="field-guide-section">
+            <p class="section-label">{sections[2]?.label || '03 · TIME'}</p>
+            <h2>{sections[2]?.title || 'Give the visit enough time'}</h2>
+            {(pageFieldNote?.time?.length ? pageFieldNote.time : [sections[2]?.text || landmark.cityContext.duration]).map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </section>
+        </div>
 
-      <div class="field-guide-section field-guide-section--climb">
-        <p class="section-label">{sections[2]?.label || '03 · TIME'}</p>
-        <h2>{sections[2]?.title || 'Give the visit enough time'}</h2>
-        <p>{sections[2]?.text || landmark.cityContext.duration}</p>
-        <blockquote>{entry.fieldNote}</blockquote>
+        <aside class="field-guide-paper-note field-guide-paper-note--xe-time">
+          <span class="field-guide-note-tape" aria-hidden="true"></span>
+          <span>KEEP CLOSE</span>
+          <ul>
+            {facts.slice(0, 5).map((item) => <li>{item.label}</li>)}
+          </ul>
+          <p>Access, river conditions, opening arrangements and prices can change. Reconfirm the practical details before leaving Thakhek.</p>
+        </aside>
       </div>
-    </section>
+    ) : (
+      <section class="field-guide-photo-story">
+        <figure class="field-guide-photo field-guide-photo--portrait">
+          <span class="field-guide-tape" aria-hidden="true"></span>
+          <img src={second.src} alt={second.alt} width="1100" height="1500" loading="lazy" decoding="async" />
+          {(secondCredit.source || secondCredit.author) && (
+            <figcaption>
+              Photo: {secondCredit.source ? <a href={secondCredit.source} target="_blank" rel="noreferrer">{secondCredit.author}</a> : secondCredit.author}
+              {secondCredit.license && <> · {secondCredit.license}</>}
+            </figcaption>
+          )}
+        </figure>
 
-    {images.length > 1 && (
+        <div class="field-guide-section field-guide-section--climb">
+          <p class="section-label">{sections[2]?.label || '03 · TIME'}</p>
+          <h2>{sections[2]?.title || 'Give the visit enough time'}</h2>
+          <p>{sections[2]?.text || landmark.cityContext.duration}</p>
+          <blockquote>{entry.fieldNote}</blockquote>
+        </div>
+      </section>
+    )}
+
+    {!isXeBangFai && images.length > 1 && (
       <section class="field-guide-gallery" aria-label={`${landmark.name} photo notes`}>
         {[second, third].map((image) => {
           const credit = sourceCaption(image);
@@ -167,7 +204,7 @@ const questions = landmark.facts.slice(0, 5).map((item) => ({
       <span>ADVERTISEMENT</span>
     </div>
 
-    <div class="field-guide-layout field-guide-layout--reverse">
+    <div class:list={{ 'field-guide-layout': true, 'field-guide-layout--reverse': true, 'field-guide-layout--xe-final': isXeBangFai }}>
       <div class="field-guide-story">
         <section class="field-guide-section">
           <p class="section-label">{sections[3]?.label || '04 · ON THE GROUND'}</p>
@@ -182,14 +219,27 @@ const questions = landmark.facts.slice(0, 5).map((item) => ({
         </section>
       </div>
 
-      <aside class="field-guide-paper-note">
-        <span class="field-guide-note-tape" aria-hidden="true"></span>
-        <span>KEEP CLOSE</span>
-        <ul>
-          {facts.slice(0, 5).map((item) => <li>{item.label}</li>)}
-        </ul>
-        <p>Conditions, access, opening arrangements and prices can change. Reconfirm time-sensitive details before departure.</p>
-      </aside>
+      {isXeBangFai ? (
+        <figure class="field-guide-photo field-guide-photo--xe-final">
+          <span class="field-guide-tape" aria-hidden="true"></span>
+          <img src={third.src} alt={third.alt} width="1100" height="900" loading="lazy" decoding="async" />
+          {(thirdCredit.source || thirdCredit.author) && (
+            <figcaption>
+              Photo: {thirdCredit.source ? <a href={thirdCredit.source} target="_blank" rel="noreferrer">{thirdCredit.author}</a> : thirdCredit.author}
+              {thirdCredit.license && <> · {thirdCredit.license}</>}
+            </figcaption>
+          )}
+        </figure>
+      ) : (
+        <aside class="field-guide-paper-note">
+          <span class="field-guide-note-tape" aria-hidden="true"></span>
+          <span>KEEP CLOSE</span>
+          <ul>
+            {facts.slice(0, 5).map((item) => <li>{item.label}</li>)}
+          </ul>
+          <p>Conditions, access, opening arrangements and prices can change. Reconfirm time-sensitive details before departure.</p>
+        </aside>
+      )}
     </div>
 
     <section class="field-guide-practical" aria-labelledby={`landmark-practical-${entry.slug}`}>
@@ -265,6 +315,63 @@ const questions = landmark.facts.slice(0, 5).map((item) => ({
     <LandmarkGuideFinalCta entry={entry} />
   </article>
 </main>
+
+<style>
+  .field-guide-layout--xe-intro,
+  .field-guide-layout--xe-time,
+  .field-guide-layout--xe-final {
+    grid-template-columns: minmax(0, 1.34fr) minmax(280px, .66fr);
+    gap: clamp(44px, 7vw, 88px);
+  }
+
+  .field-guide-photo--xe-side,
+  .field-guide-photo--xe-final {
+    align-self: center;
+    width: 100%;
+    transform: rotate(1deg);
+  }
+
+  .field-guide-photo--xe-side img,
+  .field-guide-photo--xe-final img {
+    width: 100%;
+    height: clamp(300px, 31vw, 420px);
+    object-fit: cover;
+  }
+
+  .field-guide-photo--xe-final {
+    transform: rotate(-1deg);
+  }
+
+  .field-guide-paper-note--xe-time {
+    align-self: center;
+    margin-top: 0;
+  }
+
+  .field-guide-layout--xe-time .field-guide-section p + p {
+    margin-top: 22px !important;
+  }
+
+  @media (max-width: 820px) {
+    .field-guide-layout--xe-intro,
+    .field-guide-layout--xe-time,
+    .field-guide-layout--xe-final {
+      grid-template-columns: 1fr;
+      gap: 38px;
+    }
+
+    .field-guide-photo--xe-side,
+    .field-guide-photo--xe-final,
+    .field-guide-paper-note--xe-time {
+      width: min(100%, 560px);
+      justify-self: center;
+    }
+
+    .field-guide-photo--xe-side img,
+    .field-guide-photo--xe-final img {
+      height: clamp(260px, 65vw, 380px);
+    }
+  }
+</style>
 
 <script>
   const setupLandmarkPageBack = () => {
