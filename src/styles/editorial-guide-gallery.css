@@ -1,0 +1,112 @@
+.editorial-page__photo-spread {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(22px, 4vw, 46px);
+  align-items: end;
+  padding: clamp(20px, 3vw, 34px) 0;
+}
+
+.editorial-page__photo-spread::before {
+  content: 'FROM THE FIELD';
+  position: absolute;
+  top: -14px;
+  left: 0;
+  color: var(--editorial-terracotta);
+  font-size: .58rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+.editorial-page__photo-card {
+  position: relative;
+  margin: 0;
+  padding: 11px 11px 26px;
+  background: var(--editorial-paper-soft);
+  box-shadow: 5px 7px 0 rgba(49, 85, 69, .065), 0 14px 28px rgba(32, 60, 49, .08);
+  transform: rotate(-.65deg);
+}
+
+.editorial-page__photo-card:nth-child(even) {
+  transform: translateY(24px) rotate(.8deg);
+}
+
+.editorial-page__photo-card::before {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  top: -8px;
+  left: 18%;
+  width: 70px;
+  height: 17px;
+  background: rgba(205, 188, 148, .58);
+  transform: rotate(-3deg);
+}
+
+.editorial-page__photo-card img {
+  display: block;
+  width: 100%;
+  height: clamp(260px, 33vw, 430px);
+  object-fit: cover;
+  filter: saturate(.88) contrast(.97);
+}
+
+.editorial-page__photo-card figcaption {
+  padding: 10px 5px 0;
+  color: var(--editorial-green-dark);
+  font: 600 1rem/1.2 Caveat, cursive;
+}
+
+.editorial-page__photo-credit {
+  display: block;
+  margin-top: 6px;
+  color: var(--editorial-muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.editorial-page__photo-credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: .14rem;
+}
+
+.editorial-page__photo-spread--single {
+  grid-template-columns: minmax(0, 760px);
+}
+
+.editorial-page__photo-spread--single .editorial-page__photo-card {
+  width: min(100%, 760px);
+}
+
+.editorial-page--country .editorial-page__photo-spread {
+  gap: clamp(28px, 5vw, 58px);
+}
+
+.editorial-page--country .editorial-page__photo-card:first-child {
+  margin-left: clamp(0px, 2vw, 26px);
+}
+
+@media (max-width: 700px) {
+  .editorial-page__photo-spread,
+  .editorial-page__photo-spread--single {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .editorial-page__photo-card,
+  .editorial-page__photo-card:nth-child(even) {
+    transform: rotate(-.45deg);
+  }
+
+  .editorial-page__photo-card:nth-child(even) {
+    margin-left: 14px;
+  }
+
+  .editorial-page__photo-card img {
+    height: clamp(250px, 86vw, 410px);
+  }
+}
