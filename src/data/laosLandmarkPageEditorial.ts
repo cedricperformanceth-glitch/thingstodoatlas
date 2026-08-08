@@ -220,34 +220,37 @@ export const laosLandmarkPageEditorial: Record<string, LandmarkVisitGuide> = {
   },
 
   'tham-nang-aen-cave': {
-    eyebrow: 'CAVE NOTE · CLOSE TO THAKHEK',
-    intro: 'Tham Nang Aen is the accessible introduction to Khammouane cave country: close to Thakhek, developed with walkways and lighting, and easy to fit near the beginning or end of a larger loop.',
-    budget: 'Paid entrance · optional activities may cost extra',
-    duration: '1–2 hours',
-    bestFor: 'An easy first cave from Thakhek',
+    eyebrow: 'SHOW CAVE NOTE · ROUTE 12',
+    intro: 'Tham Nang Aen is one of the easiest places to understand the limestone country east of Thakhek without committing to a remote expedition. The cave combines a vast naturally cool entrance, chambers up to roughly thirty metres high, an underground lake and river passages with a deliberately developed visitor experience of stairways, concrete paths and coloured lighting. The short walking visit and the deeper boat journey are two different versions of the same cave, and the boat should be treated as conditional rather than guaranteed.',
+    budget: 'Recent reports: ~50,000 kip walk-in entry · boat extra · verify at counter',
+    duration: '30–60 min walking visit · around 2+ hours with boat',
+    bestFor: 'A first Khammouane cave, family-friendly access and the opening day of the Thakhek Loop',
     sections: [
       {
-        label: '01 · ROUTE 12',
-        title: 'Use the cave as a simple first stop from town',
-        text: 'The short distance from Thakhek makes Tham Nang Aen fundamentally different from remote caves such as Kong Lor or Xe Bang Fai. It can sit inside a normal day without turning transport into the main event, which makes it a useful introduction before committing to longer cave-country roads.'
+        label: '01 · READ THE CAVE',
+        title: 'This is a show cave — and that is exactly what makes it different',
+        text: 'Tourism Laos describes Tham Nang Aen as more than 1.5 kilometres long, with chambers reaching around thirty metres high, a small underground lake and large limestone formations. It is also unmistakably developed: lighting, staircases, railings and cement walkways guide visitors through the main fossil chambers. That makes it the opposite end of the Khammouane cave spectrum from places such as Xe Bang Fai. You do not come here for a remote expedition; you come because the scale of the karst is easy to experience only eighteen kilometres from Thakhek. The coloured lights divide opinion and should not be hidden in the description — some travellers enjoy the theatrical effect, others find that it takes away from the natural atmosphere. What remains impressive underneath the presentation is the volume of the chambers and the constant cool air flowing from the cave, which Tourism Laos describes as a kind of natural air conditioning. Use the developed route to read the formations rather than pretending the infrastructure is not there.',
+        note: 'The stairs and coloured lights are part of the visit. Judge the cave for what it is, not for being less wild than Kong Lor.'
       },
       {
-        label: '02 · INSIDE',
-        title: 'Developed does not mean completely dry',
-        text: 'Lighting and built walkways make the main chambers approachable, but cave surfaces can still be damp and cooler than the road outside. Shoes with grip are a better choice than treating the visit like an indoor attraction.'
+        label: '02 · NAME & STORY',
+        title: 'The name comes from a love story, not from the geology',
+        text: 'The official Tourism Laos account connects Tham Nang Aen with nearby Tham Xieng Liap. In the local legend, Xieng — a young former novice — searched for the beautiful daughter of a hermit and met her at the entrance of this cave. The pair sat together and flirted: “nang” refers to sitting, while “aen kan” gives the sense of flirting together, producing the name Tham Nang Aen. The site also carries a more recent layer of tourism history. Tourism Laos notes that the large entrance is reached through a wooden ceremonial structure built for a visit by a Thai princess in 1987, while specialist cave references record exploration and development of the site during the following decade. This mixture of story, cross-border visitors and long-running local tourism helps explain why Nang Aen feels less like a hidden cave discovered by backpackers and more like an established Lao and Thai excursion site. Weekends can therefore feel very different from a quiet weekday morning.',
+        note: 'The cave belongs to local weekend tourism as much as to the international Thakhek Loop.'
       },
       {
-        label: '03 · OPTIONS',
-        title: 'Confirm what the current ticket actually includes',
-        text: 'Entrance arrangements and optional on-site activities can change. Check the available route and any additional boat or activity cost when you arrive instead of assuming every experience shown online is included in one standard ticket.'
+        label: '03 · WALK OR BOAT',
+        title: 'The short visit and the river journey should not be confused',
+        text: 'The basic entrance ticket gives you the developed walking section: the large chambers, stairways, formations and viewpoints can be explored without committing half a day. Recent visitors commonly report around twenty to sixty minutes for that part depending on pace. The deeper option follows the underground river by small boat and has historically been described as roughly a two-hour experience, with about one kilometre on the water and additional walking toward the far side. But this is the part of the cave where old guidebook information becomes unreliable. In July 2025, a visitor reported that no boats were running; by November 2025, other visitors again reported an optional boat trip at around 150,000 kip per person. Water level, staffing and local operation clearly matter. Ask at the counter before paying or building the rest of your day around the boat. If it is running, bring a headlamp and footwear you are happy to get wet. If it is not, the main cave is still a complete short visit rather than a failed version of the attraction.',
+        note: 'Decide at the entrance: walking cave today, or walking cave plus river if the boat is actually operating.'
       },
       {
-        label: '04 · CONTEXT',
-        title: 'Let the easy cave prepare you for the remote ones',
-        text: 'Tham Nang Aen is not trying to compete with a seven-kilometre river journey. Its value is accessibility. Use it to understand the limestone landscape around Thakhek, then decide how much farther into Khammouane cave country you actually want to travel.'
+        label: '04 · FROM THAKHEK',
+        title: 'Use Nang Aen as the opening chapter of Cave Alley',
+        text: 'Tourism Laos places the cave about eighteen kilometres northeast of Thakhek on Route 12. From the signed turn, the access road continues roughly seven hundred metres toward the entrance and crosses a small watercourse; official guidance notes a footbridge option when the crossing is flooded. The current Khammouane Tourism Loop itinerary puts Nang Aen directly into Day 1 of the route east from Thakhek, alongside the string of caves, swimming places and limestone scenery before the climb toward the Nakai Plateau. That is the right scale for the visit. If you are doing the Loop, stop here while the day is still young rather than sacrificing the afternoon to a long detour. If you are staying in Thakhek, it works as a simple half-day with nearby Route 12 stops. Multiple current references list hours around 08:00–17:00, but entrance prices are inconsistent: late-2025 reports often mention about 50,000 kip, while a 2026 guide still lists 30,000 kip. Treat both as evidence that the price changes and check the counter. The route is easy by motorbike or private vehicle; the cave itself has many stairs and should not be described as step-free accessibility.'
       }
     ],
-    fieldNote: 'Use it as the first cave, not the last word on Khammouane.'
+    fieldNote: 'Nang Aen is the cave to understand before the road gets harder: close to town, highly developed, and deep enough to show how much of Khammouane sits below the limestone.'
   },
 
   'hot-air-balloon-paramotor-vang-vieng': {
