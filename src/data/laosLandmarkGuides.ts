@@ -143,36 +143,5 @@ export const laosLandmarkGuides: Record<string, LandmarkVisitGuide> = {
       }
     ],
     fieldNote: 'The sunrise begins with the river crossing. Organise the people and the route before chasing the view.'
-  },
-
-  'kong-lor-cave': {
-    eyebrow: 'CAVE NOTE · THAKHEK LOOP',
-    intro: 'Kong Lor is both a cave visit and a river journey through the mountain. It fits naturally into the Thakhek Loop or a stay around Ban Khounkham, rather than as a quick detour with no time margin.',
-    budget: 'Moderate',
-    duration: '2–3 hours at the cave · longer with travel',
-    bestFor: 'Boat journeys, caves and the Thakhek Loop',
-    sections: [
-      {
-        label: '01 · ROUTE',
-        title: 'How to get there',
-        text: 'Reach Kong Lor through Khammouane, commonly as part of the Thakhek Loop or from Ban Khounkham. The road journey is substantial, so sleep nearby or place the cave inside a wider route. Save the destination offline and avoid arriving close to closing time.'
-      },
-      {
-        label: '02 · MONEY',
-        title: 'What the budget feels like',
-        text: 'Plan for transport, entrance and the local boat arrangement. The visit remains reasonably priced, but the wider road trip, accommodation and fuel create most of the total budget. Confirm the current ticket and boat conditions at the entrance and carry cash.'
-      },
-      {
-        label: '03 · TIME',
-        title: 'How long to keep',
-        text: 'Allow two to three hours for boarding, the return boat journey and the illuminated formation stop. Travel time should be planned separately. Keep a relaxed schedule in case water levels or local boat availability slow the departure.'
-      },
-      {
-        label: '04 · INSIDE',
-        title: 'How to approach it',
-        text: 'Wear quick-dry clothes and water-friendly shoes. Keep the life jacket on, protect electronics in a dry bag and use a reliable headlamp. Some sections may require stepping out of the boat in shallow water, and wet surfaces can be slippery.'
-      }
-    ],
-    fieldNote: 'The mountain opens into darkness. Keep time for the return journey.'
   }
 };
