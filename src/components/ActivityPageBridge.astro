@@ -1,0 +1,57 @@
+---
+import { laosActivityPages } from '../data/laosActivityPageRegistry';
+
+const activityConfigs = laosActivityPages.map((entry) => ({
+  slug: entry.slug,
+  route: entry.route,
+  title: entry.title
+}));
+---
+
+<script id="atlas-activity-page-config" type="application/json" set:html={JSON.stringify(activityConfigs)}></script>
+
+<style is:global>
+  .partner-card .activity-page-card-link {
+    display: block;
+    text-decoration: none;
+  }
+</style>
+
+<script>
+  type ActivityPageConfig = {
+    slug: string;
+    route: string;
+    title: string;
+  };
+
+  const readActivityPageConfigs = (): ActivityPageConfig[] => {
+    const node = document.getElementById('atlas-activity-page-config');
+    if (!node?.textContent) return [];
+    try { return JSON.parse(node.textContent) as ActivityPageConfig[]; }
+    catch { return []; }
+  };
+
+  const linkActivityCards = () => {
+    readActivityPageConfigs().forEach((config) => {
+      const card = document.getElementById(config.slug);
+      if (!(card instanceof HTMLElement) || card.dataset.activityPageLinked === 'true') return;
+
+      const trigger = card.querySelector<HTMLElement>('[data-partner-card-open]');
+      if (!trigger) return;
+
+      const link = document.createElement('a');
+      link.className = `${trigger.className} activity-page-card-link`;
+      link.href = config.route;
+      link.setAttribute('aria-label', `Read the activity note for ${config.title}`);
+      trigger.replaceWith(link);
+
+      const actionLabel = card.querySelector<HTMLElement>('.partner-card__copy b');
+      if (actionLabel) actionLabel.innerHTML = 'Read the activity note <i aria-hidden="true">↗</i>';
+
+      card.dataset.activityPageLinked = 'true';
+    });
+  };
+
+  linkActivityCards();
+  document.addEventListener('astro:page-load', linkActivityCards);
+</script>
