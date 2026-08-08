@@ -4,135 +4,145 @@ export const pakseEditorialGuide: EditorialGuideData = {
   slug: 'pakse-city-notes',
   destination: 'Pakse',
   typeLabel: 'City notes',
-  title: 'Pakse, before you explore',
-  subtitle: 'A practical introduction to arriving, choosing a base and understanding the roads that begin here.',
+  title: 'Pakse, before the roads open south',
+  subtitle: 'A city field guide to the Mekong confluence, the Bolaven Plateau, Champasak heritage and the practical role Pakse plays in Southern Laos.',
   intro:
-    'Pakse makes more sense when you stop treating it as a city-break checklist. It is a calm, useful base at the meeting point of the Mekong, the Bolaven Plateau, Champasak and the road toward the islands.',
+    'Pakse is not a city that needs a long checklist. Its value comes from position: the Xe Don meets the Mekong here, the Bolaven Plateau rises to the east, Champasak and Vat Phou sit downriver, and the road keeps going toward Si Phan Don.',
   triggerEyebrow: 'Before you explore Pakse',
   triggerTitle: 'Read the city notes',
-  edition: 'Starter edition · August 2026',
+  edition: 'Researched edition · August 2026',
   warning:
-    'Flight schedules, road conditions and local transport arrangements can change. Use these notes to understand Pakse, then confirm the details that affect a fixed connection.',
+    'Flight schedules, road conditions, waterfall access and local transport arrangements can change. Use the city notes to understand how Pakse fits the region, then confirm anything attached to a fixed departure or weather-sensitive road.',
   sections: [
     {
-      id: 'why-pakse',
-      eyebrow: '01 · The role of the city',
-      title: 'Pakse is the base, not the whole itinerary',
+      id: 'confluence',
+      eyebrow: '01 · Read the city',
+      title: 'Pakse begins where the Xe Don meets the Mekong',
       paragraphs: [
-        'Pakse is the provincial capital and the most practical transport and service hub in Southern Laos. The city itself is relaxed and compact, but its real value is how easily it opens several very different journeys.',
-        'From one base, travellers can prepare a Bolaven Plateau loop, cross toward Champasak and Vat Phou, follow the Mekong south toward Si Phan Don or simply pause between longer road days.'
+        'The name Pakse is tied to the mouth of the river, and the geography still explains the city better than a list of sights. The centre sits around the meeting of the Xe Don and Mekong, with bridges, markets, temple streets and transport roads spreading outward from that confluence.',
+        'That position made Pakse an administrative and trading centre for Champasak and still makes it the most useful southern base for travellers. The city is compact enough to understand quickly, but the routes leaving it point toward very different landscapes.'
+      ],
+      facts: [
+        { label: 'Setting', value: 'At the confluence of the Xe Don and Mekong rivers in Champasak Province.' },
+        { label: 'Role', value: 'Southern transport, services and planning hub rather than a self-contained city-break destination.' },
+        { label: 'East', value: 'Bolaven Plateau, Paksong, coffee country and major waterfalls.' },
+        { label: 'South & west', value: 'Champasak, Vat Phou and the Mekong road toward Si Phan Don.' }
+      ]
+    },
+    {
+      id: 'history',
+      eyebrow: '02 · A relatively young city',
+      title: 'The streets are younger than the landscape around them',
+      paragraphs: [
+        'French authorities established an administrative post at Pakse in 1905. The city later served as the capital of the Kingdom of Champasak until the formation of the Kingdom of Laos in 1946, leaving a layer of twentieth-century administrative history beside a much older southern cultural landscape.',
+        'That contrast is useful when reading the region. Pakse itself is a modern hub; the deeper historical chapter sits around Champasak and Vat Phou, where Khmer sacred geography reaches back many centuries. The unfinished Champasak Palace, now used as a hotel, is one visible reminder that the twentieth-century political story also passed through the city.'
       ],
       note: {
         label: 'City note',
-        text: 'Choose Pakse for access and rhythm. The strongest experiences usually begin outside the centre.'
+        text: 'Do not ask Pakse to be an ancient city. Use it as the modern doorway into a much older southern landscape.'
       }
     },
     {
-      id: 'arriving',
-      eyebrow: '02 · First arrival',
-      title: 'Most journeys reach Pakse by road or air',
+      id: 'bolaven',
+      eyebrow: '03 · The road east',
+      title: 'The Bolaven Plateau starts with altitude, coffee and falling water',
       paragraphs: [
-        'Pakse sits on the main southern road network and receives buses, minivans and private transfers from other Lao cities and neighbouring border routes. Road journeys can take longer than the distance suggests, especially in the rainy season.',
-        'There is no southern extension of the Laos–China Railway to Pakse, so do not build the final part of the trip around a train connection. Keep a margin between an important arrival and the next departure.'
+        'East of Pakse, the road climbs onto the Bolaven Plateau, a highland landscape associated with cooler air, fertile soils, coffee farms, villages and some of Southern Laos’s best-known waterfalls. Travelfish and long-form road guides consistently frame Pakse as the natural launch point for the plateau rather than the attraction itself.',
+        'The classic small and large loops deserve multiple days. Tad Fane, Tad Yuang, Paksong and Tad Lo are not best compressed into one frantic photo run. Road surface, rain, daylight and the time spent at coffee farms or villages matter as much as the number of stops.'
       ],
       facts: [
-        { label: 'Getting there', value: 'Road and air are the main ways travellers reach Pakse.' },
-        { label: 'Planning time', value: 'Avoid tight same-day connections after a long minivan or bus journey.' },
-        { label: 'Road conditions', value: 'Weather and works can change journey times outside the city.' },
-        { label: 'Arrival habit', value: 'Save the accommodation name and address in Lao before leaving.' }
+        { label: 'Landscape', value: 'High plateau east of Pakse with waterfalls, farms and cooler elevations.' },
+        { label: 'Coffee', value: 'One of the defining products of the plateau, especially around Paksong and surrounding farms.' },
+        { label: 'Loop style', value: 'Two days can sketch the small loop; three or more days create room for a slower route.' },
+        { label: 'Road rule', value: 'Choose the loop for current weather and riding confidence, not for the maximum number of pins.' }
       ]
     },
     {
-      id: 'airport',
-      eyebrow: '03 · PKZ airport',
-      title: 'A small airport with useful, changing connections',
+      id: 'champasak',
+      eyebrow: '04 · The road to older Champasak',
+      title: 'Vat Phou turns the southern road into a history lesson',
       paragraphs: [
-        'Pakse International Airport is close to the city and is straightforward compared with a large regional hub. Vientiane is the most dependable domestic connection, while other domestic and international routes may be seasonal or operate only on selected days.',
-        'Check the operating airline directly before building a route around a flight. A timetable visible months in advance can still change, and a missed limited-frequency connection is harder to replace than a road transfer.'
+        'South of Pakse, Champasak leads toward Vat Phou and its associated ancient settlements. UNESCO inscribed the wider Champasak cultural landscape in 2001, recognising far more than an isolated temple: the relationship between mountain, water, settlements, processional routes and Khmer religious architecture is central to the site.',
+        'That makes Champasak a different kind of excursion from the Bolaven Plateau. One route is shaped by altitude, waterfalls and agriculture; the other by the Mekong, sacred geography and archaeology. Giving them separate days makes both easier to understand.'
       ],
       facts: [
-        { label: 'Airport code', value: 'PKZ · Pakse International Airport.' },
-        { label: 'Primary flight', value: 'Vientiane is the core domestic air connection.' },
-        { label: 'Flight schedule', value: 'Other direct routes can be seasonal or limited to a few days each week.' },
-        { label: 'Backup time', value: 'Keep flexibility around onward travel when a flight is essential.' }
+        { label: 'World Heritage', value: 'Vat Phou and the Champasak cultural landscape have been UNESCO listed since 2001.' },
+        { label: 'Best frame', value: 'Think beyond the sanctuary: mountain, barays, causeway and settlements belong to the same cultural landscape.' },
+        { label: 'From Pakse', value: 'A straightforward southern road journey, better treated as its own chapter than an add-on to the plateau.' },
+        { label: 'Atlas link', value: 'Open the dedicated Vat Phou field note for route, climb and practical details.' }
       ]
     },
     {
-      id: 'where-to-stay',
-      eyebrow: '04 · Choosing a base',
-      title: 'Stay central for one night, choose atmosphere for longer',
+      id: 'city-life',
+      eyebrow: '05 · What belongs to Pakse itself',
+      title: 'Markets, temple streets and the river make the city worth one unhurried day',
       paragraphs: [
-        'For a short stop, the practical choice is usually a central guesthouse with easy access to restaurants, the river roads, rental shops and onward transport. Pakse is not so large that you need to chase a perfect neighbourhood for a single night.',
-        'For a slower stay, decide whether you prefer the compact centre, a quieter riverside position or a property outside the busiest streets. The best base depends more on your next journey than on a list of city attractions.'
+        'Dao Heuang market is one of the clearest places to see Pakse functioning as a regional hub: produce, household goods, prepared food and daily trade matter more here than souvenir staging. Travelfish also points toward the old French-quarter streets, cafés and Wat Luang as part of the city’s everyday texture.',
+        'The city is best explored without trying to manufacture a monument list. Walk a few central streets, eat in the market or a local noodle shop, cross the river when the light is good and let the Mekong explain why Pakse grew where it did.'
       ],
       facts: [
-        { label: 'One-night stay', value: 'Prioritise simple access to food, transport and an early departure.' },
-        { label: 'Longer stay', value: 'Choose calm, shade and a place where returning after a road day feels easy.' },
-        { label: 'Scooter pickup', value: 'Confirm where the bike is collected and whether luggage can be stored.' },
-        { label: 'Map check', value: 'Measure the real distance to the bridge, market or departure point you need.' }
+        { label: 'Market', value: 'Dao Heuang is a large working market and one of the strongest windows into everyday Pakse.' },
+        { label: 'Temple', value: 'Wat Luang is one of the city’s principal Buddhist landmarks.' },
+        { label: 'Old streets', value: 'The older central blocks retain parts of the city’s French-era urban character.' },
+        { label: 'Best pace', value: 'Half a day to one day is enough when the goal is to understand Pakse rather than collect sights.' }
       ]
     },
     {
-      id: 'moving-around',
-      eyebrow: '05 · Inside Pakse',
-      title: 'The centre is simple; the useful places are spread out',
+      id: 'transport',
+      eyebrow: '06 · A southern hinge',
+      title: 'Road and air matter more here than rail',
       paragraphs: [
-        'Parts of central Pakse are comfortable on foot, especially for cafés, restaurants and short errands. The airport, larger market areas, bus stations and some riverside or cross-river stops may require a tuk-tuk, local vehicle or arranged pickup.',
-        'Do not assume that an app will always provide an immediate ride. For an early bus, flight or border transfer, arrange transport with the guesthouse or driver beforehand and keep the pickup details in writing.'
+        'Pakse sits outside the Laos–China Railway corridor. Long-distance buses and minivans connect the city with the rest of Laos, while Pakse International Airport provides the fastest alternative for selected domestic and regional journeys.',
+        'That makes timing important. If the next step is an important flight, border crossing or overnight bus, return from the plateau or Champasak with margin. A road day that looks short can expand with weather, mechanical issues or a delayed local transfer.'
       ],
       facts: [
-        { label: 'Navigation', value: 'Save pins before leaving Wi-Fi and verify which side of the river or bridge you need.' },
-        { label: 'Communication', value: 'Keep the destination name in Lao for drivers and local transport.' },
-        { label: 'Payment', value: 'Carry small kip notes for short rides and simple local services.' },
-        { label: 'Backup', value: 'Arrange essential early-morning transport the evening before.' }
+        { label: 'Airport', value: 'PKZ · Pakse International Airport, close enough to the city to remain practical for short stays.' },
+        { label: 'No rail', value: 'The Laos–China Railway does not extend to Pakse.' },
+        { label: 'Road south', value: 'Main onward direction for Champasak, Nakasang and Si Phan Don.' },
+        { label: 'Buffer', value: 'Return from road trips before the day of a connection when missing it would matter.' }
       ]
     },
     {
-      id: 'scooter',
-      eyebrow: '06 · The road outward',
-      title: 'Rent the scooter for the route, not only the daily price',
+      id: 'base',
+      eyebrow: '07 · Choosing the base',
+      title: 'Stay for the road you are taking next',
       paragraphs: [
-        'Pakse is a common starting point for the Bolaven Plateau and other independent road trips. Rental quality, deposits, breakdown support and insurance conditions vary, so compare the whole arrangement rather than choosing only the lowest rate.',
-        'Photograph the bike, inspect tyres and brakes, test the lights, clarify damage rules and ask what support exists outside town. Rain, gravel, animals and darkness can turn an easy-looking road into a different ride.'
-      ],
-      note: {
-        label: 'Before the keys',
-        text: 'A reliable bike, a proper helmet and daylight are worth more than saving a few thousand kip.'
-      }
-    },
-    {
-      id: 'day-trips',
-      eyebrow: '07 · What opens from Pakse',
-      title: 'Build the stay around one strong direction',
-      paragraphs: [
-        'East and northeast, the Bolaven Plateau brings cooler elevations, coffee farms, villages and major waterfalls. South and southwest, Champasak and Vat Phou shift the journey toward Mekong landscapes and Khmer heritage.',
-        'Further south, Si Phan Don becomes another chapter rather than a quick city excursion. Trying to combine every direction into one rushed day weakens the reason for using Pakse as a base in the first place.'
+        'For one night, a central guesthouse close to food, rental shops and onward transport is usually the easiest choice. For a longer pause, a quieter riverside or cross-river property can make more sense if you do not need to collect a scooter or catch an early departure.',
+        'The useful question is not which neighbourhood is best in the abstract. It is what needs to happen tomorrow morning: airport, bus station, motorbike briefing, Champasak departure or a slow day in town.'
       ],
       facts: [
-        { label: 'Bolaven road', value: 'Waterfalls, coffee country and a route that deserves more than one rushed stop.' },
-        { label: 'Southern chapter', value: 'Champasak, Vat Phou and the Mekong road toward the islands.' },
-        { label: 'Planning rule', value: 'Choose one direction per day and leave time for weather and detours.' },
-        { label: 'Best next step', value: 'Open one landmark note, then build the practical route around it.' }
+        { label: 'Before a loop', value: 'Prioritise scooter access, luggage storage, fuel and an easy early start.' },
+        { label: 'Before a flight', value: 'Choose simple transport to PKZ and avoid returning from a remote road the same morning.' },
+        { label: 'Slow stay', value: 'River views and quieter streets matter more when the logistics are already solved.' },
+        { label: 'Map check', value: 'Measure the real route to the bridge, market, station or rental shop you actually need.' }
       ]
     },
     {
       id: 'how-long',
       eyebrow: '08 · Setting the pace',
-      title: 'One night is practical; several days reveal the region',
+      title: 'Pakse needs two nights; Southern Laos needs much longer',
       paragraphs: [
-        'A single night can work when Pakse is only a connection. Two nights allow the city to function as a calm base rather than a waiting room. Three to five days make more sense when a plateau route, Champasak or a slower southern itinerary is part of the plan.',
-        'The right length depends on whether you are exploring Pakse itself or using it to organise the surrounding region. Count the road days separately instead of pretending every excursion is part of one city stay.'
+        'One night works as transit. Two nights allow the city to become a place rather than a waiting room. After that, count the Bolaven Plateau, Champasak and Si Phan Don as separate travel chapters instead of pretending every road belongs inside a Pakse stay.',
+        'A strong southern route often uses Pakse twice: once to organise the road and once to reset after it. That second night can be more useful than squeezing another waterfall or island into a timetable that is already full.'
       ],
       facts: [
-        { label: 'Transit stay', value: 'One night for food, sleep and the next connection.' },
-        { label: 'Practical base', value: 'Two nights for errands, local exploration and one nearby direction.' },
-        { label: 'Road chapter', value: 'Three to five days when the plateau or Champasak is included.' },
-        { label: 'Extra time', value: 'Keep one flexible block during the rainy season or before an important flight.' }
-      ]
+        { label: 'Transit', value: 'One night for food, sleep and the next departure.' },
+        { label: 'City', value: 'Two nights for Pakse itself plus planning time.' },
+        { label: 'Plateau', value: 'Add two to four separate road days according to the chosen loop.' },
+        { label: 'Wider south', value: 'Champasak and Si Phan Don deserve their own nights rather than rushed returns to Pakse.' }
+      ],
+      note: {
+        label: 'Atlas note',
+        text: 'Pakse becomes more interesting when you stop asking what to do in the city and start noticing how many different roads begin there.'
+      }
     }
   ],
   links: [
-    { label: 'Check Lao Airlines schedules', href: 'https://laoairlines.com/en/flight-schedule/' },
-    { label: 'Explore official Champasak tourism information', href: 'https://tourismchampasak.com/' }
+    { label: 'Wikipedia · Pakse background and history', href: 'https://en.wikipedia.org/wiki/Pakse' },
+    { label: 'UNESCO · Vat Phou and Champasak cultural landscape', href: 'https://whc.unesco.org/en/list/481/' },
+    { label: 'Travelfish · things to do around Pakse', href: 'https://www.travelfish.org/sights/laos/southern_laos/champasak/pakse' },
+    { label: 'Travelfish · food and markets in Pakse', href: 'https://www.travelfish.org/eatandmeet/laos/southern_laos/champasak/pakse/eat' },
+    { label: 'Indie Traveller · Bolaven Plateau road trip', href: 'https://www.indietraveller.co/bolaven-plateau-road-trip/' },
+    { label: 'Official Champasak tourism information', href: 'https://www.tourismlaos.org/southern-provinces/champasak-province/' }
   ]
 };
