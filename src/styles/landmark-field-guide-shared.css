@@ -18,6 +18,22 @@
   letter-spacing: .16em;
 }
 
+/* Quick Field Notes are marginal annotations, not a second article. */
+.field-guide-side-note li {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.field-guide-side-note li:nth-child(n + 4) {
+  display: none;
+}
+
+.field-guide-side-note > span:last-child {
+  display: none;
+}
+
 .landmark-guide-shared-cta {
   width: min(var(--atlas-content, 1180px), calc(100% - 48px));
   margin: 0 auto 48px;
