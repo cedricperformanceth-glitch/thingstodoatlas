@@ -57,16 +57,23 @@ export const laosLandmarkLicensedMedia: Record<string, LandmarkGalleryItem[]> = 
   'pha-pa-tou': [
     commons(
       'Mountains clouds Mekong and dwellings from Mount Phou Si at sunrise in Luang Prabang Laos.jpg',
-      'Mountain landscape, mist and Mekong seen in Luang Prabang Province, used as regional context for the Pha Pa Tou journey',
+      'Mist, mountain ridges and the Mekong at sunrise in Luang Prabang, used as regional context for the Pha Pa Tou mountain journey',
       'Basile Morin',
       'CC BY-SA 4.0',
       1800
     ),
     commons(
-      'Panoramic view from the Pha Daeng Peak Viewpoint.jpg',
-      'Mountain panorama in Luang Prabang Province, used as regional landscape context for Pha Pa Tou',
-      'Christophe95',
+      'Panoramic view of Mount Phou Si seen from Wat Chomphet in Luang Prabang Laos.jpg',
+      'Mountain and Mekong landscape around Luang Prabang, used as regional context rather than as a photograph of Pha Pa Tou itself',
+      'Basile Morin',
       'CC BY-SA 4.0',
+      1700
+    ),
+    commons(
+      'Luang Phabang, Pak Ou caves (6172935890).jpg',
+      'Mekong and limestone landscape around Pak Ou north of Luang Prabang, close to the wider area used in guided Pha Pa Tou itineraries',
+      'Arian Zwegers',
+      'CC BY 2.0',
       1600
     )
   ],
