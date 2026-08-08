@@ -6,6 +6,7 @@ import ExploreBoard from '../../components/ExploreBoard.astro';
 import CityCategorySPA from '../../components/TravelDeskCategorySPA.astro';
 import CityCategoryPanel from '../../components/TravelDeskCategoryPanel.astro';
 import PartnerPlaceCard from '../../components/PartnerPlaceCard.astro';
+import ActivityLinkCard from '../../components/ActivityLinkCard.astro';
 import SelectionPlaceCard from '../../components/SelectionPlaceCard.astro';
 import { tadLoExperiences, tadLoLocalAddresses } from '../../data/tadLoPlaces';
 import {
@@ -58,9 +59,11 @@ const tadLoExploreLandmarks = tadLoBoardSelections.map((selection) => {
     : [{ src: place.image, alt: place.imageAlt }];
 
   return {
-    modalId: selection.slug === 'vat-paa-ancient-forest'
-      ? `selection-place-${place.slug}`
-      : `partner-place-${place.slug}`,
+    modalId: selection.slug === 'cooking-class-nyay'
+      ? 'activity-page-cooking-class-nyay'
+      : selection.slug === 'vat-paa-ancient-forest'
+        ? `selection-place-${place.slug}`
+        : `partner-place-${place.slug}`,
     name: selection.name,
     gallery,
     cityContext: {
@@ -165,7 +168,11 @@ const categoryTabs = [
           <div data-selection-alias={vatPaaForestSelection.slug}>
             <SelectionPlaceCard place={vatPaaForestCategorySelection} index={1} />
           </div>
-          {tadLoPartnerExperiences.map((place, index) => <PartnerPlaceCard place={place} index={index + 2} />)}
+          {tadLoPartnerExperiences.map((place, index) => (
+            place.slug === 'cooking-class-nyay'
+              ? <ActivityLinkCard place={place} index={index + 2} href="/laos/tad-lo/activities/cooking-class-nyay" />
+              : <PartnerPlaceCard place={place} index={index + 2} />
+          ))}
         </div>
       </CityCategoryPanel>
 
@@ -249,8 +256,20 @@ const categoryTabs = [
       if (button.dataset.tadLoExploreReady === 'true') return;
       button.dataset.tadLoExploreReady = 'true';
 
+      const targetId = button.dataset.openLandmark || '';
+      if (targetId === 'activity-page-cooking-class-nyay') {
+        const action = button.querySelector<HTMLElement>('.explore-board-card__action');
+        if (action) action.innerHTML = 'open activity page <b aria-hidden="true">↗</b>';
+        button.setAttribute('aria-label', 'Open Cooking with Nyay activity page');
+      }
+
       button.addEventListener('click', () => {
         const targetDialogId = button.dataset.openLandmark || '';
+        if (targetDialogId === 'activity-page-cooking-class-nyay') {
+          window.location.href = '/laos/tad-lo/activities/cooking-class-nyay';
+          return;
+        }
+
         const targetCategory = targetDialogId.startsWith('selection-place-') ? 'my-selection' : 'things-to-do';
         const categoryTab = document.querySelector<HTMLButtonElement>(`[data-city-category-button="${targetCategory}"]`);
         categoryTab?.click();
