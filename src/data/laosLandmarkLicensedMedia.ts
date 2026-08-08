@@ -128,6 +128,13 @@ export const laosLandmarkLicensedMedia: Record<string, LandmarkGalleryItem[]> = 
       1800
     ),
     commons(
+      '20171120 Wlot jaskini Kong Lor w Laosie 3663 DxO.jpg',
+      'Wide inlet of Kong Lor Cave and the Nam Hin Boun river in Khammouane Province',
+      'Jakub Hałun',
+      'CC BY-SA 4.0',
+      1800
+    ),
+    commons(
       'Kong Lor Caves of Laos (5422115490).jpg',
       'Boat journey through the dark interior of Kong Lor Cave',
       'Aleksey Gnilenkov',
