@@ -5,10 +5,9 @@ const bridgeConfig = laosLandmarkPages.map((entry) => {
   const getFact = (label: string) => entry.landmark.facts.find((fact) => fact.label.toLowerCase() === label.toLowerCase())?.value || '';
   return {
     slug: entry.slug,
-    modalId: entry.landmark.modalId,
     route: entry.route,
     duration: entry.landmark.cityContext.duration || getFact('Duration'),
-    difficulty: getFact('Difficulty') || 'Check the field guide',
+    difficulty: getFact('Difficulty') || 'See the field guide',
     bestTime: getFact('Best time') || 'Check current conditions'
   };
 });
@@ -17,244 +16,60 @@ const bridgeConfig = laosLandmarkPages.map((entry) => {
 <script id="atlas-landmark-page-config" type="application/json" set:html={JSON.stringify(bridgeConfig)}></script>
 
 <style is:global>
-  /* One small preview component for every landmark. */
-  .landmark-modal[data-guide-page-ready='true'] {
-    box-sizing: border-box !important;
-    width: min(640px, calc(100vw - 40px)) !important;
-    height: auto !important;
-    max-height: min(420px, calc(100svh - 40px)) !important;
-    margin: auto !important;
-    padding: 0 !important;
-    border: 0 !important;
-    background: #f4ecd9 !important;
-    overflow: hidden !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__grid {
-    display: grid !important;
-    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) !important;
-    align-items: stretch !important;
-    height: auto !important;
-    min-height: 0 !important;
-    background: #f4ecd9 !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__story,
-  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__visual {
-    box-sizing: border-box !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__story {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    padding: 22px 20px 18px 28px !important;
-    overflow: hidden !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__eyebrow {
-    margin: 0 0 6px !important;
-    font-size: .48rem !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__story h2 {
-    margin: 0 !important;
-    font-size: clamp(2.35rem, 4vw, 3.25rem) !important;
-    line-height: .86 !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__region {
-    margin: 7px 0 0 !important;
-    font-size: .88rem !important;
-    line-height: 1.05 !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-story__underline {
-    width: 135px !important;
-    margin: 3px 0 5px !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-story__description {
-    display: -webkit-box !important;
-    margin: 0 !important;
-    overflow: hidden !important;
-    font-size: .82rem !important;
-    line-height: 1.22 !important;
-    -webkit-box-orient: vertical !important;
-    -webkit-line-clamp: 3 !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-story__annotations,
-  .landmark-modal[data-guide-page-ready='true'] .landmark-story__scribble,
-  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__facts,
-  .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__thumbnails,
-  .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__arrow,
-  .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__counter,
-  .landmark-modal[data-guide-page-ready='true'] .landmark-actions__annotation,
-  .landmark-modal[data-guide-page-ready='true'] .landmark-visual__closing,
-  .landmark-modal[data-guide-page-ready='true'] .landmark-partner-note {
-    display: none !important;
-  }
-
-  .landmark-preview-meta {
-    display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 4px !important;
-    margin-top: 8px !important;
-    padding-top: 7px !important;
-    border-top: 1px dashed rgba(49, 85, 69, .24) !important;
-  }
-
-  .landmark-preview-meta span {
-    min-width: 0 !important;
-    color: #315545 !important;
-    font: 650 .62rem/1.05 'Caveat', 'Segoe Print', cursive !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-  }
-
-  .landmark-preview-meta small {
-    display: block !important;
-    margin-bottom: 1px !important;
-    color: #a45d3a !important;
-    font: 700 .34rem/1.15 'DM Sans', sans-serif !important;
-    letter-spacing: .06em !important;
-    text-transform: uppercase !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__visual {
-    display: flex !important;
-    flex-direction: column !important;
-    padding: 13px 15px 11px !important;
-    background: #eee7d7 !important;
-    overflow: hidden !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-visual__meta {
-    margin: 0 0 4px !important;
-    font-size: .45rem !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-gallery,
-  .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__stage {
-    min-width: 0 !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__stage {
-    min-height: 150px !important;
-    height: 150px !important;
-    padding: 4px !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__stage > img {
-    width: 100% !important;
-    height: 142px !important;
-    object-fit: cover !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__placeholder {
-    min-height: 150px !important;
-    height: 150px !important;
-    font-size: 1.15rem !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__credit {
-    min-height: 0 !important;
-    margin: 3px 0 0 !important;
-    overflow: hidden !important;
-    font-size: .46rem !important;
-    line-height: 1.1 !important;
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__actions {
-    display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 5px !important;
-    width: 100% !important;
-    margin: auto 0 0 !important;
-    padding: 7px 0 0 !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-action {
-    box-sizing: border-box !important;
-    min-width: 0 !important;
-    min-height: 34px !important;
-    padding: 5px !important;
-    overflow: hidden !important;
-    font-size: .69rem !important;
-    line-height: 1 !important;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] [data-landmark-page-link] {
-    border: 1px solid #b8653e !important;
-    background: #f4e7d2 !important;
-    color: #9a5134 !important;
-    font-weight: 700 !important;
-    box-shadow: 2px 3px 0 rgba(184, 101, 62, .14) !important;
-  }
-
-  /* Things-to-do category cards use a different dialog component. */
+  /* This bridge only adapts category PlaceCard dialogs.
+     Explore Board landmark previews have their own standalone component. */
   .place-dialog[data-guide-page-ready='true'] {
-    box-sizing: border-box !important;
-    width: min(640px, calc(100vw - 40px)) !important;
+    box-sizing: border-box;
+    width: min(720px, calc(100vw - 40px));
     height: auto !important;
-    max-height: min(420px, calc(100svh - 40px)) !important;
-    margin: auto !important;
-    padding: 0 !important;
-    overflow: hidden !important;
+    max-height: calc(100svh - 40px);
+    margin: auto;
+    padding: 0;
+    overflow: auto;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__shell {
-    display: grid !important;
-    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) !important;
-    align-items: stretch !important;
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    align-items: stretch;
     height: auto !important;
-    min-height: 0 !important;
-  }
-
-  .place-dialog[data-guide-page-ready='true'] .place-dialog__visual,
-  .place-dialog[data-guide-page-ready='true'] .place-dialog__content {
-    min-width: 0 !important;
     min-height: 0 !important;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__visual {
-    max-height: none !important;
-    overflow: hidden !important;
+    min-height: 0 !important;
+    overflow: hidden;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__visual img {
-    width: 100% !important;
-    height: 100% !important;
-    min-height: 260px !important;
-    object-fit: cover !important;
+    width: 100%;
+    height: 100%;
+    min-height: 330px;
+    object-fit: cover;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__content {
-    display: flex !important;
-    flex-direction: column !important;
-    padding: 24px 24px 17px !important;
-    overflow: hidden !important;
+    display: flex;
+    min-height: 0 !important;
+    flex-direction: column;
+    padding: 28px 28px 22px;
+    overflow: hidden;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__content h2 {
-    margin-bottom: 7px !important;
-    font-size: clamp(2.15rem, 4vw, 3rem) !important;
-    line-height: .95 !important;
+    margin-bottom: 8px;
+    font-size: clamp(2.5rem, 4.2vw, 3.5rem);
+    line-height: .95;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__description {
-    display: -webkit-box !important;
-    margin-bottom: 6px !important;
-    overflow: hidden !important;
-    font-size: .82rem !important;
-    line-height: 1.3 !important;
-    -webkit-box-orient: vertical !important;
-    -webkit-line-clamp: 3 !important;
+    display: -webkit-box;
+    margin-bottom: 8px;
+    overflow: hidden;
+    font-size: .96rem;
+    line-height: 1.4;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__recommend,
@@ -266,51 +81,53 @@ const bridgeConfig = laosLandmarkPages.map((entry) => {
   }
 
   .place-landmark-preview-meta {
-    display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 4px !important;
-    margin-top: 7px !important;
-    padding-top: 7px !important;
-    border-top: 1px dashed rgba(49, 85, 69, .24) !important;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(49, 85, 69, .24);
   }
 
   .place-landmark-preview-meta span {
-    min-width: 0 !important;
-    color: #315545 !important;
-    font: 650 .62rem/1.05 'Caveat', 'Segoe Print', cursive !important;
+    min-width: 0;
+    color: #315545;
+    font: 650 .78rem/1.1 'Caveat', 'Segoe Print', cursive;
   }
 
   .place-landmark-preview-meta small {
-    display: block !important;
-    color: #a45d3a !important;
-    font: 700 .34rem/1.15 'DM Sans', sans-serif !important;
-    text-transform: uppercase !important;
+    display: block;
+    margin-bottom: 2px;
+    color: #a45d3a;
+    font: 700 .42rem/1.15 'DM Sans', sans-serif;
+    letter-spacing: .08em;
+    text-transform: uppercase;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__actions {
-    display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 5px !important;
-    width: 100% !important;
-    margin: auto 0 0 !important;
-    padding: 7px 0 0 !important;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    width: 100%;
+    margin: 18px 0 0;
+    padding: 0;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__actions > * {
-    box-sizing: border-box !important;
-    min-width: 0 !important;
-    min-height: 34px !important;
-    margin: 0 !important;
-    padding: 5px !important;
-    font-size: .5rem !important;
-    text-align: center !important;
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 40px;
+    margin: 0;
+    padding: 7px;
+    font-size: .58rem;
+    text-align: center;
   }
 
   .place-dialog[data-guide-page-ready='true'] [data-landmark-page-link] {
     border: 1px solid #b8653e !important;
-    background: #f4e7d2 !important;
+    background: #f4e2cd !important;
     color: #9a5134 !important;
-    font-weight: 700 !important;
+    font-weight: 700;
   }
 
   .landmark-return-target {
@@ -321,76 +138,23 @@ const bridgeConfig = laosLandmarkPages.map((entry) => {
     box-shadow: 0 0 0 12px rgba(217, 119, 69, .12), 0 16px 35px rgba(31, 57, 45, .16) !important;
   }
 
-  @media (max-width: 650px) {
-    .landmark-modal[data-guide-page-ready='true'],
+  @media (max-width: 620px) {
     .place-dialog[data-guide-page-ready='true'] {
-      width: min(360px, calc(100vw - 32px)) !important;
-      max-height: min(460px, calc(100svh - 32px)) !important;
-      margin: auto !important;
-      overflow: auto !important;
+      width: min(520px, calc(100vw - 28px));
+      max-height: calc(100svh - 28px);
     }
 
-    .landmark-modal[data-guide-page-ready='true'] .landmark-modal__grid,
     .place-dialog[data-guide-page-ready='true'] .place-dialog__shell {
-      grid-template-columns: 1fr !important;
-    }
-
-    .landmark-modal[data-guide-page-ready='true'] .landmark-modal__story {
-      padding: 22px 22px 13px !important;
-    }
-
-    .landmark-modal[data-guide-page-ready='true'] .landmark-modal__story h2 {
-      font-size: 2.55rem !important;
-    }
-
-    .landmark-modal[data-guide-page-ready='true'] .landmark-story__description {
-      -webkit-line-clamp: 2 !important;
-    }
-
-    .landmark-preview-meta {
-      margin-top: 6px !important;
-      padding-top: 5px !important;
-    }
-
-    .landmark-modal[data-guide-page-ready='true'] .landmark-modal__visual {
-      padding: 10px 13px 12px !important;
-    }
-
-    .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__stage,
-    .landmark-modal[data-guide-page-ready='true'] .landmark-modal__placeholder {
-      min-height: 112px !important;
-      height: 112px !important;
-    }
-
-    .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__stage > img {
-      height: 104px !important;
-    }
-
-    .landmark-modal[data-guide-page-ready='true'] .landmark-modal__actions,
-    .place-dialog[data-guide-page-ready='true'] .place-dialog__actions {
-      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    }
-
-    .landmark-modal[data-guide-page-ready='true'] .landmark-action {
-      min-height: 32px !important;
-      font-size: .58rem !important;
-    }
-
-    .place-dialog[data-guide-page-ready='true'] .place-dialog__visual {
-      max-height: 120px !important;
+      grid-template-columns: 1fr;
     }
 
     .place-dialog[data-guide-page-ready='true'] .place-dialog__visual img {
-      height: 120px !important;
-      min-height: 120px !important;
+      height: 150px;
+      min-height: 150px;
     }
 
     .place-dialog[data-guide-page-ready='true'] .place-dialog__content {
-      padding: 18px 20px 14px !important;
-    }
-
-    .place-dialog[data-guide-page-ready='true'] .place-dialog__content h2 {
-      font-size: 2.3rem !important;
+      padding: 22px 20px 18px;
     }
   }
 </style>
@@ -398,7 +162,6 @@ const bridgeConfig = laosLandmarkPages.map((entry) => {
 <script>
   type LandmarkBridgeConfig = {
     slug: string;
-    modalId: string;
     route: string;
     duration: string;
     difficulty: string;
@@ -432,52 +195,19 @@ const bridgeConfig = laosLandmarkPages.map((entry) => {
   );
 
   const sourceElementFor = (trigger: HTMLElement, slug: string) => (
-    trigger.closest<HTMLElement>(`.explore-board-card, .city-landmark-card, #category-${CSS.escape(slug)}, .place-card, article`) || trigger
+    trigger.closest<HTMLElement>(`#category-${CSS.escape(slug)}, .place-card, article`) || trigger
   );
-
-  const prepareSources = (configs: LandmarkBridgeConfig[]) => {
-    configs.forEach((config) => {
-      document.querySelectorAll<HTMLElement>(`[data-open-landmark="${config.modalId}"]`).forEach((trigger, index) => {
-        const source = sourceElementFor(trigger, config.slug);
-        if (!source.id) source.id = `landmark-source-${config.slug}-${index + 1}`;
-        trigger.dataset.landmarkPageSourceId = source.id;
-      });
-
-      document.querySelectorAll<HTMLElement>(`[data-place-dialog="place-dialog-${config.slug}"]`).forEach((trigger, index) => {
-        const source = sourceElementFor(trigger, config.slug);
-        if (!source.id) source.id = `landmark-category-source-${config.slug}-${index + 1}`;
-        trigger.dataset.landmarkPageSourceId = source.id;
-      });
-    });
-  };
 
   const metaMarkup = (config: LandmarkBridgeConfig) => `
     <span><small>Time</small>${config.duration}</span>
     <span><small>Effort</small>${config.difficulty}</span>
-    <span><small>Best rhythm</small>${config.bestTime}</span>
+    <span><small>Best time</small>${config.bestTime}</span>
   `;
-
-  const addLandmarkMeta = (dialog: HTMLDialogElement, config: LandmarkBridgeConfig) => {
-    const story = dialog.querySelector<HTMLElement>('.landmark-modal__story');
-    if (!story || story.querySelector('.landmark-preview-meta')) return;
-    const meta = document.createElement('div');
-    meta.className = 'landmark-preview-meta';
-    meta.innerHTML = metaMarkup(config);
-    story.append(meta);
-  };
-
-  const addPlaceMeta = (dialog: HTMLDialogElement, config: LandmarkBridgeConfig) => {
-    const content = dialog.querySelector<HTMLElement>('.place-dialog__content');
-    if (!content || content.querySelector('.place-landmark-preview-meta')) return;
-    const meta = document.createElement('div');
-    meta.className = 'place-landmark-preview-meta';
-    meta.innerHTML = metaMarkup(config);
-    content.querySelector('.place-dialog__description')?.insertAdjacentElement('afterend', meta);
-  };
 
   const rememberReturn = (dialog: HTMLDialogElement, config: LandmarkBridgeConfig) => {
     const sourceId = dialog.dataset.landmarkPageSourceId || '';
     if (!sourceId) return;
+
     const state: LandmarkReturnState = {
       slug: config.slug,
       sourcePath: `${location.pathname}${location.search}${location.hash}`,
@@ -485,38 +215,25 @@ const bridgeConfig = laosLandmarkPages.map((entry) => {
       categorySlug: activeCategory(),
       scrollY: currentScroll()
     };
+
     sessionStorage.setItem(RETURN_KEY, JSON.stringify(state));
     if (config.slug === 'wat-phou') sessionStorage.setItem('atlas:wat-phou-return', JSON.stringify(state));
   };
 
-  const bindReturnToLink = (link: HTMLAnchorElement, dialog: HTMLDialogElement, config: LandmarkBridgeConfig) => {
-    if (link.dataset.returnReady === 'true') return;
-    link.dataset.returnReady = 'true';
-    link.addEventListener('click', () => {
-      rememberReturn(dialog, config);
-      if (dialog.open) dialog.close();
-    });
-  };
+  const configurePlaceDialog = (config: LandmarkBridgeConfig) => {
+    const dialog = document.getElementById(`place-dialog-${config.slug}`);
+    if (!(dialog instanceof HTMLDialogElement)) return;
 
-  const installLandmarkPageLink = (dialog: HTMLDialogElement, config: LandmarkBridgeConfig) => {
-    const actions = dialog.querySelector<HTMLElement>('.landmark-modal__actions');
-    if (!actions) return;
+    dialog.dataset.guidePageReady = 'true';
 
-    let link = actions.querySelector<HTMLAnchorElement>('[data-landmark-page-link]');
-    if (!link) {
-      link = document.createElement('a');
-      link.className = 'landmark-action landmark-action--guide';
-      link.dataset.landmarkPageLink = config.slug;
-      link.href = config.route;
-      link.innerHTML = '<span aria-hidden="true">✎</span> Plan my visit';
-      link.setAttribute('aria-label', `Open the complete ${dialog.querySelector('h2')?.textContent?.trim() || 'landmark'} guide`);
-      const saveButton = actions.querySelector('[data-add-landmark]');
-      actions.insertBefore(link, saveButton || null);
+    const content = dialog.querySelector<HTMLElement>('.place-dialog__content');
+    if (content && !content.querySelector('.place-landmark-preview-meta')) {
+      const meta = document.createElement('div');
+      meta.className = 'place-landmark-preview-meta';
+      meta.innerHTML = metaMarkup(config);
+      content.querySelector('.place-dialog__description')?.insertAdjacentElement('afterend', meta);
     }
-    bindReturnToLink(link, dialog, config);
-  };
 
-  const installPlacePageLink = (dialog: HTMLDialogElement, config: LandmarkBridgeConfig) => {
     const actions = dialog.querySelector<HTMLElement>('.place-dialog__actions');
     if (!actions) return;
 
@@ -530,50 +247,38 @@ const bridgeConfig = laosLandmarkPages.map((entry) => {
       const mapLink = actions.querySelector('.place-dialog__map');
       actions.insertBefore(link, mapLink || actions.firstChild);
     }
-    bindReturnToLink(link, dialog, config);
+
+    if (link.dataset.returnReady !== 'true') {
+      link.dataset.returnReady = 'true';
+      link.addEventListener('click', () => {
+        rememberReturn(dialog, config);
+        if (dialog.open) dialog.close();
+      });
+    }
   };
 
-  const configureDialogs = (configs: LandmarkBridgeConfig[]) => {
-    prepareSources(configs);
+  const preparePlaceSources = (configs: LandmarkBridgeConfig[]) => {
     configs.forEach((config) => {
-      const landmarkDialog = document.getElementById(config.modalId);
-      if (landmarkDialog instanceof HTMLDialogElement && landmarkDialog.classList.contains('landmark-modal')) {
-        landmarkDialog.dataset.guidePageReady = 'true';
-        const eyebrow = landmarkDialog.querySelector<HTMLElement>('.landmark-modal__eyebrow');
-        if (eyebrow) eyebrow.textContent = 'LAOS · QUICK FIELD CARD';
-        addLandmarkMeta(landmarkDialog, config);
-        installLandmarkPageLink(landmarkDialog, config);
-      }
-
-      const placeDialog = document.getElementById(`place-dialog-${config.slug}`);
-      if (placeDialog instanceof HTMLDialogElement) {
-        placeDialog.dataset.guidePageReady = 'true';
-        addPlaceMeta(placeDialog, config);
-        installPlacePageLink(placeDialog, config);
-      }
+      document.querySelectorAll<HTMLElement>(`[data-place-dialog="place-dialog-${config.slug}"]`).forEach((trigger, index) => {
+        const source = sourceElementFor(trigger, config.slug);
+        if (!source.id) source.id = `landmark-category-source-${config.slug}-${index + 1}`;
+        trigger.dataset.landmarkPageSourceId = source.id;
+      });
     });
   };
 
-  const bindSourceTracking = (configs: LandmarkBridgeConfig[]) => {
-    if (document.documentElement.dataset.landmarkPageTrackingReady === 'true') return;
-    document.documentElement.dataset.landmarkPageTrackingReady = 'true';
-    const byDialog = new Map<string, LandmarkBridgeConfig>();
-    configs.forEach((config) => {
-      byDialog.set(config.modalId, config);
-      byDialog.set(`place-dialog-${config.slug}`, config);
-    });
+  const bindPlaceSourceTracking = (configs: LandmarkBridgeConfig[]) => {
+    if (document.documentElement.dataset.placeLandmarkTrackingReady === 'true') return;
+    document.documentElement.dataset.placeLandmarkTrackingReady = 'true';
+    const byDialog = new Map(configs.map((config) => [`place-dialog-${config.slug}`, config]));
 
     document.addEventListener('click', (event) => {
       const target = event.target;
       if (!(target instanceof Element)) return;
-      const landmarkTrigger = target.closest<HTMLElement>('[data-open-landmark]');
-      const placeTrigger = target.closest<HTMLElement>('[data-place-dialog]');
-      const trigger = landmarkTrigger || placeTrigger;
+      const trigger = target.closest<HTMLElement>('[data-place-dialog]');
       if (!trigger) return;
-
-      const dialogId = landmarkTrigger?.dataset.openLandmark || placeTrigger?.dataset.placeDialog || '';
-      const config = byDialog.get(dialogId);
-      if (!config) return;
+      const dialogId = trigger.dataset.placeDialog || '';
+      if (!byDialog.has(dialogId)) return;
       const dialog = document.getElementById(dialogId);
       if (dialog instanceof HTMLDialogElement) dialog.dataset.landmarkPageSourceId = trigger.dataset.landmarkPageSourceId || '';
     }, true);
@@ -582,6 +287,7 @@ const bridgeConfig = laosLandmarkPages.map((entry) => {
   const restoreSource = () => {
     const raw = sessionStorage.getItem(RETURN_KEY);
     if (!raw) return;
+
     let state: LandmarkReturnState | null = null;
     try { state = JSON.parse(raw) as LandmarkReturnState; }
     catch { sessionStorage.removeItem(RETURN_KEY); }
@@ -609,9 +315,10 @@ const bridgeConfig = laosLandmarkPages.map((entry) => {
   const setupLandmarkPageBridge = () => {
     const configs = readConfig();
     if (!configs.length) return;
-    bindSourceTracking(configs);
+    preparePlaceSources(configs);
+    bindPlaceSourceTracking(configs);
     restoreSource();
-    [0, 40, 120, 300].forEach((delay) => window.setTimeout(() => configureDialogs(configs), delay));
+    [0, 60, 180].forEach((delay) => window.setTimeout(() => configs.forEach(configurePlaceDialog), delay));
   };
 
   setupLandmarkPageBridge();
