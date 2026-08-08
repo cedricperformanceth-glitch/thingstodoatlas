@@ -5,6 +5,7 @@ import type { LaosLandmarkPageEntry } from '../data/laosLandmarkPageRegistry';
 import { getRelatedLandmarkPages } from '../data/laosLandmarkPageRegistry';
 import { laosLandmarkPageEditorial } from '../data/laosLandmarkPageEditorial';
 import { laosLandmarkPageFieldNotes } from '../data/laosLandmarkPageFieldNotes';
+import { laosLandmarkPageFacts } from '../data/laosLandmarkPageFacts';
 import { getLicensedLandmarkGallery } from '../data/laosLandmarkLicensedMedia';
 
 interface Props {
@@ -25,7 +26,7 @@ const second = images[1] || images[0];
 const third = images[2] || images[1] || images[0];
 const related = getRelatedLandmarkPages(entry);
 const sections = guide.sections.slice(0, 4);
-const facts = landmark.facts.slice(0, 6);
+const facts = (laosLandmarkPageFacts[entry.slug] || landmark.facts).slice(0, 6);
 
 const sourceCaption = (image: LandmarkGalleryItem) => ({
   author: image.author || 'Source photo',
@@ -37,7 +38,7 @@ const heroCredit = sourceCaption(hero);
 const secondCredit = sourceCaption(second);
 const thirdCredit = sourceCaption(third);
 
-const questions = landmark.facts.slice(0, 5).map((item) => ({
+const questions = facts.slice(0, 5).map((item) => ({
   question: item.label.endsWith('?') ? item.label : `${item.label}?`,
   answer: item.value
 }));
