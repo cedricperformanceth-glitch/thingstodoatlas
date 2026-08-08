@@ -28,6 +28,33 @@ export const laosLandmarkPageFacts: Record<string, LandmarkFact[]> = {
     }
   ],
 
+  'pha-pa-tou': [
+    {
+      label: 'Route format',
+      value: 'Pha Pa Tou is reached through a locally arranged sequence rather than one fixed public trailhead. Documented routes involve a road transfer north of Luang Prabang, a small river crossing and a mountain trek. Older independent reports describe almost two hours of climbing; a current guided itinerary uses roughly one hour by road, a boat crossing, about three hours through jungle to a Hmong village/homestay, then another short climb to the viewpoint.'
+    },
+    {
+      label: 'Overnight or day trip',
+      value: 'A full-day outing is possible in some arrangements, but an overnight is the stronger format because it removes pressure from the descent and gives access to both sunset and sunrise. Current guided trips commonly use a 2-day / 1-night rhythm.'
+    },
+    {
+      label: 'Food, water & facilities',
+      value: 'Do not assume facilities. A 2020 traveller report described a very basic mountain stay with bedding but no water or electricity, requiring the group to carry supplies. Current organised treks may include water, meals, transport and homestay services. Confirm exactly what your booking includes before leaving Luang Prabang.'
+    },
+    {
+      label: 'Weather & sunrise',
+      value: 'The viewpoint is known for sunrise, sunset and occasional cloud inversions, but a sea of clouds is never guaranteed. Rain can make forest sections slippery and can change the river crossing. Reconfirm weather and local access, especially in the wet season.'
+    },
+    {
+      label: 'What to bring',
+      value: 'Wear hiking shoes with grip and carry a headlamp, drinking water, sun protection, rain protection and a light layer for early morning. Bring cash and keep the organiser’s contact and meeting point saved offline.'
+    },
+    {
+      label: 'Difficulty & guide',
+      value: 'Moderate to demanding depending on the route: sustained uphill walking, forest trail, river transfer and very simple overnight conditions. A local guide or homestay arrangement is strongly recommended because the meeting point, boat and exact trail can vary.'
+    }
+  ],
+
   'xe-bang-fai-cave': [
     {
       label: 'Route from Thakhek',
