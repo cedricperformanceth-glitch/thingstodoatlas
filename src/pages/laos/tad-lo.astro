@@ -59,11 +59,7 @@ const tadLoExploreLandmarks = tadLoBoardSelections.map((selection) => {
     : [{ src: place.image, alt: place.imageAlt }];
 
   return {
-    modalId: selection.slug === 'cooking-class-nyay'
-      ? 'activity-page-cooking-class-nyay'
-      : selection.slug === 'vat-paa-ancient-forest'
-        ? `selection-place-${place.slug}`
-        : `partner-place-${place.slug}`,
+    modalId: `activity-page-${place.slug}`,
     name: selection.name,
     gallery,
     cityContext: {
@@ -86,10 +82,9 @@ const tadLoSelections = [
   vatPaaForestSelection
 ];
 const tadLoTreasureHuntCategorySelection = duplicateSelection(tadLoTreasureHuntSelection, 'things-to-do');
-const vatPaaForestCategorySelection = duplicateSelection(vatPaaForestSelection, 'things-to-do');
 const fandeeIslandGuesthouseSelection = duplicateSelection(fandeeIslandSelection, 'guesthouses');
-const tadLoPartnerExperiences = tadLoExperiences.filter((place) => place.slug !== 'vat-paa-ancient-forest');
-const tadLoExperienceCount = tadLoPartnerExperiences.length + 2;
+const tadLoPartnerExperiences = tadLoExperiences;
+const tadLoExperienceCount = tadLoPartnerExperiences.length + 1;
 const tadLoGuesthouses = tadLoLocalAddresses.filter((place) => place.category === 'accommodation' && place.slug !== 'fandee-island');
 const tadLoGuesthouseCount = tadLoGuesthouses.length + 1;
 const tadLoRestaurants = tadLoLocalAddresses.filter((place) => place.category === 'restaurants');
@@ -165,13 +160,12 @@ const categoryTabs = [
           <div data-selection-alias={tadLoTreasureHuntSelection.slug}>
             <SelectionPlaceCard place={tadLoTreasureHuntCategorySelection} index={0} />
           </div>
-          <div data-selection-alias={vatPaaForestSelection.slug}>
-            <SelectionPlaceCard place={vatPaaForestCategorySelection} index={1} />
-          </div>
           {tadLoPartnerExperiences.map((place, index) => (
-            place.slug === 'cooking-class-nyay'
-              ? <ActivityLinkCard place={place} index={index + 2} href="/laos/tad-lo/activities/cooking-class-nyay" />
-              : <PartnerPlaceCard place={place} index={index + 2} />
+            <ActivityLinkCard
+              place={place}
+              index={index + 1}
+              href={`/laos/tad-lo/things-to-do/${place.slug}`}
+            />
           ))}
         </div>
       </CityCategoryPanel>
@@ -257,32 +251,15 @@ const categoryTabs = [
       button.dataset.tadLoExploreReady = 'true';
 
       const targetId = button.dataset.openLandmark || '';
-      if (targetId === 'activity-page-cooking-class-nyay') {
-        const action = button.querySelector<HTMLElement>('.explore-board-card__action');
-        if (action) action.innerHTML = 'open activity page <b aria-hidden="true">↗</b>';
-        button.setAttribute('aria-label', 'Open Cooking with Nyay activity page');
-      }
+      if (!targetId.startsWith('activity-page-')) return;
+
+      const slug = targetId.replace('activity-page-', '');
+      const action = button.querySelector<HTMLElement>('.explore-board-card__action');
+      if (action) action.innerHTML = 'open the field note <b aria-hidden="true">↗</b>';
+      button.setAttribute('aria-label', `Open ${slug.replaceAll('-', ' ')} field note`);
 
       button.addEventListener('click', () => {
-        const targetDialogId = button.dataset.openLandmark || '';
-        if (targetDialogId === 'activity-page-cooking-class-nyay') {
-          window.location.href = '/laos/tad-lo/activities/cooking-class-nyay';
-          return;
-        }
-
-        const targetCategory = targetDialogId.startsWith('selection-place-') ? 'my-selection' : 'things-to-do';
-        const categoryTab = document.querySelector<HTMLButtonElement>(`[data-city-category-button="${targetCategory}"]`);
-        categoryTab?.click();
-
-        requestAnimationFrame(() => {
-          const dialog = document.getElementById(targetDialogId);
-          if (!(dialog instanceof HTMLDialogElement) || dialog.open) return;
-          dialog.showModal();
-          const dialogOpenClass = dialog.classList.contains('selection-dialog')
-            ? 'selection-dialog-open'
-            : 'partner-dialog-open';
-          document.documentElement.classList.add(dialogOpenClass);
-        });
+        window.location.href = `/laos/tad-lo/things-to-do/${slug}`;
       });
     });
   };
