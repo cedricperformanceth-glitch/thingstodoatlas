@@ -55,6 +55,33 @@ export const laosLandmarkPageFacts: Record<string, LandmarkFact[]> = {
     }
   ],
 
+  'kong-lor-cave': [
+    {
+      label: 'Underground river',
+      value: 'The Nam Hin Boun passes through the limestone mountain for about 7 km; older official Laos tourism material commonly describes the cave as roughly 7.5 km long, with passages around 70–80 m wide in places and major chambers approaching 100 m high.'
+    },
+    {
+      label: 'Ticket & hours',
+      value: 'Khammouane Tourism currently lists daily opening hours of 08:00–17:00 and a 2026 foreign visitor entry price of 250,000 kip per person. Fees are explicitly subject to change, so reconfirm at the counter.'
+    },
+    {
+      label: 'Boat journey',
+      value: 'The standard visit uses a small motorised longboat through the cave and back. Around 2 hours is a useful minimum for the crossing itself; allow 2–3 hours overall for boarding, the lit formation walk, shallow sections and the pause near the far-side valley.'
+    },
+    {
+      label: 'Dry vs wet season',
+      value: 'November to April is the official recommended period for clearer water and safer levels. Late dry-season water can become shallow enough that passengers step out while the boat is pushed over gravel or small rapids. May to October is greener but can bring high water and changing boat conditions.'
+    },
+    {
+      label: 'From Thakhek',
+      value: 'Kong Lor is normally built into the Thakhek Loop rather than treated as a quick return excursion. Khammouane Tourism lists the cave about 198 km from Thakhek; Ban Nahin / Khoun Kham on Route 8 is the practical gateway before the final valley road to Kong Lor.'
+    },
+    {
+      label: 'What to bring',
+      value: 'Wear quick-dry clothing and shoes or sandals that can get wet. Bring a headlamp, protect electronics from water and keep the supplied life jacket on throughout the boat journey. Follow the boat crew when shallow water requires getting out.'
+    }
+  ],
+
   'xe-bang-fai-cave': [
     {
       label: 'Route from Thakhek',
