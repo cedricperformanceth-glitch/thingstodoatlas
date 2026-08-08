@@ -82,6 +82,33 @@ export const laosLandmarkPageFacts: Record<string, LandmarkFact[]> = {
     }
   ],
 
+  'tham-nang-aen-cave': [
+    {
+      label: 'Size & character',
+      value: 'Tourism Laos describes Tham Nang Aen as more than 1.5 km long, with chambers up to about 30 m high, a small underground lake and impressive limestone formations. The main visitor section is highly developed with lighting, stairs, railings and cement walkways.'
+    },
+    {
+      label: 'From Thakhek',
+      value: 'The cave is about 18 km northeast of Thakhek on Route 12. From the signed turn, continue roughly 700 m along the access road. Khammouane Tourism includes Nang Aen in Day 1 of the classic Thakhek Loop through the Route 12 cave corridor.'
+    },
+    {
+      label: 'Walking visit',
+      value: 'The developed chamber can be explored independently in roughly 30–60 minutes depending on pace. It is easy compared with the remote caves, but there are many stairs and damp surfaces, so it should not be described as step-free access.'
+    },
+    {
+      label: 'Boat option',
+      value: 'A deeper underground-river trip may be available as an extra. Older route descriptions mention roughly 1 km by boat plus further walking and about two hours overall. Availability changes: a July 2025 visitor found the boats suspended, while late-2025 reports again describe them operating.'
+    },
+    {
+      label: 'Ticket & hours',
+      value: 'Multiple guides list roughly 08:00–17:00. Prices conflict: late-2025 visitor reports commonly mention about 50,000 kip for the walking visit and around 150,000 kip for the boat, while a 2026 guide still lists 30,000 kip entry. Confirm the current rate at the counter.'
+    },
+    {
+      label: 'What to bring',
+      value: 'Wear shoes with grip and light clothing; the cave stays noticeably cool inside. For the boat option, bring a headlamp, quick-dry clothing and something to protect electronics. Follow staff instructions if water levels change the route.'
+    }
+  ],
+
   'xe-bang-fai-cave': [
     {
       label: 'Route from Thakhek',
