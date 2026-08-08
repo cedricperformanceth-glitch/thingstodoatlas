@@ -140,8 +140,8 @@ export const tadLoEditorialGuide: EditorialGuideData = {
   links: [
     { label: 'Visit Tad Lo · local practical guide', href: 'https://visit-tadlo.com/en/practical-guide' },
     { label: 'Visit Tad Lo · local activities', href: 'https://visit-tadlo.com/en/things-to-do' },
-    { label: 'Kristof.club · Tad Lo travel notes', href: 'https://www.kristof.club/' },
-    { label: 'Globe-Trotting · Bolaven Plateau and Tad Lo', href: 'https://www.globe-trotting.com/' },
-    { label: 'Adam Liss · Bolaven mini-loop notes', href: 'https://www.adamliss.com/' }
+    { label: 'Kristof.club · Tad Lo and the Bolaven', href: 'https://kristof.club/tad-lo-boloven/' },
+    { label: 'Globe-Trotting · Bolaven Plateau guide', href: 'https://www.globe-trotting.com/post/plateau-des-bolovens-au-laos' },
+    { label: 'The Road Liss Traveled · Bolaven mini-loop', href: 'https://www.adamliss.com/blog/2025/7/10/bolaven-plateau-mini-loop' }
   ]
 };
