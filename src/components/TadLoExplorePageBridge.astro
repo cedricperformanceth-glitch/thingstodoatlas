@@ -18,31 +18,43 @@ const tadLoConfigs = laosLandmarkPages
 <style is:global>
   .partner-dialog[data-guide-page-ready='true'],
   .selection-dialog[data-guide-page-ready='true'] {
-    width: min(840px, calc(100vw - 48px));
-    height: auto;
-    max-height: min(500px, calc(100vh - 48px));
-    overflow: auto;
+    box-sizing: border-box;
+    width: min(820px, calc(100vw - 48px));
+    height: auto !important;
+    max-height: min(470px, calc(100svh - 48px));
+    overflow: hidden;
   }
 
   .partner-dialog[data-guide-page-ready='true'] .partner-dialog__shell,
   .selection-dialog[data-guide-page-ready='true'] .selection-dialog__shell {
-    grid-template-columns: minmax(250px, .78fr) minmax(390px, 1.22fr);
-    align-items: start;
-    height: auto;
+    display: grid;
+    grid-template-columns: minmax(0, .86fr) minmax(0, 1.14fr);
+    align-items: stretch;
+    height: auto !important;
     min-height: 0;
   }
 
   .partner-dialog[data-guide-page-ready='true'] .partner-dialog__visual,
-  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__visual {
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__visual,
+  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__content,
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__content {
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 0;
     align-self: stretch;
-    min-height: 320px;
-    max-height: 390px;
+  }
+
+  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__visual,
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__visual {
+    max-height: none;
+    overflow: hidden;
   }
 
   .partner-dialog[data-guide-page-ready='true'] .partner-dialog__visual img,
   .selection-dialog[data-guide-page-ready='true'] .selection-dialog__visual img {
+    width: 100%;
     height: 100%;
-    min-height: 320px;
+    min-height: 300px;
     object-fit: cover;
   }
 
@@ -51,31 +63,7 @@ const tadLoConfigs = laosLandmarkPages
   .selection-dialog[data-guide-page-ready='true'] .selection-gallery__control,
   .selection-dialog[data-guide-page-ready='true'] .selection-gallery__counter,
   .partner-dialog[data-guide-page-ready='true'] .partner-dialog__partner,
-  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__stamp {
-    display: none !important;
-  }
-
-  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__content,
-  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__content {
-    min-height: 0;
-    padding: 30px 30px 24px;
-    overflow: visible;
-  }
-
-  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__content h2,
-  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__content h2 {
-    margin-bottom: 10px;
-    font-size: clamp(2.6rem, 4.2vw, 3.8rem);
-    line-height: .95;
-  }
-
-  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__description,
-  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__description {
-    margin-bottom: 12px;
-    font-size: 1rem;
-    line-height: 1.42;
-  }
-
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__stamp,
   .partner-dialog[data-guide-page-ready='true'] .partner-dialog__recommend,
   .partner-dialog[data-guide-page-ready='true'] .partner-dialog__content > ul,
   .partner-dialog[data-guide-page-ready='true'] .partner-dialog__practical,
@@ -85,19 +73,50 @@ const tadLoConfigs = laosLandmarkPages
     display: none !important;
   }
 
+  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__content,
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__content {
+    display: flex;
+    flex-direction: column;
+    padding: 28px 28px 20px;
+    overflow: hidden;
+  }
+
+  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__content h2,
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__content h2 {
+    margin-bottom: 9px;
+    font-size: clamp(2.45rem, 4vw, 3.5rem);
+    line-height: .95;
+  }
+
+  .partner-dialog[data-guide-page-ready='true'] .partner-dialog__description,
+  .selection-dialog[data-guide-page-ready='true'] .selection-dialog__description {
+    display: -webkit-box;
+    margin-bottom: 8px;
+    overflow: hidden;
+    font-size: .94rem;
+    line-height: 1.37;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+  }
+
   .partner-dialog[data-guide-page-ready='true'] .partner-dialog__actions,
   .selection-dialog[data-guide-page-ready='true'] .selection-dialog__actions {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 7px;
-    margin-top: 12px;
+    gap: 6px;
+    width: 100%;
+    margin: auto 0 0;
+    padding-top: 9px;
   }
 
   .partner-dialog[data-guide-page-ready='true'] .partner-dialog__actions > *,
   .selection-dialog[data-guide-page-ready='true'] .selection-dialog__actions > * {
-    min-height: 39px;
-    padding: 8px 8px;
-    font-size: .57rem;
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 38px;
+    margin: 0;
+    padding: 7px;
+    font-size: .55rem;
     text-align: center;
   }
 
@@ -111,29 +130,49 @@ const tadLoConfigs = laosLandmarkPages
   .tad-lo-preview-meta {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 6px;
-    margin-top: 11px;
-    padding-top: 9px;
+    gap: 5px;
+    margin-top: 10px;
+    padding-top: 8px;
     border-top: 1px dashed rgba(49, 85, 69, .25);
   }
 
   .tad-lo-preview-meta span {
     display: grid;
     gap: 2px;
+    min-width: 0;
+    overflow-wrap: anywhere;
     color: #315545;
-    font: 650 .75rem/1.05 'Caveat', 'Segoe Print', cursive;
+    font: 650 .72rem/1.03 'Caveat', 'Segoe Print', cursive;
   }
 
   .tad-lo-preview-meta small {
     color: #a45d3a;
-    font: 700 .4rem/1.15 'DM Sans', sans-serif;
-    letter-spacing: .09em;
+    font: 700 .39rem/1.15 'DM Sans', sans-serif;
+    letter-spacing: .08em;
     text-transform: uppercase;
   }
 
   @media (max-width: 700px) {
+    .partner-dialog[data-guide-page-ready='true'],
+    .selection-dialog[data-guide-page-ready='true'] {
+      width: calc(100vw - 14px);
+      max-height: calc(100svh - 14px);
+      overflow: auto;
+    }
+
     .partner-dialog[data-guide-page-ready='true'] .partner-dialog__shell,
     .selection-dialog[data-guide-page-ready='true'] .selection-dialog__shell {
+      grid-template-columns: 1fr;
+    }
+
+    .partner-dialog[data-guide-page-ready='true'] .partner-dialog__visual img,
+    .selection-dialog[data-guide-page-ready='true'] .selection-dialog__visual img {
+      min-height: 220px;
+      max-height: 260px;
+    }
+
+    .partner-dialog[data-guide-page-ready='true'] .partner-dialog__actions,
+    .selection-dialog[data-guide-page-ready='true'] .selection-dialog__actions {
       grid-template-columns: 1fr;
     }
   }
