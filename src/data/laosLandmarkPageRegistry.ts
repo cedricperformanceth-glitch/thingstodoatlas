@@ -6,6 +6,7 @@ import { thakhekLandmarks } from './thakhekLandmarks';
 import { vangViengLandmarks } from './vangViengLandmarks';
 import { tadLoExplorePageLandmarks } from './tadLoExploreLandmarks';
 import { laosLandmarkGuides, type LandmarkVisitGuide } from './laosLandmarkGuides';
+import { khonePhaphengLandmarkGuide } from './khonePhaphengLandmarkGuide';
 
 export type LaosLandmarkPageEntry = {
   slug: string;
@@ -74,7 +75,9 @@ const page = (
   route: `/laos/${citySlug}/things-to-do/${landmark.slug}`,
   sourceRoute: `/laos/${citySlug}`,
   landmark,
-  guide: laosLandmarkGuides[landmark.slug] || buildFallbackGuide(landmark, fieldNote),
+  guide: landmark.slug === 'khone-phapheng-falls'
+    ? khonePhaphengLandmarkGuide
+    : laosLandmarkGuides[landmark.slug] || buildFallbackGuide(landmark, fieldNote),
   editorialAngle,
   fieldNote,
   relatedSlugs
@@ -104,8 +107,8 @@ export const laosLandmarkPages: LaosLandmarkPageEntry[] = [
     ['tad-lo-waterfall', 'cooking-class-nyay', 'bolaven-plateau', 'pha-pa-tou']),
 
   page(requireCityLandmark(donDetLandmarks, 'khone-phapheng-falls'), 'don-det', 'Don Det',
-    'Khone Phapheng is about scale. The river does not need a long activity list; it needs enough time to move between viewpoints and understand how violently the Mekong changes here.',
-    'Give the river space. This stop is about scale, sound and distance.',
+    'Khone Phapheng is the breaking point of the Mekong: a vast multi-channel cataract whose scale shaped the ecology of Si Phan Don, blocked continuous navigation and eventually forced the French railway bypass across Don Khon and Don Det.',
+    'Give the river space. Read the waterfall, the islands and the old railway as one connected Mekong story.',
     ['don-khon-railway-bridge', 'cambodia-from-don-det', 'wat-phou', 'bolaven-plateau']),
   page(requireCityLandmark(donDetLandmarks, 'don-khon-railway-bridge'), 'don-det', 'Don Det',
     'The bridge matters because it changes the island day: cross it slowly, continue onto Don Khon and let the old railway traces connect the history with the bicycle route.',
