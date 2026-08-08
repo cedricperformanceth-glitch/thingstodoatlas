@@ -1,0 +1,262 @@
+---
+import type { LandmarkGalleryItem, LandmarkFact } from '../data/laosLandmarks';
+
+interface Props {
+  id: string;
+  slug: string;
+  name: string;
+  region: string;
+  description: string;
+  mapsUrl: string;
+  guideUrl?: string;
+  gallery?: LandmarkGalleryItem[];
+  facts?: LandmarkFact[];
+  duration?: string;
+}
+
+const { id, slug, name, region, description, mapsUrl, guideUrl, gallery = [], facts = [], duration } = Astro.props;
+const photo = gallery.find((item) => item?.src);
+const getFact = (label: string) => facts.find((item) => item.label.toLowerCase() === label.toLowerCase())?.value || '';
+const short = (value: string, fallback: string) => {
+  if (!value) return fallback;
+  const sentence = value.split('.')[0] || value;
+  const clause = sentence.split(',')[0] || sentence;
+  const clean = clause.trim();
+  return clean.length > 40 ? `${clean.slice(0, 37).trim()}…` : clean;
+};
+const time = duration || short(getFact('Duration'), 'See guide');
+const best = short(getFact('Best time'), 'Check conditions');
+const effort = short(getFact('Difficulty'), 'See guide');
+---
+
+<dialog id={id} class="landmark-preview-v2" data-landmark-slug={slug} aria-labelledby={`${id}-title`}>
+  <article class="landmark-preview-v2__card">
+    <button class="landmark-preview-v2__close" type="button" data-close-landmark aria-label={`Close ${name}`}>×</button>
+
+    <div class="landmark-preview-v2__media">
+      <div class="landmark-preview-v2__photo">
+        {photo ? <img src={photo.src} alt={photo.alt || name} width="900" height="675" loading="lazy" decoding="async" /> : <span>Field photo</span>}
+      </div>
+      {photo && (photo.author || photo.sourcePage) && (
+        <p class="landmark-preview-v2__credit">
+          {photo.sourcePage ? <a href={photo.sourcePage} target="_blank" rel="noreferrer">Photo: {photo.author || 'Wikimedia Commons'}</a> : <>Photo: {photo.author}</>}
+          {photo.license && <> · {photo.license}</>}
+        </p>
+      )}
+    </div>
+
+    <div class="landmark-preview-v2__body">
+      <div class="landmark-preview-v2__copy">
+        <p class="landmark-preview-v2__eyebrow">LAOS · QUICK FIELD CARD</p>
+        <h2 id={`${id}-title`}>{name}</h2>
+        <p class="landmark-preview-v2__region">{region}</p>
+        <p class="landmark-preview-v2__description">{description}</p>
+
+        <div class="landmark-preview-v2__meta" aria-label={`${name} quick information`}>
+          <span><small>Time</small>{time}</span>
+          <span><small>Best time</small>{best}</span>
+          <span><small>Effort</small>{effort}</span>
+        </div>
+      </div>
+
+      <div class="landmark-preview-v2__actions">
+        <a href={mapsUrl} target="_blank" rel="noreferrer">Google Maps ↗</a>
+        {guideUrl && <a class="landmark-preview-v2__plan" href={guideUrl} data-landmark-page-link={slug}>Plan my visit</a>}
+        <button type="button" data-add-landmark data-landmark-name={name}>Add to My Trip</button>
+      </div>
+    </div>
+  </article>
+</dialog>
+
+<style>
+  .landmark-preview-v2 {
+    width: min(840px, calc(100vw - 40px));
+    max-width: 840px;
+    max-height: calc(100svh - 40px);
+    margin: auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: auto;
+  }
+
+  .landmark-preview-v2::backdrop {
+    background: rgba(19, 27, 23, .60);
+    backdrop-filter: blur(3px);
+  }
+
+  .landmark-preview-v2__card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    width: 100%;
+    margin: 0;
+    border: 1px solid rgba(49, 85, 69, .22);
+    background: #f4ecd9;
+    box-shadow: 0 24px 65px rgba(18, 24, 21, .32);
+    overflow: hidden;
+  }
+
+  .landmark-preview-v2__close {
+    position: absolute;
+    top: 11px;
+    right: 11px;
+    z-index: 5;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid rgba(49, 85, 69, .28);
+    border-radius: 50%;
+    background: rgba(248, 243, 231, .95);
+    color: #315545;
+    font: 500 1.35rem/1 'DM Sans', sans-serif;
+    cursor: pointer;
+  }
+
+  .landmark-preview-v2__media {
+    align-self: start;
+    padding: 18px 0 18px 18px;
+  }
+
+  .landmark-preview-v2__photo {
+    display: grid;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    place-items: center;
+    padding: 6px;
+    background: #f9f4e9;
+    color: rgba(49, 85, 69, .62);
+    box-shadow: 0 8px 22px rgba(31, 41, 36, .16), 0 0 0 1px rgba(49, 85, 69, .10);
+    overflow: hidden;
+  }
+
+  .landmark-preview-v2__photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .landmark-preview-v2__credit {
+    margin: 7px 6px 0;
+    color: rgba(31, 57, 45, .68);
+    font: 600 .57rem/1.25 'DM Sans', sans-serif;
+  }
+
+  .landmark-preview-v2__credit a { color: inherit; }
+
+  .landmark-preview-v2__body {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    padding: 29px 28px 0;
+    background-color: #f4ecd9;
+    background-image: repeating-linear-gradient(to bottom, transparent 0 31px, rgba(49, 85, 69, .055) 32px, transparent 33px);
+  }
+
+  .landmark-preview-v2__eyebrow {
+    margin: 0 42px 8px 0;
+    color: rgba(49, 85, 69, .62);
+    font: 800 .6rem/1.2 'DM Sans', sans-serif;
+    letter-spacing: .14em;
+  }
+
+  .landmark-preview-v2 h2 {
+    margin: 0;
+    color: #1f392d;
+    font: 600 clamp(3rem, 5vw, 4.2rem)/.88 'Caveat', 'Segoe Print', cursive;
+    letter-spacing: -.025em;
+  }
+
+  .landmark-preview-v2__region {
+    margin: 9px 0 10px;
+    color: #b8653e;
+    font: 650 1.08rem/1.12 'Caveat', 'Segoe Print', cursive;
+  }
+
+  .landmark-preview-v2__description {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    color: #263b32;
+    font: 500 1.08rem/1.35 'Caveat', 'Segoe Print', cursive;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+  }
+
+  .landmark-preview-v2__meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 18px;
+    padding-top: 13px;
+    border-top: 1px dashed rgba(49, 85, 69, .25);
+  }
+
+  .landmark-preview-v2__meta span {
+    min-width: 0;
+    color: #315545;
+    font: 650 .94rem/1.18 'Caveat', 'Segoe Print', cursive;
+  }
+
+  .landmark-preview-v2__meta small {
+    display: block;
+    margin-bottom: 4px;
+    color: #a45d3a;
+    font: 800 .5rem/1.1 'DM Sans', sans-serif;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+  }
+
+  .landmark-preview-v2__actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 22px -28px 0;
+    border-top: 1px solid rgba(49, 85, 69, .22);
+  }
+
+  .landmark-preview-v2__actions > * {
+    display: flex;
+    min-width: 0;
+    min-height: 50px;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 9px 7px;
+    border: 0;
+    border-right: 1px solid rgba(49, 85, 69, .22);
+    background: rgba(248, 243, 231, .58);
+    color: #315545;
+    font: 700 .8rem/1.1 'DM Sans', sans-serif;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .landmark-preview-v2__actions > *:last-child { border-right: 0; }
+  .landmark-preview-v2__actions button { background: #315545; color: #f7f2e6; }
+  .landmark-preview-v2__actions .landmark-preview-v2__plan { background: #f4e2cd; color: #9a5134; }
+
+  @media (max-width: 680px) {
+    .landmark-preview-v2 { width: min(520px, calc(100vw - 28px)); max-height: calc(100svh - 28px); }
+    .landmark-preview-v2__card { grid-template-columns: 1fr; }
+    .landmark-preview-v2__media { padding: 14px 14px 0; }
+    .landmark-preview-v2__photo { aspect-ratio: 16 / 9; }
+    .landmark-preview-v2__body { padding: 19px 20px 0; }
+    .landmark-preview-v2 h2 { font-size: clamp(2.7rem, 12vw, 3.6rem); }
+    .landmark-preview-v2__description { font-size: 1.02rem; -webkit-line-clamp: 3; }
+    .landmark-preview-v2__meta { margin-top: 13px; padding-top: 10px; }
+    .landmark-preview-v2__actions { margin: 16px -20px 0; }
+    .landmark-preview-v2__actions > * { min-height: 46px; padding-inline: 5px; font-size: .7rem; }
+  }
+
+  @media (max-width: 430px) {
+    .landmark-preview-v2 { width: calc(100vw - 24px); }
+    .landmark-preview-v2__media { padding: 12px 12px 0; }
+    .landmark-preview-v2__body { padding: 17px 16px 0; }
+    .landmark-preview-v2__meta { gap: 7px; }
+    .landmark-preview-v2__actions { margin: 14px -16px 0; }
+    .landmark-preview-v2__actions > * { min-height: 44px; padding-inline: 3px; font-size: .64rem; }
+  }
+</style>
