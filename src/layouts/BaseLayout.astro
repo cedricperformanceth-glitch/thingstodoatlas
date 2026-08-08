@@ -20,6 +20,7 @@ import LandmarkPageBridge from '../components/LandmarkPageBridge.astro';
 import TadLoExplorePageBridge from '../components/TadLoExplorePageBridge.astro';
 import LandmarkPageBackHistory from '../components/LandmarkPageBackHistory.astro';
 import LaosEditorialGuideLink from '../components/LaosEditorialGuideLink.astro';
+import ActivityPageBridge from '../components/ActivityPageBridge.astro';
 
 const {
   title,
@@ -30,6 +31,7 @@ const {
 const normalizedPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const isHomepage = normalizedPath === '/';
 const isLaosMap = normalizedPath === '/laos';
+const isTadLo = normalizedPath === '/laos/tad-lo';
 ---
 
 <!doctype html>
@@ -56,6 +58,7 @@ const isLaosMap = normalizedPath === '/laos';
       <VangViengMapActivation />
       <LandmarkPageBridge />
       <TadLoExplorePageBridge />
+      {isTadLo && <ActivityPageBridge />}
       <LandmarkPageBackHistory />
     </div>
 
