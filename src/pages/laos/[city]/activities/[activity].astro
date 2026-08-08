@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import ActivityNotePage from '../../../../components/ActivityNotePage.astro';
+import { laosActivityPages, type ActivityPageEntry } from '../../../../data/laosActivityPageRegistry';
+
+export function getStaticPaths() {
+  return laosActivityPages.map((entry) => ({
+    params: { city: entry.citySlug, activity: entry.slug },
+    props: { entry }
+  }));
+}
+
+interface Props {
+  entry: ActivityPageEntry;
+}
+
+const { entry } = Astro.props;
+const title = entry.slug === 'cooking-class-nyay'
+  ? 'Lao Cooking Class in Tad Lo with Nyay'
+  : `${entry.title} in ${entry.cityName}`;
+const description = entry.slug === 'cooking-class-nyay'
+  ? 'Plan the Lao Cooking Class with Nyay in Tad Lo: half-day format, morning or afternoon session, meal included, walkable access, booking and dietary notes.'
+  : entry.intro;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={`https://thingstodoatlas.com${entry.route}`}
+>
+  <ActivityNotePage entry={entry} />
+</BaseLayout>
