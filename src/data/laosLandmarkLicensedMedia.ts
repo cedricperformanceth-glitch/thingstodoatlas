@@ -152,10 +152,24 @@ export const laosLandmarkLicensedMedia: Record<string, LandmarkGalleryItem[]> = 
   'khone-phapheng-falls': [
     commons(
       'Khone Phapheng Falls, Si Phan Don, Laos, widest waterfall in the world.jpg',
-      'Wide view of Khone Phapheng Falls on the Mekong in southern Laos',
+      'Panoramic dry-season view across the multiple channels of Khone Phapheng Falls on the Mekong',
       'Basile Morin',
       'CC BY-SA 4.0',
       1800
+    ),
+    commons(
+      '20171122 Khone Phapheng Falls 3923 DxO.jpg',
+      'Khone Phapheng Falls spreading across rocky Mekong channels in southern Laos',
+      'Jakub Hałun',
+      'CC BY-SA 4.0',
+      1700
+    ),
+    commons(
+      'Khon Phapheng Falls.jpg',
+      'Closer view of white water and exposed rock at Khone Phapheng Falls',
+      'Rup11',
+      'CC BY-SA 3.0',
+      1600
     )
   ]
 };
