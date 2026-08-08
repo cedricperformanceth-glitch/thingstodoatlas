@@ -1,0 +1,160 @@
+---
+import type { EditorialGuidePageMeta } from '../data/editorialGuidePageRegistry';
+import '../styles/editorial-guide-page.css';
+
+interface Props {
+  entry: EditorialGuidePageMeta;
+}
+
+const { entry } = Astro.props;
+const { guide } = entry;
+const heroSections = guide.sections.slice(0, 4);
+const adIndexes = guide.sections.length >= 7 ? [1, 4, 6] : guide.sections.length >= 5 ? [1, 3] : [1];
+const isCountry = entry.variant === 'country';
+const readLabel = isCountry ? 'READ THE COUNTRY' : 'READ THE CITY';
+const closingTitle = isCountry ? 'Choose your next chapter' : `Start exploring ${guide.destination}`;
+const closingText = isCountry
+  ? 'Use the country guide to understand the rhythm, then open a city chapter and build the route from there.'
+  : `Keep these notes as context, then return to ${guide.destination} for landmarks, addresses and the practical side of the stay.`;
+
+const countryLinks = [
+  { href: '/laos/pakse', label: 'Pakse', note: 'Southern base · Bolaven · Champasak' },
+  { href: '/laos/thakhek', label: 'Thakhek', note: 'Khammouane · caves · loop roads' },
+  { href: '/laos/vang-vieng', label: 'Vang Vieng', note: 'Nam Song · karst · viewpoints' },
+  { href: '/laos/vientiane', label: 'Vientiane', note: 'Capital · Mekong · arrival' },
+  { href: '/laos/tad-lo', label: 'Tad Lo', note: 'Waterfalls · village · slower days' },
+  { href: '/laos/don-det', label: 'Don Det', note: 'Si Phan Don · Mekong islands' }
+];
+
+const cityLinks = [
+  { href: entry.sourceRoute, label: `Explore ${guide.destination}`, note: 'Landmarks, places and practical addresses' },
+  { href: '/laos', label: 'Back to the Laos map', note: 'Choose another city or landmark' },
+  { href: '/laos/field-guide', label: 'Read the Laos field guide', note: 'Country rhythm, transport and route planning' }
+];
+
+const nextLinks = isCountry ? countryLinks : cityLinks;
+---
+
+<main class:list={['editorial-page', `editorial-page--${entry.variant}`]}>
+  <nav class="editorial-page__return" aria-label={`${guide.destination} editorial guide navigation`}>
+    <a href={entry.sourceRoute}>← {entry.backLabel}</a>
+    {!isCountry && <a href="/laos/field-guide">Laos field guide</a>}
+  </nav>
+
+  <article class="editorial-page__article" aria-labelledby={`editorial-page-title-${entry.slug}`}>
+    <nav class="editorial-page__breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Atlas</a><span aria-hidden="true">/</span>
+      {isCountry ? (
+        <span aria-current="page">Laos field guide</span>
+      ) : (
+        <><a href="/laos">Laos</a><span aria-hidden="true">/</span><a href={entry.sourceRoute}>{guide.destination}</a><span aria-hidden="true">/</span><span aria-current="page">City notes</span></>
+      )}
+    </nav>
+
+    <header class="editorial-page__hero">
+      <div class="editorial-page__hero-copy">
+        <p class="editorial-page__kicker">{guide.typeLabel}</p>
+        <h1 id={`editorial-page-title-${entry.slug}`}>{guide.destination}</h1>
+        <p class="editorial-page__context">{entry.contextLine}</p>
+        <p class="editorial-page__deck">{guide.subtitle}</p>
+
+        <div class="editorial-page__read" aria-label={`${guide.destination} guide chapters`}>
+          <span>{readLabel}</span>
+          <ol>
+            {heroSections.map((section, index) => (
+              <li><b>{String(index + 1).padStart(2, '0')}</b>{section.title}</li>
+            ))}
+          </ol>
+        </div>
+
+        <div class="editorial-page__stamp" aria-label={`${guide.destination} field guide`}>
+          <span>{isCountry ? 'COUNTRY FIELD GUIDE' : 'CITY NOTES'}</span>
+          <strong>Before you begin</strong>
+          <small>{guide.destination} · Laos</small>
+        </div>
+      </div>
+
+      <figure class="editorial-page__hero-visual">
+        <img src={entry.heroSrc} alt={entry.heroAlt} width="1500" height="1100" fetchpriority="high" />
+        <figcaption>{guide.intro}</figcaption>
+      </figure>
+    </header>
+
+    <section class="editorial-page__quick" aria-label={`${guide.destination} guide overview`}>
+      <div><span>Chapters</span><strong>{guide.sections.length} field notes</strong><small>A complete editorial overview, not a checklist.</small></div>
+      <div><span>Use it for</span><strong>{entry.focusLabel}</strong><small>Read before building fixed connections.</small></div>
+      <div><span>Scope</span><strong>{entry.regionLabel}</strong><small>{isCountry ? 'Change the planning method with the region.' : 'Use the city as the base, then read the road outward.'}</small></div>
+      <div><span>Edition</span><strong>{guide.edition || 'Living guide'}</strong><small>Time-sensitive details should still be reconfirmed.</small></div>
+    </section>
+
+    <div class="editorial-page__chapters">
+      {guide.sections.map((section, index) => {
+        const hasSupport = Boolean((section.facts && section.facts.length) || section.note);
+        return (
+          <>
+            <section class:list={[
+              'editorial-page__chapter',
+              { 'editorial-page__chapter--reverse': index % 2 === 1 && hasSupport },
+              { 'editorial-page__chapter--solo': !hasSupport }
+            ]}>
+              <div class="editorial-page__chapter-copy">
+                <p class="editorial-page__section-label">{section.eyebrow || `${String(index + 1).padStart(2, '0')} · FIELD NOTE`}</p>
+                <h2>{section.title}</h2>
+                <div class="editorial-page__prose">
+                  {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+                </div>
+              </div>
+
+              {hasSupport && (
+                <aside class="editorial-page__chapter-side">
+                  {section.facts && section.facts.length > 0 && (
+                    <>
+                      <h3>{isCountry ? 'Keep close' : 'City notes'}</h3>
+                      <dl class="editorial-page__facts">
+                        {section.facts.map((fact) => (
+                          <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>
+                        ))}
+                      </dl>
+                    </>
+                  )}
+                  {section.note && (
+                    <div class="editorial-page__note">
+                      <span>{section.note.label || 'Field note'}</span>
+                      <p>{section.note.text}</p>
+                    </div>
+                  )}
+                </aside>
+              )}
+            </section>
+
+            {adIndexes.includes(index) && (
+              <div class="editorial-page__ad" data-ad-slot={`editorial-${entry.slug}-${index + 1}`} aria-label="Advertisement placeholder">
+                <span>ADVERTISEMENT</span>
+              </div>
+            )}
+          </>
+        );
+      })}
+    </div>
+
+    {guide.warning && <p class="editorial-page__warning">{guide.warning}</p>}
+
+    {guide.links && guide.links.length > 0 && (
+      <details class="editorial-page__sources">
+        <summary>Useful official links</summary>
+        <ul>{guide.links.map((link) => <li><a href={link.href} target="_blank" rel="noreferrer">{link.label} ↗</a></li>)}</ul>
+      </details>
+    )}
+
+    <section class="editorial-page__closing">
+      <p class="editorial-page__section-label">{isCountry ? 'OPEN THE ATLAS' : 'BACK TO THE CITY'}</p>
+      <h2>{closingTitle}</h2>
+      <p>{closingText}</p>
+      <div class="editorial-page__next">
+        {nextLinks.map((link) => (
+          <a href={link.href}><strong>{link.label}</strong><small>{link.note}</small></a>
+        ))}
+      </div>
+    </section>
+  </article>
+</main>
