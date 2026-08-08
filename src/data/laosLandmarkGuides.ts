@@ -119,23 +119,23 @@ export const laosLandmarkGuides: Record<string, LandmarkVisitGuide> = {
     sections: [
       {
         label: '01 · ROUTE',
-        title: 'How to get there',
+        title: 'The long road from Thakhek',
         text: 'From Thakhek, follow Highway 12 east for about 130 km toward the Vietnamese border. At Nongchan, turn right: the paved road ends here and the dirt road begins. Continue toward Ban Xoang and then Bualapha. Between these villages you reach the Xe Bang Fai River; cross by ferry, with a motorbike crossing reported at around 15,000 kip. Once in Bualapha, continue toward Ban Natoy, then Ban Gnavet and Ban Kouankaphoung. From Ban Natoy onward, the smaller villages and tracks may be easier to follow with an offline map such as Maps.me. At Ban Kouankaphoung the road forks: take the right-hand track and continue to the end of the road for the cave entrance. The final roads are remote and can be rough, so leave enough daylight, arrange a local guide and reconfirm the route, ferry and access conditions before departure.',
         note: 'Route: Thakhek → Highway 12 → Nongchan → Ban Xoang → Xe Bang Fai ferry → Bualapha → Ban Natoy → Ban Gnavet → Ban Kouankaphoung → right-hand track → cave entrance.'
       },
       {
         label: '02 · MONEY',
-        title: 'What the budget feels like',
+        title: 'What the expedition costs',
         text: 'Recent visitor reports put the entrance at around 50,000 kip per person, with motorbike parking around 10,000 kip. A small local boat has recently been reported at around 150,000 kip, while larger boats may cost more depending on the group. The boat is the part of the visit worth making room for: once you leave the riverbank and move into the darkness, the scale of Xe Bang Fai really begins to make sense. Prices and boat capacity can change between seasons, so treat these figures as a useful reference and confirm the current rate at the park office when you arrive.'
       },
       {
         label: '03 · TIME',
-        title: 'How long to keep',
+        title: 'Day trip or overnight?',
         text: 'The cave journey itself may take one to two hours, but the remote approach turns it into a full-day or multi-day plan. Keep margin for road conditions, the walk to the river and local coordination. Do not attach a fixed evening arrival elsewhere to the same day.'
       },
       {
         label: '04 · SAFETY',
-        title: 'How to approach it',
+        title: 'Let the river and season decide',
         text: 'Confirm river levels and boat access locally. Wear quick-dry clothing and shoes with grip, use the supplied life jacket and carry a strong headlamp. Do not enter the cave or surrounding forest route without a guide.'
       }
     ],
