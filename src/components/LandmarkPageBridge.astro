@@ -17,73 +17,73 @@ const bridgeConfig = laosLandmarkPages.map((entry) => {
 <script id="atlas-landmark-page-config" type="application/json" set:html={JSON.stringify(bridgeConfig)}></script>
 
 <style is:global>
-  /*
-   * Compact landmark preview.
-   * This deliberately owns the complete geometry of the preview instead of
-   * partially overriding the old three-column field-card modal.
-   */
+  /* One small preview component for every landmark. */
   .landmark-modal[data-guide-page-ready='true'] {
-    box-sizing: border-box;
-    width: min(820px, calc(100vw - 48px));
+    box-sizing: border-box !important;
+    width: min(640px, calc(100vw - 40px)) !important;
     height: auto !important;
-    max-height: min(470px, calc(100svh - 48px));
-    padding: 0;
-    overflow: hidden;
+    max-height: min(420px, calc(100svh - 40px)) !important;
+    margin: auto !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: #f4ecd9 !important;
+    overflow: hidden !important;
   }
 
   .landmark-modal[data-guide-page-ready='true'] .landmark-modal__grid {
-    display: grid;
-    grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
-    align-items: stretch;
+    display: grid !important;
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) !important;
+    align-items: stretch !important;
     height: auto !important;
-    min-height: 0;
+    min-height: 0 !important;
+    background: #f4ecd9 !important;
   }
 
   .landmark-modal[data-guide-page-ready='true'] .landmark-modal__story,
   .landmark-modal[data-guide-page-ready='true'] .landmark-modal__visual {
-    box-sizing: border-box;
-    min-width: 0;
-    min-height: 0;
-    align-self: stretch;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
   }
 
   .landmark-modal[data-guide-page-ready='true'] .landmark-modal__story {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 24px 24px 20px 31px;
-    overflow: hidden;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__story h2 {
-    margin-top: 0;
-    font-size: clamp(2.75rem, 4.4vw, 3.8rem);
-    line-height: .84;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    padding: 22px 20px 18px 28px !important;
+    overflow: hidden !important;
   }
 
   .landmark-modal[data-guide-page-ready='true'] .landmark-modal__eyebrow {
-    margin-bottom: 8px;
+    margin: 0 0 6px !important;
+    font-size: .48rem !important;
+  }
+
+  .landmark-modal[data-guide-page-ready='true'] .landmark-modal__story h2 {
+    margin: 0 !important;
+    font-size: clamp(2.35rem, 4vw, 3.25rem) !important;
+    line-height: .86 !important;
   }
 
   .landmark-modal[data-guide-page-ready='true'] .landmark-modal__region {
-    margin-top: 7px !important;
-    font-size: .98rem !important;
+    margin: 7px 0 0 !important;
+    font-size: .88rem !important;
+    line-height: 1.05 !important;
   }
 
   .landmark-modal[data-guide-page-ready='true'] .landmark-story__underline {
-    width: min(170px, 72%);
-    margin: 3px 0 6px;
+    width: 135px !important;
+    margin: 3px 0 5px !important;
   }
 
   .landmark-modal[data-guide-page-ready='true'] .landmark-story__description {
-    display: -webkit-box;
-    max-width: 25rem;
-    margin: 0;
-    overflow: hidden;
-    font-size: .9rem;
-    line-height: 1.24;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 5;
+    display: -webkit-box !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    font-size: .82rem !important;
+    line-height: 1.22 !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 3 !important;
   }
 
   .landmark-modal[data-guide-page-ready='true'] .landmark-story__annotations,
@@ -98,162 +98,163 @@ const bridgeConfig = laosLandmarkPages.map((entry) => {
     display: none !important;
   }
 
+  .landmark-preview-meta {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 4px !important;
+    margin-top: 8px !important;
+    padding-top: 7px !important;
+    border-top: 1px dashed rgba(49, 85, 69, .24) !important;
+  }
+
+  .landmark-preview-meta span {
+    min-width: 0 !important;
+    color: #315545 !important;
+    font: 650 .62rem/1.05 'Caveat', 'Segoe Print', cursive !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .landmark-preview-meta small {
+    display: block !important;
+    margin-bottom: 1px !important;
+    color: #a45d3a !important;
+    font: 700 .34rem/1.15 'DM Sans', sans-serif !important;
+    letter-spacing: .06em !important;
+    text-transform: uppercase !important;
+  }
+
   .landmark-modal[data-guide-page-ready='true'] .landmark-modal__visual {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 15px 18px 12px;
-    overflow: hidden;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 13px 15px 11px !important;
+    background: #eee7d7 !important;
+    overflow: hidden !important;
   }
 
   .landmark-modal[data-guide-page-ready='true'] .landmark-visual__meta {
-    flex: 0 0 auto;
-    margin-bottom: 5px;
+    margin: 0 0 4px !important;
+    font-size: .45rem !important;
   }
 
-  .landmark-modal[data-guide-page-ready='true'] .landmark-gallery {
-    flex: 0 0 auto;
-    min-width: 0;
+  .landmark-modal[data-guide-page-ready='true'] .landmark-gallery,
+  .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__stage {
+    min-width: 0 !important;
   }
 
   .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__stage {
-    min-height: 184px;
-    padding: 5px;
+    min-height: 150px !important;
+    height: 150px !important;
+    padding: 4px !important;
   }
 
   .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__stage > img {
-    height: 184px;
+    width: 100% !important;
+    height: 142px !important;
+    object-fit: cover !important;
   }
 
   .landmark-modal[data-guide-page-ready='true'] .landmark-modal__placeholder {
-    min-height: 184px;
-    font-size: 1.35rem;
+    min-height: 150px !important;
+    height: 150px !important;
+    font-size: 1.15rem !important;
   }
 
   .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__credit {
-    min-height: 11px;
-    margin: 4px 0 0;
-    overflow: hidden;
-    font-size: .5rem;
-    line-height: 1.15;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    min-height: 0 !important;
+    margin: 3px 0 0 !important;
+    overflow: hidden !important;
+    font-size: .46rem !important;
+    line-height: 1.1 !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
   }
 
   .landmark-modal[data-guide-page-ready='true'] .landmark-modal__actions {
-    display: grid;
+    display: grid !important;
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 6px;
-    width: 100%;
-    margin: auto 0 0;
-    padding-top: 8px;
+    gap: 5px !important;
+    width: 100% !important;
+    margin: auto 0 0 !important;
+    padding: 7px 0 0 !important;
   }
 
   .landmark-modal[data-guide-page-ready='true'] .landmark-action {
-    box-sizing: border-box;
-    min-width: 0;
-    min-height: 37px;
-    padding: 6px 6px;
-    overflow: hidden;
-    font-size: .78rem;
-    line-height: 1.05;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    min-height: 34px !important;
+    padding: 5px !important;
+    overflow: hidden !important;
+    font-size: .69rem !important;
+    line-height: 1 !important;
   }
 
-  .landmark-preview-meta,
-  .place-landmark-preview-meta {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 5px;
-    margin-top: 10px;
-    padding-top: 8px;
-    border-top: 1px dashed rgba(49, 85, 69, .28);
-  }
-
-  .landmark-preview-meta span,
-  .place-landmark-preview-meta span {
-    display: grid;
-    gap: 2px;
-    min-width: 0;
-    overflow-wrap: anywhere;
-    color: #315545;
-    font: 650 .72rem/1.03 'Caveat', 'Segoe Print', cursive;
-  }
-
-  .landmark-preview-meta small,
-  .place-landmark-preview-meta small {
-    color: #a45d3a;
-    font: 700 .39rem/1.15 'DM Sans', sans-serif;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-  }
-
-  .landmark-modal[data-guide-page-ready='true'] [data-landmark-page-link],
-  .place-dialog[data-guide-page-ready='true'] [data-landmark-page-link] {
+  .landmark-modal[data-guide-page-ready='true'] [data-landmark-page-link] {
     border: 1px solid #b8653e !important;
     background: #f4e7d2 !important;
     color: #9a5134 !important;
-    font-weight: 700;
-    box-shadow: 2px 3px 0 rgba(184, 101, 62, .14);
+    font-weight: 700 !important;
+    box-shadow: 2px 3px 0 rgba(184, 101, 62, .14) !important;
   }
 
-  /* Category Things-to-do cards use PlaceCard dialogs. Keep them visually aligned. */
+  /* Things-to-do category cards use a different dialog component. */
   .place-dialog[data-guide-page-ready='true'] {
-    box-sizing: border-box;
-    width: min(820px, calc(100vw - 48px));
+    box-sizing: border-box !important;
+    width: min(640px, calc(100vw - 40px)) !important;
     height: auto !important;
-    max-height: min(470px, calc(100svh - 48px));
-    overflow: hidden;
+    max-height: min(420px, calc(100svh - 40px)) !important;
+    margin: auto !important;
+    padding: 0 !important;
+    overflow: hidden !important;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__shell {
-    display: grid;
-    grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr);
-    align-items: stretch;
+    display: grid !important;
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) !important;
+    align-items: stretch !important;
     height: auto !important;
-    min-height: 0;
+    min-height: 0 !important;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__visual,
   .place-dialog[data-guide-page-ready='true'] .place-dialog__content {
-    box-sizing: border-box;
-    min-width: 0;
-    min-height: 0;
-    align-self: stretch;
+    min-width: 0 !important;
+    min-height: 0 !important;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__visual {
-    max-height: none;
-    overflow: hidden;
+    max-height: none !important;
+    overflow: hidden !important;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__visual img {
-    width: 100%;
-    height: 100%;
-    min-height: 300px;
-    object-fit: cover;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 260px !important;
+    object-fit: cover !important;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__content {
-    display: flex;
-    flex-direction: column;
-    padding: 28px 28px 20px;
-    overflow: hidden;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 24px 24px 17px !important;
+    overflow: hidden !important;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__content h2 {
-    margin-bottom: 9px;
-    font-size: clamp(2.45rem, 4vw, 3.5rem);
-    line-height: .95;
+    margin-bottom: 7px !important;
+    font-size: clamp(2.15rem, 4vw, 3rem) !important;
+    line-height: .95 !important;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__description {
-    display: -webkit-box;
-    margin-bottom: 8px;
-    overflow: hidden;
-    font-size: .94rem;
-    line-height: 1.37;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 5;
+    display: -webkit-box !important;
+    margin-bottom: 6px !important;
+    overflow: hidden !important;
+    font-size: .82rem !important;
+    line-height: 1.3 !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 3 !important;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__recommend,
@@ -264,23 +265,52 @@ const bridgeConfig = laosLandmarkPages.map((entry) => {
     display: none !important;
   }
 
+  .place-landmark-preview-meta {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 4px !important;
+    margin-top: 7px !important;
+    padding-top: 7px !important;
+    border-top: 1px dashed rgba(49, 85, 69, .24) !important;
+  }
+
+  .place-landmark-preview-meta span {
+    min-width: 0 !important;
+    color: #315545 !important;
+    font: 650 .62rem/1.05 'Caveat', 'Segoe Print', cursive !important;
+  }
+
+  .place-landmark-preview-meta small {
+    display: block !important;
+    color: #a45d3a !important;
+    font: 700 .34rem/1.15 'DM Sans', sans-serif !important;
+    text-transform: uppercase !important;
+  }
+
   .place-dialog[data-guide-page-ready='true'] .place-dialog__actions {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 6px;
-    width: 100%;
-    margin: auto 0 0;
-    padding-top: 9px;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+    width: 100% !important;
+    margin: auto 0 0 !important;
+    padding: 7px 0 0 !important;
   }
 
   .place-dialog[data-guide-page-ready='true'] .place-dialog__actions > * {
-    box-sizing: border-box;
-    min-width: 0;
-    min-height: 38px;
-    margin: 0;
-    padding: 7px;
-    font-size: .55rem;
-    text-align: center;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    min-height: 34px !important;
+    margin: 0 !important;
+    padding: 5px !important;
+    font-size: .5rem !important;
+    text-align: center !important;
+  }
+
+  .place-dialog[data-guide-page-ready='true'] [data-landmark-page-link] {
+    border: 1px solid #b8653e !important;
+    background: #f4e7d2 !important;
+    color: #9a5134 !important;
+    font-weight: 700 !important;
   }
 
   .landmark-return-target {
@@ -291,52 +321,76 @@ const bridgeConfig = laosLandmarkPages.map((entry) => {
     box-shadow: 0 0 0 12px rgba(217, 119, 69, .12), 0 16px 35px rgba(31, 57, 45, .16) !important;
   }
 
-  @media (max-width: 850px) {
-    .landmark-modal[data-guide-page-ready='true'],
-    .place-dialog[data-guide-page-ready='true'] {
-      width: min(730px, calc(100vw - 28px));
-      max-height: min(490px, calc(100svh - 28px));
-    }
-
-    .landmark-modal[data-guide-page-ready='true'] .landmark-modal__grid,
-    .place-dialog[data-guide-page-ready='true'] .place-dialog__shell {
-      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
-    }
-  }
-
   @media (max-width: 650px) {
     .landmark-modal[data-guide-page-ready='true'],
     .place-dialog[data-guide-page-ready='true'] {
-      width: calc(100vw - 14px);
-      max-height: calc(100svh - 14px);
-      overflow: auto;
+      width: min(360px, calc(100vw - 32px)) !important;
+      max-height: min(460px, calc(100svh - 32px)) !important;
+      margin: auto !important;
+      overflow: auto !important;
     }
 
     .landmark-modal[data-guide-page-ready='true'] .landmark-modal__grid,
     .place-dialog[data-guide-page-ready='true'] .place-dialog__shell {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr !important;
     }
 
     .landmark-modal[data-guide-page-ready='true'] .landmark-modal__story {
-      padding: 28px 25px 19px;
+      padding: 22px 22px 13px !important;
+    }
+
+    .landmark-modal[data-guide-page-ready='true'] .landmark-modal__story h2 {
+      font-size: 2.55rem !important;
     }
 
     .landmark-modal[data-guide-page-ready='true'] .landmark-story__description {
-      -webkit-line-clamp: 4;
+      -webkit-line-clamp: 2 !important;
+    }
+
+    .landmark-preview-meta {
+      margin-top: 6px !important;
+      padding-top: 5px !important;
     }
 
     .landmark-modal[data-guide-page-ready='true'] .landmark-modal__visual {
-      padding: 12px 16px 15px;
+      padding: 10px 13px 12px !important;
+    }
+
+    .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__stage,
+    .landmark-modal[data-guide-page-ready='true'] .landmark-modal__placeholder {
+      min-height: 112px !important;
+      height: 112px !important;
+    }
+
+    .landmark-modal[data-guide-page-ready='true'] .landmark-gallery__stage > img {
+      height: 104px !important;
     }
 
     .landmark-modal[data-guide-page-ready='true'] .landmark-modal__actions,
     .place-dialog[data-guide-page-ready='true'] .place-dialog__actions {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    .landmark-modal[data-guide-page-ready='true'] .landmark-action {
+      min-height: 32px !important;
+      font-size: .58rem !important;
+    }
+
+    .place-dialog[data-guide-page-ready='true'] .place-dialog__visual {
+      max-height: 120px !important;
     }
 
     .place-dialog[data-guide-page-ready='true'] .place-dialog__visual img {
-      min-height: 220px;
-      max-height: 260px;
+      height: 120px !important;
+      min-height: 120px !important;
+    }
+
+    .place-dialog[data-guide-page-ready='true'] .place-dialog__content {
+      padding: 18px 20px 14px !important;
+    }
+
+    .place-dialog[data-guide-page-ready='true'] .place-dialog__content h2 {
+      font-size: 2.3rem !important;
     }
   }
 </style>
