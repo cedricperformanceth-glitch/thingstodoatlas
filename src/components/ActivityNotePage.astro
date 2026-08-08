@@ -1,0 +1,152 @@
+---
+import type { ActivityPageEntry } from '../data/laosActivityPageRegistry';
+import '../styles/activity-note-page.css';
+
+interface Props {
+  entry: ActivityPageEntry;
+}
+
+const { entry } = Astro.props;
+const tripPlace = JSON.stringify({
+  id: entry.slug,
+  name: entry.title,
+  city: entry.cityName,
+  group: 'things-to-do',
+  category: 'Activity',
+  address: `${entry.cityName} · ${entry.countryName}`,
+  url: entry.route
+});
+---
+
+<main class="activity-note">
+  <nav class="activity-note__return" aria-label={`${entry.title} navigation`}>
+    <a href={entry.sourceRoute}>← Back to {entry.cityName}</a>
+    <a href={`${entry.sourceRoute}/field-guide`}>{entry.cityName} editorial guide</a>
+  </nav>
+
+  <article class="activity-note__article" aria-labelledby="activity-note-title">
+    <nav class="activity-note__breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Atlas</a><span aria-hidden="true">/</span>
+      <a href="/laos">Laos</a><span aria-hidden="true">/</span>
+      <a href={entry.sourceRoute}>{entry.cityName}</a><span aria-hidden="true">/</span>
+      <span aria-current="page">Activity</span>
+    </nav>
+
+    <header class="activity-note__hero">
+      <div class="activity-note__hero-copy">
+        <p class="activity-note__eyebrow">{entry.eyebrow}</p>
+        <h1 id="activity-note-title">{entry.title}</h1>
+        <p class="activity-note__context">{entry.contextLine}</p>
+        <p class="activity-note__intro">{entry.intro}</p>
+
+        <div class="activity-note__partner-stamp">
+          <span>LOCAL PARTNER</span>
+          <strong>{entry.sourceLabel}</strong>
+          <small>Practical details checked from the local activity guide</small>
+        </div>
+      </div>
+
+      <figure class="activity-note__photo">
+        <img src={entry.image} alt={entry.imageAlt} width="1050" height="850" fetchpriority="high" />
+        <figcaption>prepare it · understand it · share it</figcaption>
+      </figure>
+    </header>
+
+    <section class="activity-note__facts" aria-label={`${entry.title} quick facts`}>
+      {entry.facts.map((fact) => (
+        <div><span>{fact.label}</span><strong>{fact.value}</strong></div>
+      ))}
+    </section>
+
+    <section class="activity-note__session">
+      <div class="activity-note__copy">
+        <p class="activity-note__section-label">HOW IT FITS THE DAY</p>
+        <h2>{entry.sessionTitle}</h2>
+        {entry.sessionParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+
+      <aside class="activity-note__schedule" aria-label="Cooking class session options">
+        <span class="activity-note__schedule-tape" aria-hidden="true"></span>
+        <p>Choose your rhythm</p>
+        <div><b>Morning</b><span>cook together</span><strong>→ lunch</strong></div>
+        <div><b>Afternoon</b><span>cook together</span><strong>→ dinner</strong></div>
+        <small>The exact starting time is arranged locally.</small>
+      </aside>
+    </section>
+
+    {entry.adSlots >= 1 && (
+      <div class="activity-note__ad" data-ad-slot={`activity-${entry.slug}-1`} aria-label="Advertisement placeholder">
+        <span>ADVERTISEMENT</span>
+      </div>
+    )}
+
+    <section class="activity-note__booking">
+      <div class="activity-note__copy">
+        <p class="activity-note__section-label">BEFORE YOU BOOK</p>
+        <h2>{entry.bookingTitle}</h2>
+        {entry.bookingParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+        <aside class="activity-note__note">
+          <span>Field note</span>
+          <p>{entry.note}</p>
+        </aside>
+      </div>
+
+      <dl class="activity-note__booking-facts">
+        {entry.bookingFacts.map((fact) => (
+          <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>
+        ))}
+      </dl>
+    </section>
+
+    {entry.adSlots >= 2 && (
+      <div class="activity-note__ad" data-ad-slot={`activity-${entry.slug}-2`} aria-label="Advertisement placeholder">
+        <span>ADVERTISEMENT</span>
+      </div>
+    )}
+
+    <section class="activity-note__faq" aria-labelledby="activity-note-faq-title">
+      <p class="activity-note__section-label">QUICK ANSWERS</p>
+      <h2 id="activity-note-faq-title">Before you walk over</h2>
+      <div class="activity-note__faq-grid">
+        {entry.faq.map((item) => (
+          <details>
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    {entry.adSlots >= 3 && (
+      <div class="activity-note__ad" data-ad-slot={`activity-${entry.slug}-3`} aria-label="Advertisement placeholder">
+        <span>ADVERTISEMENT</span>
+      </div>
+    )}
+
+    <aside class="activity-note__source">
+      <div>
+        <span>LOCAL SOURCE</span>
+        <strong>{entry.sourceLabel}</strong>
+        <p>This compact note follows the information published by our local partner. Details marked for confirmation are intentionally left unguessed.</p>
+      </div>
+      <a href={entry.sourceUrl} target="_blank" rel="noreferrer">Read the local activity guide ↗</a>
+    </aside>
+
+    {entry.adSlots >= 4 && (
+      <div class="activity-note__ad" data-ad-slot={`activity-${entry.slug}-4`} aria-label="Advertisement placeholder">
+        <span>ADVERTISEMENT</span>
+      </div>
+    )}
+
+    <section class="activity-note__closing">
+      <p class="activity-note__section-label">KEEP TAD LO SIMPLE</p>
+      <h2>One activity, then leave room for the village.</h2>
+      <p>The class fits naturally into a slow Tad Lo day. Save it to the trip, then keep the rest of the day flexible.</p>
+      <div class="activity-note__actions">
+        <button type="button" data-trip-add data-trip-id={entry.slug} data-trip-place={tripPlace} aria-pressed="false">Add to My Trip</button>
+        <a href={entry.sourceRoute}>Explore Tad Lo</a>
+        <a href={`${entry.sourceRoute}/field-guide`}>Read the Tad Lo editorial guide</a>
+      </div>
+    </section>
+  </article>
+</main>
