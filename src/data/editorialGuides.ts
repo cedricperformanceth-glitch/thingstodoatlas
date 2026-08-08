@@ -41,152 +41,155 @@ export const laosEditorialGuide: EditorialGuideData = {
   slug: 'laos-field-guide',
   destination: 'Laos',
   typeLabel: 'Country field guide',
-  title: 'Laos, before you begin',
-  subtitle: 'A practical introduction to arriving, moving around and building a route that fits the country.',
+  title: 'Laos, before you draw the route',
+  subtitle: 'A country field guide to the regions, heritage, transport and everyday rhythms that shape a journey through Laos.',
   intro:
-    'Laos is easier to enjoy when you stop treating it as a list of attractions. Distances take time, plans stay flexible and the best part of a route is often what happens between the famous stops.',
+    'Laos is easier to understand as a sequence of very different travel chapters than as one straight itinerary. The railway changes the north, limestone and caves define much of the centre, and the south opens toward coffee country, Khmer heritage and the broad Mekong.',
   triggerEyebrow: 'Before you choose a place',
   triggerTitle: 'Read the Laos field guide',
-  edition: 'Starter edition · August 2026',
+  edition: 'Researched edition · August 2026',
   warning:
-    'Entry rules, transport schedules and payment systems can change. Use this guide to understand how the country works, then confirm time-sensitive details before travelling.',
+    'Visa rules, transport schedules, border procedures, prices and local access can change quickly. Use this guide for context and planning, then confirm any time-sensitive detail with the relevant official source before travelling.',
   sections: [
     {
-      id: 'why-laos',
-      eyebrow: '01 · The rhythm',
-      title: 'Come for the space between places',
+      id: 'regions',
+      eyebrow: '01 · Read the country',
+      title: 'Plan Laos by regions, not by straight-line distance',
       paragraphs: [
-        'Laos is not built around speed. It works best for travellers who are comfortable with quieter towns, long road days, local food, changing plans and a little uncertainty.',
-        'The north brings mountain routes, old towns and the railway corridor. Central Laos is shaped by limestone, caves and motorbike loops. The south opens toward the Bolaven Plateau, Khmer heritage and the Mekong islands.'
+        'The north is increasingly organised around the Vientiane–Vang Vieng–Luang Prabang–Boten railway corridor, with mountain roads and river journeys branching away from it. Central Laos slows back down around limestone country, the Thakhek Loop, caves and long road stages. South of Pakse, the rhythm changes again toward the Bolaven Plateau, Champasak and Si Phan Don.',
+        'That difference matters more than the size of the country on a map. A short northern rail segment can take less time than a modest-looking road day in Khammouane or the south. Build each region with the transport that actually exists there.'
+      ],
+      facts: [
+        { label: 'North', value: 'Railway towns, mountain roads, river journeys and the historic city of Luang Prabang.' },
+        { label: 'Central Laos', value: 'Karst landscapes, caves, motorbike loops and long rural road stages.' },
+        { label: 'South', value: 'Pakse, coffee country, waterfalls, Vat Phou and the Mekong islands.' },
+        { label: 'Planning rule', value: 'Change the method with the region instead of forcing one transport style across the whole country.' }
+      ]
+    },
+    {
+      id: 'heritage',
+      eyebrow: '02 · UNESCO and living heritage',
+      title: 'Four World Heritage properties reveal four different versions of Laos',
+      paragraphs: [
+        'Laos now has four UNESCO World Heritage properties. Luang Prabang represents an unusually preserved meeting of Lao religious architecture, traditional houses and colonial-era urban fabric. Vat Phou sits inside the wider Champasak cultural landscape, where sacred geography and Khmer history extend well beyond a single temple.',
+        'The Plain of Jars adds a prehistoric archaeological landscape in Xiengkhuang. In 2025, Hin Nam No National Park became the Lao part of the transboundary Phong Nha-Ke Bang and Hin Nam No World Heritage property, recognising a major karst landscape shared with Vietnam. Heritage in Laos is therefore not one architectural style: it stretches from living Buddhist towns to megaliths, sacred mountains and cave ecosystems.'
+      ],
+      facts: [
+        { label: 'Luang Prabang', value: 'World Heritage since 1995 · historic town and living Buddhist landscape.' },
+        { label: 'Vat Phou', value: 'World Heritage since 2001 · Champasak cultural landscape and Khmer heritage.' },
+        { label: 'Plain of Jars', value: 'World Heritage since 2019 · megalithic archaeological sites in Xiengkhuang.' },
+        { label: 'Hin Nam No', value: 'Added in 2025 to the transboundary Phong Nha-Ke Bang and Hin Nam No natural property.' }
       ],
       note: {
         label: 'Field note',
-        text: 'Leave empty days in the itinerary. In Laos, flexibility is not lost time; it is part of the trip.'
+        text: 'UNESCO status is useful context, not a ranking. Some of the strongest Lao journeys happen between the famous sites.'
       }
-    },
-    {
-      id: 'entry',
-      eyebrow: '02 · Before arrival',
-      title: 'Choose the entry that fits your route',
-      paragraphs: [
-        'Laos can be entered through its international airports or across an overland border. For eligible passports, a visa on arrival remains a simple option at many checkpoints, so applying for an eVisa before the trip is useful but not always necessary. Check the exact border you plan to use, as visa services are not identical everywhere.',
-        'A tourist stay normally begins with 30 days. Extensions are arranged inside Laos in additional 30-day blocks, with travellers often planning around as much as three months before leaving the country and entering again. Bring your passport, an identity photo and cash; a 30-day extension is commonly charged at 600,000 kip plus 25,000 kip in processing fees. Confirm the number of extensions and the current price with immigration when you apply, as local procedures can change.'
-      ],
-      facts: [
-        { label: 'eVisa', value: 'Optional for eligible passports. Apply through the official Lao eVisa website and enter at a designated checkpoint.' },
-        { label: 'Visa on arrival', value: 'Available at many international airports and land borders, and generally straightforward to obtain.' },
-        { label: 'Extension', value: 'Plan for 600,000 kip plus 25,000 kip in processing fees, and bring a passport photo.' },
-        { label: 'Longer stay', value: 'Two 30-day extensions are commonly used; after about 90 days in total, leave Laos before entering again.' }
-      ]
-    },
-    {
-      id: 'money',
-      eyebrow: '03 · Everyday money',
-      title: 'Carry kip, and keep a second option',
-      paragraphs: [
-        'The Lao kip is the everyday currency. Cash remains the safest default for markets, small restaurants, rural guesthouses, local transport and fuel stops. ATMs are common in larger towns, but availability becomes less predictable on remote routes.',
-        'Cards are accepted by some hotels and established businesses, while QR payment is widespread in local life. A foreign traveller should not assume that every Lao QR code will work with an overseas banking app, so keep cash and a backup card.'
-      ],
-      facts: [
-        { label: 'Primary currency', value: 'Lao kip for daily purchases.' },
-        { label: 'Best habit', value: 'Withdraw before leaving a major town and keep smaller notes for local payments.' },
-        { label: 'QR payments', value: 'Useful only when your bank or wallet is compatible with the merchant network.' },
-        { label: 'Backup', value: 'Carry a second card separately and avoid depending on one ATM or one app.' }
-      ]
     },
     {
       id: 'transport',
-      eyebrow: '04 · Moving around',
-      title: 'Match the transport to the part of Laos',
+      eyebrow: '03 · Moving through Laos',
+      title: 'The railway is fast; the country around it is not',
       paragraphs: [
-        'The fast railway belongs to the north. It runs from Vientiane through Vang Vieng and Luang Prabang to Boten, with international trains continuing to Kunming in China. Several European passports currently qualify for short visa-free visits to China, which can turn the railway into a real onward route rather than a border curiosity; check the policy for your passport and travel date before booking. A future high-speed connection toward Thailand is planned, but it is not yet a journey you can rely on.',
-        'Outside that corridor, buses and minivans still do most of the work. Published journey times are often optimistic: delays, mechanical problems, roadside repairs and occasional vehicle changes are part of the reality, so never build an essential same-day connection around the advertised arrival time. Between Pakse and Vientiane, compare the bus with the domestic flight; the airfare can be several times higher, but it may still be a sensible trade for the time saved.'
+        'The Laos–China Railway has transformed travel between Vientiane, Vang Vieng and Luang Prabang, but it does not solve transport across the whole country. Outside that corridor, buses, minivans, private drivers, domestic flights, boats and rented motorbikes still do most of the work.',
+        'Published road times are best treated as estimates. Weather, roadworks, breakdowns, loading stops and local transfers can stretch a journey. When Pakse and Vientiane are both in the itinerary, compare the long road journey with the domestic flight rather than assuming the bus is automatically the better fit.'
       ],
       facts: [
-        { label: 'Northern railway', value: 'The fast line serves the Vientiane–Vang Vieng–Luang Prabang–Boten corridor, not the centre or south.' },
-        { label: 'China connection', value: 'International trains continue to Kunming. Check Chinese entry rules for your passport and date before buying the ticket.' },
-        { label: 'Bus reality', value: 'Allow time for late departures, roadside repairs, breakdowns and occasional changes of vehicle.' },
-        { label: 'Pakse ↔ Vientiane', value: 'Domestic flights operate on this route. Compare the current fare and schedule with the long bus journey.' }
-      ],
-      note: {
-        label: 'On the horizon',
-        text: 'Thailand’s planned high-speed railway is intended to connect with the Laos–China corridor through Nong Khai, but the practical through-service date remains uncertain.'
-      }
+        { label: 'Rail corridor', value: 'Vientiane · Vang Vieng · Luang Prabang · Boten, with onward international rail toward China.' },
+        { label: 'Elsewhere', value: 'Road transport remains the default through much of central and southern Laos.' },
+        { label: 'Connections', value: 'Avoid building an essential same-day connection around an optimistic bus arrival.' },
+        { label: 'Offline habit', value: 'Save the next address, local-language spelling and route before leaving reliable data coverage.' }
+      ]
     },
     {
-      id: 'scooter',
-      eyebrow: '05 · Renting a scooter',
-      title: 'Easy to rent does not mean easy to replace',
+      id: 'arrival-money',
+      eyebrow: '04 · Entry, money and connection',
+      title: 'Keep one backup for every practical system',
       paragraphs: [
-        'Scooter rental is informal in practice. A shop may hand over the keys without asking for an international permit, but that does not remove the legal requirement, insurance conditions or the possibility of a police check. Checks are more noticeable in towns; outside them, the larger risks are road surfaces, animals, weather, darkness and being far from help. Wear a helmet even where enforcement feels relaxed.',
-        'The bike remains your responsibility from handover to return. Theft, damage and breakdowns do happen, and many shops ask to hold the original passport, especially for multi-day loops. That request is common, but it carries real risk: use a reputable operator, photograph the bike, read the contract, obtain a written receipt and ask for an alternative deposit whenever possible. For remote travel, a semi-automatic is often the practical choice because local mechanics and parts are easier to find than for some automatic scooters.'
+        'Entry options vary by passport and checkpoint. Eligible travellers may use the Lao eVisa at designated entry points, while visa-on-arrival availability depends on the border being used. Check the exact crossing rather than assuming a rule that worked at an airport also applies to a small land border.',
+        'The Lao kip remains the everyday currency. Cash is still the safest default for markets, small restaurants, rural guesthouses and fuel stops. QR payments are common in local life but foreign banking compatibility is inconsistent, so combine cash with a backup card. A local SIM makes navigation and last-minute coordination much easier, but remote stretches still reward screenshots and offline maps.'
       ],
       facts: [
-        { label: 'Licence & checks', value: 'The rental desk may not ask for documents, but local law, police checks and insurance conditions still apply.' },
-        { label: 'Passport deposit', value: 'A common request for loop rentals, but a risky one. Prefer an alternative deposit or use a reputable shop with a written receipt.' },
-        { label: 'Bike choice', value: 'A semi-automatic is often easier to repair outside the cities, where mechanics and simple parts are more widely available.' },
-        { label: 'Theft & damage', value: 'Lock the bike, park carefully and understand who pays for theft, recovery, damage or a breakdown before leaving.' }
+        { label: 'Entry', value: 'Check the official Lao eVisa service and the exact border or airport you plan to use.' },
+        { label: 'Cash', value: 'Withdraw before rural routes and keep smaller kip notes for local payments.' },
+        { label: 'Cards & QR', value: 'Useful in larger towns, but not a reliable replacement for cash everywhere.' },
+        { label: 'Phone', value: 'Buy a local SIM early and keep essential maps and bookings available offline.' }
+      ]
+    },
+    {
+      id: 'roads',
+      eyebrow: '05 · Scooters, roads and the invisible map',
+      title: 'A motorbike opens the road, but it also changes the responsibility',
+      paragraphs: [
+        'Renting a scooter or semi-automatic is easy in many traveller hubs, but an informal handover does not remove licence, insurance or legal requirements. Inspect tyres, brakes and lights, photograph the bike, understand the deposit and ask what happens after a breakdown far from town.',
+        'Road travel also carries one distinctly Lao rule: do not leave marked paths in areas affected by unexploded ordnance. Decades after the conflicts of the twentieth century, UXO still affects parts of the country. Marked trails, local guidance and official warnings matter more than curiosity about an untracked shortcut.'
+      ],
+      facts: [
+        { label: 'Bike choice', value: 'Choose reliability, repairability and support before choosing the cheapest daily rate.' },
+        { label: 'Insurance', value: 'Check whether your licence and policy actually cover the vehicle and activity.' },
+        { label: 'Night riding', value: 'Animals, potholes, unlit vehicles and limited help make darkness a poor time to improvise.' },
+        { label: 'UXO', value: 'Stay on established paths and follow local or official guidance in contaminated areas.' }
       ],
       note: {
         label: 'Do not improvise',
-        text: 'Guided motocross and off-road trips are available. Use a local operator for difficult tracks and do not venture alone onto remote routes where phone coverage, rescue and mechanical help may be limited.'
+        text: 'A road that feels empty is not automatically a safe place to take risks. Distance from help is part of the route.'
       }
     },
     {
-      id: 'phone',
-      eyebrow: '06 · Your phone',
-      title: 'Use technology as a backup, not a guarantee',
+      id: 'food',
+      eyebrow: '06 · Eat with the country',
+      title: 'Sticky rice is a clue to how everyday Laos works',
       paragraphs: [
-        'A local SIM makes navigation, accommodation messages and last-minute transport changes much easier. Unitel is a reliable first choice, while Lao Telecom also works well in many areas. Coverage keeps improving, but do not plan as if 4G, Wi-Fi and electricity will follow you everywhere; remote stretches can still lose signal, and occasional power cuts remain part of the journey.',
-        'Translation tools are improving, but Lao results can still be uneven. When a Lao translation looks doubtful, trying Thai can produce a clearer sentence that many Lao people will understand. Google Maps needs the same caution: map data may move faster than business listings, while Street View photographs can be years old. Check the image date, confirm directly and look beyond the first pin.'
+        'Lao food is built around shared textures and strong contrasts: sticky rice, herbs, grilled meats, soups, fermented flavours and chilli-rich dips appear in many regional forms. Laap is internationally familiar, but a market breakfast, a simple bowl of noodles or grilled food beside the road often says more about a place than a restaurant designed around a traveller menu.',
+        'Meals are also social. Watch how food is shared, use the basket of sticky rice as intended and let local habits set the pace. Regional food changes as the landscape changes, so the north, the Mekong corridor and the south should not be treated as one identical menu.'
       ],
       facts: [
-        { label: 'Local SIM', value: 'Unitel is a strong default; Lao Telecom is another useful option. Buy the SIM before leaving a major town.' },
-        { label: 'Translation', value: 'Try Lao first, then Thai when the result is unclear. Keep sentences short and show the address on screen.' },
-        { label: 'Google Maps', value: 'Opening hours, pins and business status can be wrong. Street View is historical imagery, not a live view.' },
-        { label: 'Offline backup', value: 'Save maps, screenshots, phone numbers and the Lao or Thai spelling before remote sections.' }
+        { label: 'Khao niew', value: 'Sticky rice is a daily staple and one of the clearest anchors of Lao food culture.' },
+        { label: 'Laap', value: 'Minced meat or fish salad shaped by herbs, toasted rice and regional variations.' },
+        { label: 'Markets', value: 'Useful for breakfast, fruit, grilled food and seeing what a town actually eats.' },
+        { label: 'Best habit', value: 'Try local dishes before defaulting to the same traveller menu from city to city.' }
+      ]
+    },
+    {
+      id: 'season',
+      eyebrow: '07 · Weather changes the route',
+      title: 'The dry and wet seasons create different versions of the same journey',
+      paragraphs: [
+        'Dry-season travel generally simplifies roads, river crossings and outdoor access, while the wet season brings greener landscapes, stronger waterfalls and more variable tracks. Neither is automatically better: each changes what is comfortable, photogenic and safe.',
+        'On plateau and cave routes, recent rain matters as much as the month on the calendar. Water levels can alter cave boats, river activities and swimming conditions; mud can turn an easy track into a slow one. Ask locally when an activity depends on water or an unsealed road.'
+      ],
+      facts: [
+        { label: 'Dry months', value: 'Easier roads and clearer logistics, with hotter or dustier conditions in some regions.' },
+        { label: 'Wet months', value: 'Greener landscapes and stronger water, but more disruption to roads, trails and caves.' },
+        { label: 'Altitude', value: 'The Bolaven Plateau can feel much cooler than lowland southern Laos.' },
+        { label: 'Decision rule', value: 'Recent local conditions outrank a generic seasonal description.' }
       ]
     },
     {
       id: 'route',
-      eyebrow: '07 · Building the route',
-      title: 'Think in chapters, not in checkpoints',
+      eyebrow: '08 · Building the journey',
+      title: 'Choose fewer chapters and leave space between them',
       paragraphs: [
-        'A first trip rarely needs the whole country. Choose one strong region, then add a second only when the transport between them makes sense. The north, the central cave roads and the south each follow a different rhythm, so the same planning method will not work everywhere.',
-        'A place that looks close on the map may still consume most of the day. Around Thakhek, a cave can mean four or five hours of riding for the return journey, with few practical options to sleep nearby. Read the complete route — road surface, daylight, transport, fuel and accommodation — before deciding that a pin is an easy day trip.'
+        'A first trip does not need every famous Lao stop. A strong route might combine the northern railway corridor with one slower mountain extension, or focus on central cave country, or use Pakse as the beginning of a southern chapter toward the plateau, Champasak and the islands.',
+        'The country rewards empty time because transport and weather are not the only variables. A conversation, a village, a market or a road you did not expect can become the memory that justifies the journey. Build the plan tightly enough to move, but loosely enough to notice where you are.'
       ],
       facts: [
-        { label: 'Northern chapter', value: 'Railway towns and mountain routes reward a plan built around stations and longer bases.' },
-        { label: 'Central chapter', value: 'Caves and loops are measured in riding hours, road conditions and daylight, not straight-line distance.' },
-        { label: 'Southern chapter', value: 'Pakse works as a hub, but the plateau, Champasak and the islands each require a different transport rhythm.' },
-        { label: 'Planning rule', value: 'Change the method with the region: walk, hire a driver, ride, sleep elsewhere or remove the stop.' }
+        { label: 'Short trip', value: 'Choose one strong region and understand it rather than collecting distant highlights.' },
+        { label: 'Longer trip', value: 'Add a second region only when the transport between them earns its place in the route.' },
+        { label: 'Buffer', value: 'Keep one flexible day before an important international connection.' },
+        { label: 'Respect', value: 'Dress and behave as a guest around temples, villages, ceremonies and everyday family spaces.' }
       ],
       note: {
-        label: 'Read the whole day',
-        text: 'A nearby attraction is not automatically an accessible attraction. Plan the return journey before committing to the outward one.'
-      }
-    },
-    {
-      id: 'respect',
-      eyebrow: '08 · Travelling well',
-      title: 'Pay attention before taking space',
-      paragraphs: [
-        'At temples, cover shoulders and knees, remove shoes and hats where expected, and ask before photographing people or ceremonies. Outside beaches, pools and private accommodation, dress with the same restraint you would expect from a guest in your own community.',
-        'Treat Buddhist objects as part of a living tradition, not ordinary decoration. For an amulet or sacred tattoo, begin with a temple or a recognised specialist connected to the practice; if the religious community does not offer it, an ordinary jewellery shop or tattoo studio is not an automatic substitute.'
-      ],
-      facts: [
-        { label: 'Feet', value: 'Keep feet off tables and chairs, and avoid pointing them toward people, food or sacred objects.' },
-        { label: 'Public behaviour', value: 'Do not walk around town shirtless or treat local streets like a private resort.' },
-        { label: 'Small customs', value: 'Some families avoid whistling at night, singing before the meal is finished or turning a whole fish over. Watch first and follow the table.' },
-        { label: 'Your example', value: 'Visitors are noticed, especially by children. Respect is also the example you leave behind.' }
-      ],
-      note: {
-        label: 'Remember',
-        text: 'You are not only moving through a destination. You are entering someone else’s everyday life.'
+        label: 'Atlas note',
+        text: 'In Laos, the road between two saved places is often part of the reason to travel at all.'
       }
     }
   ],
   links: [
-    { label: 'Check the official Lao eVisa service', href: 'https://laoevisa.gov.la/' }
+    { label: 'UNESCO · Laos World Heritage properties', href: 'https://whc.unesco.org/en/statesparties/la/' },
+    { label: 'Official Lao eVisa service', href: 'https://laoevisa.gov.la/' },
+    { label: 'Indie Traveller · Laos travel guide', href: 'https://www.indietraveller.co/laos-travel-guide/' },
+    { label: 'Discover Laos · route timing and itinerary notes', href: 'https://discoverlaos.info/blog/laos-itinerary-2-weeks/' },
+    { label: 'Terra Lao · local travel stories and guides', href: 'https://terralao.la/blog' },
+    { label: 'Serious Eats · introduction to Lao food', href: 'https://www.seriouseats.com/a-guide-to-the-essential-dishes-of-laos' }
   ]
 };
