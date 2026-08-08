@@ -18,35 +18,38 @@ export const thamNangAenLandmark: LaosLandmark = {
   country: 'Laos',
   fieldCardNumber: '10',
   region: 'Thakhek District · Khammouane',
-  description: 'A large developed show cave on Route 12, known for its cool air, illuminated limestone chambers, built walkways and a small underground lake. It is one of the easiest cave stops to combine with a stay in Thakhek.',
+  description: 'A large developed river cave about 18 km from Thakhek on Route 12, with cool air, chambers reaching roughly 30 metres high, illuminated limestone formations, built stairways and an optional deeper boat journey when conditions and local operation allow.',
   mapsUrl: 'https://maps.app.goo.gl/UbvyD3oxhyWVjLyC6',
   gallery: [
     {
-      src: 'https://mdw-travel-data-us-east-1.s3.amazonaws.com/img/country/Laos/Tham-Nang-Aen-Cave/img_03.jpg',
-      alt: 'Boat approaching the green cave entrance at Tham Nang Aen near Thakhek',
-      sourcePage: 'https://www.goglobbie.com/country/Laos/attraction/Tham-Nang-Aen-Cave',
-      author: 'Go Globbie travel gallery'
+      src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/10%20Nang%20Aen%20cane%20-%20panoramio.jpg?width=1800',
+      alt: 'Illuminated limestone formations and visitor walkways inside Tham Nang Aen Cave near Thakhek',
+      sourcePage: 'https://commons.wikimedia.org/wiki/File:10_Nang_Aen_cane_-_panoramio.jpg',
+      author: 'Adriaan Castermans',
+      license: 'CC BY-SA 3.0'
     },
     {
-      src: 'https://mdw-travel-data-us-east-1.s3.amazonaws.com/img/country/Laos/Tham-Nang-Aen-Cave/img_01.jpg',
-      alt: 'Illuminated limestone formations and walkways inside Tham Nang Aen Cave',
-      sourcePage: 'https://www.goglobbie.com/country/Laos/attraction/Tham-Nang-Aen-Cave',
-      author: 'Go Globbie travel gallery'
+      src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/03%20Thakhek%20route%2016%20to%20caves%20-%20panoramio.jpg?width=1800',
+      alt: 'Karst road landscape east of Thakhek on the route toward the cave area, used as approach context for Tham Nang Aen',
+      sourcePage: 'https://commons.wikimedia.org/wiki/File:03_Thakhek_route_16_to_caves_-_panoramio.jpg',
+      author: 'Adriaan Castermans',
+      license: 'CC BY-SA 3.0'
     },
     {
-      src: 'https://mdw-travel-data-us-east-1.s3.amazonaws.com/img/country/Laos/Tham-Nang-Aen-Cave/img_02.jpg',
-      alt: 'Colourful cave chamber and underground pathways at Tham Nang Aen',
-      sourcePage: 'https://www.goglobbie.com/country/Laos/attraction/Tham-Nang-Aen-Cave',
-      author: 'Go Globbie travel gallery'
+      src: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/02%20Tham%20Pha%20Bahn%20Tham%20cave%20-%20panoramio.jpg?width=1600',
+      alt: 'Limestone cave landscape in the Thakhek cave corridor, used as regional cave-country context for Tham Nang Aen',
+      sourcePage: 'https://commons.wikimedia.org/wiki/File:02_Tham_Pha_Bahn_Tham_cave_-_panoramio.jpg',
+      author: 'Adriaan Castermans',
+      license: 'CC BY-SA 3.0'
     }
   ],
   facts: [
-    { label: 'Getting there', value: 'The cave is roughly 18 kilometres northeast of Thakhek on Route 12, followed by a short access road from the signed turn.' },
-    { label: 'Best time', value: 'Visit in daylight and confirm current opening conditions locally, especially after heavy rain.' },
-    { label: 'What to wear', value: 'Light clothing and shoes with grip. The cave stays noticeably cooler than the road outside.' },
-    { label: 'Price', value: 'Paid entrance. Boat trips or other on-site activities may cost extra, so confirm the current options at the entrance.' },
-    { label: 'Duration', value: 'Allow around one to two hours for the walkways, chambers and any optional activity.' },
-    { label: 'Difficulty', value: 'Easy to moderate. The main route uses developed steps and walkways, but surfaces may still be damp.' }
+    { label: 'Getting there', value: 'Tourism Laos places Tham Nang Aen about 18 km northeast of Thakhek on Route 12. Turn from the signed junction and continue roughly 700 m along the access road; after heavy rain, local water levels can affect the final approach.' },
+    { label: 'Best time', value: 'The walking section is an all-year developed visit, but the optional boat section depends more on water and current operation. Weekdays and earlier hours are usually calmer than popular Lao and Thai weekend periods.' },
+    { label: 'What to wear', value: 'Light clothing and footwear with grip. The cave has a strong naturally cool airflow, while steps and damp surfaces can still be slippery. Carry a torch or headlamp if you plan the deeper boat option.' },
+    { label: 'Price', value: 'Prices are inconsistent across current references. Late-2025 visitor reports commonly mention about 50,000 kip for the walking visit and around 150,000 kip for the optional boat; other 2026 listings still show 30,000 kip. Confirm at the counter.' },
+    { label: 'Duration', value: 'The main developed chamber can be seen in roughly 30–60 minutes at an easy pace. If the deeper boat route is operating, keep around two hours or more for the complete visit.' },
+    { label: 'Difficulty', value: 'Easy to moderate. The main cave is developed with stairways, railings and lighting, but it includes many steps and is not a step-free attraction. The boat route adds wet surfaces, darker passages and more time underground.' }
   ]
 };
 
@@ -70,9 +73,9 @@ export const thakhekLandmarks: CityLandmark[] = [
     cityContext: {
       order: 3,
       kicker: 'SHOW CAVE · ROUTE 12 · CLOSE TO TOWN',
-      summary: 'A practical first cave from Thakhek, with illuminated formations, built walkways and cool chambers close to the beginning of the loop.',
-      duration: '1–2 hours',
-      route: '18 km from Thakhek'
+      summary: 'A large, highly developed first cave from Thakhek: illuminated chambers and stairways for the short visit, with a deeper river-and-boat option when it is operating.',
+      duration: '1 hour · 2+ hours with boat',
+      route: '18 km from Thakhek on Route 12'
     }
   }
 ];
