@@ -9,6 +9,7 @@ import { laosLandmarkGuides, type LandmarkVisitGuide } from './laosLandmarkGuide
 import { khonePhaphengLandmarkGuide } from './khonePhaphengLandmarkGuide';
 import { kongLorLandmarkGuide } from './kongLorLandmarkGuide';
 import { tadLoAdditionalActivityGuides } from './tadLoAdditionalActivityGuides';
+import { thakhekAdditionalActivityGuides } from './thakhekAdditionalActivityGuides';
 
 export type LaosLandmarkPageEntry = {
   slug: string;
@@ -66,7 +67,8 @@ const buildFallbackGuide = (landmark: CityLandmark, fieldNote: string): Landmark
 const researchedGuides: Record<string, LandmarkVisitGuide> = {
   'khone-phapheng-falls': khonePhaphengLandmarkGuide,
   'kong-lor-cave': kongLorLandmarkGuide,
-  ...tadLoAdditionalActivityGuides
+  ...tadLoAdditionalActivityGuides,
+  ...thakhekAdditionalActivityGuides
 };
 
 const page = (
@@ -165,15 +167,23 @@ export const laosLandmarkPages: LaosLandmarkPageEntry[] = [
   page(requireCityLandmark(thakhekLandmarks, 'kong-lor-cave'), 'thakhek', 'Thakhek',
     'Kong Lor is a river crossing through a limestone mountain: about seven kilometres of darkness, shallow water, huge chambers and a second valley on the far side make the boat journey one continuous piece of the Thakhek Loop rather than a normal in-and-out cave stop.',
     'Follow the Hin Boun through the mountain. The darkness, the shallow water and the far valley are one journey.',
-    ['xe-bang-fai-cave', 'tham-nang-aen-cave', 'bolaven-plateau', 'pha-pa-tou']),
+    ['xe-bang-fai-cave', 'tham-nang-aen-cave', 'thafalang-thakhek', 'kuan-cow-cave-thakhek']),
   page(requireCityLandmark(thakhekLandmarks, 'xe-bang-fai-cave'), 'thakhek', 'Thakhek',
     'Xe Bang Fai is the remote end of the cave spectrum: rougher access, local coordination and river conditions matter as much as the underground chamber itself.',
     'The road is part of the expedition. Confirm the river before leaving.',
-    ['kong-lor-cave', 'tham-nang-aen-cave', 'pha-pa-tou', 'phou-bia-from-vang-vieng']),
+    ['kong-lor-cave', 'tham-nang-aen-cave', 'thafalang-thakhek', 'kuan-cow-cave-thakhek']),
   page(requireCityLandmark(thakhekLandmarks, 'tham-nang-aen-cave'), 'thakhek', 'Thakhek',
     'Tham Nang Aen is the accessible introduction to Khammouane cave country: close to Thakhek, developed enough to visit simply, but still cool, damp and dramatically different from the road outside.',
     'Use it as the first cave, not the last word on Khammouane.',
-    ['kong-lor-cave', 'xe-bang-fai-cave', 'bolaven-plateau', 'hot-air-balloon-paramotor-vang-vieng']),
+    ['thafalang-thakhek', 'kuan-cow-cave-thakhek', 'kong-lor-cave', 'xe-bang-fai-cave']),
+  page(requireCityLandmark(thakhekLandmarks, 'kuan-cow-cave-thakhek'), 'thakhek', 'Thakhek',
+    'Kuan Cow is the intentionally small Thakhek field note: a lightly documented cave embedded in a scenic village mini-loop near the beginning of Route 12, where the quality of the detour matters more than pretending the cave is a major attraction.',
+    'Keep the claim smaller than the evidence. The quiet road is as important as the cave.',
+    ['thafalang-thakhek', 'tham-nang-aen-cave', 'kong-lor-cave', 'xe-bang-fai-cave']),
+  page(requireCityLandmark(thakhekLandmarks, 'thafalang-thakhek'), 'thakhek', 'Thakhek',
+    'Tha Falang is the first Loop day’s reset button: clear river water under limestone cliffs, local leisure culture, food and kayaking make it a place to stop moving for a while rather than another attraction to photograph from the bike.',
+    'Swim, eat, watch the limestone and let the Route 12 schedule wait.',
+    ['kuan-cow-cave-thakhek', 'tham-nang-aen-cave', 'kong-lor-cave', 'xe-bang-fai-cave']),
 
   page(requireCityLandmark(vangViengLandmarks, 'hot-air-balloon-paramotor-vang-vieng'), 'vang-vieng', 'Vang Vieng',
     'The appeal is perspective: river, rice fields and limestone towers suddenly become one landscape. Weather and operator judgement matter more than a fixed departure promise.',
