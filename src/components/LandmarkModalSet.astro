@@ -1,82 +1,36 @@
 ---
-import LandmarkModal from './LandmarkModal.astro';
+import LaosLandmarkPreviewModal from './LaosLandmarkPreviewModal.astro';
 import type { LaosLandmark } from '../data/laosLandmarks';
 import { getLicensedLandmarkGallery } from '../data/laosLandmarkLicensedMedia';
+import { laosLandmarkPageByModalId } from '../data/laosLandmarkPageRegistry';
 
 interface Props {
   landmarks?: LaosLandmark[];
 }
 
 const { landmarks = [] } = Astro.props;
-const bolavenPartner = {
-  name: 'Visit Tad Lo',
-  domain: 'visit-tadlo.com',
-  url: 'https://visit-tadlo.com'
-};
 ---
 
 {landmarks.map((landmark) => {
-  const partner = landmark.slug === 'bolaven-plateau' ? bolavenPartner : null;
   const gallery = getLicensedLandmarkGallery(landmark.slug, landmark.gallery);
+  const guideUrl = laosLandmarkPageByModalId[landmark.modalId]?.route;
 
   return (
-    <>
-      <LandmarkModal
-        id={landmark.modalId}
-        name={landmark.name}
-        country={landmark.country}
-        fieldCardNumber={landmark.fieldCardNumber}
-        region={landmark.region}
-        description={landmark.description}
-        mapsUrl={landmark.mapsUrl}
-        gallery={gallery}
-        facts={landmark.facts}
-      />
-
-      {partner && (
-        <span
-          hidden
-          data-landmark-partner-config
-          data-parent-landmark-modal={landmark.modalId}
-          data-partner-name={partner.name}
-          data-partner-domain={partner.domain}
-          data-partner-url={partner.url}
-        ></span>
-      )}
-    </>
+    <LaosLandmarkPreviewModal
+      id={landmark.modalId}
+      slug={landmark.slug}
+      name={landmark.name}
+      region={landmark.region}
+      description={landmark.description}
+      mapsUrl={landmark.mapsUrl}
+      guideUrl={guideUrl}
+      gallery={gallery}
+      facts={landmark.facts}
+    />
   );
 })}
 
 <style is:global>
-  .landmark-partner-note {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    margin: 1rem 0 .8rem;
-    padding: .8rem .9rem;
-    border: 1px solid rgba(49, 85, 69, .28);
-    background: rgba(49, 85, 69, .065);
-    color: #315545;
-    text-decoration: none;
-    cursor: pointer;
-    transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
-  }
-
-  .landmark-partner-note:hover,
-  .landmark-partner-note:focus-visible {
-    border-color: rgba(49, 85, 69, .5);
-    background: rgba(49, 85, 69, .12);
-    box-shadow: 2px 3px 0 rgba(49, 85, 69, .1);
-    transform: translateY(-1px);
-    outline: none;
-  }
-
-  .landmark-partner-note span { display: grid; gap: .22rem; }
-  .landmark-partner-note small { color: #b76645; font: 700 .46rem/1 'DM Sans', sans-serif; letter-spacing: .15em; }
-  .landmark-partner-note strong { font: 600 .76rem/1.2 'DM Sans', sans-serif; }
-  .landmark-partner-note b { color: #b76645; font: 600 .72rem/1 Fraunces, serif; }
-
   .city-note__partner {
     display: inline-block;
     margin: 2px 0 7px;
@@ -91,21 +45,24 @@ const bolavenPartner = {
     text-transform: uppercase;
     transform: rotate(-1deg);
   }
-
-  @media (max-width: 650px) {
-    .landmark-partner-note { align-items: flex-start; flex-direction: column; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .landmark-partner-note { transition: none; }
-  }
 </style>
 
 <script>
   let landmarkScrollY = 0;
 
+  const RETURN_KEY = 'atlas:landmark-return';
+
   const hasOpenLandmarkDialog = () => Boolean(
-    document.querySelector('.landmark-modal[open], [data-landmark-guide-dialog][open]')
+    document.querySelector('.atlas-landmark-preview[open], [data-landmark-guide-dialog][open]')
+  );
+
+  const currentScroll = () => {
+    const fixedTop = Number.parseFloat(document.body.style.top || '');
+    return Number.isFinite(fixedTop) && fixedTop < 0 ? Math.abs(fixedTop) : window.scrollY;
+  };
+
+  const activeCategory = () => (
+    document.querySelector<HTMLElement>('[data-city-category-button][aria-selected="true"]')?.dataset.cityCategoryButton || undefined
   );
 
   const lockLandmarkPage = () => {
@@ -140,33 +97,71 @@ const bolavenPartner = {
     });
   };
 
-  const bindLandmarkModals = () => {
-    const openLandmark = (trigger: HTMLElement) => {
-      const id = trigger.dataset.openLandmark;
-      const dialog = id ? document.getElementById(id) : null;
-      if (!(dialog instanceof HTMLDialogElement) || dialog.open) return;
-      lockLandmarkPage();
-      dialog.showModal();
+  const sourceFor = (trigger: HTMLElement) => (
+    trigger.closest<HTMLElement>('.explore-board-card, .city-landmark-card, .place-card, article') || trigger
+  );
+
+  const rememberReturn = (dialog: HTMLDialogElement) => {
+    const sourceId = dialog.dataset.landmarkPageSourceId || '';
+    const slug = dialog.dataset.landmarkSlug || '';
+    if (!sourceId || !slug) return;
+
+    const state = {
+      slug,
+      sourcePath: `${location.pathname}${location.search}${location.hash}`,
+      sourceId,
+      categorySlug: activeCategory(),
+      scrollY: currentScroll()
     };
 
-    document.querySelectorAll<HTMLElement>('[data-open-landmark]').forEach((trigger) => {
+    sessionStorage.setItem(RETURN_KEY, JSON.stringify(state));
+    if (slug === 'wat-phou') sessionStorage.setItem('atlas:wat-phou-return', JSON.stringify(state));
+  };
+
+  const bindLandmarkModals = () => {
+    document.querySelectorAll<HTMLElement>('[data-open-landmark]').forEach((trigger, index) => {
       if (trigger.dataset.landmarkTriggerBound === 'true') return;
       trigger.dataset.landmarkTriggerBound = 'true';
-      trigger.addEventListener('click', () => openLandmark(trigger));
+
+      const openLandmark = () => {
+        const id = trigger.dataset.openLandmark;
+        const dialog = id ? document.getElementById(id) : null;
+        if (!(dialog instanceof HTMLDialogElement) || !dialog.classList.contains('atlas-landmark-preview') || dialog.open) return;
+
+        const source = sourceFor(trigger);
+        if (!source.id) {
+          const slug = dialog.dataset.landmarkSlug || 'landmark';
+          source.id = `landmark-source-${slug}-${index + 1}`;
+        }
+        dialog.dataset.landmarkPageSourceId = source.id;
+
+        lockLandmarkPage();
+        dialog.showModal();
+      };
+
+      trigger.addEventListener('click', openLandmark);
       trigger.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
-          openLandmark(trigger);
+          openLandmark();
         }
       });
     });
 
-    document.querySelectorAll<HTMLDialogElement>('.landmark-modal').forEach((dialog) => {
+    document.querySelectorAll<HTMLDialogElement>('.atlas-landmark-preview').forEach((dialog) => {
       if (dialog.dataset.landmarkDialogBound === 'true') return;
       dialog.dataset.landmarkDialogBound = 'true';
+
       dialog.querySelector<HTMLElement>('[data-close-landmark]')?.addEventListener('click', () => dialog.close());
-      dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+      dialog.addEventListener('click', (event) => {
+        if (event.target === dialog) dialog.close();
+      });
       dialog.addEventListener('close', scheduleLandmarkPageUnlock);
+
+      dialog.querySelector<HTMLAnchorElement>('[data-landmark-page-link]')?.addEventListener('click', () => {
+        rememberReturn(dialog);
+        if (dialog.open) dialog.close();
+      });
     });
   };
 
@@ -180,35 +175,9 @@ const bolavenPartner = {
     body.insertBefore(label, closing || null);
   };
 
-  const bindLandmarkPartners = () => {
-    document.querySelectorAll<HTMLElement>('[data-landmark-partner-config]').forEach((config) => {
-      if (config.dataset.partnerConfigBound === 'true') return;
-      config.dataset.partnerConfigBound = 'true';
-      const parentId = config.dataset.parentLandmarkModal;
-      const partnerUrl = config.dataset.partnerUrl;
-      const partnerName = config.dataset.partnerName || 'local partner';
-      const dialog = parentId ? document.getElementById(parentId) : null;
-      if (!(dialog instanceof HTMLDialogElement) || !partnerUrl) return;
-      const actions = dialog.querySelector<HTMLElement>('.landmark-modal__actions');
-      const visual = dialog.querySelector<HTMLElement>('.landmark-modal__visual');
-      if (!actions || !visual || visual.querySelector('[data-landmark-partner-note]')) return;
-
-      const note = document.createElement('a');
-      note.className = 'landmark-partner-note';
-      note.dataset.landmarkPartnerNote = '';
-      note.href = partnerUrl;
-      note.target = '_blank';
-      note.rel = 'noreferrer';
-      note.setAttribute('aria-label', `Visit the ${partnerName} website`);
-      note.innerHTML = `<span><small>LOCAL PARTNER</small><strong>In partnership with ${partnerName}</strong></span><b>${config.dataset.partnerDomain} ↗</b>`;
-      visual.insertBefore(note, actions);
-    });
-  };
-
   const setupLandmarkExperience = () => {
     bindLandmarkModals();
     bindTadLoMapPartner();
-    bindLandmarkPartners();
   };
 
   setupLandmarkExperience();
