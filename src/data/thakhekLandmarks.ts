@@ -1,9 +1,16 @@
 import { laosLandmarks, type CityLandmark, type CityLandmarkContext, type LaosLandmark } from './laosLandmarks';
+import { thakhekThingsToDo } from './thakhekPlaces';
 
 const requireLandmark = (slug: string): LaosLandmark => {
   const landmark = laosLandmarks.find((item) => item.slug === slug);
   if (!landmark) throw new Error(`Missing Laos landmark: ${slug}`);
   return landmark;
+};
+
+const requireThakhekThing = (slug: string) => {
+  const place = thakhekThingsToDo.find((item) => item.slug === slug);
+  if (!place) throw new Error(`Missing Thakhek activity: ${slug}`);
+  return place;
 };
 
 const forThakhek = (slug: string, cityContext: CityLandmarkContext): CityLandmark => ({
@@ -53,6 +60,63 @@ export const thamNangAenLandmark: LaosLandmark = {
   ]
 };
 
+const kuanCowPlace = requireThakhekThing('kuan-cow-cave-thakhek');
+const thaFalangPlace = requireThakhekThing('thafalang-thakhek');
+
+export const kuanCowLandmark: CityLandmark = {
+  slug: kuanCowPlace.slug,
+  modalId: 'kuan-cow-cave-modal',
+  name: kuanCowPlace.name,
+  country: 'Laos',
+  fieldCardNumber: '14',
+  region: kuanCowPlace.address,
+  description: 'A small, lightly documented cave detour east of Thakhek, best understood as part of a quiet mini-loop through villages, rice fields and limestone scenery after Elephant Cave rather than as a major developed cave attraction.',
+  mapsUrl: kuanCowPlace.mapsUrl,
+  gallery: [{ src: kuanCowPlace.image, alt: kuanCowPlace.imageAlt }],
+  facts: [
+    { label: 'Getting there', value: 'The current map pin places Kuan Cow Cave east of Thakhek near the early Route 12 cave corridor. Recent Loop travellers reach it on a short mini-loop after Elephant Cave using village roads and compacted dirt tracks before reconnecting with the main road.' },
+    { label: 'How long', value: 'Keep the cave itself as a short stop. Allow roughly 1–2 hours for the complete detour, including the quieter village road, photos and any time spent checking local access.' },
+    { label: 'Road conditions', value: 'Recent dry-season accounts describe mostly compacted dirt with a short gravel or dusty section. Rain can change these small roads quickly, so do not treat an old dry-season route description as a permanent surface guarantee.' },
+    { label: 'Cave access', value: 'No dependable current source confirms fixed opening hours, a maintained interior route or a permanent guide system. Check local access on arrival and do not push farther underground when the route is unclear.' },
+    { label: 'What to bring', value: 'Carry a proper torch or headlamp, shoes with grip, water and an offline map. A phone light is not enough for an unlit cave beyond the daylight zone.' },
+    { label: 'Price', value: 'No reliable current entrance price could be verified. Carry small Lao kip in case a local parking or access contribution is requested, and treat any amount as local and changeable.' }
+  ],
+  cityContext: {
+    order: 4,
+    kicker: 'CAVE DETOUR · VILLAGES · QUIET ROAD',
+    summary: 'A lesser-known cave stop inside a scenic village mini-loop near the beginning of Route 12, with intentionally cautious guidance because the cave itself is only lightly documented.',
+    duration: '1–2 hours including detour',
+    route: 'East of Thakhek · near early Cave Alley'
+  }
+};
+
+export const thaFalangLandmark: CityLandmark = {
+  slug: thaFalangPlace.slug,
+  modalId: 'thafalang-modal',
+  name: 'Tha Falang',
+  country: 'Laos',
+  fieldCardNumber: '15',
+  region: thaFalangPlace.address,
+  description: 'A popular clear-water river stop on the first section of the Thakhek Loop, combining swimming and limestone scenery with riverside food, huts, kayaking, camping and accommodation.',
+  mapsUrl: thaFalangPlace.mapsUrl,
+  gallery: [{ src: thaFalangPlace.image, alt: thaFalangPlace.imageAlt }],
+  facts: [
+    { label: 'From Thakhek', value: 'Current sources place Tha Falang roughly 12–16 km east or northeast of central Thakhek along the Route 12 cave corridor. Follow the signed turn from the main road and continue on the short local access road to the river.' },
+    { label: 'Hours & access', value: 'Khammouane Tourism currently lists daily hours around 08:00–17:00 and free entrance to the natural site. Other current tourism listings extend the closing time to 18:00, so reconfirm locally if arriving late.' },
+    { label: 'Swimming season', value: 'November to April generally brings clearer, lower water and the easiest swimming conditions. Rainy-season levels can rise significantly and the access road can become more difficult; always read the current before entering.' },
+    { label: 'What is available', value: 'Recent reporting documents swimming, riverside meals, fish feeding, camping and kayaking, including a calm stretch of river used for longer paddling. Accommodation and bamboo or floating seating are also available around the developed riverbank.' },
+    { label: 'Budget', value: 'Keep free natural-site access separate from paid services. Food, a riverside hut, kayak, camping or accommodation may cost extra even when there is no general entrance fee.' },
+    { label: 'What to bring', value: 'Keep swimwear and a towel accessible, bring cash, drinking water and sun protection, and use sandals or water shoes around rocky banks. Weekdays and mornings are better if you prefer a quieter stop.' }
+  ],
+  cityContext: {
+    order: 5,
+    kicker: 'RIVER · SWIM · CAVE ALLEY',
+    summary: 'The first Loop day’s reset button: clear river water beneath limestone cliffs, with food and activities that can turn a quick swim into a long pause.',
+    duration: '2–4 hours',
+    route: 'Route 12 · roughly 12–16 km from Thakhek'
+  }
+};
+
 export const thakhekLandmarks: CityLandmark[] = [
   forThakhek('kong-lor-cave', {
     order: 1,
@@ -77,5 +141,7 @@ export const thakhekLandmarks: CityLandmark[] = [
       duration: '1 hour · 2+ hours with boat',
       route: '18 km from Thakhek on Route 12'
     }
-  }
+  },
+  kuanCowLandmark,
+  thaFalangLandmark
 ];
