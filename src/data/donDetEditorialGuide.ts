@@ -139,9 +139,9 @@ export const donDetEditorialGuide: EditorialGuideData = {
   ],
   links: [
     { label: 'Wikipedia · Si Phan Don geography and railway history', href: 'https://en.wikipedia.org/wiki/Si_Phan_Don' },
-    { label: 'Backpack Adventures · Don Det and the 4000 Islands', href: 'https://www.backpackadventures.org/don-det-laos/' },
-    { label: 'Never Ending Footsteps · Don Det travel guide', href: 'https://www.neverendingfootsteps.com/don-det-laos-travel-guide/' },
-    { label: 'The Common Wanderer · Don Det and Si Phan Don guide', href: 'https://www.thecommonwanderer.com/blog/don-det-laos-travel-guide' },
+    { label: 'Backpack Adventures · 4000 Islands guide', href: 'https://www.backpackadventures.org/4000-islands-laos/' },
+    { label: 'Never Ending Footsteps · Don Det travel guide', href: 'https://www.neverendingfootsteps.com/scenes-from-si-phan-don/' },
+    { label: 'The Common Wanderer · Don Det and the 4000 Islands', href: 'https://www.thecommonwanderer.com/blog/don-det-4000-islands-laos-guide' },
     { label: 'Official Champasak tourism information', href: 'https://www.tourismlaos.org/southern-provinces/champasak-province/' }
   ]
 };
