@@ -1,5 +1,5 @@
 ---
-import LaosLandmarkPreviewModal from './LaosLandmarkPreviewModal.astro';
+import LaosLandmarkPreviewModalV2 from './LaosLandmarkPreviewModalV2.astro';
 import type { LaosLandmark } from '../data/laosLandmarks';
 import { getLicensedLandmarkGallery } from '../data/laosLandmarkLicensedMedia';
 import { laosLandmarkPageByModalId } from '../data/laosLandmarkPageRegistry';
@@ -13,19 +13,20 @@ const { landmarks = [] } = Astro.props;
 
 {landmarks.map((landmark) => {
   const gallery = getLicensedLandmarkGallery(landmark.slug, landmark.gallery);
-  const guideUrl = laosLandmarkPageByModalId[landmark.modalId]?.route;
+  const entry = laosLandmarkPageByModalId[landmark.modalId];
 
   return (
-    <LaosLandmarkPreviewModal
+    <LaosLandmarkPreviewModalV2
       id={landmark.modalId}
       slug={landmark.slug}
       name={landmark.name}
       region={landmark.region}
       description={landmark.description}
       mapsUrl={landmark.mapsUrl}
-      guideUrl={guideUrl}
+      guideUrl={entry?.route}
       gallery={gallery}
       facts={landmark.facts}
+      duration={entry?.landmark.cityContext.duration}
     />
   );
 })}
@@ -49,11 +50,10 @@ const { landmarks = [] } = Astro.props;
 
 <script>
   let landmarkScrollY = 0;
-
   const RETURN_KEY = 'atlas:landmark-return';
 
   const hasOpenLandmarkDialog = () => Boolean(
-    document.querySelector('.atlas-landmark-preview[open], [data-landmark-guide-dialog][open]')
+    document.querySelector('.landmark-preview-v2[open], [data-landmark-guide-dialog][open]')
   );
 
   const currentScroll = () => {
@@ -68,7 +68,6 @@ const { landmarks = [] } = Astro.props;
   const lockLandmarkPage = () => {
     const root = document.documentElement;
     if (root.dataset.landmarkScrollLocked === 'true') return;
-
     landmarkScrollY = window.scrollY;
     root.dataset.landmarkScrollLocked = 'true';
     document.body.style.position = 'fixed';
@@ -81,7 +80,6 @@ const { landmarks = [] } = Astro.props;
   const unlockLandmarkPage = () => {
     const root = document.documentElement;
     if (root.dataset.landmarkScrollLocked !== 'true') return;
-
     delete root.dataset.landmarkScrollLocked;
     document.body.style.position = '';
     document.body.style.top = '';
@@ -126,7 +124,7 @@ const { landmarks = [] } = Astro.props;
       const openLandmark = () => {
         const id = trigger.dataset.openLandmark;
         const dialog = id ? document.getElementById(id) : null;
-        if (!(dialog instanceof HTMLDialogElement) || !dialog.classList.contains('atlas-landmark-preview') || dialog.open) return;
+        if (!(dialog instanceof HTMLDialogElement) || !dialog.classList.contains('landmark-preview-v2') || dialog.open) return;
 
         const source = sourceFor(trigger);
         if (!source.id) {
@@ -134,7 +132,6 @@ const { landmarks = [] } = Astro.props;
           source.id = `landmark-source-${slug}-${index + 1}`;
         }
         dialog.dataset.landmarkPageSourceId = source.id;
-
         lockLandmarkPage();
         dialog.showModal();
       };
@@ -148,16 +145,14 @@ const { landmarks = [] } = Astro.props;
       });
     });
 
-    document.querySelectorAll<HTMLDialogElement>('.atlas-landmark-preview').forEach((dialog) => {
+    document.querySelectorAll<HTMLDialogElement>('.landmark-preview-v2').forEach((dialog) => {
       if (dialog.dataset.landmarkDialogBound === 'true') return;
       dialog.dataset.landmarkDialogBound = 'true';
-
       dialog.querySelector<HTMLElement>('[data-close-landmark]')?.addEventListener('click', () => dialog.close());
       dialog.addEventListener('click', (event) => {
         if (event.target === dialog) dialog.close();
       });
       dialog.addEventListener('close', scheduleLandmarkPageUnlock);
-
       dialog.querySelector<HTMLAnchorElement>('[data-landmark-page-link]')?.addEventListener('click', () => {
         rememberReturn(dialog);
         if (dialog.open) dialog.close();
