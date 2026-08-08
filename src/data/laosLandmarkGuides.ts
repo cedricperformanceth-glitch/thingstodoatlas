@@ -79,37 +79,6 @@ export const laosLandmarkGuides: Record<string, LandmarkVisitGuide> = {
     fieldNote: 'Do not race the stairs. The landscape is part of the temple.'
   },
 
-  'khone-phapheng-falls': {
-    eyebrow: 'MEKONG NOTE · SOUTHBOUND',
-    intro: 'Khone Phapheng is a place of scale rather than a long activity list. The value is in seeing and hearing the Mekong break across a vast field of rock near the Cambodian border.',
-    budget: 'Moderate from Pakse · lower as an onward stop',
-    duration: '1–2 hours at the falls · a long travel day',
-    bestFor: 'Mekong landscapes and the road to Si Phan Don',
-    sections: [
-      {
-        label: '01 · ROUTE',
-        title: 'How to get there',
-        text: 'The falls are far south of Pakse and are better understood as part of the road toward Nakasang and Si Phan Don. Road transport is the practical option. A direct return from Pakse creates a long day, while visiting on the way to the islands makes the route more natural.'
-      },
-      {
-        label: '02 · MONEY',
-        title: 'What the budget feels like',
-        text: 'The entrance itself is only one part of the cost. From Pakse, transport usually matters more than the visit, especially with a private vehicle. Travellers already moving toward Si Phan Don can keep the budget more reasonable by treating the falls as an onward stop. Confirm the current entrance fee before leaving.'
-      },
-      {
-        label: '03 · TIME',
-        title: 'How long to keep',
-        text: 'One to two hours is enough for the principal viewpoints without rushing. The road from Pakse changes the calculation: keep most of the day for transport, breaks and the visit. Avoid building a tight onward connection immediately after the falls.'
-      },
-      {
-        label: '04 · AT THE RIVER',
-        title: 'How to approach it',
-        text: 'Morning or late afternoon is more comfortable for walking between viewpoints. Bring sun protection and water. This is not a swimming stop: the force of the river is the reason to visit, and barriers and warning areas should be respected.'
-      }
-    ],
-    fieldNote: 'Give the river space. This stop is about scale, sound and distance.'
-  },
-
   'xe-bang-fai-cave': {
     eyebrow: 'EXPEDITION NOTE · KHAMMOUANE',
     intro: 'Xe Bang Fai is a remote river-cave expedition, not a casual roadside attraction. The final roads, local guide, boat journey and changing water conditions all need to be organised before arrival.',
@@ -143,34 +112,37 @@ export const laosLandmarkGuides: Record<string, LandmarkVisitGuide> = {
   },
 
   'pha-pa-tou': {
-    eyebrow: 'MOUNTAIN NOTE · LUANG PRABANG',
-    intro: 'Pha Pa Tou combines a river crossing, a forest climb and a simple mountain stay. It rewards travellers who organise the local connection and keep enough time for sunset or sunrise rather than attempting a rushed return.',
-    budget: 'Moderate',
-    duration: 'Full day · overnight recommended',
-    bestFor: 'Hiking, sunrise and simple homestays',
+    eyebrow: 'MOUNTAIN NOTE · PAK OU DISTRICT',
+    intro: 'Pha Pa Tou — also written Pha Patu or Pha Patou — is a small mountain expedition north of Luang Prabang built around the approach as much as the viewpoint: road transfer, a river crossing, a forest climb, simple local accommodation and the chance to wake above the valleys for sunrise. It is not a fixed urban trail with one official schedule, so the local arrangement matters before the first step.',
+    budget: 'Variable · arrange guide, boat, meals and overnight together',
+    duration: 'Full day minimum · 2 days / 1 night is the stronger format',
+    bestFor: 'Trekking, sunrise, mountain views and a simple local overnight',
     sections: [
       {
-        label: '01 · ROUTE',
-        title: 'How to get there',
-        text: 'Arrange the local guide or homestay before leaving Luang Prabang. The usual journey continues outside the city, crosses the river by small boat and then climbs through forest for several hours. The exact meeting point matters more than simply saving the mountain pin.'
+        label: '01 · THE APPROACH',
+        title: 'The pin is not the trailhead',
+        text: 'Do not navigate to Pha Pa Tou as though the Google Maps marker were a normal roadside viewpoint. A documented independent trip from 2020 parked near the elephant-camp area, crossed the river by small boat and then climbed for almost two hours to Pha PaTou Camping-Home Stay. A current Luang Prabang operator uses a longer guided version: roughly one hour by minivan from town, a small-boat crossing, around three hours of jungle walking to a Hmong village and homestay, then another short climb of about twenty-five minutes to the viewpoint. Those descriptions are not necessarily contradictory; they show that different meeting points, accommodation arrangements and trail formats exist. Confirm the exact pickup, river crossing, walking time and sleeping place with the local organiser before leaving Luang Prabang.',
+        note: 'Save the organiser and meeting point, not only the mountain pin.'
       },
       {
-        label: '02 · MONEY',
-        title: 'What the budget feels like',
-        text: 'The budget is shaped by transport, boat crossing, guide, meals and any overnight stay. It remains reasonable when arranged locally, but it is not a free independent viewpoint. Confirm what food, bedding and return transport are included and carry cash.'
+        label: '02 · THE OVERNIGHT',
+        title: 'Sunrise is the reason not to turn the mountain into a rushed day trip',
+        text: 'Pha Pa Tou becomes much more coherent when the overnight is treated as part of the visit. The older traveller account describes extremely simple mountaintop accommodation with bedding but no water or electricity, and the group carried its own supplies. Current guided itineraries can include water, meals, transport and a homestay, so do not assume that the old setup or the newer packaged setup is what you will find. Ask exactly what is provided: drinking water, dinner, breakfast, bedding, mosquito protection, charging, toilet facilities and the return boat. Staying overnight gives you sunset without a dark descent, then lets you walk back to the viewpoint before dawn for sunrise rather than starting the entire approach in the middle of the night.',
+        note: 'Simple is part of the appeal only when you know what “simple” means before you arrive.'
       },
       {
-        label: '03 · TIME',
-        title: 'How long to keep',
-        text: 'Treat the journey as a full-day hike at minimum. Staying overnight gives the route more meaning and makes sunrise possible without racing the descent. Keep extra daylight for the return crossing and avoid planning the trail in heavy rain.'
+        label: '03 · THE VIEW',
+        title: 'Come for the mountain light, not a guaranteed sea of clouds',
+        text: 'Recent local coverage promotes Pha Patu for wide mountain views, sunrise and cloud inversions, but a “sea of clouds” is weather, not a product included with the booking. Clear mornings can open a broad panorama across the Luang Prabang mountain landscape; other mornings may be hazy, overcast or completely inside cloud. The strongest plan is therefore not to chase one viral photograph but to give yourself both evening and morning light. A guided two-day itinerary currently uses the viewpoint for sunset on day one and returns again at dawn on day two. Bring a headlamp for the pre-sunrise walk, a light warm layer for the exposed morning and enough patience to let the weather decide what the ridge reveals.',
+        note: 'The overnight gives you two chances at the light. The clouds make no promises.'
       },
       {
-        label: '04 · ON THE MOUNTAIN',
-        title: 'How to approach it',
-        text: 'Wear hiking shoes with grip and carry water, food, light layers and rain protection. Facilities at the top are basic. The climb is steady and the river crossing changes with conditions, so follow local advice rather than treating the route as a fixed urban trail.'
+        label: '04 · THE TRAIL',
+        title: 'Treat it as a local mountain route, not an improvised solo mission',
+        text: 'The climb is long enough, remote enough and dependent enough on the river crossing that local coordination is the sensible default. Wear shoes with real grip, carry rain protection, sun protection and a headlamp, and keep drinking water accessible rather than buried at the bottom of the pack. Rain can make forest sections slippery and can also change the river crossing, so reconfirm conditions before departure. Some guided formats pass through or stay near Hmong communities; that makes the human part of the route as important as the panorama. Ask before photographing people, homes or daily work, keep noise low around the homestay and do not treat a village as scenery placed on the way to the viewpoint. If the organiser changes the route because of weather or local conditions, the local decision should outrank an old GPX track or saved blog itinerary.'
       }
     ],
-    fieldNote: 'Sunrise is earned on foot. Organise the crossing before the climb.'
+    fieldNote: 'The sunrise begins with the river crossing. Organise the people and the route before chasing the view.'
   },
 
   'kong-lor-cave': {
