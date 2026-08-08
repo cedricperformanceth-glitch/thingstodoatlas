@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CityPostcardHero from '../../components/CityPostcardHero.astro';
+import LuangPrabangEditorialGuide from '../../components/LuangPrabangEditorialGuide.astro';
 import ExploreBoard from '../../components/ExploreBoard.astro';
 import LandmarkModalSet from '../../components/LandmarkModalSet.astro';
 import CityCategorySPA from '../../components/TravelDeskCategorySPA.astro';
@@ -71,6 +72,7 @@ const spaTabs = categoryTabs.map(({ slug, title, kicker, icon, places }) => ({
         drawingCaption="Temple roofs · river mornings · northern roads"
       />
     </div>
+    <LuangPrabangEditorialGuide />
 
     <ExploreBoard
       cityName="Luang Prabang"
