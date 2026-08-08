@@ -4,6 +4,7 @@ import type { LandmarkGalleryItem } from '../data/laosLandmarks';
 import type { LaosLandmarkPageEntry } from '../data/laosLandmarkPageRegistry';
 import { getRelatedLandmarkPages } from '../data/laosLandmarkPageRegistry';
 import { laosLandmarkPageEditorial } from '../data/laosLandmarkPageEditorial';
+import { laosLandmarkPageFieldNotes } from '../data/laosLandmarkPageFieldNotes';
 import { getLicensedLandmarkGallery } from '../data/laosLandmarkLicensedMedia';
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
 const { entry } = Astro.props;
 const { landmark } = entry;
 const guide = laosLandmarkPageEditorial[entry.slug] || entry.guide;
+const pageFieldNote = laosLandmarkPageFieldNotes[entry.slug];
 const licensedGallery = getLicensedLandmarkGallery(entry.slug, landmark.gallery);
 const images: LandmarkGalleryItem[] = licensedGallery.length
   ? licensedGallery
@@ -170,13 +172,13 @@ const questions = landmark.facts.slice(0, 5).map((item) => ({
         <section class="field-guide-section">
           <p class="section-label">{sections[3]?.label || '04 · ON THE GROUND'}</p>
           <h2>{sections[3]?.title || 'How to approach it'}</h2>
-          <p>{sections[3]?.text || landmark.description}</p>
+          <p>{pageFieldNote?.approach || sections[3]?.text || landmark.description}</p>
         </section>
         <section class="field-guide-section">
           <p class="section-label">FIELD NOTE · BEFORE YOU LEAVE</p>
           <h2>What matters more than another pin</h2>
           <p>{entry.editorialAngle}</p>
-          <p>{guide.fieldNote}</p>
+          <p>{pageFieldNote?.beforeYouLeave || guide.fieldNote}</p>
         </section>
       </div>
 
