@@ -1,6 +1,7 @@
 import type { EditorialGuideData } from './editorialGuides';
 import { laosEditorialGuide } from './editorialGuides';
 import { pakseEditorialGuide } from './pakseEditorialGuide';
+import { luangPrabangEditorialGuide } from './luangPrabangEditorialGuide';
 import { tadLoEditorialGuide } from './tadLoEditorialGuide';
 import { thakhekEditorialGuide } from './thakhekEditorialGuide';
 import { vangViengEditorialGuide } from './vangViengEditorialGuide';
@@ -92,6 +93,35 @@ export const laosCityEditorialPages: EditorialGuidePageMeta[] = [
         caption: 'Outside Pakse · a working landscape beyond the city roads',
         sourceHref: commonsSource('Weaving.jpg'),
         license: 'Public domain'
+      }
+    ]
+  },
+  {
+    slug: 'luang-prabang',
+    guide: luangPrabangEditorialGuide,
+    variant: 'city',
+    route: '/laos/luang-prabang/field-guide',
+    sourceRoute: '/laos/luang-prabang',
+    backLabel: 'Back to Luang Prabang',
+    heroSrc: '/images/laos/luang-prabang.webp',
+    heroAlt: 'Luang Prabang old town in northern Laos',
+    contextLine: 'Mekong · Nam Khan · royal old town',
+    focusLabel: 'Living heritage, temples & river rhythm',
+    regionLabel: 'Luang Prabang Province · Northern Laos',
+    galleryImages: [
+      {
+        src: commonsImage('Mekong_at_Luang_Prabang.jpg'),
+        alt: 'Mekong River at Luang Prabang in northern Laos',
+        caption: 'Luang Prabang · the Mekong remains one edge of the historic city',
+        sourceHref: commonsSource('Mekong_at_Luang_Prabang.jpg'),
+        license: 'CC0'
+      },
+      {
+        src: commonsImage('20191212_Wat_Xieng_Thong_temple-1.jpg'),
+        alt: 'Wat Xieng Thong temple complex in Luang Prabang, Laos',
+        caption: 'Wat Xieng Thong · one landmark inside a much larger living religious townscape',
+        sourceHref: commonsSource('20191212_Wat_Xieng_Thong_temple-1.jpg'),
+        license: 'CC0'
       }
     ]
   },
