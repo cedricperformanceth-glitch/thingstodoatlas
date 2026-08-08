@@ -8,6 +8,7 @@ import { tadLoExplorePageLandmarks } from './tadLoExploreLandmarks';
 import { laosLandmarkGuides, type LandmarkVisitGuide } from './laosLandmarkGuides';
 import { khonePhaphengLandmarkGuide } from './khonePhaphengLandmarkGuide';
 import { kongLorLandmarkGuide } from './kongLorLandmarkGuide';
+import { tadLoAdditionalActivityGuides } from './tadLoAdditionalActivityGuides';
 
 export type LaosLandmarkPageEntry = {
   slug: string;
@@ -64,7 +65,8 @@ const buildFallbackGuide = (landmark: CityLandmark, fieldNote: string): Landmark
 
 const researchedGuides: Record<string, LandmarkVisitGuide> = {
   'khone-phapheng-falls': khonePhaphengLandmarkGuide,
-  'kong-lor-cave': kongLorLandmarkGuide
+  'kong-lor-cave': kongLorLandmarkGuide,
+  ...tadLoAdditionalActivityGuides
 };
 
 const page = (
@@ -97,18 +99,42 @@ export const laosLandmarkPages: LaosLandmarkPageEntry[] = [
     'Do not race the stairs. The landscape is part of the temple.',
     ['bolaven-plateau', 'khone-phapheng-falls', 'pha-pa-tou', 'kuang-si-waterfall']),
 
+  page(requireCityLandmark(tadLoExplorePageLandmarks, 'tad-hang-waterfall'), 'tad-lo', 'Tad Lo',
+    'Tad Hang is the easiest waterfall to make part of ordinary village time: walk there, read the river conditions and let the short distance be an advantage rather than a reason to rush.',
+    'Walk there first. Decide what the river allows when you arrive.',
+    ['tad-lo-waterfall', 'tad-soung-waterfall', 'cooking-class-nyay', 'fandee-adventure-park']),
   page(requireCityLandmark(tadLoExplorePageLandmarks, 'tad-lo-waterfall'), 'tad-lo', 'Tad Lo',
     'Tad Lo Waterfall works best as part of village life rather than a single photo stop: walk there slowly, stay by the river and let the light and water level decide how long you remain.',
     'The waterfall belongs to the village day, not to a checklist.',
-    ['bolaven-plateau', 'cooking-class-nyay', 'vat-paa-ancient-forest', 'wat-phou']),
+    ['tad-hang-waterfall', 'tad-soung-waterfall', 'cooking-class-nyay', 'vat-paa-ancient-forest']),
+  page(requireCityLandmark(tadLoExplorePageLandmarks, 'tad-soung-waterfall'), 'tad-lo', 'Tad Lo',
+    'Tad Soung is the longer waterfall chapter: rural approach, lower falls, a moderate climb or road route to the top, and an escarpment whose view remains part of the reward even when controlled flow is low.',
+    'Tad Soung is the half day. Let the road, climb and escarpment count as part of it.',
+    ['tad-hang-waterfall', 'tad-lo-waterfall', 'mr-hook-coffee-culture', 'bolaven-plateau']),
+  page(requireCityLandmark(tadLoExplorePageLandmarks, 'katu-weaving-workshop'), 'tad-lo', 'Tad Lo',
+    'The weaving workshop makes the time inside a Katu textile visible: posture, backstrap tension, repeated movements and patient instruction matter more than producing a souvenir quickly.',
+    'Four hours at the loom can explain more than four minutes in front of a textile stall.',
+    ['cooking-class-nyay', 'mr-hook-coffee-culture', 'mr-vieng-coffee-experience', 'tad-lo-waterfall']),
   page(requireCityLandmark(tadLoExplorePageLandmarks, 'cooking-class-nyay'), 'tad-lo', 'Tad Lo',
     'The cooking class turns one meal into a local half-day: preparation, conversation and eating together matter more than collecting recipes quickly.',
     'Prepare it, understand it, then share the meal.',
-    ['tad-lo-waterfall', 'vat-paa-ancient-forest', 'bolaven-plateau', 'wat-phou']),
+    ['katu-weaving-workshop', 'tad-lo-waterfall', 'fandee-adventure-park', 'vat-paa-ancient-forest']),
+  page(requireCityLandmark(tadLoExplorePageLandmarks, 'fandee-adventure-park'), 'tad-lo', 'Tad Lo',
+    'Fandee Adventure Park is a controlled burst of height inside an otherwise slow village stay: the value is the complete guided forest circuit, not one isolated zipline.',
+    'Close to the village does not mean casual about the harness. Follow the staff briefing exactly.',
+    ['tad-hang-waterfall', 'tad-lo-waterfall', 'cooking-class-nyay', 'vat-paa-ancient-forest']),
+  page(requireCityLandmark(tadLoExplorePageLandmarks, 'mr-hook-coffee-culture'), 'tad-lo', 'Tad Lo',
+    'Mr Hook uses coffee as a doorway into plants, questions and Katou cultural perspectives. The visit works best when the traveller listens long enough to separate one host’s explanations from easy generalisations about an entire people.',
+    'Listen for three hours before trying to summarise the village in three sentences.',
+    ['mr-vieng-coffee-experience', 'katu-weaving-workshop', 'tad-soung-waterfall', 'bolaven-plateau']),
+  page(requireCityLandmark(tadLoExplorePageLandmarks, 'mr-vieng-coffee-experience'), 'tad-lo', 'Tad Lo',
+    'Mr Vieng is the compact producer visit: follow the coffee chain from plant to processing and cup, then read whatever stage of the agricultural season the farm is actually showing that day.',
+    'The useful question is not only how the coffee is roasted, but what stage the farm is in today.',
+    ['mr-hook-coffee-culture', 'katu-weaving-workshop', 'bolaven-plateau', 'tad-lo-waterfall']),
   page(requireCityLandmark(tadLoExplorePageLandmarks, 'vat-paa-ancient-forest'), 'tad-lo', 'Tad Lo',
     'Vat Paa is the quiet counterpoint to the waterfalls: old trees, a Buddha and a cave entrance that should be observed without turning an unassessed underground route into a casual attraction.',
     'Stay with the forest. The cave does not need to be entered.',
-    ['tad-lo-waterfall', 'cooking-class-nyay', 'bolaven-plateau', 'pha-pa-tou']),
+    ['tad-lo-waterfall', 'cooking-class-nyay', 'katu-weaving-workshop', 'fandee-adventure-park']),
 
   page(requireCityLandmark(donDetLandmarks, 'khone-phapheng-falls'), 'don-det', 'Don Det',
     'Khone Phapheng is the breaking point of the Mekong: a vast multi-channel cataract whose scale shaped the ecology of Si Phan Don, blocked continuous navigation and eventually forced the French railway bypass across Don Khon and Don Det.',
