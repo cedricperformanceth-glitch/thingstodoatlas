@@ -11,6 +11,8 @@ import { kongLorLandmarkGuide } from './kongLorLandmarkGuide';
 import { tadLoAdditionalActivityGuides } from './tadLoAdditionalActivityGuides';
 import { thakhekAdditionalActivityGuides } from './thakhekAdditionalActivityGuides';
 import { donDetAdditionalActivityGuides } from './donDetAdditionalActivityGuides';
+import { vangViengAdditionalActivityGuides } from './vangViengAdditionalActivityGuides';
+import { vangViengLandmarkRelated } from './vangViengLandmarkPageMeta';
 
 export type LaosLandmarkPageEntry = {
   slug: string;
@@ -70,7 +72,8 @@ const researchedGuides: Record<string, LandmarkVisitGuide> = {
   'kong-lor-cave': kongLorLandmarkGuide,
   ...tadLoAdditionalActivityGuides,
   ...thakhekAdditionalActivityGuides,
-  ...donDetAdditionalActivityGuides
+  ...donDetAdditionalActivityGuides,
+  ...vangViengAdditionalActivityGuides
 };
 
 const page = (
@@ -219,14 +222,18 @@ export const laosLandmarkPages: LaosLandmarkPageEntry[] = [
     'Swim, eat, watch the limestone and let the Route 12 schedule wait.',
     ['kuan-cow-cave-thakhek', 'tham-nang-aen-cave', 'kong-lor-cave', 'xe-bang-fai-cave']),
 
-  page(requireCityLandmark(vangViengLandmarks, 'hot-air-balloon-paramotor-vang-vieng'), 'vang-vieng', 'Vang Vieng',
-    'The appeal is perspective: river, rice fields and limestone towers suddenly become one landscape. Weather and operator judgement matter more than a fixed departure promise.',
-    'Book the view, but let the weather make the final decision.',
-    ['phou-bia-from-vang-vieng', 'pha-pa-tou', 'kuang-si-waterfall', 'slow-boat-luang-prabang-huay-xai']),
-  page(requireCityLandmark(vangViengLandmarks, 'phou-bia-from-vang-vieng'), 'vang-vieng', 'Vang Vieng',
-    'Phou Bia belongs in the expedition notebook rather than the normal day-trip list. Current access, local permissions, road conditions and UXO risk have to shape the plan before the mountain does.',
-    'Do not turn the highest peak into an improvised scooter mission.',
-    ['hot-air-balloon-paramotor-vang-vieng', 'pha-pa-tou', 'kong-lor-cave', 'xe-bang-fai-cave'])
+  ...vangViengLandmarks.map((landmark) => {
+    const guide = vangViengAdditionalActivityGuides[landmark.slug];
+    if (!guide) throw new Error(`Missing Vang Vieng guide: ${landmark.slug}`);
+    return page(
+      landmark,
+      'vang-vieng',
+      'Vang Vieng',
+      guide.intro,
+      guide.fieldNote,
+      vangViengLandmarkRelated[landmark.slug] || []
+    );
+  })
 ];
 
 export const laosLandmarkPageBySlug = Object.fromEntries(
