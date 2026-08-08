@@ -4,6 +4,7 @@ import CityPostcardHero from '../../components/CityPostcardHero.astro';
 import VangViengEditorialGuide from '../../components/VangViengEditorialGuide.astro';
 import ExploreBoard from '../../components/ExploreBoard.astro';
 import LandmarkModalSet from '../../components/LandmarkModalSet.astro';
+import LandmarkCategoryCard from '../../components/LandmarkCategoryCard.astro';
 import CityCategorySPA from '../../components/TravelDeskCategorySPA.astro';
 import CityCategoryPanel from '../../components/TravelDeskCategoryPanel.astro';
 import PlaceCard from '../../components/PlaceCard.astro';
@@ -14,8 +15,7 @@ import {
   vangViengFitness,
   vangViengGuesthouses,
   vangViengMarkets,
-  vangViengScooterRentals,
-  vangViengThingsToDo
+  vangViengScooterRentals
 } from '../../data/vangViengResolvedPlaces';
 import { vangViengRestaurants } from '../../data/vangViengRestaurants';
 import vangViengDrawingUrl from '../../../calque SVG/laos-bolaven-coffee-waterfall.webp?url';
@@ -27,30 +27,49 @@ const vangViengPostcardFacts = [
   { label: 'Vientiane Province', icon: 'location' as const }
 ];
 
-const categoryTabs = [
+const practicalCategories = [
   { slug: 'restaurants', title: 'Restaurants', kicker: 'EAT · LOCAL · SLOW', icon: 'restaurants' as const, noun: 'restaurants', fieldNote: '01', places: vangViengRestaurants },
   { slug: 'cafes', title: 'Cafés', kicker: 'COFFEE · PAUSE · SHADE', icon: 'cafes' as const, noun: 'cafés', fieldNote: '02', places: vangViengCafes },
   { slug: 'accommodation', title: 'Guesthouses', kicker: 'SLEEP · SIMPLE · CENTRAL', icon: 'guesthouses' as const, noun: 'stays', fieldNote: '03', places: vangViengGuesthouses },
   { slug: 'scooter-rental', title: 'Scooter Rental', kicker: 'KEYS · HELMET · ROAD', icon: 'scooter' as const, noun: 'rental addresses', fieldNote: '04', places: vangViengScooterRentals },
-  { slug: 'things-to-do', title: 'Things to do', kicker: 'CAVES · WATER · EXPLORE', icon: 'explore' as const, noun: 'experiences', fieldNote: '05', places: vangViengThingsToDo },
   { slug: 'gyms-fitness', title: 'Gyms & Fitness', kicker: 'TRAIN · MOVE · SWEAT', icon: 'gyms' as const, noun: 'places to train', fieldNote: '06', places: vangViengFitness },
   { slug: 'markets-shopping', title: 'Markets & Shopping', kicker: 'MARKETS · GOODS · FINDS', icon: 'markets' as const, noun: 'markets and shops', fieldNote: '07', places: vangViengMarkets },
   { slug: 'essential-information', title: 'Essential Information', kicker: 'HEALTH · MONEY · BASICS', icon: 'essential' as const, noun: 'useful addresses', fieldNote: '08', places: vangViengEssentialInformation }
 ];
 
-const spaTabs = categoryTabs.map(({ slug, title, kicker, icon, places }) => ({
-  slug,
-  title,
-  kicker,
-  icon,
-  count: places.length,
-  ...(places.length === 0 ? { countLabel: 'notes soon' } : {})
-}));
+const firstPracticalCategories = practicalCategories.slice(0, 4);
+const laterPracticalCategories = practicalCategories.slice(4);
+
+const spaTabs = [
+  ...firstPracticalCategories.map(({ slug, title, kicker, icon, places }) => ({
+    slug,
+    title,
+    kicker,
+    icon,
+    count: places.length,
+    ...(places.length === 0 ? { countLabel: 'notes soon' } : {})
+  })),
+  {
+    slug: 'things-to-do',
+    title: 'Things to do',
+    kicker: 'CAVES · WATER · EXPLORE',
+    icon: 'explore' as const,
+    count: vangViengLandmarks.length
+  },
+  ...laterPracticalCategories.map(({ slug, title, kicker, icon, places }) => ({
+    slug,
+    title,
+    kicker,
+    icon,
+    count: places.length,
+    ...(places.length === 0 ? { countLabel: 'notes soon' } : {})
+  }))
+];
 ---
 
 <BaseLayout
   title="Things to do in Vang Vieng, Laos"
-  description="Prepare a stay in Vang Vieng with restaurants, cafés, guesthouses, scooter rentals, gyms, markets, lagoons, caves, viewpoints, healthcare and transport information."
+  description="Prepare a stay in Vang Vieng with detailed field notes for lagoons, caves, viewpoints, climbing, ziplining and aerial experiences, plus restaurants, cafés, stays and practical addresses."
   canonical="https://thingstodoatlas.com/laos/vang-vieng"
 >
   <main class="vang-vieng-page">
@@ -79,8 +98,8 @@ const spaTabs = categoryTabs.map(({ slug, title, kicker, icon, places }) => ({
       landmarks={vangViengLandmarks}
       eyebrow="What can I actually do from Vang Vieng?"
       title="Explore from Vang Vieng"
-      intro="Fly above the Nam Song and limestone valley, or place the remote Phou Bia expedition in the wider Laos journey notebook."
-      note="One experience begins above town; the other requires several days, current permission and serious preparation."
+      intro="Swim beyond the rice fields, climb the karst, enter the cave systems or see the Nam Song valley from the air. Every activity below opens its complete field note with route, timing, conditions and the details worth checking before you leave town."
+      note="Choose the experience first. Then let weather, water and road conditions decide the exact day."
       wide
     />
 
@@ -93,7 +112,7 @@ const spaTabs = categoryTabs.map(({ slug, title, kicker, icon, places }) => ({
       transitionTitle="Now for the practical side."
       transitionText="Eat · sleep · explore · prepare the road ahead"
     >
-      {categoryTabs.map((category, index) => (
+      {firstPracticalCategories.map((category, index) => (
         <CityCategoryPanel
           slug={category.slug}
           cityName="Vang Vieng"
@@ -103,6 +122,47 @@ const spaTabs = categoryTabs.map(({ slug, title, kicker, icon, places }) => ({
           intro=""
           fieldNote={category.fieldNote}
           active={index === 0}
+        >
+          {category.places.length ? (
+            <div class="city-panel-list">
+              {category.places.map((place, placeIndex) => (
+                <PlaceCard place={place} index={placeIndex} />
+              ))}
+            </div>
+          ) : (
+            <div class="city-panel-empty">
+              <h4>This notebook tab is ready.</h4>
+              <p>Checked Vang Vieng addresses will appear here as the city guide is documented.</p>
+            </div>
+          )}
+        </CityCategoryPanel>
+      ))}
+
+      <CityCategoryPanel
+        slug="things-to-do"
+        cityName="Vang Vieng"
+        title="Things to do"
+        count={vangViengLandmarks.length}
+        noun="field notes"
+        intro=""
+        fieldNote="05"
+      >
+        <div class="city-panel-list">
+          {vangViengLandmarks.map((landmark, index) => (
+            <LandmarkCategoryCard landmark={landmark} index={index} />
+          ))}
+        </div>
+      </CityCategoryPanel>
+
+      {laterPracticalCategories.map((category) => (
+        <CityCategoryPanel
+          slug={category.slug}
+          cityName="Vang Vieng"
+          title={category.title}
+          count={category.places.length}
+          noun={category.noun}
+          intro=""
+          fieldNote={category.fieldNote}
         >
           {category.places.length ? (
             <div class="city-panel-list">
