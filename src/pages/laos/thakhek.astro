@@ -15,8 +15,7 @@ import {
   thakhekGuesthouses,
   thakhekMarkets,
   thakhekRestaurants,
-  thakhekScooterRentals,
-  thakhekThingsToDo
+  thakhekScooterRentals
 } from '../../data/thakhekExpandedPlaces';
 import thakhekDrawingUrl from '../../../calque SVG/laos-northern-road-tuk-tuk.webp?url';
 
@@ -91,7 +90,7 @@ const categoryTabs = [
     title: 'Things to do',
     kicker: 'CAVES · WATER · EXPLORE',
     icon: 'explore' as const,
-    count: thakhekLandmarks.length + thakhekThingsToDo.length
+    count: thakhekLandmarks.length
   }
 ];
 ---
@@ -125,7 +124,7 @@ const categoryTabs = [
       landmarks={thakhekLandmarks}
       eyebrow="What can I actually do from Thakhek?"
       title="Explore from Thakhek"
-      intro="Thakhek is the starting point for the limestone roads of Khammouane. Choose a cave journey to open its complete field note, practical details and route information."
+      intro="Thakhek is the starting point for the limestone roads of Khammouane. Open a river cave, a smaller cave detour or a swimming stop to read the complete field note, practical details and route information."
       note="The town is the base. The loop begins when the road turns east."
       wide
     />
@@ -167,17 +166,14 @@ const categoryTabs = [
         slug="things-to-do"
         cityName="Thakhek"
         title="Things to do"
-        count={thakhekLandmarks.length + thakhekThingsToDo.length}
-        noun="places and field notes"
+        count={thakhekLandmarks.length}
+        noun="field notes"
         intro=""
         fieldNote="07"
       >
         <div class="city-panel-list">
           {thakhekLandmarks.map((landmark, index) => (
             <LandmarkCategoryCard landmark={landmark} index={index} />
-          ))}
-          {thakhekThingsToDo.map((place, index) => (
-            <MapAddressCard place={place} cityName="Thakhek" index={index + thakhekLandmarks.length} />
           ))}
         </div>
       </CityCategoryPanel>
