@@ -120,7 +120,8 @@ export const laosLandmarkGuides: Record<string, LandmarkVisitGuide> = {
       {
         label: '01 · ROUTE',
         title: 'How to get there',
-        text: 'Approach from the Thakhek and Route 12 side, then continue toward the remote villages near the cave. The final roads can be rough and are not a place to improvise after dark. Arrange a local guide and confirm the meeting point before starting the last section.'
+        text: 'From Thakhek, follow Highway 12 east for about 130 km toward the Vietnamese border. At Nongchan, turn right: the paved road ends here and the dirt road begins. Continue toward Ban Xoang and then Bualapha. Between these villages you reach the Xe Bang Fai River; cross by ferry, with a motorbike crossing reported at around 15,000 kip. Once in Bualapha, continue toward Ban Natoy, then Ban Gnavet and Ban Kouankaphoung. From Ban Natoy onward, the smaller villages and tracks may be easier to follow with an offline map such as Maps.me. At Ban Kouankaphoung the road forks: take the right-hand track and continue to the end of the road for the cave entrance. The final roads are remote and can be rough, so leave enough daylight, arrange a local guide and reconfirm the route, ferry and access conditions before departure.',
+        note: 'Route: Thakhek → Highway 12 → Nongchan → Ban Xoang → Xe Bang Fai ferry → Bualapha → Ban Natoy → Ban Gnavet → Ban Kouankaphoung → right-hand track → cave entrance.'
       },
       {
         label: '02 · MONEY',
