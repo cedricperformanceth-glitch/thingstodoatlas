@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import EditorialGuidePage from '../../../components/EditorialGuidePage.astro';
+import { laosCityEditorialPages, type EditorialGuidePageMeta } from '../../../data/editorialGuidePageRegistry';
+
+export function getStaticPaths() {
+  return laosCityEditorialPages.map((entry) => ({
+    params: { city: entry.slug },
+    props: { entry }
+  }));
+}
+
+interface Props {
+  entry: EditorialGuidePageMeta;
+}
+
+const { entry } = Astro.props;
+const title = `${entry.guide.destination} travel field guide`;
+const description = entry.guide.subtitle;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={`https://thingstodoatlas.com${entry.route}`}
+>
+  <EditorialGuidePage entry={entry} />
+</BaseLayout>
