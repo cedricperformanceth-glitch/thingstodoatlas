@@ -38,10 +38,33 @@ const heroCredit = sourceCaption(hero);
 const secondCredit = sourceCaption(second);
 const thirdCredit = sourceCaption(third);
 
-const questions = facts.slice(0, 5).map((item) => ({
-  question: item.label.endsWith('?') ? item.label : `${item.label}?`,
-  answer: item.value
-}));
+const questions = isXeBangFai
+  ? [
+      {
+        question: 'Can Xe Bang Fai Cave be visited as a day trip from Thakhek?',
+        answer: 'Yes, but it should be the centre of the day rather than one more stop. The boat visit itself is relatively short; the long road, rough final tracks, ferry and local coordination are what make the schedule demanding.'
+      },
+      {
+        question: 'Can you visit Xe Bang Fai Cave during the rainy season?',
+        answer: 'Hin Nam No advises against entering the river cave from June to October, when flows can become dangerous. Road access can also deteriorate quickly, so reconfirm river and track conditions locally before leaving Thakhek.'
+      },
+      {
+        question: 'Do you need a guide for Xe Bang Fai Cave?',
+        answer: 'Yes. The cave visit is guided, and local coordination matters for the boat, river conditions and the remote final approach. Do not enter the cave or surrounding forest route independently.'
+      },
+      {
+        question: 'Where can you stay near Xe Bang Fai Cave?',
+        answer: 'Ban Nong Ping has homestays, a village lodge and simple bungalows close to the river. Staying nearby removes the pressure of making the long return journey immediately after the cave.'
+      },
+      {
+        question: 'How long is the Xe Bang Fai Cave boat trip?',
+        answer: 'The standard local boat visit is about ninety minutes. The complete trip needs much more time because the road from Thakhek, river crossing and final access turn Xe Bang Fai into a full-day or overnight journey.'
+      }
+    ]
+  : facts.slice(0, 5).map((item) => ({
+      question: item.label.endsWith('?') ? item.label : `${item.label}?`,
+      answer: item.value
+    }));
 ---
 
 <main class="field-guide-page">
@@ -62,6 +85,7 @@ const questions = facts.slice(0, 5).map((item) => ({
       <div class="field-guide-hero__copy">
         <p class="field-guide-kicker">{guide.eyebrow}</p>
         <h1 id={`landmark-title-${entry.slug}`}>{landmark.name}</h1>
+        {isXeBangFai && <p class="field-guide-aliases">Hin Nam No · Khammouane · Remote river cave</p>}
         <p class="field-guide-deck">{entry.editorialAngle}</p>
 
         <div class="field-guide-axis field-guide-axis--four" aria-label={`${landmark.name} visit rhythm`}>
@@ -214,7 +238,7 @@ const questions = facts.slice(0, 5).map((item) => ({
         </section>
         <section class="field-guide-section">
           <p class="section-label">FIELD NOTE · BEFORE YOU LEAVE</p>
-          <h2>What matters more than another pin</h2>
+          <h2>{isXeBangFai ? 'Inside Hin Nam No, beyond the photograph' : 'What matters more than another pin'}</h2>
           <p>{entry.editorialAngle}</p>
           <p>{pageFieldNote?.beforeYouLeave || guide.fieldNote}</p>
         </section>
@@ -269,7 +293,7 @@ const questions = facts.slice(0, 5).map((item) => ({
     <section class="field-guide-faq" aria-labelledby={`landmark-faq-${entry.slug}`}>
       <p class="section-label">QUESTIONS BEFORE GOING</p>
       <h2 id={`landmark-faq-${entry.slug}`}>{landmark.name}, without the guesswork</h2>
-      <p class="field-guide-faq__intro">Short answers built from the practical field information already attached to this landmark.</p>
+      <p class="field-guide-faq__intro">{isXeBangFai ? 'The questions that matter when the road, river and local coordination shape the visit.' : 'Short answers built from the practical field information already attached to this landmark.'}</p>
       {questions.map((item, index) => (
         <details open={index === 0}>
           <summary>{item.question}</summary>
