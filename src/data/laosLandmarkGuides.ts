@@ -113,7 +113,7 @@ export const laosLandmarkGuides: Record<string, LandmarkVisitGuide> = {
   'xe-bang-fai-cave': {
     eyebrow: 'EXPEDITION NOTE · KHAMMOUANE',
     intro: 'Xe Bang Fai is a remote river-cave expedition, not a casual roadside attraction. The final roads, local guide, boat journey and changing water conditions all need to be organised before arrival.',
-    budget: 'Moderate to high',
+    budget: 'Around 50,000 kip entry · boat extra',
     duration: 'Full day minimum · often multi-day',
     bestFor: 'Remote adventure and guided cave travel',
     sections: [
@@ -126,7 +126,7 @@ export const laosLandmarkGuides: Record<string, LandmarkVisitGuide> = {
       {
         label: '02 · MONEY',
         title: 'What the budget feels like',
-        text: 'This costs more than a normal viewpoint because transport, guide and boat arrangements are part of the experience. Prices vary according to access and group size, so agree on what is included before departure. Carry sufficient cash; remote villages may not offer reliable payment services.'
+        text: 'Recent visitor reports put the entrance at around 50,000 kip per person, with motorbike parking around 10,000 kip. A small local boat has recently been reported at around 150,000 kip, while larger boats may cost more depending on the group. The boat is the part of the visit worth making room for: once you leave the riverbank and move into the darkness, the scale of Xe Bang Fai really begins to make sense. Prices and boat capacity can change between seasons, so treat these figures as a useful reference and confirm the current rate at the park office when you arrive.'
       },
       {
         label: '03 · TIME',
