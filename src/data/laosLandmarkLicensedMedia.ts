@@ -163,4 +163,9 @@ export const laosLandmarkLicensedMedia: Record<string, LandmarkGalleryItem[]> = 
 export const getLicensedLandmarkGallery = (
   slug: string,
   fallback: LandmarkGalleryItem[] = []
-): LandmarkGalleryItem[] => laosLandmarkLicensedMedia[slug] || fallback;
+): LandmarkGalleryItem[] => {
+  if (slug === 'xe-bang-fai-cave' && fallback.length >= 3) {
+    return [fallback[1], fallback[0], fallback[2]];
+  }
+  return laosLandmarkLicensedMedia[slug] || fallback;
+};
