@@ -10,6 +10,7 @@ import { khonePhaphengLandmarkGuide } from './khonePhaphengLandmarkGuide';
 import { kongLorLandmarkGuide } from './kongLorLandmarkGuide';
 import { tadLoAdditionalActivityGuides } from './tadLoAdditionalActivityGuides';
 import { thakhekAdditionalActivityGuides } from './thakhekAdditionalActivityGuides';
+import { donDetAdditionalActivityGuides } from './donDetAdditionalActivityGuides';
 
 export type LaosLandmarkPageEntry = {
   slug: string;
@@ -68,7 +69,8 @@ const researchedGuides: Record<string, LandmarkVisitGuide> = {
   'khone-phapheng-falls': khonePhaphengLandmarkGuide,
   'kong-lor-cave': kongLorLandmarkGuide,
   ...tadLoAdditionalActivityGuides,
-  ...thakhekAdditionalActivityGuides
+  ...thakhekAdditionalActivityGuides,
+  ...donDetAdditionalActivityGuides
 };
 
 const page = (
@@ -141,15 +143,47 @@ export const laosLandmarkPages: LaosLandmarkPageEntry[] = [
   page(requireCityLandmark(donDetLandmarks, 'khone-phapheng-falls'), 'don-det', 'Don Det',
     'Khone Phapheng is the breaking point of the Mekong: a vast multi-channel cataract whose scale shaped the ecology of Si Phan Don, blocked continuous navigation and eventually forced the French railway bypass across Don Khon and Don Det.',
     'Give the river space. Read the waterfall, the islands and the old railway as one connected Mekong story.',
-    ['don-khon-railway-bridge', 'cambodia-from-don-det', 'wat-phou', 'bolaven-plateau']),
+    ['don-khon-railway-bridge', 'li-phi-somphamit-waterfalls', 'si-phan-don-boat-exploration', 'cambodia-from-don-det']),
   page(requireCityLandmark(donDetLandmarks, 'don-khon-railway-bridge'), 'don-det', 'Don Det',
     'The bridge matters because it changes the island day: cross it slowly, continue onto Don Khon and let the old railway traces connect the history with the bicycle route.',
     'Cross the bridge, then keep going. The island route begins after the obvious landmark.',
-    ['khone-phapheng-falls', 'cambodia-from-don-det', 'bolaven-plateau', 'wat-phou']),
+    ['li-phi-somphamit-waterfalls', 'xai-kong-nyai-beach', 'khone-pa-soi-waterfall', 'khone-phapheng-falls']),
   page(requireCityLandmark(donDetLandmarks, 'cambodia-from-don-det'), 'don-det', 'Don Det',
     'This is a travel-day guide rather than a sightseeing stop. The useful content is the sequence: island departure, Nakasang, road transfer, border formalities and enough time margin for the onward journey.',
     'Treat the border as the whole day, not as a gap between two bookings.',
-    ['don-khon-railway-bridge', 'khone-phapheng-falls', 'wat-phou', 'bolaven-plateau']),
+    ['khone-phapheng-falls', 'si-phan-don-boat-exploration', 'don-khon-railway-bridge', 'don-som-island']),
+  page(requireCityLandmark(donDetLandmarks, 'e-toud-waterfall'), 'don-det', 'Don Det',
+    'E-Toud is a river-day stop rather than an independent waterfall mission: the guided kayak route, changing current and overland transfers matter more than the few minutes spent at the cataract itself.',
+    'E-Toud is earned from the river. Follow the guide, protect your gear and let the Mekong set the route.',
+    ['si-phan-don-boat-exploration', 'don-som-island', 'khone-phapheng-falls', 'hidden-waterfall-boat-trip']),
+  page(requireCityLandmark(donDetLandmarks, 'don-som-island'), 'don-det', 'Don Det',
+    'Don Som is the anti-attraction: a nearby agricultural island where the boat crossing, bicycle roads, villages and ordinary river life are the reason to go.',
+    'Don Som is not a sightseeing checklist. Cross the river, arrange the way back, then let the island stay ordinary.',
+    ['si-phan-don-boat-exploration', 'e-toud-waterfall', 'don-khon-railway-bridge', 'hidden-waterfall-boat-trip']),
+  page(requireCityLandmark(donDetLandmarks, 'khone-pa-soi-waterfall'), 'don-det', 'Don Det',
+    'Khone Pa Soi is the quieter waterfall route on Don Khon: rougher tracks, a suspension bridge and the old Teak Way give the stop a completely different character from the developed Somphamit park.',
+    'Take the quieter road, check the bridge and remember that “smaller” does not make the Mekong gentle.',
+    ['don-khon-railway-bridge', 'li-phi-somphamit-waterfalls', 'xai-kong-nyai-beach', 'mekong-fly-zipline']),
+  page(requireCityLandmark(donDetLandmarks, 'hidden-waterfall-boat-trip'), 'don-det', 'Don Det',
+    'The hidden-waterfall trip stays deliberately imprecise: recent local guest reports verify the excursion, but not one stable official attraction name or public route. The page therefore teaches the traveller how to arrange it without inventing certainty.',
+    'No fake pin, no fake timetable. Ask locally what the hidden-waterfall trip means today.',
+    ['si-phan-don-boat-exploration', 'e-toud-waterfall', 'don-som-island', 'xai-kong-nyai-beach']),
+  page(requireCityLandmark(donDetLandmarks, 'xai-kong-nyai-beach'), 'don-det', 'Don Det',
+    'Xai Kong Nyai is the slow part of a Don Khon bicycle day: a sandy bank, simple food and cautious swimming close to shore after the louder waterfall stops.',
+    'Stay near the bank, eat slowly and let this be the quiet part of the Don Khon loop.',
+    ['li-phi-somphamit-waterfalls', 'don-khon-railway-bridge', 'khone-pa-soi-waterfall', 'mekong-fly-zipline']),
+  page(requireCityLandmark(donDetLandmarks, 'si-phan-don-boat-exploration'), 'don-det', 'Don Det',
+    'A long-tail boat turns Si Phan Don back into an archipelago: inhabited islands, farming islets and working channels matter more than one fixed tour itinerary.',
+    'Choose the river, not a checklist. Let the boatman connect the islands that make sense that day.',
+    ['don-som-island', 'hidden-waterfall-boat-trip', 'e-toud-waterfall', 'khone-phapheng-falls']),
+  page(requireCityLandmark(donDetLandmarks, 'li-phi-somphamit-waterfalls'), 'don-det', 'Don Det',
+    'Somphamit is the defining Don Khon waterfall visit: cycle across the railway bridge, follow the developed viewpoints and read a section of Mekong whose force made navigation and swimming fundamentally dangerous.',
+    'Cycle there for the river, not the add-ons. The strongest experience is simply watching the Mekong refuse to be a normal channel.',
+    ['mekong-fly-zipline', 'xai-kong-nyai-beach', 'khone-pa-soi-waterfall', 'don-khon-railway-bridge']),
+  page(requireCityLandmark(donDetLandmarks, 'mekong-fly-zipline'), 'don-det', 'Don Det',
+    'The Mekong Fly adds a guided aerial layer to Somphamit: seven lines, suspended bridges and the rapids directly below, with operator judgement and harness discipline more important than the photograph.',
+    'Book the height only after you have read the water below it. The operator controls the course; the Mekong controls the atmosphere.',
+    ['li-phi-somphamit-waterfalls', 'xai-kong-nyai-beach', 'khone-pa-soi-waterfall', 'don-khon-railway-bridge']),
 
   page(requireCityLandmark(luangPrabangExploreLandmarks, 'pha-pa-tou'), 'luang-prabang', 'Luang Prabang',
     'Pha Pa Tou is a small expedition: river crossing, forest climb and a very simple mountain stay. The sunrise only makes sense when the approach is treated as part of the experience.',
