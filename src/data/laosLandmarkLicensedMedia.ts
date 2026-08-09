@@ -1,4 +1,5 @@
 import type { LandmarkGalleryItem } from './laosLandmarks';
+import { getProtectedPlaceImage } from './placeImageResolver';
 
 const commons = (
   fileName: string,
@@ -178,12 +179,35 @@ export const laosLandmarkLicensedMedia: Record<string, LandmarkGalleryItem[]> = 
   ]
 };
 
+const protectedLeadImage = (
+  slug: string,
+  fallback: LandmarkGalleryItem[]
+): LandmarkGalleryItem | undefined => {
+  const protectedImage = getProtectedPlaceImage(slug);
+  if (!protectedImage?.selectedImage) return undefined;
+
+  const fallbackAlt = fallback[0]?.alt || slug.replaceAll('-', ' ');
+  return {
+    src: protectedImage.selectedImage,
+    alt: fallbackAlt,
+    sourcePage: protectedImage.sourcePage || protectedImage.imageSourceUrl || undefined,
+    author: protectedImage.imageAuthor || protectedImage.sourceName || undefined,
+    license: protectedImage.imageLicense || undefined
+  };
+};
+
 export const getLicensedLandmarkGallery = (
   slug: string,
   fallback: LandmarkGalleryItem[] = []
 ): LandmarkGalleryItem[] => {
+  let gallery = laosLandmarkLicensedMedia[slug] || fallback;
+
   if (slug === 'xe-bang-fai-cave' && fallback.length >= 3) {
-    return [fallback[1], fallback[0], fallback[2]];
+    gallery = [fallback[1], fallback[0], fallback[2]];
   }
-  return laosLandmarkLicensedMedia[slug] || fallback;
+
+  const lead = protectedLeadImage(slug, gallery.length ? gallery : fallback);
+  if (!lead) return gallery;
+
+  return [lead, ...gallery.filter((image) => image.src !== lead.src)];
 };
