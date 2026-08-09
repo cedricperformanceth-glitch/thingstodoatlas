@@ -1,4 +1,6 @@
 ---
+import { getLicensedLandmarkGallery } from '../data/laosLandmarkLicensedMedia';
+
 interface ExploreBoardImage {
   src: string;
   alt?: string;
@@ -14,6 +16,7 @@ interface ExploreBoardContext {
 interface ExploreBoardLandmark {
   modalId: string;
   name: string;
+  slug?: string;
   gallery: ExploreBoardImage[];
   cityContext: ExploreBoardContext;
 }
@@ -39,6 +42,10 @@ const {
   wide = false,
   decorationVariant = 'none'
 } = Astro.props;
+
+if (landmarks.length !== 3) {
+  throw new Error(`ExploreBoard for ${cityName} requires exactly 3 curated entries; received ${landmarks.length}.`);
+}
 
 const sectionId = `explore-board-${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 const thumbnailSrc = (src?: string) => src ? src.replace(/([?&])width=\d+/i, '$1width=720') : '';
@@ -101,39 +108,45 @@ const showPakseDecorations = decorationVariant === 'pakse';
       </header>
 
       <div class="explore-board__content" aria-label={`Landmarks and journeys to explore from ${cityName}`}>
-        {landmarks.map((landmark, index) => (
-          <button
-            class:list={['explore-board-card', `explore-board-card--${index % 3}`]}
-            type="button"
-            data-open-landmark={landmark.modalId}
-            aria-label={`Open the complete ${landmark.name} field note`}
-          >
-            <span class="explore-board-card__photo">
-              <span class="explore-board-card__tape" aria-hidden="true"></span>
-              <img
-                src={thumbnailSrc(landmark.gallery[0]?.src)}
-                alt={landmark.gallery[0]?.alt || landmark.name}
-                width="480"
-                height="270"
-                loading="lazy"
-                decoding="async"
-              />
-              <span class="explore-board-card__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-            </span>
+        {landmarks.map((landmark, index) => {
+          const image = landmark.slug
+            ? getLicensedLandmarkGallery(landmark.slug, landmark.gallery as any)[0]
+            : landmark.gallery[0];
 
-            <span class="explore-board-card__copy">
-              <small>{landmark.cityContext.kicker}</small>
-              <strong>{landmark.name}</strong>
-              <span class="explore-board-card__summary">{landmark.cityContext.summary}</span>
-              <span class="explore-board-card__meta">
-                <span>{landmark.cityContext.duration}</span>
-                <i aria-hidden="true"></i>
-                <span>{landmark.cityContext.route}</span>
+          return (
+            <button
+              class:list={['explore-board-card', `explore-board-card--${index % 3}`]}
+              type="button"
+              data-open-landmark={landmark.modalId}
+              aria-label={`Open the complete ${landmark.name} field note`}
+            >
+              <span class="explore-board-card__photo">
+                <span class="explore-board-card__tape" aria-hidden="true"></span>
+                <img
+                  src={thumbnailSrc(image?.src)}
+                  alt={image?.alt || landmark.name}
+                  width="480"
+                  height="270"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="explore-board-card__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
               </span>
-              <span class="explore-board-card__action">open the field note <b aria-hidden="true">↗</b></span>
-            </span>
-          </button>
-        ))}
+
+              <span class="explore-board-card__copy">
+                <small>{landmark.cityContext.kicker}</small>
+                <strong>{landmark.name}</strong>
+                <span class="explore-board-card__summary">{landmark.cityContext.summary}</span>
+                <span class="explore-board-card__meta">
+                  <span>{landmark.cityContext.duration}</span>
+                  <i aria-hidden="true"></i>
+                  <span>{landmark.cityContext.route}</span>
+                </span>
+                <span class="explore-board-card__action">open the field note <b aria-hidden="true">↗</b></span>
+              </span>
+            </button>
+          );
+        })}
       </div>
 
       <footer class="explore-board__footer">
