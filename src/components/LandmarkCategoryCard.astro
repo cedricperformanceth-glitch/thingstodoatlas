@@ -1,5 +1,6 @@
 ---
 import type { CityLandmark } from '../data/laosLandmarks';
+import { getLicensedLandmarkGallery } from '../data/laosLandmarkLicensedMedia';
 
 interface Props {
   landmark: CityLandmark;
@@ -8,7 +9,7 @@ interface Props {
 
 const { landmark, index = 0 } = Astro.props;
 const cardNumber = String(index + 1).padStart(2, '0');
-const image = landmark.gallery[0];
+const image = getLicensedLandmarkGallery(landmark.slug, landmark.gallery)[0];
 ---
 
 <article class="landmark-category-card" id={`category-${landmark.slug}`}>
