@@ -4,6 +4,8 @@ export type ImageResult = {
   slug?: string;
   selectedImage?: string | null;
   status?: string;
+  sourcePage?: string | null;
+  sourceName?: string | null;
   sourceType?: string;
   imageSourceUrl?: string | null;
   imageSourceType?: string;
@@ -30,9 +32,7 @@ const priority = (result: ImageResult) => {
   const image = result.selectedImage!;
   const source = result.imageSourceType ?? result.sourceType ?? '';
 
-  // The order intentionally mirrors the editorial policy. A valid original
-  // atlas image remains the final fallback and is never replaced by a generic
-  // candidate when a stronger selection exists.
+  // Manual/local editorial choices always outrank generated candidates.
   if (source === 'user-supplied' && isLocalImage(image)) return 600;
   if (isLocalImage(image)) return 500;
   if (result.imageIsGeneric === false) return 400;
@@ -61,6 +61,22 @@ for (const source of candidateSources) {
     if (!current || priority(candidate) >= priority(current)) imageBySlug.set(candidate.slug, candidate);
   }
 }
+
+/**
+ * Return only an authored/exact image strong enough to lead a card or field guide.
+ * Generic discovery fallbacks are deliberately excluded so an automated search can
+ * never become the hero image merely because no better result was found.
+ */
+export const getProtectedPlaceImage = (slug: string): ImageResult | undefined => {
+  const candidate = imageBySlug.get(slug);
+  if (!candidate?.selectedImage) return undefined;
+
+  const source = candidate.imageSourceType ?? candidate.sourceType ?? '';
+  if (source === 'user-supplied') return candidate;
+  if (isLocalImage(candidate.selectedImage)) return candidate;
+  if (candidate.imageIsGeneric === false) return candidate;
+  return undefined;
+};
 
 export const resolvePlaceImage = <T extends ImageablePlace>(place: T): T => {
   const candidate = imageBySlug.get(place.slug);
