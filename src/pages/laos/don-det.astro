@@ -23,6 +23,10 @@ const donDetPostcardFacts = [
   { label: 'Si Phan Don', icon: 'location' as const }
 ];
 
+const donDetExploreLandmarks = donDetLandmarks.filter((landmark) =>
+  ['don-khon-railway-bridge', 'khone-phapheng-falls', 'cambodia-from-don-det'].includes(landmark.slug)
+);
+
 const getStaySide = (address: string) => {
   const normalizedAddress = address.toLowerCase();
   if (normalizedAddress.includes('sunset')) return 'Sunset side';
@@ -119,11 +123,11 @@ const categoryTabs = [
 
     <ExploreBoard
       cityName="Don Det"
-      landmarks={donDetLandmarks}
+      landmarks={donDetExploreLandmarks}
       eyebrow="What can I actually do from Don Det?"
       title="Explore from Don Det"
-      intro="Cycle into Don Khon, read the Mekong waterfalls, kayak through the channels, cross to quieter islands or build a slow boat day through Si Phan Don. Every route below opens its complete field note."
-      note="Here, the road narrows into island paths — then the river becomes the route."
+      intro="Cross into Don Khon, follow the old railway route, stand above the southern Mekong falls, or use the island as the final Lao stop before Cambodia."
+      note="Three larger journeys frame the island stay: Don Khon, Khone Phapheng and the road south."
       wide
     />
 
