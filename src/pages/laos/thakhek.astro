@@ -26,6 +26,10 @@ const thakhekPostcardFacts = [
   { label: 'Khammouane Province', icon: 'location' as const }
 ];
 
+const thakhekExploreLandmarks = thakhekLandmarks.filter((landmark) =>
+  ['kong-lor-cave', 'xe-bang-fai-cave', 'tham-nang-aen-cave'].includes(landmark.slug)
+);
+
 const mapCategories = [
   {
     slug: 'restaurants',
@@ -121,11 +125,11 @@ const categoryTabs = [
 
     <ExploreBoard
       cityName="Thakhek"
-      landmarks={thakhekLandmarks}
+      landmarks={thakhekExploreLandmarks}
       eyebrow="What can I actually do from Thakhek?"
       title="Explore from Thakhek"
-      intro="Thakhek is the starting point for the limestone roads of Khammouane. Open a river cave, a smaller cave detour or a swimming stop to read the complete field note, practical details and route information."
-      note="The town is the base. The loop begins when the road turns east."
+      intro="Start with the three defining cave journeys: Kong Lor’s underground river, the remote Xe Bang Fai expedition and the accessible chambers of Tham Nang Aen."
+      note="Three different scales of Khammouane cave country, all starting from Thakhek."
       wide
     />
 
