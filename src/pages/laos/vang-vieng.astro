@@ -27,6 +27,10 @@ const vangViengPostcardFacts = [
   { label: 'Vientiane Province', icon: 'location' as const }
 ];
 
+const vangViengExploreLandmarks = vangViengLandmarks.filter((landmark) =>
+  ['hot-air-balloon-paramotor-vang-vieng', 'phou-bia-from-vang-vieng'].includes(landmark.slug)
+);
+
 const practicalCategories = [
   { slug: 'restaurants', title: 'Restaurants', kicker: 'EAT · LOCAL · SLOW', icon: 'restaurants' as const, noun: 'restaurants', fieldNote: '01', places: vangViengRestaurants },
   { slug: 'cafes', title: 'Cafés', kicker: 'COFFEE · PAUSE · SHADE', icon: 'cafes' as const, noun: 'cafés', fieldNote: '02', places: vangViengCafes },
@@ -95,11 +99,11 @@ const spaTabs = [
 
     <ExploreBoard
       cityName="Vang Vieng"
-      landmarks={vangViengLandmarks}
+      landmarks={vangViengExploreLandmarks}
       eyebrow="What can I actually do from Vang Vieng?"
       title="Explore from Vang Vieng"
-      intro="Swim beyond the rice fields, climb the karst, enter the cave systems or see the Nam Song valley from the air. Every activity below opens its complete field note with route, timing, conditions and the details worth checking before you leave town."
-      note="Choose the experience first. Then let weather, water and road conditions decide the exact day."
+      intro="Fly above the Nam Song and limestone valley, or place the remote Phou Bia expedition in the wider Laos journey notebook."
+      note="One experience begins above town; the other requires several days, current permission and serious preparation."
       wide
     />
 
