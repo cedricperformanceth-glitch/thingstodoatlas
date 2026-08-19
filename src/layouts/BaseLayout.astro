@@ -24,12 +24,19 @@ import LaosEditorialGuideLink from '../components/LaosEditorialGuideLink.astro';
 const {
   title,
   description = 'A thoughtful guide to places worth your time across Asia.',
-  canonical = 'https://thingstodoatlas.com/'
+  canonical = 'https://thingstodoatlas.com/',
+  image,
+  imageAlt = title,
+  structuredData
 } = Astro.props;
 
 const normalizedPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const isHomepage = normalizedPath === '/';
 const isLaosMap = normalizedPath === '/laos';
+const socialImage = image ? new URL(image, canonical).href : undefined;
+const structuredDataItems = structuredData
+  ? (Array.isArray(structuredData) ? structuredData : [structuredData])
+  : [];
 ---
 
 <!doctype html>
@@ -45,6 +52,15 @@ const isLaosMap = normalizedPath === '/laos';
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
+    {socialImage && <meta property="og:image" content={socialImage} />}
+    {socialImage && <meta property="og:image:alt" content={imageAlt} />}
+    <meta name="twitter:card" content={socialImage ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={`${title} | ThingsToDoAtlas`} />
+    <meta name="twitter:description" content={description} />
+    {socialImage && <meta name="twitter:image" content={socialImage} />}
+    {structuredDataItems.map((item) => (
+      <script type="application/ld+json" set:html={JSON.stringify(item)} />
+    ))}
   </head>
   <body class={isHomepage ? 'is-homepage' : undefined}>
     <SiteHeader />
