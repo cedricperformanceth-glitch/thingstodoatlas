@@ -52,12 +52,6 @@
   margin-top: -48px;
 }
 
-@media (max-width: 820px) {
-  .field-guide-page .field-guide-layout--xe-time {
-    gap: 58px !important;
-  }
-}
-
 @media (max-width: 620px) {
   .field-guide-ad-slot {
     min-height: 88px;
