@@ -2,6 +2,7 @@
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import LaosLandmarkFieldGuide from '../../../../components/LaosLandmarkFieldGuide.astro';
 import { laosLandmarkPages, type LaosLandmarkPageEntry } from '../../../../data/laosLandmarkPageRegistry';
+import { getLandmarkPagePresentation } from '../../../../data/laosLandmarkPagePresentation';
 import '../../../../styles/wat-phou-field-guide.css';
 import '../../../../styles/wat-phou-refinements.css';
 import '../../../../styles/field-guide-position.css';
@@ -21,14 +22,58 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const title = `${entry.landmark.name} from ${entry.cityName}`;
-const description = `${entry.landmark.description} Practical route, timing, conditions and field notes for planning the visit from ${entry.cityName}.`;
+const presentation = getLandmarkPagePresentation(entry.slug);
+const canonical = `https://thingstodoatlas.com${entry.route}`;
+const title = presentation.seo?.title || `${entry.landmark.name} from ${entry.cityName}`;
+const description = presentation.seo?.description || `${entry.landmark.description} Practical route, timing, conditions and field notes for planning the visit from ${entry.cityName}.`;
+const image = presentation.seo?.image || entry.landmark.gallery[0]?.src;
+const imageAlt = presentation.seo?.imageAlt || entry.landmark.gallery[0]?.alt || entry.landmark.name;
+
+const breadcrumbStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Atlas', item: 'https://thingstodoatlas.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Laos', item: 'https://thingstodoatlas.com/laos' },
+    { '@type': 'ListItem', position: 3, name: entry.cityName, item: `https://thingstodoatlas.com${entry.sourceRoute}` },
+    { '@type': 'ListItem', position: 4, name: entry.landmark.name, item: canonical }
+  ]
+};
+
+const articleStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description,
+  ...(image ? { image: [new URL(image, canonical).href] } : {}),
+  mainEntityOfPage: canonical,
+  about: {
+    '@type': 'Place',
+    name: entry.landmark.name,
+    address: {
+      '@type': 'PostalAddress',
+      addressRegion: entry.landmark.region,
+      addressCountry: 'LA'
+    }
+  },
+  author: {
+    '@type': 'Organization',
+    name: 'ThingsToDoAtlas'
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'ThingsToDoAtlas'
+  }
+};
 ---
 
 <BaseLayout
   title={title}
   description={description}
-  canonical={`https://thingstodoatlas.com${entry.route}`}
+  canonical={canonical}
+  image={image}
+  imageAlt={imageAlt}
+  structuredData={[breadcrumbStructuredData, articleStructuredData]}
 >
   <LaosLandmarkFieldGuide entry={entry} />
 </BaseLayout>
