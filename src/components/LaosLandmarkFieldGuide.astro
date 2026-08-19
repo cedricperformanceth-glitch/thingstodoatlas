@@ -7,6 +7,7 @@ import { laosLandmarkPageEditorial } from '../data/laosLandmarkPageEditorial';
 import { laosLandmarkPageFieldNotes } from '../data/laosLandmarkPageFieldNotes';
 import { laosLandmarkPageFacts } from '../data/laosLandmarkPageFacts';
 import { getLicensedLandmarkGallery } from '../data/laosLandmarkLicensedMedia';
+import { getLandmarkPagePresentation } from '../data/laosLandmarkPagePresentation';
 
 interface Props {
   entry: LaosLandmarkPageEntry;
@@ -16,7 +17,8 @@ const { entry } = Astro.props;
 const { landmark } = entry;
 const guide = laosLandmarkPageEditorial[entry.slug] || entry.guide;
 const pageFieldNote = laosLandmarkPageFieldNotes[entry.slug];
-const isXeBangFai = entry.slug === 'xe-bang-fai-cave';
+const presentation = getLandmarkPagePresentation(entry.slug);
+const isExpeditionLayout = presentation.layoutVariant === 'expedition';
 const licensedGallery = getLicensedLandmarkGallery(entry.slug, landmark.gallery);
 const images: LandmarkGalleryItem[] = licensedGallery.length
   ? licensedGallery
@@ -38,33 +40,10 @@ const heroCredit = sourceCaption(hero);
 const secondCredit = sourceCaption(second);
 const thirdCredit = sourceCaption(third);
 
-const questions = isXeBangFai
-  ? [
-      {
-        question: 'Can Xe Bang Fai Cave be visited as a day trip from Thakhek?',
-        answer: 'Yes, but it should be the centre of the day rather than one more stop. The boat visit itself is relatively short; the long road, rough final tracks, ferry and local coordination are what make the schedule demanding.'
-      },
-      {
-        question: 'Can you visit Xe Bang Fai Cave during the rainy season?',
-        answer: 'Hin Nam No advises against entering the river cave from June to October, when flows can become dangerous. Road access can also deteriorate quickly, so reconfirm river and track conditions locally before leaving Thakhek.'
-      },
-      {
-        question: 'Do you need a guide for Xe Bang Fai Cave?',
-        answer: 'Yes. The cave visit is guided, and local coordination matters for the boat, river conditions and the remote final approach. Do not enter the cave or surrounding forest route independently.'
-      },
-      {
-        question: 'Where can you stay near Xe Bang Fai Cave?',
-        answer: 'Ban Nong Ping has homestays, a village lodge and simple bungalows close to the river. Staying nearby removes the pressure of making the long return journey immediately after the cave.'
-      },
-      {
-        question: 'How long is the Xe Bang Fai Cave boat trip?',
-        answer: 'The standard local boat visit is about ninety minutes. The complete trip needs much more time because the road from Thakhek, river crossing and final access turn Xe Bang Fai into a full-day or overnight journey.'
-      }
-    ]
-  : facts.slice(0, 5).map((item) => ({
-      question: item.label.endsWith('?') ? item.label : `${item.label}?`,
-      answer: item.value
-    }));
+const questions = presentation.faq || facts.slice(0, 5).map((item) => ({
+  question: item.label.endsWith('?') ? item.label : `${item.label}?`,
+  answer: item.value
+}));
 ---
 
 <main class="field-guide-page">
@@ -85,7 +64,7 @@ const questions = isXeBangFai
       <div class="field-guide-hero__copy">
         <p class="field-guide-kicker">{guide.eyebrow}</p>
         <h1 id={`landmark-title-${entry.slug}`}>{landmark.name}</h1>
-        {isXeBangFai && <p class="field-guide-aliases">Hin Nam No · Khammouane · Remote river cave</p>}
+        {presentation.aliases && <p class="field-guide-aliases">{presentation.aliases}</p>}
         <p class="field-guide-deck">{entry.editorialAngle}</p>
 
         <div class="field-guide-axis field-guide-axis--four" aria-label={`${landmark.name} visit rhythm`}>
@@ -123,7 +102,7 @@ const questions = isXeBangFai
       <div><span>Best for</span><strong>{guide.bestFor}</strong><small>{landmark.region}</small></div>
     </section>
 
-    <div class:list={{ 'field-guide-layout': true, 'field-guide-layout--xe-intro': isXeBangFai }}>
+    <div class:list={{ 'field-guide-layout': true, 'field-guide-layout--expedition-intro': isExpeditionLayout }}>
       <div class="field-guide-story">
         {sections.slice(0, 2).map((section, index) => (
           <section class="field-guide-section">
@@ -135,8 +114,8 @@ const questions = isXeBangFai
         ))}
       </div>
 
-      {isXeBangFai ? (
-        <figure class="field-guide-photo field-guide-photo--xe-side">
+      {isExpeditionLayout ? (
+        <figure class="field-guide-photo field-guide-photo--expedition-side">
           <span class="field-guide-tape" aria-hidden="true"></span>
           <img src={second.src} alt={second.alt} width="1100" height="900" loading="lazy" decoding="async" />
           {(secondCredit.source || secondCredit.author) && (
@@ -162,8 +141,8 @@ const questions = isXeBangFai
       <span>ADVERTISEMENT</span>
     </div>
 
-    {isXeBangFai ? (
-      <div class="field-guide-layout field-guide-layout--xe-time">
+    {isExpeditionLayout ? (
+      <div class="field-guide-layout field-guide-layout--expedition-time">
         <div class="field-guide-story">
           <section class="field-guide-section">
             <p class="section-label">{sections[2]?.label || '03 · TIME'}</p>
@@ -174,13 +153,13 @@ const questions = isXeBangFai
           </section>
         </div>
 
-        <aside class="field-guide-paper-note field-guide-paper-note--xe-time">
+        <aside class="field-guide-paper-note field-guide-paper-note--expedition-time">
           <span class="field-guide-note-tape" aria-hidden="true"></span>
           <span>KEEP CLOSE</span>
           <ul>
             {facts.slice(0, 5).map((item) => <li>{item.label}</li>)}
           </ul>
-          <p>Access, river conditions, opening arrangements and prices can change. Reconfirm the practical details before leaving Thakhek.</p>
+          <p>Access, conditions, opening arrangements and prices can change. Reconfirm the practical details before leaving {entry.cityName}.</p>
         </aside>
       </div>
     ) : (
@@ -205,7 +184,7 @@ const questions = isXeBangFai
       </section>
     )}
 
-    {!isXeBangFai && images.length > 1 && (
+    {!isExpeditionLayout && images.length > 1 && (
       <section class="field-guide-gallery" aria-label={`${landmark.name} photo notes`}>
         {[second, third].map((image) => {
           const credit = sourceCaption(image);
@@ -229,7 +208,7 @@ const questions = isXeBangFai
       <span>ADVERTISEMENT</span>
     </div>
 
-    <div class:list={{ 'field-guide-layout': true, 'field-guide-layout--reverse': true, 'field-guide-layout--xe-final': isXeBangFai }}>
+    <div class:list={{ 'field-guide-layout': true, 'field-guide-layout--reverse': true, 'field-guide-layout--expedition-final': isExpeditionLayout }}>
       <div class="field-guide-story">
         <section class="field-guide-section">
           <p class="section-label">{sections[3]?.label || '04 · ON THE GROUND'}</p>
@@ -238,14 +217,14 @@ const questions = isXeBangFai
         </section>
         <section class="field-guide-section">
           <p class="section-label">FIELD NOTE · BEFORE YOU LEAVE</p>
-          <h2>{isXeBangFai ? 'Inside Hin Nam No, beyond the photograph' : 'What matters more than another pin'}</h2>
+          <h2>{presentation.finalHeading || 'What matters more than another pin'}</h2>
           <p>{entry.editorialAngle}</p>
           <p>{pageFieldNote?.beforeYouLeave || guide.fieldNote}</p>
         </section>
       </div>
 
-      {isXeBangFai ? (
-        <figure class="field-guide-photo field-guide-photo--xe-final">
+      {isExpeditionLayout ? (
+        <figure class="field-guide-photo field-guide-photo--expedition-final">
           <span class="field-guide-tape" aria-hidden="true"></span>
           <img src={third.src} alt={third.alt} width="1100" height="900" loading="lazy" decoding="async" />
           {(thirdCredit.source || thirdCredit.author) && (
@@ -293,7 +272,7 @@ const questions = isXeBangFai
     <section class="field-guide-faq" aria-labelledby={`landmark-faq-${entry.slug}`}>
       <p class="section-label">QUESTIONS BEFORE GOING</p>
       <h2 id={`landmark-faq-${entry.slug}`}>{landmark.name}, without the guesswork</h2>
-      <p class="field-guide-faq__intro">{isXeBangFai ? 'The questions that matter when the road, river and local coordination shape the visit.' : 'Short answers built from the practical field information already attached to this landmark.'}</p>
+      <p class="field-guide-faq__intro">{presentation.faqIntro || 'Short answers built from the practical field information already attached to this landmark.'}</p>
       {questions.map((item, index) => (
         <details open={index === 0}>
           <summary>{item.question}</summary>
@@ -342,57 +321,57 @@ const questions = isXeBangFai
 </main>
 
 <style>
-  .field-guide-layout--xe-intro,
-  .field-guide-layout--xe-time,
-  .field-guide-layout--xe-final {
+  .field-guide-layout--expedition-intro,
+  .field-guide-layout--expedition-time,
+  .field-guide-layout--expedition-final {
     grid-template-columns: minmax(0, 1.34fr) minmax(280px, .66fr);
     gap: clamp(44px, 7vw, 88px);
   }
 
-  .field-guide-photo--xe-side,
-  .field-guide-photo--xe-final {
+  .field-guide-photo--expedition-side,
+  .field-guide-photo--expedition-final {
     align-self: center;
     width: 100%;
     transform: rotate(1deg);
   }
 
-  .field-guide-photo--xe-side img,
-  .field-guide-photo--xe-final img {
+  .field-guide-photo--expedition-side img,
+  .field-guide-photo--expedition-final img {
     width: 100%;
     height: clamp(300px, 31vw, 420px);
     object-fit: cover;
   }
 
-  .field-guide-photo--xe-final {
+  .field-guide-photo--expedition-final {
     transform: rotate(-1deg);
   }
 
-  .field-guide-paper-note--xe-time {
+  .field-guide-paper-note--expedition-time {
     align-self: center;
     margin-top: 0;
   }
 
-  .field-guide-layout--xe-time .field-guide-section p + p {
+  .field-guide-layout--expedition-time .field-guide-section p + p {
     margin-top: 22px !important;
   }
 
   @media (max-width: 820px) {
-    .field-guide-layout--xe-intro,
-    .field-guide-layout--xe-time,
-    .field-guide-layout--xe-final {
+    .field-guide-layout--expedition-intro,
+    .field-guide-layout--expedition-time,
+    .field-guide-layout--expedition-final {
       grid-template-columns: 1fr;
       gap: 38px;
     }
 
-    .field-guide-photo--xe-side,
-    .field-guide-photo--xe-final,
-    .field-guide-paper-note--xe-time {
+    .field-guide-photo--expedition-side,
+    .field-guide-photo--expedition-final,
+    .field-guide-paper-note--expedition-time {
       width: min(100%, 560px);
       justify-self: center;
     }
 
-    .field-guide-photo--xe-side img,
-    .field-guide-photo--xe-final img {
+    .field-guide-photo--expedition-side img,
+    .field-guide-photo--expedition-final img {
       height: clamp(260px, 65vw, 380px);
     }
   }
